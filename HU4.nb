@@ -1,0 +1,167 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.2' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      5411,        159]
+NotebookOptionsPosition[      4802,        139]
+NotebookOutlinePosition[      5201,        155]
+CellTagsIndexPosition[      5158,        152]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "1.", " ", "Verzeichnis", " ", "setzen", " ", "und", " ", "Bild", " ", 
+    "importieren"}], "*)"}], 
+  RowBox[{
+   RowBox[{
+    RowBox[{"SetDirectory", "[", "\"\</Users/jureglavas/Downloads\>\"", "]"}],
+     ";"}], "\n", 
+   RowBox[{
+    RowBox[{"image", "=", 
+     RowBox[{
+     "Import", 
+      "[", "\"\</Users/jureglavas/Library/Mobile \
+Documents/com~apple~CloudDocs/Downloads/jurenog.JPG\>\"", "]"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"\[CapitalUDoubleDot]berpr\[UDoubleDot]fen", ",", 
+     RowBox[{
+     "ob", " ", "das", " ", "Bild", " ", "erfolgreich", " ", "importiert", " ",
+       "wurde"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Head", "[", "image", "]"}], "===", "Image"}], ",", 
+      RowBox[{
+       RowBox[{"Print", "[", "\"\<Bild erfolgreich importiert.\>\"", "]"}], ";",
+        "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", 
+        RowBox[{"\"\<Bildgr\[ODoubleDot]\[SZ]e: \>\"", ",", 
+         RowBox[{"ImageDimensions", "[", "image", "]"}]}], "]"}]}], ",", 
+      RowBox[{"Print", "[", "\"\<Fehler beim Import!\>\"", "]"}]}], "]"}], 
+    ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"2.", " ", "In", " ", "Graustufen", " ", "umwandeln"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"image", "=", 
+     RowBox[{"ColorConvert", "[", 
+      RowBox[{"image", ",", "\"\<Grayscale\>\""}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "3.", " ", "Gl\[ADoubleDot]ttungsfunktion", " ", "mit", " ", "Mittelwert",
+      " ", "\[UDoubleDot]ber", " ", "Kernel"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"SmoothImage", "[", 
+      RowBox[{"img_", ",", "size_"}], "]"}], ":=", 
+     RowBox[{"ImageConvolve", "[", 
+      RowBox[{"img", ",", 
+       RowBox[{"ConstantArray", "[", 
+        RowBox[{
+         RowBox[{"1", "/", 
+          RowBox[{"(", 
+           RowBox[{"size", "^", "2"}], ")"}]}], ",", 
+         RowBox[{"{", 
+          RowBox[{"size", ",", "size"}], "}"}]}], "]"}]}], "]"}]}], ";"}], 
+   "\n", "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{
+    "4.", " ", "Gl\[ADoubleDot]tten", " ", "mit", " ", "verschiedenen", " ", 
+     "Fenstergr\[ODoubleDot]\[SZ]en"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"smoothed3", "=", 
+     RowBox[{"SmoothImage", "[", 
+      RowBox[{"image", ",", "3"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"smoothed5", "=", 
+     RowBox[{"SmoothImage", "[", 
+      RowBox[{"image", ",", "5"}], "]"}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"smoothed7", "=", 
+     RowBox[{"SmoothImage", "[", 
+      RowBox[{"image", ",", "7"}], "]"}]}], ";"}], "\n", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"5.", " ", "Speicherung", " ", 
+     RowBox[{"als", ".", "pgm"}]}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<smoothed3.pgm\>\"", ",", "smoothed3", ",", "\"\<PGM\>\""}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<smoothed5.pgm\>\"", ",", "smoothed5", ",", "\"\<PGM\>\""}], 
+     "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{"\"\<smoothed7.pgm\>\"", ",", "smoothed7", ",", "\"\<PGM\>\""}], 
+     "]"}], ";"}], "\n"}]}]], "Input",
+ CellChangeTimes->{{3.949310152288464*^9, 3.949310152289174*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"7b482c76-cc7c-44e4-a72c-c6f718d671e7"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Bild erfolgreich importiert.\"\>"], "Print",
+ CellChangeTimes->{3.94931287812177*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"ada7cd91-5bdd-4183-821d-7ff91ce8299a"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Bildgr\[ODoubleDot]\[SZ]e: \"\>", "\[InvisibleSpace]", 
+   RowBox[{"{", 
+    RowBox[{"7008", ",", "4672"}], "}"}]}],
+  SequenceForm["Bildgr\[ODoubleDot]\[SZ]e: ", {7008, 4672}],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.949312878122497*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"6e474fe7-f44d-47b6-8acb-e4e877ec990f"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1111, 756},
+WindowMargins->{{192, Automatic}, {Automatic, 31}},
+FrontEndVersion->"14.2 for Mac OS X ARM (64-bit) (December 26, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"fbb219b9-5d61-4bc1-8587-86cfca2ebbb7"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 3561, 93, 478, "Input",ExpressionUUID->"7b482c76-cc7c-44e4-a72c-c6f718d671e7"],
+Cell[CellGroupData[{
+Cell[4162, 119, 207, 4, 23, "Print",ExpressionUUID->"ada7cd91-5bdd-4183-821d-7ff91ce8299a"],
+Cell[4372, 125, 402, 10, 23, "Print",ExpressionUUID->"6e474fe7-f44d-47b6-8acb-e4e877ec990f"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

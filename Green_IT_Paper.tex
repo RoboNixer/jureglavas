@@ -1,0 +1,105 @@
+\documentclass[12pt]{article}
+
+% Pakete laden
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}  % Bessere T1-Schriftunterstützung
+\usepackage[a4paper, margin=2.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{abstract}
+\usepackage{hyperref}
+\usepackage{lastpage}
+\usepackage{natbib}
+\usepackage{fancyhdr}
+
+% Kopf- und Fußzeilen einrichten
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot[C]{\thepage}
+
+% Überschriften formatieren
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+% Zeilennummerierung
+\usepackage{lineno}
+\linenumbers
+
+% BibTeX-Einstellungen
+\bibliographystyle{plain}
+
+\begin{document}
+
+\title{Green IT}
+\author{Gerwin Bacher \and Jure Glavas}
+\date{\today}
+
+\maketitle
+
+\begin{abstract}
+Green IT umfasst Maßnahmen zur Reduzierung der Umweltbelastung durch Informations- und Kommunikationstechnologien (IKT). Dazu gehören energieeffiziente Hardware, nachhaltige Produktionsprozesse und optimierte Recyclingverfahren. Angesichts des steigenden Energiebedarfs der IT-Branche und wachsender Mengen an Elektronikschrott sind innovative Lösungen erforderlich. Dieses Manuskript beleuchtet zentrale Herausforderungen sowie technologische und organisatorische Ansätze für eine nachhaltigere IT-Nutzung.
+\end{abstract}
+
+\section{Einführung}
+Die IT-Branche trägt mit ihrem hohen Energieverbrauch und steigenden Mengen an Elektronikschrott erheblich zur Umweltbelastung bei. Green IT zielt darauf ab, diese Auswirkungen durch effizientere Technologien und nachhaltige Strategien zu minimieren. Dieses Manuskript gibt einen Überblick über die zentralen Herausforderungen und Lösungsansätze zur Förderung einer umweltfreundlicheren IT-Nutzung.
+
+\section{Grundlagen}
+\subsection{Bedeutung von Green IT}
+Green IT umfasst Strategien zur Reduzierung der Umweltauswirkungen von Informations- und Kommunikationstechnologien (IKT) über ihren gesamten Lebenszyklus\cite{murugesan2008}. Dies beinhaltet den Einsatz energieeffizienter Technologien, die Optimierung von IT-Infrastrukturen und die Förderung umweltfreundlicher Produktionsprozesse\cite{tomlinson2010}. Ein wesentlicher Aspekt ist die Verbesserung der Energieeffizienz von Hardware und Rechenzentren, um den Stromverbrauch und damit verbundene CO2-Emissionen zu reduzieren\cite{gartner2007}. Zudem umfasst Green IT Ansätze zur Verlängerung der Lebensdauer von IT-Geräten, effiziente Recycling- und Entsorgungsprozesse sowie die Entwicklung von Kreislaufwirtschaftskonzepten für IT-Produkte\cite{geissdoerfer2010}. Die Optimierung von IT-Infrastrukturen zielt darauf ab, Ressourcen effizienter zu nutzen und den ökologischen Fußabdruck der IT-Branche insgesamt zu verringern\cite{jenkin2011}.
+
+\subsection{Ziele von Green IT}
+Die Hauptziele von Green IT umfassen die signifikante Reduzierung des Energieverbrauchs in der IT-Branche, was angesichts des prognostizierten Anstiegs des globalen IKT-Energieverbrauchs von entscheidender Bedeutung ist\cite{andrae2015}. Ein weiteres zentrales Ziel ist die Förderung einer Kreislaufwirtschaft im IT-Sektor, um Ressourceneffizienz zu maximieren und Abfälle zu minimieren\cite{geissdoerfer2010}. Die Integration von KI-Technologien zur Optimierung von IT-Systemen und Energiemanagement gewinnt zunehmend an Bedeutung, da sie das Potenzial hat, die Energieeffizienz erheblich zu steigern\cite{khan2021}. Darüber hinaus ist die Schaffung von Bewusstsein für die Umweltauswirkungen der IT sowohl in der Industrie als auch bei Verbrauchern ein wichtiges Ziel, um nachhaltigere Praktiken in der Entwicklung, Nutzung und Entsorgung von IT-Produkten zu fördern\cite{jenkin2011}. Diese Ziele zielen gemeinsam darauf ab, den ökologischen Fußabdruck der IT-Branche zu reduzieren und ihre Rolle bei der Bekämpfung des Klimawandels zu stärken.
+
+\section{Herausforderungen}
+\subsection{Energieverbrauch von Rechenzentren}
+Der Energieverbrauch von Rechenzentren stellt eine wachsende Herausforderung dar, mit einem prognostizierten globalen Anstieg auf 8\% des gesamten Stromverbrauchs bis 2030\cite{andrae2015}. Der hohe Strombedarf resultiert aus der steigenden Nachfrage nach Datenverarbeitung und -speicherung, insbesondere durch Cloud-Computing und KI-Anwendungen\cite{masanet2020}. Kühlungsanforderungen machen einen erheblichen Teil des Energieverbrauchs aus, wobei innovative Kühlmethoden wie Flüssigkeitskühlung zunehmend eingesetzt werden, um die Effizienz zu verbessern\cite{oró2015}. Die Skalierbarkeit und das Wachstum von Rechenzentren führen zu einem kontinuierlichen Anstieg des Energiebedarfs, während gleichzeitig Bemühungen unternommen werden, die Energieeffizienz zu steigern\cite{jones2018}. Trotz Fortschritten in der Energieeffizienz bleibt die unzureichende Gesamteffizienz vieler Rechenzentren eine Herausforderung, die durch den Einsatz erneuerbarer Energien und fortschrittlicher Energiemanagementtechniken angegangen wird\cite{khan2021}.
+
+\subsection{Lebensdauer von IT Geräten}
+Die Lebensdauer von IT-Geräten ist ein kritischer Faktor für die Nachhaltigkeit der IT-Branche. Der hohe Ressourcenverbrauch bei der Produktion von IT-Hardware unterstreicht die Notwendigkeit, die Nutzungsdauer zu maximieren\cite{tomlinson2010}. Die schnelle technologische Alterung führt oft dazu, dass Geräte vorzeitig ersetzt werden, obwohl sie noch funktionsfähig sind, was den Lebenszyklus-Umwelteinfluss erhöht\cite{belkhir2018}. Mangelnde Reparierbarkeit und begrenzte Upgrade-Möglichkeiten vieler moderner Geräte verschärfen dieses Problem und tragen zur Zunahme von Elektroschrott bei\cite{baldé2017}. Die wachsende Menge an Elektroschrott stellt eine erhebliche Umweltbelastung dar, mit globalen E-Waste-Mengen, die bis 2030 voraussichtlich 74,7 Millionen Tonnen erreichen werden\cite{baldé2017}. Um diesen Herausforderungen zu begegnen, werden Ansätze wie modulares Design, verbesserte Reparierbarkeit und effizientere Recycling-Prozesse erforscht und implementiert\cite{pohl2019}.
+
+\subsection{Recycling-Prozesse}
+Recycling-Prozesse für IT-Geräte stellen aufgrund der Komplexität der verwendeten Materialien eine erhebliche Herausforderung dar. Die Vielfalt an Komponenten und Materialien in elektronischen Geräten erschwert effiziente Recyclingverfahren\cite{baldé2017}. Kostenintensive Prozesse zur Trennung und Aufbereitung der verschiedenen Materialien sind erforderlich, was die wirtschaftliche Machbarkeit des Recyclings beeinträchtigt\cite{tomlinson2010}. Die Behandlung von Gefahrstoffen, die in vielen elektronischen Komponenten enthalten sind, erfordert spezielle Vorsichtsmaßnahmen und Technologien, um Umwelt- und Gesundheitsrisiken zu minimieren\cite{murugesan2008}. Zudem führt der Mangel an standardisierter Infrastruktur und einheitlichen Recycling-Verfahren zu Ineffizienzen im globalen Recycling-System für Elektronikschrott\cite{baldé2017}. Die Entwicklung fortschrittlicher Recycling-Technologien und die Implementierung von Kreislaufwirtschaftskonzepten werden als wichtige Schritte zur Verbesserung der Recycling-Effizienz und zur Reduzierung der Umweltauswirkungen von IT-Abfällen angesehen\cite{geissdoerfer2010}.
+
+\subsection{Benötigte Erze und ökologische Folgen}
+Die IT-Industrie benötigt eine Vielzahl von Rohstoffen, darunter seltene Erden und Metalle, deren Gewinnung oft mit erheblichen ökologischen Folgen verbunden ist\cite{unctad2019}. Der hohe Rohstoffbedarf führt zu intensivem Bergbau, der Landschaftszerstörung, Wasserverschmutzung und Verlust der Biodiversität verursachen kann\cite{tomlinson2010}. Die Gewinnung dieser Ressourcen ist zudem äußerst energieintensiv, was zu einem signifikanten CO2-Fußabdruck beiträgt\cite{belkhir2018}. Die begrenzte Verfügbarkeit vieler dieser Rohstoffe, insbesondere seltener Erden, stellt eine zusätzliche Herausforderung dar und unterstreicht die Notwendigkeit für effizientere Recycling-Prozesse und die Entwicklung alternativer Materialien\cite{freitag2021}. Um diese Probleme anzugehen, werden Ansätze wie Urban Mining, die Entwicklung von Substitutionsmaterialien und die Verbesserung der Ressourceneffizienz in der IT-Produktion erforscht\cite{pohl2019}. Die Berücksichtigung des gesamten Lebenszyklus von IT-Produkten, einschließlich der Rohstoffgewinnung, ist entscheidend für die Verbesserung der Nachhaltigkeit in der IT-Branche\cite{bieser2019}.
+
+\section{Lösungsansätze}
+\subsection{Technologische Ansätze}
+Technologische Ansätze zur Verbesserung der Energieeffizienz in der IT-Branche umfassen Virtualisierung und Cloud Computing, energieeffiziente Hardware sowie intelligente Kühlung in Rechenzentren. Virtualisierung und Cloud Computing ermöglichen eine effizientere Nutzung von Serverressourcen und reduzieren den Energieverbrauch durch Konsolidierung von Workloads\cite{murugesan2008}. Der Einsatz energieeffizienter Hardware, wie stromsparender Prozessoren und Speichermodule, trägt wesentlich zur Senkung des Gesamtenergieverbrauchs bei\cite{tomlinson2010}. Intelligente Kühlsysteme in Rechenzentren, wie freie Kühlung und adiabatische Kühlung, optimieren den Energieeinsatz für die Klimatisierung und verbessern die Gesamteffizienz der Infrastruktur\cite{oró2015}. Diese Ansätze zusammen bilden eine Grundlage für nachhaltigere IT-Infrastrukturen und tragen zur Reduzierung des ökologischen Fußabdrucks der Branche bei\cite{jenkin2011}.
+
+\subsection{Organisatorische Maßnahmen}
+Organisatorische Maßnahmen spielen eine zentrale Rolle bei der Umsetzung von Nachhaltigkeit in IT-Projekten. Die Etablierung von Nachhaltigkeitsrichtlinien bildet die Grundlage für ein umweltbewusstes Handeln im Unternehmen\cite{murugesan2008}. Bewusstseinsbildung und Schulungen für Mitarbeiter sind essentiell, um eine Nachhaltigkeitskultur im IT-Team zu verankern\cite{jenkin2011}. Die Förderung von Home-Office und Telekonferenzen kann den CO2-Ausstoß durch Pendlerverkehr erheblich reduzieren, wobei der zusätzliche Energieverbrauch durch IT-Nutzung zu Hause deutlich überkompensiert wird\cite{tomlinson2010}. Die Verlängerung der Lebensdauer von IT-Geräten durch Reparaturen und Upgrades anstelle von Neuanschaffungen trägt wesentlich zur Ressourcenschonung bei\cite{baldé2017}. Diese Maßnahmen zusammen bilden einen ganzheitlichen Ansatz zur Steigerung der Nachhaltigkeit in IT-Organisationen.
+
+\section{Praxisbeispiele}
+\subsection{Google und CO$_2$ Neutrale Rechenzentren}
+Google hat sich ehrgeizige Ziele für Nachhaltigkeit und CO$_2$-Neutralität gesetzt, steht jedoch vor erheblichen Herausforderungen. Das Unternehmen strebt bis 2030 Netto-Null-Emissionen an, trotz eines 13\%igen Anstiegs der Treibhausgasemissionen im Jahr 2023\cite{google2024}. Google setzt verstärkt auf KI für Nachhaltigkeitslösungen, wie die Optimierung des Energieverbrauchs und kraftstoffsparende Routenplanung, die zu einer Reduzierung der Treibhausgasemissionen um 650.000 Tonnen geführt hat\cite{google2024}. Im Bereich Wassermanagement hat Google sein Wassernachfüllportfolio nahezu verdoppelt und schätzungsweise 1 Milliarde Gallonen Wasser aufgefüllt\cite{google2024}. Hinsichtlich der Kreislaufwirtschaft hat das Unternehmen Fortschritte gemacht, beispielsweise durch die Einführung einer 100\% plastikfreien Verpackung für Pixel 8 und Pixel 8 Pro\cite{google2024}. Trotz dieser Bemühungen bleibt der steigende Energiebedarf von KI-Anwendungen eine große Herausforderung für Googles Nachhaltigkeitsziele.
+
+\subsection{Nachhaltige Hardware: Fairphone}
+Fairphone hat sich als Vorreiter für nachhaltige und ethisch produzierte Smartphones etabliert. Das modulare Design ermöglicht einfache Reparaturen und verlängert die Lebensdauer der Geräte\cite{fairphoneimpact}. Fairphone nutzt fair gehandelte und recycelte Materialien, wie recyceltes Plastik und fair gehandeltes Gold\cite{fairphoneimpact}. Eine lange Software-Unterstützung ist ebenfalls ein zentrales Merkmal, das die Nutzungsdauer der Geräte verlängert\cite{fairphoneimpact}. Darüber hinaus setzt sich Fairphone für ethische Produktionsbedingungen ein, einschließlich fairer Löhne und verbesserter Arbeitsbedingungen in der gesamten Lieferkette\cite{fairphoneimpact}.
+
+
+\subsection{Persönliche Nutzung}
+Persönliche Nutzung spielt eine entscheidende Rolle für nachhaltigen Konsum. Die Verlängerung der Lebensdauer von Produkten durch sorgsamen Umgang und Reparaturen anstelle von Neuanschaffungen ist ein wichtiger Aspekt. Bewusstes Kaufverhalten beinhaltet die Berücksichtigung ökologischer und sozialer Produktionsbedingungen sowie die Bevorzugung langlebiger, qualitativ hochwertiger Produkte. Konsumenten können sich über Nachhaltigkeitsaspekte und Gütezeichen informieren, wobei 40\% der Verbraucher angeben, dies regelmäßig zu tun. Die ordnungsgemäße Entsorgung von Produkten am Ende ihrer Nutzungsdauer ist ebenfalls wichtig für einen nachhaltigen Konsum. EU-Energielabel können Verbrauchern bei der Auswahl energieeffizienter Produkte helfen, obwohl sie in den gegebenen Quellen nicht explizit erwähnt werden. Insgesamt kann jeder Einzelne durch bewusste Konsumentscheidungen einen Beitrag zu einer nachhaltigeren Zukunft leisten\cite{buerger2022}.
+
+\section{Zukunft}
+\subsection{Trends in der IT-Branche}
+Die IT-Branche zeigt deutliche Trends in Richtung Nachhaltigkeit und Energieeffizienz. Judijanto et al. (2024) betonen die steigende Bedeutung erneuerbarer Energien in der Forschung zu grünen Technologien\cite{judijanto2024}. Nyabuto (2024) hebt die Verbreitung nachhaltiger Hardware-Konzepte hervor, die energieeffiziente Designs und umweltfreundliche Materialien umfassen\cite{nyabuto2024}.
+Der Einsatz von künstlicher Intelligenz zur Energieoptimierung ist ein weiterer wichtiger Trend. Soare et al. (2024) identifizieren KI als Schlüsseltechnologie für die Verbesserung der Energieeffizienz in IT-Systemen\cite{soare2024}. Diese Trends zeigen, dass die IT-Branche aktiv an Lösungen arbeitet, um ihren ökologischen Fußabdruck zu verringern und nachhaltiger zu wirtschaften.
+
+\subsection{Potential neuer Technologien}
+Neue Technologien bieten großes Potenzial für die Verbesserung der Energieeffizienz in der IT-Branche. Quantencomputing verspricht effizientere Berechnungen, was den Energieverbrauch in Rechenzentren reduzieren könnte\cite{soare2024}. Energieeffiziente Prozessorarchitekturen, wie neuromorphe Chips, ermöglichen signifikante Energieeinsparungen bei rechenintensiven Aufgaben\cite{nyabuto2024}.
+Die erweiterte Nutzung von Wasserstofftechnologien gewinnt an Bedeutung, insbesondere in der Energiespeicherung\cite{judijanto2024}. Intelligente IoT-basierte Energiemanagementsysteme nutzen Sensoren und KI, um den Energieverbrauch zu optimieren\cite{soare2024}. Diese Technologien versprechen erhebliche Energieeinsparungen und treiben die grüne IT-Revolution voran.
+
+\section{Fazit}
+Green IT spielt eine zentrale Rolle bei der Reduzierung der Umweltauswirkungen der IT-Branche. Durch energieeffiziente Technologien, nachhaltige Hardware-Entwicklung und optimierte Recyclingprozesse lassen sich Ressourcen schonen und CO$_2$-Emissionen senken. Dennoch stehen der Branche erhebliche Herausforderungen gegenüber, insbesondere der hohe Energieverbrauch von Rechenzentren, die begrenzte Lebensdauer von IT-Geräten und die komplexen Recyclingprozesse. Technologische Innovationen wie KI-gestützte Energiemanagementsysteme, nachhaltige Hardware-Konzepte und der Einsatz erneuerbarer Energien zeigen vielversprechende Lösungsansätze. Um eine nachhaltige IT-Zukunft zu sichern, sind neben technologischen Fortschritten auch organisatorische Maßnahmen und ein bewusster Konsum entscheidend.
+
+\newpage
+% Literaturverzeichnis mit BibTeX
+\bibliography{references}  % Verweist auf die Datei references.bib
+
+\end{document}
