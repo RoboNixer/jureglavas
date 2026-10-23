@@ -1,7 +1,12 @@
 # Cyberpunk gradski blok (Blender -> Cinema 4D)
 
 Dio cyberpunk grada 128 x 92 m u realnoj velicini (1 BU = 1 m), HIGH POLY i LOW POLY.
-835 soba s interijerom (svaki prozor ima svoju sobu), 133 svjetla.
+835 soba s interijerom (svaki prozor ima svoju sobu), 150 svjetala.
+HIGH POLY: 1 294 objekta, 1 019 700 trokuta. LOW POLY: 1 214 objekata, 159 608 trokuta.
+
+Istaci na fasadama: vijenci katova, klupcice i zardinjere s biljkama, oluci s obujmicama, balkoni sa
+staklenom ogradom na tornjevima, izlazi stubista i parapeti na krovovima, vodospremnici, dizalica za
+pranje fasade (BMU), rashladni tornjevi i klima uredjaji na podiju megatornja, signalna svjetla.
 
 | Datoteka | Sadrzaj |
 |---|---|

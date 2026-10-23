@@ -1974,10 +1974,10 @@ def shophouse(ctx, grow, lrow, tag, x0, w, nfl, seed):
           for f in range(nfl)]
     n_signs = 1 if k == 1 else r.choice([1, 2])
     signs = []
-    for pi in r.sample(range(k + 1), min(n_signs, k + 1)):
+    for pi_ in r.sample(range(k + 1), min(n_signs, k + 1)):
         L = round(r.uniform(3.0, min(9.0, top - GH - 1.0)) * 20) / 20
         za = round((GH + 0.4 + r.uniform(0.0, max(0.0, top - GH - 1.0 - L - 0.4))) * 20) / 20 + 0.013
-        signs.append((pi, za, za + L, r.choice(NEON_COLORS)))     # .013 -> nikad u ravnini ploca/parapeta
+        signs.append((pi_, za, za + L, r.choice(NEON_COLORS)))     # .013 -> nikad u ravnini ploca/parapeta
     tank = r.random() < 0.6
     tank_xy = (r.uniform(x0 + 1.3, x0 + w - 1.3), r.uniform(4.8, 6.4))
     billboard = w >= 7.0 and r.random() < 0.35
@@ -2105,8 +2105,8 @@ def shophouse(ctx, grow, lrow, tag, x0, w, nfl, seed):
         mb.obj(tag + "_Tenda", gh)
 
     # ---- vertikalni neonski natpisi (HK stil) na stupicima fasade
-    for si, (pi, za, zb, col) in enumerate(signs):
-        c = (piers[pi][0] + piers[pi][1]) / 2
+    for si, (pi_, za, zb, col) in enumerate(signs):
+        c = (piers[pi_][0] + piers[pi_][1]) / 2
         mb = MB(ctx)
         box(mb, "MAT_Metal_Okvir", c - 0.125, c + 0.125, -1.75, 0.25, za, zb)
         mb.obj(f"{tag}_Natpis_Okomiti_{si + 1}", gh, bevel=True)
@@ -2129,6 +2129,53 @@ def shophouse(ctx, grow, lrow, tag, x0, w, nfl, seed):
             if ac[f][i]:
                 instance(ctx, ctx.numbered(tag + "_Klima"), acm, gh,
                          V((wa + wb) / 2, -0.05, GH + f * FHS + 0.30), 0.0)
+
+    # ---- istaci fasade: vijenci katova, klupcice, zardinjere (vlastiti rng -> raspored iznad ostaje isti)
+    rd = random.Random(seed + "_istaci")
+    mb, pl = MB(ctx), MB(ctx)
+    for f in range(1, nfl):
+        fz = GH + f * FHS
+        box(mb, "MAT_Beton_Tamni", x0 + 0.155, x0 + w - 0.155, -0.14, -0.04, fz - 0.12, fz - 0.03)
+    box(mb, "MAT_Beton_Tamni", x0 + 0.155, x0 + w - 0.155, -0.16, -0.04, top + 0.30, top + 0.42)
+    for f in range(nfl):
+        fz = GH + f * FHS
+        for i, (wa, wb) in enumerate(wins):
+            if cage[f][i] or ac[f][i]:
+                continue
+            box(mb, "MAT_Beton_Svijetli", wa - 0.06, wb + 0.06, -0.12, 0.10, fz + 0.855, fz + 0.93)
+            if f >= 1 and rd.random() < 0.3:
+                box(mb, "MAT_Lonac", wa + 0.10, wb - 0.10, -0.32, 0.0, fz + 0.92, fz + 1.08)
+                box(mb, "MAT_Zemlja", wa + 0.12, wb - 0.12, -0.30, -0.02, fz + 1.07, fz + 1.10)
+                if det:
+                    nb_ = max(2, int((wb - wa - 0.3) / 0.32))
+                    for b_ in range(nb_):
+                        cx_ = wa + 0.18 + (wb - wa - 0.36) * (b_ + 0.5) / nb_ + rd.uniform(-0.03, 0.03)
+                        a_, h_ = rd.uniform(0.11, 0.14), rd.uniform(0.18, 0.30)
+                        z0_ = fz + 1.08
+                        prof = [(a_ * sin(pi * k_ / 6), z0_ + h_ * (1 - cos(pi * k_ / 6)) / 2) for k_ in range(7)]
+                        prof[0], prof[-1] = (0.0, prof[0][1]), (0.0, prof[-1][1])
+                        lathe(pl, "MAT_Lisce", prof, 10, Matrix.Translation(V(cx_, -0.16, 0)))
+    mb.obj(tag + "_Vijenci_Klupcice", gh, bevel=True)
+    if pl.bm.faces:
+        pl.obj(tag + "_Biljke_Zardinjere", gh, smooth=80)
+    else:
+        pl.bm.free()
+
+    # ---- krov: strazni parapet, izlaz stubista, ventilacije
+    rz_ = roof
+    mb = MB(ctx)
+    box(mb, fac, x0 + 0.175, x0 + w - 0.175, DEPTH - 0.25, DEPTH + 0.02, rz_ - 0.02, rz_ + 0.9)
+    box(mb, "MAT_Beton_Tamni", x0 + 0.165, x0 + w - 0.165, DEPTH - 0.29, DEPTH + 0.06, rz_ + 0.88, rz_ + 0.96)
+    hc = x0 + w / 2
+    box(mb, fac, hc - 0.7, hc + 0.7, 9.2, 10.4, rz_ - 0.02, rz_ + 2.3)
+    box(mb, "MAT_Beton_Tamni", hc - 0.8, hc + 0.8, 9.1, 10.5, rz_ + 2.28, rz_ + 2.42)
+    box(mb, "MAT_Rolo_Vrata", hc - 0.45, hc + 0.45, 9.17, 9.22, rz_ - 0.01, rz_ + 2.07)
+    box(mb, "MAT_Metal_Okvir", hc - 0.52, hc + 0.52, 9.15, 9.23, rz_ + 2.05, rz_ + 2.12)
+    for vx in (x0 + w * 0.15, x0 + w * 0.85):
+        cyl(mb, "MAT_Metal_Pocincani", V(vx, 7.8, rz_ - 0.02), V(vx, 7.8, rz_ + 1.0), 0.08, ctx.small * 2)
+        cyl(mb, "MAT_Metal_Pocincani", V(vx, 7.8, rz_ + 0.98), V(vx, 7.8, rz_ + 1.06), 0.13, ctx.small * 2)
+    mb.obj(tag + "_Krov_Stubiste_Parapet", gh, bevel=True, smooth=60)
+    light(ctx, "SVJETLO_KROV_VRATA", "POINT", lh, V(hc, 8.85, rz_ + 2.2), energy=6.0, color=(1.0, 0.75, 0.45))
 
     # ---- krov
     if tank or billboard or ants or roof_ac:
@@ -2188,6 +2235,19 @@ def shop_row(ctx, g_parent, lg_parent, tag, origin, rot, length, seed):
         box(mb, "MAT_Beton_Svijetli", b - 0.2, b + 0.2, -0.25, DEPTH + 0.1, -0.06, H)
         anchors.append(to_block(origin, rot, (b, -0.25, 0.0)))
     mb.obj(f"Niz_Kuca_{tag}_Zabatni_Zidovi", g, bevel=True)
+    # oluci na zabatnim zidovima (desno od konzola kabela, ispred natpisa ducana)
+    mb = MB(ctx)
+    for j, b in enumerate(xs):
+        H = max(tops[i] for i in (j - 1, j) if 0 <= i < n) + 0.35
+        bx, hs = b + 0.12, H - 0.45
+        sweep(mb, "MAT_Metal_Pocincani", fillet([V(bx, -0.45, -0.03), V(bx, -0.45, hs), V(bx, -0.20, hs)], 0.12, 4),
+              0.05, ctx.small * 2)
+        cz = 1.2
+        while cz < hs - 0.6:
+            if not 3.3 < cz < 4.5:
+                box(mb, "MAT_Metal_Okvir", bx - 0.06, bx + 0.065, -0.53, -0.22, cz - 0.03, cz + 0.03)
+            cz += 2.5
+    mb.obj(f"Niz_Kuca_{tag}_Oluci", g, smooth=60)
     return anchors
 
 
@@ -2363,6 +2423,33 @@ def build_megatower(ctx, root, lroot, pos, rot=0.0):
     for x in (-12.0, -4.0, 4.0, 12.0):
         put_asset(ctx, "Drvo_Zardinjera", tm, g_pod, L, V(x, -10.5, 14.0 - 0.02), 0.0, name="MT_Krovni_Vrt_Drvo")
 
+    # strojarnica na krovu podija: rashladni tornjevi i nizovi klima uredjaja
+    mb = MB(ctx)
+    for cx_ in (-13.5, 13.5):
+        box(mb, "MAT_Metal_Pocincani", cx_ - 1.2, cx_ + 1.2, 10.8, 13.2, 13.98, 15.6)
+        cyl(mb, "MAT_Metal_Okvir", V(cx_, 12.0, 15.58), V(cx_, 12.0, 16.2), 1.0, ctx.small * 4)
+        if det:
+            for k in range(8):
+                a = pi * k / 8
+                obox(mb, "MAT_Klima_Resetka", V(cx_, 12.0, 16.18 + 0.005 * k), V(cos(a), sin(a), 0), V(-sin(a), cos(a), 0),
+                     V(0, 0, 1), 1.96, 0.04, 0.06)
+            cyl(mb, "MAT_Metal_Okvir", V(cx_, 12.0, 16.12), V(cx_, 12.0, 16.28), 0.18, ctx.small * 2)
+            for k in range(6):
+                z = 14.3 + k * 0.2
+                box(mb, "MAT_Klima_Resetka", cx_ - 1.0, cx_ + 1.0, 10.76, 10.82, z, z + 0.08)
+    mb.obj("MT_Krov_Podija_Rashladni_Tornjevi", g_pod, bevel=True, smooth=60)
+    acm = ac_mesh(ctx)
+    for sx_ in (-12.5, 12.5):
+        for yy in (-6.0, -3.5, -1.0, 1.5, 4.0, 6.5):
+            instance(ctx, ctx.numbered("MT_Krov_Podija_Klima"), acm, g_pod, V(sx_, yy, 14.0 - 0.01), 0.0)
+    # crvena signalna svjetla na kruni
+    mb = MB(ctx)
+    for qx, qy in ((-6.6, 2.0 - 6.6), (6.6, 2.0 - 6.6), (-6.6, 2.0 + 6.6)):
+        cyl(mb, "MAT_Metal_Okvir", V(qx, qy, 96.98), V(qx, qy, 97.5), 0.06, ctx.small)
+        lathe(mb, "SIGNAL_CRVENI", [(0, 97.66), (0.09, 97.61), (0.11, 97.54), (0.1, 97.48), (0, 97.48)],
+              ctx.small * 2, Matrix.Translation(V(qx, qy, 0)))
+    mb.obj("MT_KRUNA_SIGNALNA_SVJETLA", L, light=True)
+
 
 # --------------------------------------------------------------------------
 # POZADINSKI TORNJEVI (skyline)
@@ -2477,6 +2564,86 @@ def filler_tower(ctx, g_parent, lg_parent, tag, pos, rot, w, d, H, seed):
             sq_tube(mb, "MAT_Metal_Okvir", [V(lx, y0 + 0.125, ztop + 1.38), V(lx, y0 + 0.125, ztop + 7.6)], 0.08)
         box(mb, "MAT_Metal_Okvir", -w * 0.35, w * 0.35, y0, y0 + 0.25, ztop + 3.0, ztop + 7.4)
     mb.obj(tag + "_Krov", G, bevel=True)
+
+    # ---- istaci (vlastiti rng -> raspored iznad ostaje isti za HP i LP)
+    rb = random.Random(seed + "_istaci")
+    zr = ztop + 1.4                     # gornja ploha krova
+
+    def fb(mb_, mat, face, u0, u1, s0, s1, z0, z1):
+        """Kvadar u koordinatama lica: u uzduz lica, s van od fasade (s=0), z gore."""
+        if face == "+x":
+            box(mb_, mat, w / 2 + s0, w / 2 + s1, u0, u1, z0, z1)
+        elif face == "-x":
+            box(mb_, mat, -w / 2 - s1, -w / 2 - s0, -u1, -u0, z0, z1)
+        else:
+            box(mb_, mat, -u1, -u0, d / 2 + s0, d / 2 + s1, z0, z1)
+
+    if style == "Trake":
+        # balkoni sa staklenom ogradom na bocnim i straznjoj fasadi
+        mb, gb = MB(ctx), MB(ctx)
+        for face, half in (("+x", d / 2 - rr), ("-x", d / 2 - rr), ("+y", w / 2 - rr)):
+            usable = half - 1.5
+            if usable < 0:
+                continue
+            cols = [-min(usable, 3.0), min(usable, 3.0)] if usable >= 1.3 else [0.0]
+            for uc in cols:
+                for f in range(1, n):
+                    if rb.random() >= 0.4:
+                        continue
+                    fz = 5.0 + f * FHT
+                    fb(mb, "MAT_Beton_Tamni", face, uc - 1.2, uc + 1.2, -0.2, 1.3, fz - 0.04, fz + 0.16)
+                    fb(mb, "MAT_Metal_Okvir", face, uc - 1.2, uc + 1.2, 1.18, 1.26, fz + 1.05, fz + 1.10)
+                    fb(gb, "MAT_Staklo", face, uc - 1.18, uc + 1.18, 1.20, 1.24, fz + 0.12, fz + 1.07)
+                    for sg in (-1, 1):
+                        ua, ub = sorted((uc + sg * 1.11, uc + sg * 1.19))
+                        fb(mb, "MAT_Metal_Okvir", face, ua, ub, 0.02, 1.21, fz + 1.045, fz + 1.095)
+                        ua, ub = sorted((uc + sg * 1.13, uc + sg * 1.17))
+                        fb(gb, "MAT_Staklo", face, ua, ub, 0.03, 1.22, fz + 0.11, fz + 1.06)
+        if mb.bm.faces:
+            mb.obj(tag + "_Balkoni", G, bevel=True)
+            gb.obj(tag + "_Balkoni_Staklo", G)
+        else:
+            mb.bm.free()
+            gb.bm.free()
+    else:
+        # uredjaj za pranje fasade (BMU): stup, krak preko ruba, kosara na sajlama
+        mb = MB(ctx)
+        mx, my = -0.32 * w, 0.2 * d
+        box(mb, "MAT_Metal_Okvir", mx - 0.6, mx + 0.6, my - 0.6, my + 0.6, zr - 0.02, zr + 0.2)
+        cyl(mb, "MAT_Metal_Pocincani", V(mx, my, zr + 0.18), V(mx, my, zr + 3.05), 0.25, ctx.small * 2)
+        box(mb, "MAT_Metal_Pocincani", -w / 2 - 0.8, mx + 1.6, my - 0.15, my + 0.15, zr + 3.0, zr + 3.35)
+        box(mb, "MAT_Beton_Tamni", mx + 1.0, mx + 1.6 + 0.05, my - 0.35, my + 0.35, zr + 2.5, zr + 3.05)
+        box(mb, "MAT_Metal_Okvir", -w / 2 - 1.05, -w / 2 - 0.75, my - 0.5, my + 0.5, zr + 2.9, zr + 3.2)
+        zg = ztop - 6.0
+        xg0, xg1 = -w / 2 - 1.35, -w / 2 - 0.65
+        box(mb, "MAT_Metal_Okvir", xg0, xg1, my - 0.9, my + 0.9, zg, zg + 0.1)
+        box(mb, "MAT_Metal_Okvir", xg0, xg1, my - 0.9, my + 0.9, zg + 1.0, zg + 1.06)
+        for px in (xg0 + 0.04, xg1 - 0.04):
+            for py in (my - 0.86, my + 0.86):
+                box(mb, "MAT_Metal_Pocincani", px - 0.025, px + 0.025, py - 0.025, py + 0.025, zg + 0.08, zg + 1.04)
+        for py in (my - 0.42, my + 0.42):
+            cyl(mb, "MAT_Kabel", V(-w / 2 - 0.9, py, zg + 1.04), V(-w / 2 - 0.9, py, zr + 2.92), 0.012, ctx.small)
+        mb.obj(tag + "_Krov_BMU_Dizalica", G, bevel=True, smooth=60)
+
+    # vodospremnici na krovu i crvena signalna svjetla na uglovima
+    mb, ms_ = MB(ctx), MB(ctx)
+    for sx_ in (-1, 1):
+        tx, ty = sx_ * 0.22 * w, -0.12 * d
+        for lx, ly in ((-0.5, -0.5), (-0.5, 0.5), (0.5, -0.5), (0.5, 0.5)):
+            sq_tube(mb, "MAT_Metal_Okvir", [V(tx + lx, ty + ly, zr - 0.02), V(tx + lx, ty + ly, zr + 0.52)], 0.04)
+        cyl(mb, "MAT_Metal_Pocincani", V(tx, ty, zr + 0.5), V(tx, ty, zr + 2.5), 0.85, ctx.small * 3)
+        cyl(mb, "MAT_Metal_Okvir", V(tx, ty, zr + 2.4), V(tx, ty, zr + 2.55), 0.9, ctx.small * 3)
+        if det:
+            for hz in (zr + 1.1, zr + 1.8):
+                cyl(mb, "MAT_Metal_Okvir", V(tx, ty, hz), V(tx, ty, hz + 0.05), 0.875, ctx.small * 3)
+    ex = w / 2 - 0.6 - 0.3 * rr
+    ey = d / 2 - 0.6 - 0.3 * rr
+    for qx, qy in ((ex, ey), (-ex, ey), (ex, -ey), (-ex, -ey)):
+        cyl(mb, "MAT_Metal_Okvir", V(qx, qy, zr - 0.02), V(qx, qy, zr + 0.5), 0.05, ctx.small)
+        lathe(ms_, "SIGNAL_CRVENI", [(0, zr + 0.62), (0.07, zr + 0.58), (0.09, zr + 0.52), (0.08, zr + 0.48),
+                                     (0, zr + 0.48)], ctx.small * 2, Matrix.Translation(V(qx, qy, 0)))
+    mb.obj(tag + "_Krov_Spremnici", G, bevel=True, smooth=60)
+    ms_.obj((tag + "_SIGNALNA_SVJETLA").upper(), L, light=True)
 
     mg = MB(ctx)
     mf = MB(ctx)
