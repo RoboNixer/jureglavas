@@ -1,0 +1,15 @@
+S=[
+ (0.05,'N:s',1.12,"This cop arrested a goldfish.",'h1'),
+ (0.10,'N:w',1.0,"For lying about its memory.",'h2'),
+ (0.22,'N',1.18,"Officer Gary. He once arrested Death.",'s1'),
+ (0.08,'G',1.08,"Where were you last night?",'g1'),
+ (0.10,'K',1.05,"Sorry. Three second memory.",'k1'),
+ (0.20,'N',1.12,"Fun fact: that's a myth.",'s2'),
+ (0.08,'N',1.18,"Scientists trained goldfish to push a lever for food. They remembered it for months.",'s2b'),
+ (0.06,'G:s',1.05,"PERJURY!",'g2'),
+ (0.25,'N:w',1.0,"But from its cell, the fish texted Memo Pie.",'s3'),
+ (2.0,'G:s',1.05,"MY WIFE'S BIRTHDAY?!",'g3'),
+ (0.15,'N',1.17,"Gary set a yearly reminder, and let the fish go.",'s4'),
+ (1.2,'K',1.0,"I'll remember this, Gary.",'k2'),
+ (0.25,'G',0.92,"Remember what?",'g4'),
+]
