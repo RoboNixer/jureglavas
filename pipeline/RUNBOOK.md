@@ -12,7 +12,16 @@ mkdir -p ~/vid && cp -r ~/jg/pipeline/common ~/vid/common
 Also load the `stickman-story-video` skill if it's available. It documents engine.html helpers (man/guy/face2/phoneUI/notif/tag/stampBig/cam/etc.). Section 7 covers the goofy toon comedy mode (Officer Gary), which is the default.
 Read 2–3 examples in `pipeline/examples/*` (script.py / scenes.js / cues.py) before writing your own. They are the approved quality bar.
 
+## 0b. Learn before you create (every run)
+1. Read `daily/learnings.md` (the viral playbook). It sets the category for this run (STORY → FUN FACT → PRODUCTIVITY rotation) and the current rules.
+2. Check performance: Buffer `list_posts` with organizationId `6af20c415819f36cb2c5beef`, `createdAt.start` = 3 days ago, `includeMetrics:true`, `first:100`. The output is large and gets saved to a file; parse it with python (edges[].node: channelService, text, sentAt, metrics[] with type/value: views, reach, reactions, comments, shares, saves, averageTimeWatched). Buffer's numbers can lag by hours; if a browser tool is available you may also read view counts from instagram.com/memopai_en/reels/ and tiktok.com/@memopai_en, but don't depend on it.
+3. Update the scoreboard in `daily/learnings.md` (top 10 + worst 5 + anything new), compare winners vs losers (hook wording, category, cover, length, first 3 seconds, posting hour), and rewrite section 3 with what the data now says. Fill in results for earlier experiments in section 4.
+4. Research what's viral right now (web search: viral AI animation shorts, viral story formats, trending topics today, hook formulas) and note new patterns.
+5. Decide ONE deliberate improvement or experiment for this video (e.g. shorter length, new hook formula, different cover style, second hook at 8 s) and log it in section 4. Every video must apply the current best rules AND test one new thing.
+Commit + push `daily/learnings.md` together with your topic claim.
+
 ## 1. Pick a topic that is NOT in `daily/topics_log.md`
+- The category comes from the rotation in `daily/learnings.md`. Log entries must include it: `- <date> | <HH:00> | <CATEGORY> | <title> | <premise> | <file>`.
 - `git pull` first, then read `daily/topics_log.md`. Never repeat a topic, fact, premise or punchline. Also avoid repeating the same *format* in back-to-back slots (alternate Officer Gary comedy / history fun fact / myth-buster / science-space / animal fact / "what if they had phones").
 - Research with web search: what's trending/controversial right now, plus surprising, verifiable fun facts. Fact-check the core fact on 2+ sources. Phrase contested claims honestly ("allegedly", "according to…").
 - The hook must be absurd or shocking in the first 2 s (e.g. "This cop arrested a goldfish." / "Napoleon lost… to bunnies.").
