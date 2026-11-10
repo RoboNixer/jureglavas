@@ -6,7 +6,7 @@ function toon(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);c
  const arm=(d,a)=>{const ang=(a!=null?a:(d>0?18:-18)+(w!=null?Math.sin(w*10+(d>0?0:Math.PI))*30:0))*Math.PI/180;const sx=d*62,sy=-270;const ex=sx+Math.sin(ang)*d*70,ey=sy+Math.cos(ang)*70;const hx=ex+Math.sin(ang*1.3)*d*58,hy=ey+Math.cos(ang*1.3)*58;
   line([[sx,sy],[ex,ey],[hx,hy]],30,O);line([[sx,sy],[ex,ey],[hx,hy]],18,o.shirt||'#3c5a9a');circ(hx,hy,20,o.hand||SKIN,6);return [hx,hy]};
  const hl=arm(-1,o.armL);
- path(()=>{X.moveTo(-70,-300);X.quadraticCurveTo(-100,-210,-80,-140);X.quadraticCurveTo(0,-110,80,-140);X.quadraticCurveTo(100,-210,70,-300);X.quadraticCurveTo(0,-325,-70,-300)},o.shirt||'#3c5a9a',8);
+ path(()=>{X.moveTo(-70,-300);X.quadraticCurveTo(-100,-210,-80,-140);X.quadraticCurveTo(0,-110,80,-140);X.quadraticCurveTo(100,-210,70,-300);X.quadraticCurveTo(0,-325,-70,-300)},o.shirt||'#3c5a9a',0);vol(()=>{X.moveTo(-70,-300);X.quadraticCurveTo(-100,-210,-80,-140);X.quadraticCurveTo(0,-110,80,-140);X.quadraticCurveTo(100,-210,70,-300);X.quadraticCurveTo(0,-325,-70,-300)},0,-215,100,105);path(()=>{X.moveTo(-70,-300);X.quadraticCurveTo(-100,-210,-80,-140);X.quadraticCurveTo(0,-110,80,-140);X.quadraticCurveTo(100,-210,70,-300);X.quadraticCurveTo(0,-325,-70,-300)},null,8);
  if(o.belly)ell(0,-185,62,48,o.shirt2||'#4a6ab0',6);
  if(o.badge){path(()=>{for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,r=k%2?11:24;X.lineTo(-34+Math.cos(a)*r,-250+Math.sin(a)*r)}X.closePath()},'#f2c94c',5)}
  if(o.tie)path(()=>{X.moveTo(-10,-300);X.lineTo(10,-300);X.lineTo(16,-220);X.lineTo(0,-200);X.lineTo(-16,-220);X.closePath()},'#c0392b',5);

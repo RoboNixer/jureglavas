@@ -33,6 +33,12 @@ Commit + push `daily/learnings.md` together with your topic claim.
 - Twist ending or new absurd escalation. No "follow for more", no CTA.
 - **Memopai (every video, never an ad):** Memopai is a WhatsApp AI contact. A character messages it or gets a reminder from it. Show it reminding *yourself* or *someone else* (e.g. a wife reminds her husband; Gary sets a reminder for the suspect). Use the mascot (`pipeline/assets/mascot.png`) as the WhatsApp avatar. Write "Memo Pie" in TTS text; captions show "Memopai". No logo end card.
 
+## 2b. Look v2 (visual quality bar) and the craft ladder
+The engine now applies this automatically to every shot: volume shading on round shapes and character bodies, contact shadows under toon()/man() characters, bloom, a warm key light with cool shadows, floating dust, a slow push-in camera with a punch + whip-blur on every cut, and karaoke captions (the spoken word pops in yellow). Set `NOFX=1` inside a shot to skip the light pass (e.g. full-screen phone UI), `VOL=0` to skip shading, `{noshadow:1}` on a floating/cropped character.
+Use the helpers in `pipeline/common/look2.js` in EVERY video, at least 4 of them: `rays()` god rays, `glow()` light sources and the Memopai notification, `bokeh()` background lights, `hills()` parallax layers (2–3 per outdoor shot), `haze()` depth, `sparkles()`, `confetti()`, `impact()` frames on punchlines, `squash()` for landings and pops, `gshadow()` for props.
+Composition rules: every shot has 3 depth layers (background, midground, characters) and one clear light source; no flat single-colour backgrounds; characters fill 35–60% of frame height; at least one close-up and one wide shot; keep faces and key action out of the caption zone (y 1400–1650).
+**Craft ladder (every run):** add ONE reusable visual upgrade to `look2.js` or `toonlib.js` and use it in this video (a new character part, prop, background kit, transition, lighting trick, animation principle such as anticipation or follow-through). Check it in the preview sheet, and only after the full render succeeds commit it with the video so the next run inherits it. Never break existing function signatures. List what you added in `daily/learnings.md` section 4.
+
 ## 3. Build
 ```bash
 P=~/vid/<slug>; mkdir -p $P && cp ~/jg/pipeline/assets/*.png $P/
