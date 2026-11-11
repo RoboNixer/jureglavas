@@ -198,3 +198,30 @@ function clockman(x,y,s,o={}){const t=o.t||0,B=o.col||'#e94b3c',B2='#b8352a';X.s
  X.save();X.translate(0,-330);face2(0,0,.62,Object.assign({},o.face||{}));X.restore();
  if(o.cuffs)cuffs(0,-150,.32,0,1);
  X.restore()}
+
+// ---- hbird(): hummingbird character (2026-11-11 20:00 craft ladder). o:{t,face,flip,watch,tap,phone,col,belly,throat}
+// blurred fast wings (3 ghost frames), long beak, hover bob; tap 0..1 lifts the near wing to tap a tiny wristwatch.
+function hbird(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y+Math.sin(t*7)*8);X.scale(s*(o.flip?-1:1),s);
+ const col=o.col||'#e8833a',bel=o.belly||'#fff3e0',thr=o.throat||'#e53935';
+ // far wing blur
+ for(let k=0;k<3;k++){const a=Math.sin(t*60+k*2.1);X.globalAlpha=.22;X.save();X.translate(-10,-40);X.rotate(-1.1+a*.7);ell(0,-90,34,95,'#cfe8ff',0);X.restore()}X.globalAlpha=1;
+ // tail
+ path(()=>{X.moveTo(-70,40);X.lineTo(-170,110);X.lineTo(-150,60);X.lineTo(-185,55);X.lineTo(-80,10);X.closePath()},col,7);
+ // body
+ ell(0,10,105,72,col,8,-.35);ell(18,30,62,40,bel,0,-.35);
+ // head + throat
+ circ(70,-55,62,col,8);path(()=>{X.moveTo(40,-15);X.quadraticCurveTo(80,20,118,-25);X.quadraticCurveTo(90,-5,40,-15)},thr,0);
+ // beak
+ path(()=>{X.moveTo(122,-62);X.lineTo(250,-74);X.lineTo(124,-46);X.closePath()},'#2b2b2b',5);
+ face2(78,-68,.42,o.face||{});
+ // near wing (blur) or tapping wing
+ if(o.tap!=null){const k=o.tap;X.save();X.translate(-5,-20);X.rotate(lerp(.25,.75,k));ell(45,0,90,28,'#bfe0ff',6);X.restore();}
+ else for(let k=0;k<3;k++){const a=Math.sin(t*60+k*2.1+1);X.globalAlpha=k?0.3:0.55;X.save();X.translate(-5,-30);X.rotate(-1.3+a*.8);ell(0,-95,36,100,'#e3f2ff',k?0:5);X.restore()}
+ X.globalAlpha=1;
+ if(o.watch){X.save();X.translate(o.tap!=null?60:30,o.tap!=null?40:60);rr(-30,-8,60,16,6,'#5a3a2a',4);circ(0,0,24,'#fff',6);line([[0,0],[0,-14]],4);line([[0,0],[10,4]],4);X.restore()}
+ if(o.phone){X.save();X.translate(40,70);X.rotate(-.15);rr(-26,-46,52,92,10,'#1b1b1f',5);rr(-19,-38,38,76,6,'#25d366',0);X.restore()}
+ X.restore()}
+// ---- feeder(): hanging red nectar feeder prop. lvl 0..1 nectar level, swing angle in rad
+function feeder(x,y,s,lvl=1,swing=0){X.save();X.translate(x,y);X.scale(s,s);X.rotate(swing);line([[0,-260],[0,-150]],5,'#444');
+ rr(-60,-160,120,200,40,'rgba(230,245,255,.55)',7);if(lvl>0){X.save();X.beginPath();X.roundRect(-56,-156,112,192,36);X.clip();X.fillStyle='#ff3b4f';X.fillRect(-60,36-192*lvl,120,200);X.restore()}
+ rr(-60,-160,120,200,40,null,7);ell(0,60,130,36,'#e53935',8);for(let k=-1;k<=1;k++){circ(k*80,52,18,'#ffe14d',5)}X.restore()}
