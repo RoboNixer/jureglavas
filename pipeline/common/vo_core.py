@@ -5,7 +5,8 @@ TTS=os.path.expanduser('~/tts')
 K=Kokoro(TTS+'/kokoro-fp32.onnx',TTS+'/voices.npz')
 SR=24000
 exec(open('script.py').read())   # defines S, and optionally VO/PITCH overrides, CAPFIX
-VO_D={'N':'af_heart','G':'am_puck','D':'am_onyx','K':'af_sky','F':'af_bella','M':'am_michael','B':'bm_george'}
+VO_D={'N':'am_michael',   # narrator is a MAN (owner request 2026-11-11); VOX={'N':'af_heart'} in script.py brings the woman back
+      'G':'am_puck','D':'am_onyx','K':'af_sky','F':'af_bella','M':'am_michael','B':'bm_george'}
 PITCH_D={'G':1.22,'D':0.84,'K':1.3,'F':1.1}
 VO=dict(VO_D,**globals().get('VOX',{}));PITCH=dict(PITCH_D,**globals().get('PITCHX',{}))
 LAB={'N':'her','G':'gary','D':'death','K':'kid','F':'fairy','M':'him','B':'him'}
