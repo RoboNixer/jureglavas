@@ -37,6 +37,8 @@ Snapshot 2026-11-11 09:25 Zagreb: still null IG metrics for the 2026-11-10 eveni
 
 Snapshot 2026-11-11 11:28 Zagreb: no change — IG metrics still null for every post since 2026-11-10 19:47 (Karma batch, Moon, Crow); TikTok 0 on all of them; FB 0. Nothing new to learn from numbers this run; the 3 morning winners (gravity 2,214 / shadow 2,180 / wolf 1,863, avg watch ~14–15 s) still define the playbook.
 
+Snapshot 2026-11-11 12:30 Zagreb: no change again — IG/FB metrics null for every post since 2026-11-10 19:47 (incl. Moon 09:00, Crow 10:00, Door 12:00), TikTok 0 views on all. Buffer IG lag now >16 h; decisions still rest on the Nov 9–10 numbers.
+
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
 ## 3. What the data says so far (hypotheses, keep testing)
@@ -56,6 +58,8 @@ TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Insta
 - 2026-11-11 10:00 FUN FACT "This crow hated one cop for 17 years": EXPERIMENT = goldfish formula (real fact wrapped in a Gary story, best fact format so far) + an on-screen ESCALATING COUNTER as the spine (1 crow → 40 crows → 3 generations) to give a mini-payoff every ~5 s against the middle sag; 3–4 hashtags only + question-style TikTok title. Craft ladder: reusable `crow()` bird character in toonlib.js (flap with follow-through, scream/talk/squint/angry) + scene-level `cmask()`/`flock()`/`statue()`/`bakery()` in src_crow/scenes.js worth promoting later. Final length 29.5 s (fact needed the room; compare retention vs the 23.7 s Moon cut). Result: TBD.
 
 - 2026-11-11 12:00 PRODUCTIVITY "This cop lost a fight to a door": EXPERIMENT = first PRODUCTIVITY video: a real psychology study (Notre Dame 'doorway effect', Radvansky 2011) wrapped in a Gary story with a SECOND-PERSON relatable hook ('…and science says you would too') + a loop-ish ending (the escaping raccoon walks through the door, forgets, and is back in custody: 'Doors. Undefeated.'). Planned a ~22 s cut but the fact explanation needed room: final 29.0 s (so length is NOT the variable here; the 2nd-person hook + productivity category is). Second hook at ~10 s (whispered 'It's real. Scientists call it the doorway effect.'). Craft ladder: reusable `door(x,y,s,{open,inside,sign,col,frame})` swinging-door prop in toonlib.js; scene-level `raccoon()` and `kitchen()` in src_door/scenes.js worth promoting. Result: TBD.
+
+- 2026-11-11 13:00 STORY "This cop arrested a snowman": EXPERIMENT = SEASONAL/TIMELY target (first snow of November) on the winning 'This cop arrested <one iconic thing>' formula, plus a visible TICKING TIMER as the second hook (station thermometer rising while the suspect melts) to hold the middle; target ~24 s. Craft ladder: reusable `snowman()` character in toonlib.js (melt 0–1 squash, carrot nose, coal eyes, stick arms, optional hat/scarf). Result: TBD.
 
 ## 5. Standing rules for studying viral content
 - 2026-11-11 12:00 research note: 2026 hook-engineering write-ups (dev.to 'Hook Engineering', opus.pro hook formulas) stress 'relatable pain in 2nd person' + 'pattern interrupt in frame 1' and payoffs every 3–5 s; the 'you've done this too' angle drives shares/sends, which is what PRODUCTIVITY videos should aim for.
