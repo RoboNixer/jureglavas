@@ -22,4 +22,4 @@ Format: date | slot | title | core fact/premise | file
 
 ## Daily scheduled videos
 - 2026-11-11 | 09:00 | STORY | This cop arrested the Moon | Gary arrests the Moon for 'following him home'; Moon's one phone call = texts Memopai to remind Gary of high tide (he parked on the beach); car floats | daily/2026-11-11/0900_ArrestedTheMoon.mp4 (23.7 s) | Buffer TT/IG/FB scheduled 09:00
-- 2026-11-11 | 10:00 | FUN FACT | This crow hated one cop for 17 years | Real UW Seattle mask study: crows remember a 'dangerous' face, scold it for 17 years and teach flockmates/kids; Gary tickets a crow, crow uses Memopai to remind the whole family 'Gary, 7 AM'; Gary disguises himself in the creepy study mask | IN PROGRESS
+- 2026-11-11 | 10:00 | FUN FACT | This crow hated one cop for 17 years | Real UW Seattle mask study: crows remember a 'dangerous' face, scold it for 17 years and teach flockmates/kids; Gary tickets a crow, crow uses Memopai to remind the whole family 'Gary, 7 AM'; Gary disguises himself in the creepy study mask | daily/2026-11-11/1000_CrowGrudge17Years.mp4 (29.5 s) | Buffer TT/IG/FB scheduled 10:00
