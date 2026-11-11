@@ -138,3 +138,23 @@ function snowman(x,y,s,o={}){const t=o.t||0,m=C(o.melt||0);X.save();X.translate(
   X.restore();
   if(o.sweat||m>.05){for(let k=0;k<5;k++){const ph=(t*1.6+k*.23)%1,dx=(k-2)*55*sx;X.globalAlpha=1-ph;ell(dx,(-520+ph*420)*sy,9,14,'#7fd1ff',3);X.globalAlpha=1}}
   X.restore()}
+// ---- wombat(x,y,s,o): chunky wombat, side-ish 3/4 view. o={t, flip, walk (leg cycle), face:{talk,smug,squint,shock,angry,look}, shades (sunglasses), hat:'boss'}. y = ground.
+function wombat(x,y,s,o={}){const t=o.t||0,F='#8a6a4f',F2='#6e523b',B='#a88768';X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);
+ X.globalAlpha=.25;ell(0,4,230,22,'#000',0);X.globalAlpha=1;
+ const lg=o.walk?Math.sin(t*12)*14:0;[[-130,lg],[-60,-lg],[70,lg],[140,-lg]].forEach(([lx,d])=>{rr(lx-28,-70+Math.abs(d)*.3,56,74,22,F2,7);ell(lx+d*.4,0,34,14,'#4a3828',5)});
+ const br=1+Math.sin(t*3)*.015;X.save();X.scale(1,br);ell(0,-150,230,135,F,8);X.save();X.beginPath();X.ellipse(0,-150,226,131,0,0,7);X.clip();X.globalAlpha=.5;ell(60,-90,230,110,F2,0);X.globalAlpha=.35;ell(-80,-230,140,50,'#c9a888',0);X.globalAlpha=1;X.restore();X.restore();
+ X.save();X.translate(150,-200);X.rotate(Math.sin(t*2)*.04);
+ [-1,1].forEach(d=>{ell(d*70,-120,30,38,F,7);ell(d*70,-116,15,22,'#d9a7a0',0)});
+ ell(0,-20,135,120,F,8);ell(10,30,95,70,B,0);
+ X.save();X.translate(0,-55);face2(0,0,.5,Object.assign({},o.face||{}));X.restore();
+ ell(18,10,52,34,'#3a2a20',7);circ(2,2,9,'#000',0);circ(34,2,9,'#000',0);circ(0,-4,8,'#fff',0);
+ if(o.shades){rr(-95,-80,80,40,14,'#111',6);rr(5,-80,80,40,14,'#111',6);line([[-15,-62],[5,-62]],8,'#111');X.globalAlpha=.5;line([[-80,-72],[-55,-72]],6,'#fff');X.globalAlpha=1}
+ if(o.hat=='boss'){rr(-90,-200,180,70,10,'#222',7);rr(-130,-140,260,22,10,'#222',7);rr(-90,-160,180,18,0,'#c62828',0)}
+ X.restore();X.restore()}
+// ---- pcube(x,y,s,o): small brown cube (wombat poop "die"), 3/4 view. o={rot, dots (draw dice dots), glow}
+function pcube(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);const a=40,b=22;
+ if(o.glow){X.globalAlpha=.35;circ(0,-30,90,'#ffd23f',0);X.globalAlpha=1}
+ path(()=>{X.moveTo(-a,-b);X.lineTo(0,-2*b);X.lineTo(a,-b);X.lineTo(0,0);X.closePath()},'#9b7452',5);
+ path(()=>{X.moveTo(-a,-b);X.lineTo(0,0);X.lineTo(0,2*a-b);X.lineTo(-a,2*a-2*b);X.closePath()},'#6f4f33',5);
+ path(()=>{X.moveTo(a,-b);X.lineTo(0,0);X.lineTo(0,2*a-b);X.lineTo(a,2*a-2*b);X.closePath()},'#5a3e27',5);
+ if(o.dots){circ(0,-b,6,'#f4e3c3',0);circ(-20,20,5,'#f4e3c3',0);circ(20,24,5,'#f4e3c3',0)}X.restore()}
