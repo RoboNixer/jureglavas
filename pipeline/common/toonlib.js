@@ -177,3 +177,24 @@ function brain(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o
  if(o.cap){path(()=>{X.moveTo(-120,-300);X.quadraticCurveTo(-20,-440,140,-330);X.quadraticCurveTo(200,-260,230,-200);X.lineTo(110,-310);X.quadraticCurveTo(0,-330,-120,-300)},o.cap,8);circ(235,-195,26,'#fff',7)}
  if(o.zz){X.font="900 70px Inter";X.fillStyle='#fff';X.strokeStyle=O;X.lineWidth=8;for(let k=0;k<3;k++){const a=(t*.6+k/3)%1;X.globalAlpha=Math.sin(a*Math.PI);const zx=150+a*120+k*10,zy=-330-a*200;X.strokeText('Z',zx,zy);X.fillText('Z',zx,zy)}X.globalAlpha=1}
  X.restore()}
+// ---- clockman(x,y,s,o): walking alarm-clock character ("Time"). o={t, flip, face:{talk,smug,squint,shock,angry,look}, frozen (hands stop at 10:10), spin (hands race), ring (bells shake + motion lines), cuffs (handcuffed wrists), walk (leg cycle), col (body colour)}. y = ground under feet.
+function clockman(x,y,s,o={}){const t=o.t||0,B=o.col||'#e94b3c',B2='#b8352a';X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);
+ const rg=o.ring?Math.sin(t*60)*.08:0;X.rotate(rg*.3);
+ const lg=o.walk?Math.sin(t*12)*18:0;[[-70,lg],[70,-lg]].forEach(([lx,d])=>{line([[lx,-120],[lx+d,-30]],22,O);line([[lx,-120],[lx+d,-30]],12,'#333');ell(lx+d+12,-18,38,18,'#2a2a2a',7)});
+ // bells + hammer
+ [-1,1].forEach(d=>{X.save();X.translate(d*120,-470);X.rotate(d*.5+(o.ring?Math.sin(t*55+d)*.25:0));path(()=>{X.arc(0,0,62,Math.PI,0);X.closePath()},'#ffd23f',7);rr(-10,-80,20,22,6,'#ffd23f',5);X.restore()});
+ line([[0,-500],[0,-560]],12,O);circ(0,-565,16,'#ffd23f',6);
+ if(o.ring){X.save();X.lineWidth=8;X.strokeStyle='#fff';[1,2].forEach(k=>{X.globalAlpha=.6-k*.15;X.beginPath();X.arc(0,-470,180+k*40+(t*200%30),-2.6,-0.5);X.stroke()});X.restore()}
+ // arms
+ const ar=(d)=>{const up=o.cuffs?0:Math.sin(t*4+d)*10;const hx=o.cuffs?d*28:d*190,hy=o.cuffs?-150:-230+up;line([[d*150,-300],[d*175,-260],[hx,hy]],22,O);line([[d*150,-300],[d*175,-260],[hx,hy]],12,'#333');circ(hx,hy,22,'#fff',6);return[hx,hy]};
+ const L=ar(-1),R=ar(1);
+ // body
+ circ(0,-310,190,B,9);X.save();X.beginPath();X.arc(0,-310,186,0,7);X.clip();X.globalAlpha=.4;circ(70,-240,190,B2,0);X.globalAlpha=1;X.restore();
+ circ(0,-310,150,'#fffaf0',7);
+ for(let k=0;k<12;k++){const a=k*Math.PI/6;line([[Math.sin(a)*128,-310-Math.cos(a)*128],[Math.sin(a)*(k%3?140:116),-310-Math.cos(a)*(k%3?140:116)]],k%3?5:9,'#333')}
+ // hands (behind the face features)
+ const sp=o.spin?t*14:t*.05,hA=o.frozen?-Math.PI/3*1.0:sp/12,mA=o.frozen?Math.PI/3:sp;
+ X.save();X.translate(0,-310);X.globalAlpha=.35;line([[0,0],[Math.sin(hA)*70,-Math.cos(hA)*70]],12,'#333');line([[0,0],[Math.sin(mA)*110,-Math.cos(mA)*110]],8,'#333');X.globalAlpha=1;circ(0,0,10,'#333',0);X.restore();
+ X.save();X.translate(0,-330);face2(0,0,.62,Object.assign({},o.face||{}));X.restore();
+ if(o.cuffs)cuffs(0,-150,.32,0,1);
+ X.restore()}

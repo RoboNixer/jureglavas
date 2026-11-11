@@ -26,3 +26,9 @@ function waves(y,t,o={}){const c1=o.col||'#1f6fb5',c2=o.col2||'#3d8fd6',amp=o.am
  [[c2,0,1,1.3],[c1,60,1.4,-1]].forEach(([c,dy,f,sp],L)=>{X.beginPath();X.moveTo(-3000,4000);for(let x=-3000;x<=4000;x+=40){X.lineTo(x,y+dy+Math.sin(x*.006*f+t*2.2*sp)*amp+Math.sin(x*.017+t*3)*amp*.35)}X.lineTo(4000,4000);X.closePath();X.fillStyle=c;X.fill();
   if(o.foam!==0){X.lineWidth=7;X.strokeStyle='rgba(255,255,255,.75)';X.beginPath();for(let x=-3000;x<=4000;x+=40){const yy=y+dy+Math.sin(x*.006*f+t*2.2*sp)*amp+Math.sin(x*.017+t*3)*amp*.35;x==-3000?X.moveTo(x,yy):X.lineTo(x,yy)}X.stroke()}});
  X.globalAlpha=.25;for(let k=0;k<14;k++){const xx=((k*263+t*40)%1400)-160,yy=y+90+(k%5)*70;line([[xx,yy],[xx+60,yy]],5,'#fff')}X.globalAlpha=1}
+// freeze(p,t,label): "time stopped" screen-state overlay: desaturates whatever is already drawn, cool blue tint, vignette, scanline flicker and a PAUSED chip. p 0..1 fades it in. Call last in a shot (after X.setTransform(1,0,0,1,0,0)).
+function freeze(p,t=0,label='⏸ PAUSED'){if(p<=0)return;X.save();X.setTransform(1,0,0,1,0,0);X.globalAlpha=C(p);X.globalCompositeOperation='saturation';X.fillStyle='#808080';X.fillRect(0,0,1080,1920);
+ X.globalCompositeOperation='source-over';X.globalAlpha=.18*C(p);X.fillStyle='#4aa8ff';X.fillRect(0,0,1080,1920);
+ const g=X.createRadialGradient(540,960,500,540,960,1200);g.addColorStop(0,'rgba(0,10,30,0)');g.addColorStop(1,'rgba(0,10,30,.55)');X.globalAlpha=C(p);X.fillStyle=g;X.fillRect(0,0,1080,1920);
+ X.globalAlpha=.08*C(p);X.fillStyle='#fff';for(let yy=(t*240)%12;yy<1920;yy+=12)X.fillRect(0,yy,1080,2);
+ X.globalAlpha=C(p*2);if(label){X.font="900 54px Inter";const w=X.measureText(label).width+60;rr(1020-w,150,w,90,45,'rgba(10,20,40,.8)',0);txt(label,1020-w/2,196,50,'#fff',0)}X.restore()}
