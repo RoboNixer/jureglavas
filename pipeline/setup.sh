@@ -16,4 +16,5 @@ fi
 pip install kokoro-onnx==0.6.1 soundfile scipy pillow --break-system-packages -q
 fc-list | grep -q "Inter" || echo "WARNING: Inter font missing (fonts-inter). Captions/cover need it: apt-get install -y fonts-inter fonts-noto-color-emoji"
 node -e "require('playwright')" 2>/dev/null || echo "WARNING: playwright missing: npm i -g playwright && npx playwright install chromium"
+pip install pyworld --break-system-packages -q 2>/dev/null || echo 'WARN: pyworld not installed (voice will be flatter)'
 echo SETUP_OK

@@ -23,6 +23,20 @@ def style(name):
 def level(a,target):
     e=np.abs(a);act=a[e>0.05*e.max()];r=np.sqrt(np.mean(act**2))+1e-9;a=a*(target/r)
     return np.tanh(a/0.9)*0.9 if np.max(np.abs(a))>0.9 else a
+# --- expressive(): makes a line less monotone by stretching its pitch movement (k), moving its register (st semitones)
+# and exaggerating loud/quiet syllables (ek). Uses the WORLD vocoder (pip install pyworld). Needs pyworld; without it the line is left as it is. Per-line register comes from REG={'tag':+2,...} in script.py (semitones).
+EXPR=globals().get('EXPR',1.55);REG=globals().get('REG',{})   # on by default (owner picked this over the flat voice); EXPR=0 in script.py turns it off
+AUTOREG=[0.0,1.0,-1.0,0.5,-2.0,1.5]   # narrator register per line (semitones) when REG has no entry, so no two lines sit on the same note
+def expressive(a,k=1.5,st=0.0,ek=1.25):
+    try: import pyworld as pw
+    except Exception: print('pyworld missing: pip install pyworld --break-system-packages');return a
+    x=a.astype(np.float64);f0,t=pw.harvest(x,SR,f0_floor=70,f0_ceil=600,frame_period=5.0);sp=pw.cheaptrick(x,f0,t,SR);ap=pw.d4c(x,f0,t,SR)
+    v=f0>0
+    if v.sum()<5: return a
+    lm=np.median(np.log(f0[v]));f1=f0.copy();f1[v]=np.exp(lm+k*(np.log(f0[v])-lm)+st*np.log(2)/12);f1[v]=np.clip(f1[v],75,560)
+    y=pw.synthesize(f1,sp,ap,SR,5.0)[:len(x)]
+    n=int(.03*SR);e=np.sqrt(np.convolve(y**2,np.ones(n)/n,'same'))+1e-6;ref=np.median(e[e>0.1*e.max()]);g=np.clip((e/ref)**(ek-1),0.5,1.8)
+    return (y*g).astype(a.dtype)
 def trim(a,th=0.008):
     i=np.where(np.abs(a)>th)[0];return a[max(0,i[0]-int(.012*SR)):i[-1]+int(.06*SR)]
 def peq(x,f0,g_db,q):
@@ -53,6 +67,7 @@ for gap,spec,sp_,text,tag in S:
         g=.8
     else:
         a,_=K.create(text,voice=style(VO[v]),speed=sp_,lang='en-gb' if VO[v].startswith('b') else 'en-us');a=trim(a);g=.8
+    if EXPR and v not in PITCH: a=expressive(a,EXPR,REG.get(tag,2.0 if mod=='s' else (-1.5 if mod=='w' else AUTOREG[len(tl)%len(AUTOREG)])))
     if mod=='s': a=shout(a)
     a=level(a,0.16*(1.4 if mod=='s' else 1.0))   # ':s' = punchy line, about 3 dB louder
     lab=LAB[v]+(('_'+mod) if mod else '')
