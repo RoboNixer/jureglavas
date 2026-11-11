@@ -39,6 +39,8 @@ Snapshot 2026-11-11 11:28 Zagreb: no change — IG metrics still null for every 
 
 Snapshot 2026-11-11 12:30 Zagreb: no change again — IG/FB metrics null for every post since 2026-11-10 19:47 (incl. Moon 09:00, Crow 10:00, Door 12:00), TikTok 0 views on all. Buffer IG lag now >16 h; decisions still rest on the Nov 9–10 numbers.
 
+Snapshot 2026-11-11 13:25 Zagreb: still no change — IG metrics null for every post since 2026-11-10 19:47 (now incl. Snowman 13:00); TikTok 0 views AND 0 reach on every post since 2026-11-10 04:58 (even the shadow/gravity winners) → TikTok looks fully suppressed for the account, not a hook problem. Plain Memopai.com reels on IG still hold the best avg watch (26–32 s).
+
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
 ## 3. What the data says so far (hypotheses, keep testing)
@@ -60,6 +62,8 @@ TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Insta
 - 2026-11-11 12:00 PRODUCTIVITY "This cop lost a fight to a door": EXPERIMENT = first PRODUCTIVITY video: a real psychology study (Notre Dame 'doorway effect', Radvansky 2011) wrapped in a Gary story with a SECOND-PERSON relatable hook ('…and science says you would too') + a loop-ish ending (the escaping raccoon walks through the door, forgets, and is back in custody: 'Doors. Undefeated.'). Planned a ~22 s cut but the fact explanation needed room: final 29.0 s (so length is NOT the variable here; the 2nd-person hook + productivity category is). Second hook at ~10 s (whispered 'It's real. Scientists call it the doorway effect.'). Craft ladder: reusable `door(x,y,s,{open,inside,sign,col,frame})` swinging-door prop in toonlib.js; scene-level `raccoon()` and `kitchen()` in src_door/scenes.js worth promoting. Result: TBD.
 
 - 2026-11-11 13:00 STORY "This cop arrested a snowman": EXPERIMENT = SEASONAL/TIMELY target (first snow of November) on the winning 'This cop arrested <one iconic thing>' formula, plus a visible TICKING TIMER as the second hook (station thermometer rising while the suspect melts) to hold the middle; final 23.5 s (shortest story yet besides Moon 23.7). Cover: 'THIS COP ARRESTED / A SNOWMAN' + 'for identity theft' pill over a jail frame (note: finish.sh cover font has NO emoji glyphs — keep cover text emoji-free). Craft ladder: reusable `snowman()` character in toonlib.js (melt 0–1 squash, carrot nose, coal eyes, stick arms, optional hat/scarf). Result: TBD.
+
+- 2026-11-11 14:00 FUN FACT "This cop arrested a wombat for running a dice casino": EXPERIMENT = QUIZ HOOK in frame 1 (on-screen question 'What shape is wombat poop?' with 3 options, answer revealed ~8 s as the second hook) to test comment-bait/interactive openers (2026 faceless-shorts guides list 'guess/quiz' as a top retention format); fact wrapped in a Gary story (goldfish formula), target ~25 s. Result: TBD.
 
 ## 5. Standing rules for studying viral content
 - 2026-11-11 12:00 research note: 2026 hook-engineering write-ups (dev.to 'Hook Engineering', opus.pro hook formulas) stress 'relatable pain in 2nd person' + 'pattern interrupt in frame 1' and payoffs every 3–5 s; the 'you've done this too' angle drives shares/sends, which is what PRODUCTIVITY videos should aim for.
