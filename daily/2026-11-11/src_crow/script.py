@@ -1,0 +1,15 @@
+S=[
+ (0.05,'N:s',1.12,"This crow has hated one cop for seventeen years.",'h1'),
+ (0.08,'N:w',1.08,"And it told the whole family.",'h2'),
+ (0.18,'N',1.2,"Officer Gary gave it a parking ticket.",'s1'),
+ (0.06,'G:s',1.08,"No parking on the statue!",'g1'),
+ (0.12,'D',0.95,"I'll remember your face, Gary.",'k1'),
+ (0.20,'N:w',1.05,"Fun fact: it really will.",'s2'),
+ (0.06,'N',1.2,"Scientists in Seattle wore a creepy mask and trapped a few crows.",'s2b'),
+ (0.06,'N',1.18,"Seventeen years later, crows still screamed at it. Even ones never caught.",'s2c'),
+ (0.20,'N:w',1.05,"So the crow texted Memo Pie.",'s3'),
+ (1.8,'N:s',1.1,"Seven A M.",'s4'),
+ (0.9,'G:s',1.08,"I NEED A DISGUISE!",'g2'),
+ (0.20,'N',1.15,"So Gary bought a mask.",'s5'),
+ (0.35,'D',0.92,"Oh, we know that one.",'k2'),
+]

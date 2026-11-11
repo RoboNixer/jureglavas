@@ -88,3 +88,19 @@ function cruiser(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*
  ell(338,-30,16,22,'#fff6b0',5);rr(-352,-40,22,40,6,'#e53935',5);
  [[-200],[210]].forEach(([wx])=>{circ(wx,95,66,'#222',8);circ(wx,95,30,'#aaa',5);const a=t*(o.speed||0);for(let k=0;k<3;k++){const b=a+k*2.09;line([[wx,95],[wx+Math.cos(b)*26,95+Math.sin(b)*26]],6,'#555')}});
  X.restore()}
+// ================= CROW (craft ladder 2026-11-11 10:00) =================
+// crow(x,y,s,{t,flap,angry,talk,look,squint,shock,flip,scream}) — y = feet. Reusable bird character with wing flap follow-through.
+function crow(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);
+ const fl=o.flap?Math.sin(t*22+(o.ph||0)):0;const hop=o.flap?Math.abs(fl)*-18:0;X.translate(0,hop);
+ if(!o.flap){line([[-20,-60],[-26,0]],9,'#e0a030');line([[20,-60],[24,0]],9,'#e0a030');line([[-40,2],[-10,2]],8,'#e0a030');line([[6,2],[40,2]],8,'#e0a030')}
+ path(()=>{X.moveTo(-60,-120);X.lineTo(-170,-90+fl*10);X.lineTo(-160,-60);X.lineTo(-60,-80);X.closePath()},'#1f2230',7);
+ ell(0,-120,90,72,'#2a2e40',8);ell(10,-100,52,36,'#3a3f58',0);
+ X.save();X.translate(-20,-140);X.rotate(-.6+fl*.9);ell(-60,0,80,30,'#22263a',7);X.restore();
+ const hx=60,hy=-205;circ(hx,hy,62,'#2a2e40',8);
+ path(()=>{X.moveTo(hx+40,hy-14);X.lineTo(hx+(o.scream?120:130),hy+(o.scream?-30:4));X.lineTo(hx+44,hy+14);X.closePath()},'#f2b134',7);
+ if(o.scream||o.talk!=null){const m=o.scream?1:Math.abs(Math.sin(o.talk*16));path(()=>{X.moveTo(hx+44,hy+16);X.lineTo(hx+118,hy+10+m*34);X.lineTo(hx+44,hy+28+m*10);X.closePath()},'#e09a1e',7)}
+ const lk=o.look||0;const r=22;circ(hx+14,hy-14,r,'#fff',6);
+ if(o.squint){X.fillStyle='#2a2e40';X.fillRect(hx+14-r,hy-14-r,2*r,r*.9);line([[hx+14-r,hy-14-r*.1],[hx+14+r,hy-14-r*.1]],6)}
+ circ(hx+14+lk*8,hy-12,o.shock?6:10,'#111',0);circ(hx+10+lk*8,hy-16,3.5,'#fff',0);
+ if(o.angry||o.scream)line([[hx-16,hy-48],[hx+40,hy-30]],10,'#111');
+ X.restore()}
