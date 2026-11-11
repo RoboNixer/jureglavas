@@ -43,9 +43,33 @@ Snapshot 2026-11-11 13:25 Zagreb: still no change — IG metrics null for every 
 
 Snapshot 2026-11-11 15:25 Zagreb: Buffer IG/FB metrics still null for EVERY Buffer-scheduled cartoon since 2026-11-10 19:47 (Karma batch → Wombat 14:00), TikTok 0. Meanwhile the plain product reel 'Never forget - memopai.com' (posted natively 2026-11-11 08:48 UTC) already shows 1,565 IG views / 1,258 reach / 14.1 s avg watch / 17 likes, i.e. metrics for natively posted reels arrive within hours while Buffer-API posts stay null. Either Buffer can't read insights for its own recent reels, or those reels are getting no distribution — check IG app directly when a browser is available.
 
+Snapshot 2026-11-11 17:22 Zagreb — IG METRICS FINALLY ARRIVED for the Buffer posts (lag was ~12–20 h, not suppression):
+| Video | Category | IG views | avg watch |
+|---|---|---|---|
+| This crow hated one cop for 17 years (10:00) | FACT+Gary | 2,463 | 17.9 s ← best cartoon ever, in 8 h |
+| He arrested gravity/sun/wind | story | 2,216 | 14.0 s |
+| Karma | story/Gary | 2,209 | 25.5 s ← best story retention |
+| Shadow/reflection | story | 2,183 | 14.6 s |
+| Autocorrect ruined Christmas | story | 2,169 | 19.7 s |
+| Goldfish | fact+Gary | 2,148 | 16.7 s |
+| Big Bad Wolf/Pinocchio | story | 1,921 | 15.0 s |
+| Napoleon v2 | fact | 1,855 | 14.2 s |
+| Pluto | fact | 1,679 | 16.6 s |
+| Snowman (13:00) | story/Gary | 1,612 | 12.5 s (only ~4 h old) |
+| First strike | fact | 1,546 | 17.8 s |
+| Moon (09:00) | story/Gary | 748 | 12.9 s |
+| Door (12:00) | PRODUCTIVITY | 686 | 11.5 s |
+| Wombat QUIZ cover (14:00) | fact | 300 | 9.2 s (~4 h) |
+| Brain 3 AM QUESTION cover (16:00) | PRODUCTIVITY | 198 | 11.8 s (~2 h) |
+Worst 5 overall: Monday 228, donut 226, banana/tornado/bee 212, Brain 198 (young), Santa/Easter 287.
+
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
 ## 3. What the data says so far (hypotheses, keep testing)
+- 17:22 UPDATE: Buffer reels are NOT suppressed on IG; metrics just lag 12–20 h. Ignore 'null' early numbers.
+- QUESTION/QUIZ covers flop (wombat quiz 300, brain-3AM 198) vs 'This cop arrested/hated…' CLAIM covers (1.6k–2.5k). Use claim covers; drop quiz/2nd-person-question openers.
+- Best two formats: (a) real animal/history fact wrapped in a Gary story (crow 2,463, goldfish 2,148); (b) Gary arrests ONE abstract/iconic thing that gets revenge (Karma 2,209 with 25.5 s avg watch = best retention; gravity, shadow). Revenge/comeback twist by the arrested thing keeps people watching.
+- PRODUCTIVITY so far underperforms (door 686, brain 198); keep it, but wrap it in the 'This cop…' claim hook.
 - "He/This cop arrested <impossible thing>" hooks win on Instagram (1.8k–2.2k) and beat plain history facts (200–600).
 - A fact wrapped in a character story (goldfish, 1,171) beats the same kind of fact told as a history lesson.
 - Covers with a bold absurd claim + character face beat "TRUE STORY" date-label covers.
@@ -69,6 +93,8 @@ TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Insta
 - 2026-11-11 14:00 FUN FACT "This cop arrested a wombat for running a dice casino": EXPERIMENT = QUIZ HOOK in frame 1 (on-screen question 'What shape is wombat poop?' with 3 options, answer revealed ~8 s as the second hook) to test comment-bait/interactive openers (2026 faceless-shorts guides list 'guess/quiz' as a top retention format); fact wrapped in a Gary story (goldfish formula); final 25.8 s. Cover = the quiz question itself ('WHAT SHAPE IS / WOMBAT POOP?' + 'this cop guessed wrong' pill) over the wombat boss close-up — first QUESTION cover, compare vs 'This cop arrested…' claim covers. Craft ladder: reusable `wombat()` character (walk cycle, shades, boss hat, face2) + `pcube()` isometric cube prop (optional dice dots/glow) in toonlib.js; scene-level `quiz()` A/B/C option cards in src_wombat/scenes.js worth promoting. Result: TBD.
 
 - 2026-11-11 16:00 PRODUCTIVITY "Why your brain yells at you at 3 AM": EXPERIMENT = 2nd-person RELATABLE QUESTION hook about the viewer ('Why does your brain yell at you at 3 AM?') with NO 'This cop…' phrasing, plus a new co-star: Gary's talking BRAIN (inner-voice character, shouting through a megaphone, British voice pitched up) — tests the 'inner voice as a character' format from POV/relatable shorts. Fact = Zeigarnik effect (Lewin/Zeigarnik, Berlin 1920s waiters remember unpaid orders, forget once paid); Memopai = Gary dumps every open task into it at 3:09 AM and the brain stamps them PAID; twist/loop: 'Gary… did you lock the car?'. Second hook ~11.6 s ('It's called the Zeigarnik effect' title card). 29.4 s. Cover = viewer question 'YOUR BRAIN / AT 3 AM' over brain+Gary. Craft ladder: reusable `brain(x,y,s,{talk,angry,smug,squint,shock,mega,cap,zz,walk,armL,armR})` character in toonlib.js (lobes, folds, little arms/legs, megaphone with sound rings, nightcap, Zzz); scene-level `bedroom()/bedBack()/bedFront()` (sitting-in-bed trick: draw character between headboard and blanket) and `card()` task chips in src_brain/scenes.js worth promoting. Result: TBD.
+
+- 2026-11-11 18:00 STORY "This cop arrested Time": EXPERIMENT = Karma formula (abstract concept arrested → takes revenge) + a FREEZE-FRAME pattern interrupt as second hook at ~7–8 s (Time stops: whole frame desaturates, 'PAUSED' stamp, coffee floats mid-air) to test whether a visual-state change mid-video lifts avg watch past 14 s; Memopai = Time's one text reminds Gary of his wife's birthday dinner tonight → Gary must release Time; twist: still late. Craft ladder: reusable `clockman()` alarm-clock character + `freeze()` desaturate/paused overlay. Results of earlier experiments: Moon short cut 748 (weak), Crow escalating counter + animal grudge 2,463 (WIN), Door 2nd-person productivity 686 (weak), Snowman seasonal 1,612 in 4 h (good), Wombat quiz hook 300 (LOSS), Brain question hook 198 so far (LOSS).
 
 ## 5. Standing rules for studying viral content
 - 2026-11-11 16:00 research note: 2026 viral-shorts guides (eliro, virvid 'faceless structures', easyviral 500-shorts analysis) keep ranking 'relatable POV / why does your brain do X' psychology explainers and inner-voice characters among the top faceless formats; hook = a question the viewer answers 'that's me' to within 2 s.
