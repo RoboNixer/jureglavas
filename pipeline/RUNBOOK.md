@@ -27,6 +27,14 @@ Commit + push `daily/learnings.md` together with your topic claim.
 - The hook must be absurd or shocking in the first 2 s (e.g. "This cop arrested a goldfish." / "Napoleon lost… to bunnies.").
 - No graphic violence, no real-person likenesses beyond generic toons, no copyrighted characters.
 
+## 1b. Visual style per video (owner: "use different styles for different videos")
+The `stickman-story-video` skill has two looks, and both are already in `engine.html` / `toonlib.js`. Do not make every video an Officer Gary toon.
+- **STORY** → goofy toon comedy look (skill section 7): Gary or another original toon character.
+- **FUN FACT** → stickman look (skill sections 1–6): `man()/guy()/dave()`, painted flat backgrounds, the fact's own characters, like `pipeline/examples/napo` and `pluto`. No Gary.
+- **PRODUCTIVITY** → alternate: use the look the previous PRODUCTIVITY entry in `topics_log.md` did NOT use.
+- Add `style: toon` or `style: stickman` to the topics_log line and compare the two looks in the scoreboard.
+- Take the LOOK and the tooling from the skill. Its pacing rules ("something changes every 1–2 s", 22–25 lines, 35–55 s) are replaced by Story rules v2 below.
+
 ## 2. Story rules v2 (2026-11-11 evening, owner feedback: "too much is happening, hard to keep up, doesn't make sense")
 These rules OVERRIDE anything older, including "something new on screen every 1–2 s" in the task prompt and in section 2b.
 - **One idea per video.** Before writing, state the story in ONE sentence: "<character> wants X, but Y, so Z." If you need "and then… and then…", cut until you don't.
