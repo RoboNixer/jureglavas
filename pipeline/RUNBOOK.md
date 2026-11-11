@@ -20,11 +20,46 @@ Read 2–3 examples in `pipeline/examples/*` (script.py / scenes.js / cues.py) b
 5. Decide ONE deliberate improvement or experiment for this video (e.g. shorter length, new hook formula, different cover style, second hook at 8 s) and log it in section 4. Every video must apply the current best rules AND test one new thing.
 Commit + push `daily/learnings.md` together with your topic claim.
 
+## 0c. MEMOPAI IS THE STAR (owner, 2026-11-11, top priority, overrides older topic rules)
+Owner: "Choose the stories so they make sense for Memopai. Don't use a story that doesn't fit Memopai and then try to put it in. Memopai has to be the star, so people say: what is this, I need to use it."
+Before today, Memopai was a cameo inside unrelated jokes (a cop arrests the Moon; the Moon texts Memopai). That is now forbidden.
+
+**What Memopai really does (memopai.com; show ONLY these, never invent features):**
+- An AI reminder assistant that lives inside WhatsApp. No app, no account: you just message it.
+- You write or SPEAK (voice message) the reminder the way you'd tell a friend: "Remind me tomorrow at 8 to call mom", "in 20 minutes", "every Monday at 9", "every first of the month".
+- Recurring reminders (daily, weekly, weekdays, monthly) until you say stop. Reply "snooze" and it comes back in 10 minutes.
+- **Reminds OTHER people:** "Remind Mom tomorrow at 9 to take her medicine" lands in HER WhatsApp. She taps Accept once and needs no account. Up to 10 people. This is the feature nobody expects; use it often.
+- Works 24/7, even when your phone is off or silent. Understands English, Croatian, Bosnian and Serbian.
+- It is a paid product (no free plan), so never say or show "free".
+
+**Fit test (the topic must pass all four BEFORE you claim it):**
+1. The problem in the story is forgetting something, or having to remind/nag someone else.
+2. Take Memopai out and the story falls apart. If the joke still works without it, pick another story.
+3. What Memopai does on screen is a real feature from the list above, used the way a real person would use it.
+4. A viewer who has never heard of Memopai can say after one watch: "It's a WhatsApp contact you text, and it reminds you or someone else at the right time", and wants it for their own life.
+
+**Story shapes that fit:**
+- *Without / with:* the same day twice. First the thing is forgotten and it goes wrong; rewind; one WhatsApp message to Memopai; it goes right.
+- *Remind someone else:* she stops nagging her husband / teenager / flatmate / team, because Memopai does it for her, at the exact minute.
+- *The save:* the reminder lands at the last possible second (free trial ends tonight, parking runs out, the oven is on, the anniversary is today).
+- *Escalation:* one person discovers it and starts using it for everything; a running gag of ever funnier reminders.
+- *True "someone forgot" story:* a real, verified moment where one forgotten thing cost a fortune, then "same day, with one reminder".
+
+**Idea bank (pick one that is NOT in topics_log.md, or invent a better one that passes the fit test):** free trial that renews tonight; bins day; wedding anniversary; mom's birthday; passport expires before the holiday; parking meter; kid waiting at school; "text me when you get home"; laundry left in the machine; oven left on; return window closes today; car inspection; water the plants while away; flatmate who never pays rent on time; boss's weekly report; group trip where everyone forgets their part; grandpa's doctor appointment; taking the bins out vs. the neighbour; concert tickets go on sale at 10:00; calling grandma every Sunday; the umbrella; library book fines; the gift you promised; defrosting dinner; "I'll do it in 5 minutes" (snooze); voice reminder while driving.
+
+**The Memopai beat (the centre of every video):**
+- Memopai is on screen by second 6–8 and for at least 6 seconds in total.
+- Show the three steps clearly: (1) someone texts or speaks to Memopai in plain words, 12 words or fewer, readable for 2.5 s; (2) the reminder ARRIVES on a phone at the critical moment (theirs or the other person's WhatsApp, mascot avatar, name "Memopai"); (3) the consequence: disaster avoided or the win.
+- The last shot contains Memopai (the chat or the notification), so the name is the last thing people see. Still no CTA voiceover and no logo end card; the caption carries memopai.com.
+- Hooks are about the viewer's pain or the surprising ability, said as a claim: "She hasn't reminded her husband of anything in 30 days." / "Your free trial ends in one hour." / "This WhatsApp contact nags your flatmate so you don't have to."
+
+**Want-it gate (mandatory, together with the clarity gate):** give only the script to a fresh subagent and ask: (a) retell the story in one sentence, (b) what is Memopai and what exactly did it do, (c) does the story work without it, (d) would a normal person want it after watching, and why. Rewrite until (b) is right, (c) is "no" and (d) is a clear yes.
+
 ## 1. Pick a topic that is NOT in `daily/topics_log.md`
 - The category comes from the rotation in `daily/learnings.md`. Log entries must include it: `- <date> | <HH:00> | <CATEGORY> | <title> | <premise> | <file>`.
 - `git pull` first, then read `daily/topics_log.md`. Never repeat a topic, fact, premise or punchline. Also avoid repeating the same *format* in back-to-back slots (alternate Officer Gary comedy / history fun fact / myth-buster / science-space / animal fact / "what if they had phones").
 - Research with web search: what's trending/controversial right now, plus surprising, verifiable fun facts. Fact-check the core fact on 2+ sources. Phrase contested claims honestly ("allegedly", "according to…").
-- The hook must be absurd or shocking in the first 2 s (e.g. "This cop arrested a goldfish." / "Napoleon lost… to bunnies.").
+- The topic must pass the Memopai fit test in section 0c. The hook is a claim about the viewer's pain or Memopai's surprising ability (examples in 0c), in the first 2 s.
 - No graphic violence, no real-person likenesses beyond generic toons, no copyrighted characters.
 
 ## 1b. Visual style per video (owner: "use different styles for different videos")
@@ -45,7 +80,7 @@ These rules OVERRIDE anything older, including "something new on screen every 1�
 - **Max 2 speaking characters** (narrator + one voice is ideal). Shouting at most once.
 - **Narrator is a man** (owner request): default narrator voice `N` = `am_michael`. Don't switch it back to a female voice.
 - **Voice v3 (owner: "heard all the time, no whispering, real storyteller" and then "more dynamic and faster"):** NO whispers ever. Fast, energetic narrator with strong CONTRAST: setup lines at speed 1.18–1.28, the hook as a punchy `:s` line (about 3 dB louder, at most 2 per video), then a 0.25–0.4 s pause and the payoff line slower at 1.0–1.08 (or `:w`, which is now a slow dramatic full-voice line). Alternate long and very short sentences ("Big mistake."), use questions and exclamations so the pitch moves, and never run two lines in a row at the same speed. Sentences still have to make sense on their own; no word-by-word fragments. The owner found the plain voice monotone, so `vo_core.py` now stretches the narrator's pitch movement by default (`EXPR=1.55`, needs `pyworld`, installed by setup.sh) and gives each line its own register; set `REG={'tag':+2,...}` (semitones) in script.py to push a key line higher or lower. Keep the default on. `score_core.py` prints `ducked bed under <tag>` when music/SFX were too loud under a line; if you see many, remove SFX from under speech.
-- **Memopai is the cause of the payoff**, in one beat: one message, 12 words or fewer, readable for at least 2.5 s. If the reminder needs explaining, the story is wrong; rewrite it. Still never an ad, no CTA. "Memo Pie" in TTS, "Memopai" in captions, mascot as avatar.
+- **Memopai is the star** (section 0c): the story is about forgetting or reminding, and the Memopai beat is its centre. "Memo Pie" in TTS, "Memopai" in captions, mascot as avatar.
 - **Clarity gate (mandatory, before building):** give ONLY the script to a fresh subagent (Agent tool) and ask it to retell the story in one sentence and name the joke. If it gets it wrong or is vague, rewrite and test again. After the preview sheet, check that 6 frames alone tell the story.
 - Keep: claim hook in the first 2 s ("This cop arrested <one thing>" / "This crow hated one cop for 17 years"), payoff ending.
 - Judge videos by **retention % = average watch ÷ length** (target 60%+), not just views.

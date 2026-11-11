@@ -4,9 +4,10 @@ Every run READS this first, then UPDATES it (sections 2–4) after checking the 
 
 ## 1. Category rotation (fixed)
 Rotate strictly, based on the last entry in `topics_log.md`: **STORY → FUN FACT → PRODUCTIVITY → STORY → …**
-- **STORY**: a character with a problem, escalation, twist ending (Officer Gary comedy, "what if they had phones", mini-drama, mystery to solve). Emotion or laughter first.
-- **FUN FACT**: one shocking, verified fact told as a cartoon (history, science, space, animals, myth-busting, psychology). Hook = the fact stated in its most absurd form.
-- **PRODUCTIVITY**: a relatable everyday struggle or brain/psychology insight (forgetting, procrastination, Zeigarnik effect, 2-minute rule, why you forget why you walked into a room, the cost of a missed deadline), still told as a funny cartoon story with characters, never as advice bullet points. Memopai fits most naturally here, so keep it subtle.
+Since 2026-11-11 evening EVERY category must pass the Memopai fit test (RUNBOOK section 0c): the story is about forgetting or reminding, it falls apart without Memopai, and it shows only real features.
+- **STORY**: a character comedy or mini-drama where forgetting (or having to nag someone) is the problem and one WhatsApp message to Memopai is the turning point. Gary is allowed only when the plot is about remembering. No more "arrest <random thing> + Memopai cameo".
+- **FUN FACT**: a true, verified fact about memory, forgetting, time or habits, or a real "someone forgot one thing and it cost a fortune" moment, followed by "same situation, with one reminder".
+- **PRODUCTIVITY**: an everyday pain everyone knows (free trial renews, bins day, birthdays, parking, kids' pickup, bills, follow-ups, nagging a flatmate), solved on screen by texting Memopai.
 
 ## 2. Scoreboard (Instagram views; update each run with fresh numbers)
 Snapshot 2026-11-11 00:20 Zagreb:
@@ -68,6 +69,8 @@ Snapshot 2026-11-11 19:25 Zagreb (IG views / avg watch): Crow 2,466/17.9 s; nati
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
 ## 3. What the data says so far (hypotheses, keep testing)
+- 2026-11-11 19:45 OWNER FEEDBACK (top priority, with the story rules): Memopai must be the STAR, not a cameo; choose only stories that are about forgetting/reminding (RUNBOOK 0c). The numbers support it: the plain product reels ('Memopai.com', 'Never forget') get 1.5k–2.8k IG views with the longest watch time (26–32 s), as good as the best cartoons. From now on measure every video by: retention %, shares/saves, and comments asking what Memopai is.
+- Voice: narrator is a man (am_michael), fast and dynamic, never a whisper, pitch movement stretched (RUNBOOK section 2).
 - 2026-11-11 19:25: 'Time' (busy, 13 shots, freeze gimmick) = 247 views / 34% retention after 2 h; Snowman (one clear idea) climbed to 1,911. Confirms owner feedback: busy = dead. TikTok blocked for 24 h after the 18:00 API error, so skip TikTok until ~2026-11-12 18:00 Zagreb.
 - 2026-11-11 18:15 OWNER FEEDBACK (top priority): stories are bad: too much happening, hard to keep up, they don't make sense. RUNBOOK section 2 was rewritten (Story rules v2: one idea, three beats, max 8 lines/8 shots, one text element at a time, clarity gate with a fresh subagent). The numbers agree: retention % (avg watch ÷ length) is best for single-idea videos (Crow 61%, Moon 54%, Karma 54%, Snowman 53%) and worst for the busy multi-idea ones (Door 40%, Brain 40%, Wombat quiz 36%). The 18:00 'Time' video (13 shots, freeze + text + play + birthday + release) is an example of what NOT to do.
 - TikTok rejects API posts after ~15 in 24 h ('large number of posts published through the API'); the 18:00 TikTok post failed. Do not post every slot to TikTok until the owner decides the cadence.
