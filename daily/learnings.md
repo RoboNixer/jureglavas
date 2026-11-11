@@ -51,6 +51,7 @@ TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Insta
 - 2026-11-11 09:00 STORY "This cop arrested the Moon": EXPERIMENT = shorter cut (~23 s instead of 28–30) + explicit second hook at ~8 s ("Big mistake. The Moon got ONE phone call."), single iconic natural target (not a list). Craft ladder: added reusable `cruiser()` police car (toonlib.js) and `waves()` animated water (look2.js). Result: TBD (check IG views + avg watch vs ~14 s baseline).
 
 ## 5. Standing rules for studying viral content
+- 2026-11-11 research note: 2026 viral-shorts guides keep stressing loopable endings (last line points back to the first frame) to drive rewatches; the Moon video ends on "See you tonight, Gary" over the Moon to test this loosely.
 - Each run, spend a few minutes on web search for what is going viral NOW: top AI-animated shorts, viral story formats, trending topics, hook formulas. Write down any new pattern in section 3.
 - Borrow the *mechanics* (hook structure, pacing, twist shape, cover style, topic angle), then write an original script, original visuals and original jokes. Never copy another creator's script, characters, footage, audio or a copyrighted character; never use real people's likenesses.
 - Every claim presented as fact must be verified on 2+ sources.

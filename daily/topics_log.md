@@ -21,4 +21,4 @@ Format: date | slot | title | core fact/premise | file
 - earlier | — | The Key That Sank the Titanic (David Blair crow's-nest key) | history what-if
 
 ## Daily scheduled videos
-- 2026-11-11 | 09:00 | STORY | This cop arrested the Moon | Gary arrests the Moon for 'following him home'; Moon's one phone call = texts Memopai to remind Gary of high tide (he parked on the beach); car floats | IN PROGRESS
+- 2026-11-11 | 09:00 | STORY | This cop arrested the Moon | Gary arrests the Moon for 'following him home'; Moon's one phone call = texts Memopai to remind Gary of high tide (he parked on the beach); car floats | daily/2026-11-11/0900_ArrestedTheMoon.mp4 (23.7 s) | Buffer TT/IG/FB scheduled 09:00
