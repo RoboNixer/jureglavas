@@ -33,6 +33,7 @@ Snapshot 2026-11-11 00:20 Zagreb:
 
 Snapshot 2026-11-11 08:27 Zagreb: the 2026-11-10 ~20:30 batch (Karma, donut, grandma, strike, emus, goldfish, Pluto, Napoleon v2) shows NO Instagram metrics in Buffer yet (null), TikTok 0 on all. Buffer IG metrics lag a lot; IG numbers above for those come from the 00:20 snapshot.
 TikTok: stalker/shadow (Dave) got 118 views, the plain Memopai.com reel 825; everything else 0–80.
+Snapshot 2026-11-11 09:25 Zagreb: still null IG metrics for the 2026-11-10 evening batch and the 09:00 Moon post (Buffer lag ~12 h+). New pattern spotted: on TikTok the older plain 'Memopai.com' product reels (Nov 8–9) got 700–950 views each, while every cartoon story since Nov 9 18:40 gets 0–120 → TikTok may be suppressing the account's newer uploads or the cartoon format; IG avg watch for winners 14–32 s.
 
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
@@ -45,12 +46,15 @@ TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Insta
 - Winners (1.8k–2.2k) were all posted ~05:00 UTC (06:00 Zagreb) in one batch; same-format posts in other batches got 200–300. Posting hour/batch may matter as much as the hook. The new hourly slots will tell us.
 - The two "single impossible arrest" hooks with a physical/natural target (gravity+sun, shadow) beat lists of holiday characters (Santa/Easter Bunny 264, Santa/GPS/sock 306). Prefer ONE iconic natural target over a list of three.
 - Best avg watch among stories is 19.8 s (Autocorrect, multi-case) vs ~14 s typical: more mini-payoffs = better retention.
+- TikTok: the plain product reels (700–950 views) beat every cartoon (0–120). Cartoon reach on TikTok collapsed right when batch-posting 5+ videos within minutes started (Nov 9 18:42) — spacing posts hourly may be what fixes it; watch the hourly slots.
 - TikTok gets nothing: test TikTok-native elements (on-screen question in first frame, faster first cut, trending-topic hooks, 3–5 hashtags not 6) and note whether anything moves.
 
 ## 4. Experiments log (one line per run: what you changed on purpose, and later what happened)
 - 2026-11-11 09:00 STORY "This cop arrested the Moon": EXPERIMENT = shorter cut (~23 s instead of 28–30) + explicit second hook at ~8 s ("Big mistake. The Moon got ONE phone call."), single iconic natural target (not a list). Craft ladder: added reusable `cruiser()` police car (toonlib.js) and `waves()` animated water (look2.js). Result: TBD (check IG views + avg watch vs ~14 s baseline).
+- 2026-11-11 10:00 FUN FACT "This crow hated one cop for 17 years": EXPERIMENT = goldfish formula (real fact wrapped in a Gary story, best fact format so far) + an on-screen ESCALATING COUNTER as the spine (1 crow → 40 crows → 3 generations) to give a mini-payoff every ~5 s against the middle sag; 3–4 hashtags only + question-style TikTok title. Craft ladder: reusable `crow()` bird character in toonlib.js. Result: TBD.
 
 ## 5. Standing rules for studying viral content
+- 2026-11-11 10:00 research note: 2026 hook guides (opus.pro 13.5M-clip study, revid, shortsintel) keep converging on: say the core keyword/claim in the first line, open on motion not a static title, curiosity gap resolved only at the end, and payoffs every few seconds; 'grudge/revenge' animal facts are an evergreen viral topic.
 - 2026-11-11 research note: 2026 viral-shorts guides keep stressing loopable endings (last line points back to the first frame) to drive rewatches; the Moon video ends on "See you tonight, Gary" over the Moon to test this loosely.
 - Each run, spend a few minutes on web search for what is going viral NOW: top AI-animated shorts, viral story formats, trending topics, hook formulas. Write down any new pattern in section 3.
 - Borrow the *mechanics* (hook structure, pacing, twist shape, cover style, topic angle), then write an original script, original visuals and original jokes. Never copy another creator's script, characters, footage, audio or a copyrighted character; never use real people's likenesses.
