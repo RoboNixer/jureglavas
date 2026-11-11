@@ -72,3 +72,19 @@ function lockPhone(t,p,body,time='14:59'){X.setTransform(1,0,0,1,0,0);X.fillStyl
  X.save();X.translate(540,860);const z=lerp(1,1.12,p);X.scale(z,z);X.rotate(-.03);rr(-330,-620,660,1240,90,'#1b1b1f',10);const g=X.createLinearGradient(0,-600,0,600);g.addColorStop(0,'#2a1240');g.addColorStop(1,'#0c2a1c');X.fillStyle=g;X.beginPath();X.roundRect(-306,-596,612,1192,70);X.fill();rr(-70,-580,140,40,20,'#000',0);
  txt('Sunday',0,-470,34,'#fff',0,'600 ');txt(time,0,-380,130,'#fff',0,'700 ');X.translate(0,-200);X.scale(.64,.64);X.translate(-540,0);notif(0,C(p*3),'Memopai',body);X.restore()}
 function calendar(x,y,s,day){X.save();X.translate(x,y);X.scale(s,s);rr(-170,-200,340,400,22,'#fff',8);rr(-170,-200,340,100,22,'#e53935',8);txt('DAY',0,-150,50,'#fff',0);txt(String(day),0,40,190,'#151515',0);X.restore()}
+// ---- cruiser(x,y,s,o): police car, side view. o={t, flip, speed (wheel spin), siren (blink lights), driver:{eyes,talk,shock,angry,sweat,look}, tilt}. y = ground line under wheels.
+function cruiser(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);if(o.tilt)X.rotate(o.tilt);X.translate(0,-160);
+ X.globalAlpha=.25;ell(0,165,330,24,'#000',0);X.globalAlpha=1;
+ path(()=>{X.moveTo(-210,-60);X.lineTo(-150,-190);X.lineTo(140,-190);X.lineTo(220,-60);X.closePath()},'#f4f4f4',8);
+ path(()=>{X.moveTo(-180,-66);X.lineTo(-135,-170);X.lineTo(-15,-170);X.lineTo(-15,-66);X.closePath()},'#bfe3ff',6);
+ path(()=>{X.moveTo(5,-66);X.lineTo(5,-170);X.lineTo(125,-170);X.lineTo(190,-66);X.closePath()},'#bfe3ff',6);
+ if(o.driver){X.save();X.beginPath();X.moveTo(5,-66);X.lineTo(5,-170);X.lineTo(125,-170);X.lineTo(190,-66);X.closePath();X.clip();const d=o.driver;
+  circ(95,-92,62,'#ffd2a8',6);rr(40,-168,110,40,12,'#2d3f73',6);rr(30,-136,130,14,6,'#1d2a50',4);circ(95,-150,9,'#ffd23f',3);face2(95,-88,.32,d);
+  if(d.sweat){ell(150,-110+((t*60)%20),6,10,'#7fd1ff',3)}X.restore()}
+ X.globalAlpha=.35;path(()=>{X.moveTo(-120,-160);X.lineTo(-90,-160);X.lineTo(-140,-80);X.lineTo(-165,-80);X.closePath()},'#fff',0);X.globalAlpha=1;
+ rr(-340,-70,690,160,46,'#f4f4f4',8);X.fillStyle='#2d4a8a';X.fillRect(-334,-8,678,46);txt('POLICE',0,16,46,'#fff',0);
+ const bl=o.siren?(Math.floor(t*8)%2):0;rr(-80,-222,80,34,10,bl?'#ff4d4d':'#8a1f1f',6);rr(0,-222,80,34,10,bl?'#2f6bff':'#ff4d4d',6);
+ if(o.siren){X.globalAlpha=.35;circ(bl?40:-40,-205,90,bl?'#4d7dff':'#ff4d4d',0);X.globalAlpha=1}
+ ell(338,-30,16,22,'#fff6b0',5);rr(-352,-40,22,40,6,'#e53935',5);
+ [[-200],[210]].forEach(([wx])=>{circ(wx,95,66,'#222',8);circ(wx,95,30,'#aaa',5);const a=t*(o.speed||0);for(let k=0;k<3;k++){const b=a+k*2.09;line([[wx,95],[wx+Math.cos(b)*26,95+Math.sin(b)*26]],6,'#555')}});
+ X.restore()}

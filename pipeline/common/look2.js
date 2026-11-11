@@ -21,3 +21,8 @@ function confetti(r,n=60){if(r<0)return;X.save();X.setTransform(1,0,0,1,0,0);con
 function impact(p){if(p<=0||p>=1)return;X.save();X.setTransform(1,0,0,1,0,0);X.globalCompositeOperation='difference';X.fillStyle=`rgba(255,255,255,${1-p})`;X.fillRect(0,0,1080,1920);X.restore()}
 // Squash and stretch wrapper: draw fn() scaled around (x,y). k>0 stretch tall, k<0 squash wide. Use sp() springs for landings/pops.
 function squash(x,y,k,fn){X.save();X.translate(x,y);X.scale(1-k*.5,1+k);X.translate(-x,-y);fn();X.restore()}
+// ---- waves(y,t,o): animated layered water filling from y downward (sea, flood). o={col:'#1f6fb5',col2:'#3d8fd6',amp:26,foam:1}
+function waves(y,t,o={}){const c1=o.col||'#1f6fb5',c2=o.col2||'#3d8fd6',amp=o.amp||26;
+ [[c2,0,1,1.3],[c1,60,1.4,-1]].forEach(([c,dy,f,sp],L)=>{X.beginPath();X.moveTo(-3000,4000);for(let x=-3000;x<=4000;x+=40){X.lineTo(x,y+dy+Math.sin(x*.006*f+t*2.2*sp)*amp+Math.sin(x*.017+t*3)*amp*.35)}X.lineTo(4000,4000);X.closePath();X.fillStyle=c;X.fill();
+  if(o.foam!==0){X.lineWidth=7;X.strokeStyle='rgba(255,255,255,.75)';X.beginPath();for(let x=-3000;x<=4000;x+=40){const yy=y+dy+Math.sin(x*.006*f+t*2.2*sp)*amp+Math.sin(x*.017+t*3)*amp*.35;x==-3000?X.moveTo(x,yy):X.lineTo(x,yy)}X.stroke()}});
+ X.globalAlpha=.25;for(let k=0;k<14;k++){const xx=((k*263+t*40)%1400)-160,yy=y+90+(k%5)*70;line([[xx,yy],[xx+60,yy]],5,'#fff')}X.globalAlpha=1}
