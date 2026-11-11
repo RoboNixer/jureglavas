@@ -1,0 +1,17 @@
+S=[
+ (0.05,'N:s',1.12,"This cop lost a fight... to a door.",'h1'),
+ (0.08,'N:w',1.05,"And science says you would too.",'h2'),
+ (0.15,'N',1.2,"Gary caught a raccoon. He just needed the handcuffs.",'s1'),
+ (0.06,'G',1.12,"Kitchen. Be right back.",'g1'),
+ (0.10,'N',1.2,"One step through the door...",'s2'),
+ (0.25,'G',0.95,"Why am I in the kitchen?",'g2'),
+ (0.22,'N:w',1.05,"It's real. Scientists call it the doorway effect.",'s3'),
+ (0.08,'N',1.2,"Your brain treats every doorway as a new scene, and dumps the last one.",'s4'),
+ (0.08,'G:s',1.08,"I'LL BEAT YOU, DOOR!",'g3'),
+ (0.10,'N',1.2,"So he texted Memo Pie.",'s5'),
+ (1.7,'G:s',1.05,"HANDCUFFS!",'g4'),
+ (0.20,'N:w',1.1,"Meanwhile, the raccoon escaped...",'s7'),
+ (0.10,'N',1.0,"through the door.",'s8'),
+ (0.30,'K',1.0,"Wait. Why am I outside?",'k1'),
+ (0.25,'G',1.0,"Doors. Undefeated.",'g5'),
+]

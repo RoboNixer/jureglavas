@@ -104,3 +104,16 @@ function crow(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o.
  circ(hx+14+lk*8,hy-12,o.shock?6:10,'#111',0);circ(hx+10+lk*8,hy-16,3.5,'#fff',0);
  if(o.angry||o.scream)line([[hx-16,hy-48],[hx+40,hy-30]],10,'#111');
  X.restore()}
+// door(x,y,s,o): a doorway with a swinging door. y = floor line, x = centre of the frame. o.open 0..1 (swing toward camera, hinge on left),
+// o.col door colour, o.frame frame colour, o.inside colour/fn seen through the opening, o.sign optional label above. Size ~ 300x560 at s=1.
+function door(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const W=300,H=560,op=C(o.open||0);
+ rr(-W/2-34,-H-34,W+68,H+34,10,o.frame||'#8a5a30',8);
+ X.save();X.beginPath();X.rect(-W/2,-H,W,H);X.clip();if(typeof o.inside=='function')o.inside();else{X.fillStyle=o.inside||'#2a2230';X.fillRect(-W/2,-H,W,H)}
+ const g=X.createLinearGradient(-W/2,0,W/2,0);g.addColorStop(0,'rgba(0,0,0,.35)');g.addColorStop(.4,'rgba(0,0,0,0)');X.fillStyle=g;X.fillRect(-W/2,-H,W,H);X.restore();
+ const k=Math.cos(op*Math.PI*.5*1.05),pw=W*k,bulge=Math.sin(op*Math.PI*.5)*40;
+ if(pw>4){const hx=-W/2;path(()=>{X.moveTo(hx,-H);X.lineTo(hx+pw,-H-bulge);X.lineTo(hx+pw,bulge*.3);X.lineTo(hx,0);X.closePath()},o.col||'#b5763c',7);
+  X.globalAlpha=.25;path(()=>{X.moveTo(hx+pw*.15,-H*.9);X.lineTo(hx+pw*.85,-H*.92-bulge*.85);X.lineTo(hx+pw*.85,-H*.55-bulge*.8);X.lineTo(hx+pw*.15,-H*.55);X.closePath()},'#000',0);
+  path(()=>{X.moveTo(hx+pw*.15,-H*.45);X.lineTo(hx+pw*.85,-H*.45-bulge*.6);X.lineTo(hx+pw*.85,-H*.1-bulge*.3);X.lineTo(hx+pw*.15,-H*.1);X.closePath()},'#000',0);X.globalAlpha=1;
+  circ(hx+pw*.86,-H*.48-bulge*.55,14,'#f2c94c',5)}
+ if(o.sign){rr(-110,-H-110,220,64,12,'#fff8e8',6);txt(o.sign,0,-H-78,34,'#333',0)}
+ X.restore()}
