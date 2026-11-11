@@ -158,3 +158,22 @@ function pcube(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(
  path(()=>{X.moveTo(-a,-b);X.lineTo(0,0);X.lineTo(0,2*a-b);X.lineTo(-a,2*a-2*b);X.closePath()},'#6f4f33',5);
  path(()=>{X.moveTo(a,-b);X.lineTo(0,0);X.lineTo(0,2*a-b);X.lineTo(a,2*a-2*b);X.closePath()},'#5a3e27',5);
  if(o.dots){circ(0,-b,6,'#f4e3c3',0);circ(-20,20,5,'#f4e3c3',0);circ(20,24,5,'#f4e3c3',0)}X.restore()}
+// brain(x,y,s,{t,talk,shock,angry,smug,squint,look,mega,armL,armR,walk,cap,col,zz,stamp}) — talking brain character (feet at y). Craft ladder 2026-11-11 16:00.
+function brain(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);
+ const w=o.walk;const ph=w!=null?Math.sin(w*12):0;const bob=w!=null?Math.abs(ph)*10:Math.sin(t*3)*4;
+ [-1,1].forEach((d,i)=>{const p=w!=null?(i?ph:-ph)*22:0;line([[d*38,-70],[d*44+p,-14]],20,O);line([[d*38,-70],[d*44+p,-14]],10,'#e7849c');ell(d*50+p,-10,30,14,'#7a2e45',6)});
+ X.translate(0,-bob);const P=o.col||'#ff9fb8',D='#d9607e';
+ const L=[[-100,-200,92],[100,-200,92],[-50,-280,92],[55,-285,88],[-115,-130,70],[115,-130,70],[0,-140,100]];
+ L.forEach(([a,b,r])=>circ(a,b,r,P,9));L.forEach(([a,b,r])=>circ(a,b,r-4,P,0));
+ X.save();X.globalAlpha=.35;circ(-60,-300,40,'#fff',0);X.restore();
+ const fold=(pts)=>path(()=>{X.moveTo(pts[0],pts[1]);for(let i=2;i<pts.length;i+=4)X.quadraticCurveTo(pts[i],pts[i+1],pts[i+2],pts[i+3])},null,7,D);
+ fold([0,-360,-20,-300,0,-250]);fold([-150,-240,-120,-270,-90,-230,-60,-200,-30,-240]);fold([150,-240,120,-275,95,-230,70,-195,40,-235]);fold([-170,-150,-150,-110,-120,-140]);fold([170,-150,150,-110,120,-140]);
+ const arm=(d,a)=>{const ang=(a!=null?a:(d>0?25:-25)+(w!=null?Math.sin(w*12+(d>0?0:3))*25:Math.sin(t*5+d)*6))*Math.PI/180;const sx=d*170,sy=-140;const ex=sx+Math.sin(ang)*d*60,ey=sy+Math.cos(ang)*60;const hx=ex+Math.sin(ang*1.2)*d*50,hy=ey+Math.cos(ang*1.2)*50;
+  line([[sx,sy],[ex,ey],[hx,hy]],20,O);line([[sx,sy],[ex,ey],[hx,hy]],10,'#e7849c');circ(hx,hy,17,'#ffc2d1',6);return [hx,hy]};
+ arm(-1,o.armL);const hr=arm(1,o.armR);
+ X.save();X.translate(0,-170);face2(0,0,.62,{talk:o.talk,shock:o.shock,angry:o.angry,smug:o.smug,squint:o.squint,look:o.look});X.restore();
+ if(o.mega){X.save();X.translate(hr[0],hr[1]);X.rotate(-.35);path(()=>{X.moveTo(0,-22);X.lineTo(120,-70);X.lineTo(120,70);X.lineTo(0,22);X.closePath()},'#ffd23f',8);ell(120,0,22,70,'#f4a51c',8);rr(-30,-14,40,60,8,'#e53935',6);
+  if(o.talk!=null){for(let k=0;k<3;k++){const a=(t*3+k/3)%1;X.globalAlpha=1-a;X.beginPath();X.arc(130,0,60+a*120,-.6,.6);X.lineWidth=10;X.strokeStyle='#fff';X.stroke()}X.globalAlpha=1}X.restore()}
+ if(o.cap){path(()=>{X.moveTo(-120,-300);X.quadraticCurveTo(-20,-440,140,-330);X.quadraticCurveTo(200,-260,230,-200);X.lineTo(110,-310);X.quadraticCurveTo(0,-330,-120,-300)},o.cap,8);circ(235,-195,26,'#fff',7)}
+ if(o.zz){X.font="900 70px Inter";X.fillStyle='#fff';X.strokeStyle=O;X.lineWidth=8;for(let k=0;k<3;k++){const a=(t*.6+k/3)%1;X.globalAlpha=Math.sin(a*Math.PI);const zx=150+a*120+k*10,zy=-330-a*200;X.strokeText('Z',zx,zy);X.fillText('Z',zx,zy)}X.globalAlpha=1}
+ X.restore()}
