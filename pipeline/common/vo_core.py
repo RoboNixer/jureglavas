@@ -9,6 +9,20 @@ VO_D={'N':'af_heart','G':'am_puck','D':'am_onyx','K':'af_sky','F':'af_bella','M'
 PITCH_D={'G':1.22,'D':0.84,'K':1.3,'F':1.1}
 VO=dict(VO_D,**globals().get('VOX',{}));PITCH=dict(PITCH_D,**globals().get('PITCHX',{}))
 LAB={'N':'her','G':'gary','D':'death','K':'kid','F':'fairy','M':'him','B':'him'}
+# --- Storyteller voice v2 (2026-11-11, owner: "voice must be heard all the time, no whispering, real storyteller") ---
+# * ':w' is no longer a whisper: it is a full-voice, slightly slower "soft" line. ':s' is an energetic line, not a distorted shout.
+# * every line is levelled to the same loudness, so nothing drops out under the music.
+# * speeds are capped (MAXSP) so the narrator never rushes. VO values may be blends: 'af_heart*0.6+af_bella*0.4'.
+MAXSP=globals().get('MAXSP',1.06)
+def style(name):
+    if '+' not in name and '*' not in name: return name
+    acc=None
+    for part in name.split('+'):
+        n,w=(part.split('*')+['1'])[:2];st=K.get_voice_style(n.strip())*float(w);acc=st if acc is None else acc+st
+    return acc
+def level(a,target):
+    e=np.abs(a);act=a[e>0.05*e.max()];r=np.sqrt(np.mean(act**2))+1e-9;a=a*(target/r)
+    return np.tanh(a/0.9)*0.9 if np.max(np.abs(a))>0.9 else a
 def trim(a,th=0.008):
     i=np.where(np.abs(a)>th)[0];return a[max(0,i[0]-int(.012*SR)):i[-1]+int(.06*SR)]
 def peq(x,f0,g_db,q):
@@ -25,24 +39,22 @@ def whisper(a):
     b,aa=signal.butter(2,500/(SR/2),'high');w=signal.lfilter(b,aa,w)
     w=w/np.max(np.abs(w))*np.max(np.abs(a));o=.72*w+.28*a
     return peq(o,4500,3,0.8)
-def shout(a):
-    a=peq(a,2500,4,0.9);a=peq(a,250,-2,0.8);return np.tanh(a/np.max(np.abs(a))*2.2)/np.tanh(2.2)
+def shout(a): return peq(a,2800,2.0,0.9)   # brighter and a touch louder, no distortion
 def goofy(a): return peq(peq(a,1300,6,1.4),200,-4,0.7)
 out=[];tl=[];t=0.0
 for gap,spec,sp_,text,tag in S:
     v=spec.split(':')[0];mod=spec.split(':')[1] if ':' in spec else ''
+    sp_=min(sp_,MAXSP)*(0.95 if mod=='w' else 1.0)
     if v in PITCH:
-        f=PITCH[v];a,_=K.create(text,voice=VO[v],speed=sp_/f,lang='en-us');a=trim(a);a=pitch(a,f)
+        f=PITCH[v];a,_=K.create(text,voice=style(VO[v]),speed=sp_/f,lang='en-us');a=trim(a);a=pitch(a,f)
         if v=='G': a=goofy(a)
         if v=='D': a=peq(a,120,3,0.8)
         if v=='K': a=peq(a,1800,3,1.0)
         g=.8
     else:
-        a,_=K.create(text,voice=VO[v],speed=sp_,lang='en-gb' if VO[v].startswith('b') else 'en-us');a=trim(a);g=.75 if v=='N' else .8
-    a=a/np.max(np.abs(a))
-    if mod=='w': a=whisper(a);g=.55
-    if mod=='s': a=shout(a);g=1.0
-    a=a*g
+        a,_=K.create(text,voice=style(VO[v]),speed=sp_,lang='en-gb' if VO[v].startswith('b') else 'en-us');a=trim(a);g=.8
+    if mod=='s': a=shout(a)
+    a=level(a,0.16*(1.15 if mod=='s' else 1.0))
     lab=LAB[v]+(('_'+mod) if mod else '')
     cap=text.replace('Memo Pie','Memopai')
     for k_,v_ in globals().get('CAPFIX',{}).items(): cap=cap.replace(k_,v_)

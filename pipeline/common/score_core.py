@@ -95,7 +95,11 @@ e=np.abs(v);a=int(.06*SR);e=np.convolve(e,np.ones(a)/a,'same');on=(e>0.02).astyp
 g=np.zeros(N);x=0
 for i in range(0,N,64):
     tg=on[i];c=1-np.exp(-64/((0.04 if tg>x else .3)*SR));x+=(tg-x)*c;g[i:i+64]=x
-mix=v+mus*.6*(1-.6*g)+sfx*.75*(1-.3*g)+lp(noise(DUR),800)*.008
+bed=mus*.6*(1-.75*g)+sfx*.75*(1-.6*g)   # v2: duck music AND sfx harder under speech so the voice is always clear
+for l in L:   # audibility check: voice must sit well above the bed on every line
+    i,j=int(l['t0']*SR),int(l['t1']*SR);d=20*np.log10((np.sqrt(np.mean(v[i:j]**2))+1e-9)/(np.sqrt(np.mean(bed[i:j]**2))+1e-9))
+    if d<12: k=10**((12-d)/20);bed[i:j]/=k;print('ducked bed under',l['tag'],round(d,1),'dB -> 12 dB')
+mix=v+bed+lp(noise(DUR),800)*.008
 f=int(.5*SR);mix[-f:]*=np.linspace(1,0,f)
 pk=np.percentile(np.abs(mix),99.95);mix=mix/pk*.9;mix=np.where(np.abs(mix)>.92,np.sign(mix)*(.92+.08*np.tanh((np.abs(mix)-.92)/.08)),mix)
 sf.write('mix.wav',np.stack([mix,mix],1).astype(np.float32),SR);print('ok',DUR)
