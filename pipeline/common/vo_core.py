@@ -13,7 +13,7 @@ LAB={'N':'her','G':'gary','D':'death','K':'kid','F':'fairy','M':'him','B':'him'}
 # * ':w' is no longer a whisper: it is a full-voice, slightly slower "soft" line. ':s' is an energetic line, not a distorted shout.
 # * every line is levelled to the same loudness, so nothing drops out under the music.
 # * speeds are capped (MAXSP) so the narrator never rushes. VO values may be blends: 'af_heart*0.6+af_bella*0.4'.
-MAXSP=globals().get('MAXSP',1.06)
+MAXSP=globals().get('MAXSP',1.32)   # v3: owner wants it faster and more dynamic
 def style(name):
     if '+' not in name and '*' not in name: return name
     acc=None
@@ -44,7 +44,7 @@ def goofy(a): return peq(peq(a,1300,6,1.4),200,-4,0.7)
 out=[];tl=[];t=0.0
 for gap,spec,sp_,text,tag in S:
     v=spec.split(':')[0];mod=spec.split(':')[1] if ':' in spec else ''
-    sp_=min(sp_,MAXSP)*(0.95 if mod=='w' else 1.0)
+    sp_=min(sp_,MAXSP)*(0.9 if mod=='w' else 1.0)   # ':w' = slow dramatic line at full voice (never a whisper)
     if v in PITCH:
         f=PITCH[v];a,_=K.create(text,voice=style(VO[v]),speed=sp_/f,lang='en-us');a=trim(a);a=pitch(a,f)
         if v=='G': a=goofy(a)
@@ -54,7 +54,7 @@ for gap,spec,sp_,text,tag in S:
     else:
         a,_=K.create(text,voice=style(VO[v]),speed=sp_,lang='en-gb' if VO[v].startswith('b') else 'en-us');a=trim(a);g=.8
     if mod=='s': a=shout(a)
-    a=level(a,0.16*(1.15 if mod=='s' else 1.0))
+    a=level(a,0.16*(1.4 if mod=='s' else 1.0))   # ':s' = punchy line, about 3 dB louder
     lab=LAB[v]+(('_'+mod) if mod else '')
     cap=text.replace('Memo Pie','Memopai')
     for k_,v_ in globals().get('CAPFIX',{}).items(): cap=cap.replace(k_,v_)
