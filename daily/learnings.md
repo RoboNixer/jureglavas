@@ -66,6 +66,8 @@ Worst 5 overall: Monday 228, donut 226, banana/tornado/bee 212, Brain 198 (young
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
 ## 3. What the data says so far (hypotheses, keep testing)
+- 2026-11-11 18:15 OWNER FEEDBACK (top priority): stories are bad: too much happening, hard to keep up, they don't make sense. RUNBOOK section 2 was rewritten (Story rules v2: one idea, three beats, max 8 lines/8 shots, one text element at a time, clarity gate with a fresh subagent). The numbers agree: retention % (avg watch ÷ length) is best for single-idea videos (Crow 61%, Moon 54%, Karma 54%, Snowman 53%) and worst for the busy multi-idea ones (Door 40%, Brain 40%, Wombat quiz 36%). The 18:00 'Time' video (13 shots, freeze + text + play + birthday + release) is an example of what NOT to do.
+- TikTok rejects API posts after ~15 in 24 h ('large number of posts published through the API'); the 18:00 TikTok post failed. Do not post every slot to TikTok until the owner decides the cadence.
 - 17:22 UPDATE: Buffer reels are NOT suppressed on IG; metrics just lag 12–20 h. Ignore 'null' early numbers.
 - QUESTION/QUIZ covers flop (wombat quiz 300, brain-3AM 198) vs 'This cop arrested/hated…' CLAIM covers (1.6k–2.5k). Use claim covers; drop quiz/2nd-person-question openers.
 - Best two formats: (a) real animal/history fact wrapped in a Gary story (crow 2,463, goldfish 2,148); (b) Gary arrests ONE abstract/iconic thing that gets revenge (Karma 2,209 with 25.5 s avg watch = best retention; gravity, shadow). Revenge/comeback twist by the arrested thing keeps people watching.

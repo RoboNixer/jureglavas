@@ -27,11 +27,18 @@ Commit + push `daily/learnings.md` together with your topic claim.
 - The hook must be absurd or shocking in the first 2 s (e.g. "This cop arrested a goldfish." / "Napoleon lost… to bunnies.").
 - No graphic violence, no real-person likenesses beyond generic toons, no copyrighted characters.
 
-## 2. Story rules (what made the good ones work)
-- 26–32 s total. Something changes every 1–2 s: new shot, stamp, tag, bubble, shake, flash.
-- Voice: setup lines fast (speed 1.12–1.18), punchlines slower with a 0.1–0.3 s gap before them. Character voices (Gary `G`, kid/fish `K`, etc.), whisper `:w`, shout `:s` (see vo_core.py VO_D/LAB).
-- Twist ending or new absurd escalation. No "follow for more", no CTA.
-- **Memopai (every video, never an ad):** Memopai is a WhatsApp AI contact. A character messages it or gets a reminder from it. Show it reminding *yourself* or *someone else* (e.g. a wife reminds her husband; Gary sets a reminder for the suspect). Use the mascot (`pipeline/assets/mascot.png`) as the WhatsApp avatar. Write "Memo Pie" in TTS text; captions show "Memopai". No logo end card.
+## 2. Story rules v2 (2026-11-11 evening, owner feedback: "too much is happening, hard to keep up, doesn't make sense")
+These rules OVERRIDE anything older, including "something new on screen every 1–2 s" in the task prompt and in section 2b.
+- **One idea per video.** Before writing, state the story in ONE sentence: "<character> wants X, but Y, so Z." If you need "and then… and then…", cut until you don't.
+- **Three beats only:** setup (0–5 s), ONE escalation (5–15 s), payoff (last ~5 s). No subplot, no second twist, no science lecture bolted onto a story.
+- **Cause and effect.** Each beat follows the previous one with "so" or "but", never "and then". Every action needs a reason the viewer can see (why does the character do this?).
+- **Less of everything:** max 8 voice lines, 45–60 words, 20–26 s. Max 8 shots, each on screen at least 2.5 s. 0.4 s of silence after the punchline.
+- **One text element at a time** besides the captions (a tag OR a stamp OR a bubble). Shake/flash only on the single biggest moment.
+- **Max 2 speaking characters** (narrator + one voice is ideal). Shouting at most once.
+- **Memopai is the cause of the payoff**, in one beat: one message, 12 words or fewer, readable for at least 2.5 s. If the reminder needs explaining, the story is wrong; rewrite it. Still never an ad, no CTA. "Memo Pie" in TTS, "Memopai" in captions, mascot as avatar.
+- **Clarity gate (mandatory, before building):** give ONLY the script to a fresh subagent (Agent tool) and ask it to retell the story in one sentence and name the joke. If it gets it wrong or is vague, rewrite and test again. After the preview sheet, check that 6 frames alone tell the story.
+- Keep: claim hook in the first 2 s ("This cop arrested <one thing>" / "This crow hated one cop for 17 years"), payoff ending.
+- Judge videos by **retention % = average watch ÷ length** (target 60%+), not just views.
 
 ## 2b. Look v2 (visual quality bar) and the craft ladder
 The engine now applies this automatically to every shot: volume shading on round shapes and character bodies, contact shadows under toon()/man() characters, bloom, a warm key light with cool shadows, floating dust, a slow push-in camera with a punch + whip-blur on every cut, and karaoke captions (the spoken word pops in yellow). Set `NOFX=1` inside a shot to skip the light pass (e.g. full-screen phone UI), `VOL=0` to skip shading, `{noshadow:1}` on a floating/cropped character.
