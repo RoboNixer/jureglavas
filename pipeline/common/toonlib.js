@@ -234,3 +234,14 @@ function endcard(t,r,o={}){NOFX=1;X.setTransform(1,0,0,1,0,0);
  if(MAS.complete&&MAS.naturalWidth){const w=580*p,h=w*MAS.height/MAS.width;X.save();X.globalAlpha=.3;X.fillStyle='#000';X.beginPath();X.ellipse(540,930,230*p-bob,26,0,0,7);X.fill();X.restore();X.drawImage(MAS,540-w/2,620-h/2+bob,w,h)}
  const a1=C((r-.2)/.3);X.save();X.globalAlpha=a1;X.translate(0,lerp(40,0,eo(a1)));txt('Memopai',540,1060,156,'#ffffff',0);txt(o.tag||'Your reminder assistant on WhatsApp',540,1172,46,'#cfd3ff',0,'600 ');X.restore();
  const a2=C(sp(r-.5,14,.5));if(a2>0){X.save();X.translate(540,1290);X.scale(a2,a2);X.font="900 66px 'Inter Display',Inter";const u=o.url||'memopai.com',w=X.measureText(u).width+110;X.fillStyle='#25d366';X.beginPath();X.roundRect(-w/2,-58,w,116,58);X.fill();txt(u,0,2,66,'#08301a',0);X.restore()}}
+
+// wbin(x,y,s,o): wheelie bin (feet at y). o.col lid/body colour, o.full 0..1 rubbish overflowing, o.tilt deg (tilted back on its wheels while pulled), o.lid 0..1 lid open, o.flies
+function wbin(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);X.rotate((o.tilt||0)*Math.PI/180);const col=o.col||'#2f7d4f',dk=o.dark||'#1f5a38';
+ circ(-58,-26,26,'#222',7);circ(-58,-26,9,'#888',0);
+ path(()=>{X.moveTo(-90,-40);X.lineTo(-110,-330);X.lineTo(110,-330);X.lineTo(90,-40);X.closePath()},col,8);if(typeof vol==='function')vol(()=>{X.rect(-110,-330,220,290)},-20,-190,110,150);
+ for(let k=0;k<3;k++)line([[-60+k*60,-290],[-52+k*52,-70]],5,dk);rr(-122,-350,244,26,8,dk,7);
+ if(o.full){const f=o.full;for(let k=0;k<7;k++){const bx=-90+k*30,by=-360-rnd(k)*70*f;circ(bx,by,26+rnd(k+3)*14,['#444','#5a5a5a','#3a3a3a','#e0e0e0'][k%4],6)}X.save();X.translate(40,-430*f);X.rotate(.4);rr(-30,-20,60,40,6,'#f2c94c',5);X.restore()}
+ X.save();X.translate(-122,-350);X.rotate(-(o.lid||0)*1.9);rr(0,-24,252,30,10,col,7);rr(236,-30,30,18,6,dk,5);X.restore();
+ rr(96,-372,26,46,8,dk,6);
+ if(o.flies){for(let k=0;k<4;k++){const a=(o.t||0)*6+k*1.6;txt('·',Math.cos(a)*90,-470+Math.sin(a*1.3)*40,60,'#111',0)}}
+ X.restore()}
