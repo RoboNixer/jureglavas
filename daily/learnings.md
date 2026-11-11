@@ -25,6 +25,14 @@ Snapshot 2026-11-11 00:20 Zagreb:
 | The army lost to emus | fact/history | 196 | "TRUE STORY" cover |
 | Who stole the donut? | story/mystery | 190 | |
 | This cop arrested Monday | story/Gary | 221 | avg watch 7 s (weak) |
+| Autocorrect ruined Christmas (3 cases) | story/Dave | 2,165 | avg watch 19.8 s = best story retention |
+| Officer Dave: Santa, GPS, sock | story/Dave | 306 | |
+| Dave vs WiFi router, volcano | story/Dave | 305 | avg 13.9 s |
+| Santa, Easter Bunny AND… | story/Gary | 264 | |
+| Banana peel, tornado, bee | story | 212 | avg 9 s (weak) |
+
+Snapshot 2026-11-11 08:27 Zagreb: the 2026-11-10 ~20:30 batch (Karma, donut, grandma, strike, emus, goldfish, Pluto, Napoleon v2) shows NO Instagram metrics in Buffer yet (null), TikTok 0 on all. Buffer IG metrics lag a lot; IG numbers above for those come from the 00:20 snapshot.
+TikTok: stalker/shadow (Dave) got 118 views, the plain Memopai.com reel 825; everything else 0–80.
 
 TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Instagram is the only channel with reach so far.
 
@@ -34,10 +42,13 @@ TikTok: almost no views on any post (0–32). Facebook: 0–3 impressions. Insta
 - Covers with a bold absurd claim + character face beat "TRUE STORY" date-label covers.
 - Average watch time is ~14 s on 30 s videos: the middle sags. Front-load, cut setup, put a second hook at ~8–10 s, and try 20–25 s lengths.
 - Posting the same story twice (Napoleon) split views; never repeat.
+- Winners (1.8k–2.2k) were all posted ~05:00 UTC (06:00 Zagreb) in one batch; same-format posts in other batches got 200–300. Posting hour/batch may matter as much as the hook. The new hourly slots will tell us.
+- The two "single impossible arrest" hooks with a physical/natural target (gravity+sun, shadow) beat lists of holiday characters (Santa/Easter Bunny 264, Santa/GPS/sock 306). Prefer ONE iconic natural target over a list of three.
+- Best avg watch among stories is 19.8 s (Autocorrect, multi-case) vs ~14 s typical: more mini-payoffs = better retention.
 - TikTok gets nothing: test TikTok-native elements (on-screen question in first frame, faster first cut, trending-topic hooks, 3–5 hashtags not 6) and note whether anything moves.
 
 ## 4. Experiments log (one line per run: what you changed on purpose, and later what happened)
-- (add entries here)
+- 2026-11-11 09:00 STORY "This cop arrested the Moon": EXPERIMENT = shorter cut (~23 s instead of 28–30) + explicit second hook at ~8 s ("Big mistake. The Moon got ONE phone call."), single iconic natural target (not a list). Craft ladder: added reusable `cruiser()` police car (toonlib.js) and `waves()` animated water (look2.js). Result: TBD (check IG views + avg watch vs ~14 s baseline).
 
 ## 5. Standing rules for studying viral content
 - Each run, spend a few minutes on web search for what is going viral NOW: top AI-animated shorts, viral story formats, trending topics, hook formulas. Write down any new pattern in section 3.
