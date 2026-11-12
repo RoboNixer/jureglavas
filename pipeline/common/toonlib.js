@@ -261,3 +261,20 @@ function pmeter(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x+(o.shake?Math.
  rr(-24,-548,48,14,6,'#222',4);rr(-60,-510,120,46,10,'#7b8592',5);txt('P',0,-487,32,'#fff',0);
  if(o.coin!=null&&o.coin<1){const p=C(o.coin);const cy=lerp(-760,-545,eo(p));X.save();X.translate(lerp(60,0,p),cy);X.rotate(p*9);X.scale(lerp(1,.6,p),1);circ(0,0,30,'#f2c94c',6);circ(0,0,20,null,4,'#c79a22');X.restore()}
  X.restore()}
+
+// router(x,y,s,o): home WiFi router (feet at y). o={t, on:0..1 (0 = red offline LED, 1 = green + wifi arcs pulse), label}
+function router(x,y,s,o={}){const t=o.t||0,on=C(o.on||0);X.save();X.translate(x,y);X.scale(s,s);gshadow(0,0,190,.28);
+ [-110,110].forEach((ax,i)=>{X.save();X.translate(ax,-90);X.rotate((i?1:-1)*.18+Math.sin(t*2+i)*.03);rr(-11,-170,22,175,10,'#2b2f3a',6);circ(0,-172,14,'#2b2f3a',5);X.restore()});
+ rr(-170,-120,340,110,30,'#f3f4f8',8);vol(()=>X.roundRect(-170,-120,340,110,30),0,-80,170,60);rr(-150,-28,300,16,8,'#d6d9e2',0);
+ for(let k=0;k<5;k++){const lit=on>.5?(k<4||Math.sin(t*14+k)>0):(k==0&&Math.sin(t*6)>-.3);const c=on>.5?'#3bdc6a':'#ff3b30';circ(-100+k*50,-62,11,lit?c:'#b9bdc8',4);if(lit)glow(-100+k*50,-62,40,on>.5?'80,240,120':'255,70,60',.5)}
+ if(o.label)txt(o.label,0,-150,30,'#151515',0);
+ if(on>0){for(let k=0;k<3;k++){const ph=((t*1.2+k/3)%1);X.save();X.globalAlpha=on*(1-ph)*.9;X.lineWidth=14;X.lineCap='round';X.strokeStyle='#25d366';X.beginPath();X.arc(0,-150,60+ph*170,-Math.PI*.78,-Math.PI*.22);X.stroke();X.restore()}}
+ X.restore()}
+// crt(x,y,s,o): retro 1999 CRT monitor + keyboard on a desk line at y. o={t, scr:'TEXT', scr2:'2nd line', col:screen colour, glowc:'r,g,b', on}
+function crt(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);gshadow(0,0,260,.3);
+ rr(-200,-470,400,360,40,'#e6dfc9',8);vol(()=>X.roundRect(-200,-470,400,360,40),0,-290,200,180);rr(-120,-120,240,60,14,'#d4ccb2',7);
+ const col=o.col||'#1d63d6';rr(-160,-430,320,250,26,col,7);X.save();X.beginPath();X.roundRect(-160,-430,320,250,26);X.clip();
+ for(let k=0;k<26;k++){X.fillStyle='rgba(0,0,0,.10)';X.fillRect(-160,-430+k*10+((t*40)%10),320,4)}X.restore();
+ if(o.scr)txt(o.scr,0,o.scr2?-330:-305,o.scr.length>12?30:38,'#fff',6);if(o.scr2)txt(o.scr2,0,-270,30,'#ffe14d',6);
+ glow(0,-305,260,o.glowc||'90,150,255',.35);circ(150,-150,8,'#5ad16a',0);
+ rr(-230,-50,460,50,12,'#d9d2bb',7);for(let r=0;r<2;r++)for(let k=0;k<9;k++)rr(-210+k*47,-42+r*20,38,14,3,'#bdb59c',0);X.restore()}

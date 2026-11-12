@@ -1,0 +1,22 @@
+import re as _re
+def WT(tag,i):
+    l=[z for z in L if z['tag']==tag][0];w=l['text'].split(' ');wt=[len(x)+1+(4 if _re.search(r'[.,?:!]$',x) else 0) for x in w];tot=sum(wt)
+    return l['t0']+(l['t1']-l['t0'])*sum(wt[:i])/tot
+WT_s1_A=WT('s1',7)
+add(sfx,impact(.8),0.05);add(sfx,whoosh(.5,.5),0.0)
+bounce(0.3,T('s1')-.1,0,.5,bpm=146)
+add(sfx,whoosh(.5,.3),0.6,.35);add(sfx,clank(),2.05,.4)
+add(sfx,whoosh(.4),T('s1')-.15,.4)
+musicbox(T('s1'),T('s3')-.1,[72,76,79,76,74,71],.32,.12)
+add(sfx,trombone([55,54,53,52],.3),T('s1')+.6,.35)
+add(sfx,pop(1200),WT_s1_A,.6);chime(WT_s1_A+.1)
+add(sfx,whoosh(.4),T('s3')-.15,.4)
+sneaky(T('s3')-.1,T('s4')-.1,0,.42)
+add(sfx,whoosh(.4),T('s4')-.15,.45);add(sfx,pop(900),T('s4')+.25,.5);add(sfx,pop(1300),T('m1')-.25,.6)
+add(sfx,pop(1500),E('m1')+.3,.6);chime(E('m1')+.35)
+WT_s5=WT('s5',2)
+add(sfx,whoosh(.4),WT_s5-.1,.4)
+add(sfx,vib(.5),WT_s5+.4,.8);add(sfx,vib(.4),WT_s5+.95,.7);chime(WT_s5+.95)
+bounce(T('s5')-.1,T('p1')-.1,2,.45,bpm=150)
+musicbox(T('p1')-.1,T('cta'),[72,76,79,84,79,76],.34,.12);sparkle(T('p1')+1.0);add(sfx,whoop(),T('p1')+.9,.4)
+chime(T('cta'));sparkle(T('cta')+.1);chord(T('cta')+.2,[60,64,67,72],2.0,.08)
