@@ -337,3 +337,19 @@ function oldbook(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scal
  for(let k=0;k<4;k++)circ(-100+k*0+rnd(k)*170,-150+rnd(k+3)*300,5,'rgba(255,255,255,.35)',0);
  if(o.dust){const d=o.dust;X.globalAlpha=C(1.2-d);for(let k=0;k<10;k++){const a=k*.63;circ(Math.cos(a)*(120+d*160),Math.sin(a)*(120+d*120),26+d*30,'rgba(210,200,180,.7)',0)}X.globalAlpha=1}
  X.restore()}
+
+// ================= TO-DO NOTEPAD (craft ladder 2026-11-12 18:00 v2) =================
+// todo(x,y,s,o): wall notepad, top-centre at (x,y). o.items = ['Call Mom back',...] (max ~4), o.title ('TO DO'),
+// o.w = pad width (default 460; use 540+ with LATER stamps), per-item arrays 0..1: o.show (line pops in), o.later (red LATER stamp slams on), o.done (green tick + strike-through).
+function todo(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const it=o.items||[],n=it.length,W=o.w||460,H=120+n*112;
+ X.save();X.translate(8,10);rr(-W/2,0,W,H,18,'rgba(0,0,0,.18)',0);X.restore();
+ rr(-W/2,0,W,H,18,'#fffbe8',7);rr(-W/2,0,W,84,16,'#ffd23f',7);txt(o.title||'TO DO',0,44,46,'#151515',0);
+ for(let k=0;k<5;k++)circ(-W/2+50+k*90,0,11,'#8a8a8a',4);
+ for(let i=0;i<n;i++){const sp=o.show?C(o.show[i]||0):1;if(sp<=0)continue;const yy=150+i*112;X.save();X.globalAlpha=sp;X.translate(lerp(-40,0,eo(sp)),0);
+  const dn=o.done?C(o.done[i]||0):0,lt=o.later?C(o.later[i]||0):0;
+  rr(-W/2+26,yy-24,48,48,10,dn>0?'#3ecf6a':'#fff',5);if(dn>0)line([[-W/2+36,yy],[-W/2+47,yy+12],[-W/2+66,yy-14]],8,'#fff');
+  txt(it[i],-W/2+92,yy+2,36,dn>0?'#8a8a8a':'#151515',0,'700 ','left');
+  if(dn>0)line([[-W/2+90,yy+2],[-W/2+90+(W-130)*dn,yy+2]],5,'#3ecf6a');
+  if(lt>0){X.save();X.translate(W/2-92,yy);X.rotate(-.14);const z=lerp(2.2,1,eo(lt));X.scale(z,z);X.globalAlpha=C(lt*3)*sp;path(()=>X.roundRect(-82,-28,164,56,10),'#fff',6,'#e53935');txt('LATER',0,2,36,'#e53935',0);X.restore()}
+  X.restore()}
+ X.restore()}
