@@ -55,6 +55,15 @@ Before today, Memopai was a cameo inside unrelated jokes (a cop arrests the Moon
 
 **Want-it gate (mandatory, together with the clarity gate):** give only the script to a fresh subagent and ask: (a) retell the story in one sentence, (b) what is Memopai and what exactly did it do, (c) does the story work without it, (d) would a normal person want it after watching, and why. Rewrite until (b) is right, (c) is "no" and (d) is a clear yes.
 
+## 0d. THE VIEWER IS THE MAIN CHARACTER (owner, 2026-11-12 17:15, top priority together with 0c)
+Owner: "Make the video more related, so the viewer feels like 'that's me', so they know Memopai helps THEM. Make people feel they need Memopai to get their lives in order."
+- Speak to the viewer in the SECOND PERSON ("And you? Call Mom back? Later."). The main character is the viewer: a stickman/toon labelled **YOU**, or a character doing exactly what the viewer does. Avoid third-person stories about named strangers (Ana, Mark, Jake) as the core; a fact or a character may open the video, but by second 5 it must turn to "and you".
+- Show 2–3 tiny, universal, everyday things that almost everyone is putting off or forgetting RIGHT NOW (call Mom back, a bill, a parcel to return, a birthday, the bins, a doctor's appointment). Specific and small beats big and dramatic.
+- Show the viewer's OWN life getting in order: they text their own things to Memopai the moment they think of them, the reminder arrives, the thing gets done, the list gets ticked. End on the "sorted" state, not only on a joke about someone else. Remind-someone-else stays a great feature, but frame it from the viewer's side ("you're tired of nagging").
+- Hook and cover are about the viewer ("You said 'later' 3 times today"), and the call to action may echo it ("Get your life in order. Just text Memo Pie on WhatsApp.").
+- Extra gate question for the test reader: "Did you feel 'that's me'?" It must be a clear yes.
+- Stay honest: only real features, no invented guarantees; Memopai reminds you, it doesn't do the task for you.
+
 ## 1. Pick a topic that is NOT in `daily/topics_log.md`
 - The category comes from the rotation in `daily/learnings.md`. Log entries must include it: `- <date> | <HH:00> | <CATEGORY> | <title> | <premise> | <file>`.
 - `git pull` first, then read `daily/topics_log.md`. Never repeat a topic, fact, premise or punchline. Also avoid repeating the same *format* in back-to-back slots (alternate Officer Gary comedy / history fun fact / myth-buster / science-space / animal fact / "what if they had phones").
