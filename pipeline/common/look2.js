@@ -45,3 +45,15 @@ function split2(t,drawA,drawB,o={}){const sl=o.slant==null?160:o.slant,p=o.p==nu
  X.lineWidth=22;X.strokeStyle='#151515';X.beginPath();X.moveTo(seam(top),top);X.lineTo(seam(bot),bot);X.stroke();X.lineWidth=10;X.strokeStyle='#fff';X.stroke();
  if(o.badge){const by=o.badgeY||820,bx=seam(by);X.save();X.translate(bx,by);const k=C(sp(o.bp==null?1:o.bp,13,.5));X.scale(k,k);X.font="900 64px Inter";const w=X.measureText(o.badge).width+70;
   rr(-w/2,-52,w,104,52,'#151515',0);rr(-w/2+8,-44,w-16,88,44,o.badgeCol||'#ffd23f',0);X.fillStyle='#151515';X.textAlign='center';X.textBaseline='middle';X.fillText(o.badge,0,4);X.restore()}}
+
+// ---- rewind(p,t,label): VHS rewind overlay, 2026-11-12 20:00. p = 0..1 strength (fade in/out yourself), t = time (moving tracking bars).
+// Desaturates + cyan/magenta split tint, horizontal tracking lines that sweep upward, jitter bands, and a '◀◀ REWIND' chip top-left. Screen space; call last in a shot.
+function rewind(p,t=0,label='◀◀ REWIND'){if(p<=0)return;const a=C(p);X.save();X.setTransform(1,0,0,1,0,0);
+ X.globalAlpha=a*.85;X.globalCompositeOperation='saturation';X.fillStyle='#808080';X.fillRect(0,0,1080,1920);
+ X.globalCompositeOperation='screen';X.globalAlpha=.16*a;X.fillStyle='#ff3cac';X.fillRect(0,0,1080,1920);X.globalAlpha=.12*a;X.fillStyle='#2bd2ff';X.fillRect(0,0,1080,1920);
+ X.globalCompositeOperation='source-over';
+ for(let k=0;k<5;k++){const yy=((1-((t*1.7+k*.21)%1))*2100)-90,h=18+rnd(k+3)*60;X.globalAlpha=.35*a;X.fillStyle='#fff';X.fillRect(0,yy,1080,h*.25);X.globalAlpha=.18*a;X.fillStyle='#000';X.fillRect(0,yy+h*.25,1080,h)}
+ X.globalAlpha=.07*a;X.fillStyle='#fff';for(let yy=(t*600)%9;yy<1920;yy+=9)X.fillRect(0,yy,1080,2);
+ const g=X.createRadialGradient(540,960,520,540,960,1250);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.6)');X.globalAlpha=a;X.fillStyle=g;X.fillRect(0,0,1080,1920);
+ if(label&&(t*3)%1<.72){X.globalAlpha=a;X.font="900 66px Inter";X.fillStyle='#fff';X.textAlign='left';X.textBaseline='middle';X.shadowColor='rgba(0,0,0,.6)';X.shadowBlur=8;X.fillText(label,70,190)}
+ X.restore()}
