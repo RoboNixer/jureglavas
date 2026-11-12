@@ -290,3 +290,23 @@ function pillbox(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const D='MTW
   X.globalAlpha=.92;rr(-W/2+2,-22,W-4,30,10,['#ff8a80','#ffd54f','#81d4fa','#a5d6a7','#b39ddb','#f48fb1','#ffcc80'][i],5);X.globalAlpha=1;
   if(lp<.5)txt(D[i],0,-7,26,'#151515',0);X.restore()}
  X.restore()}
+
+// armchair(x,y,s,{col,col2,front}) — cosy wingback armchair, y = floor line. Call once with front:0 BEFORE the seated toon (back + seat), then with front:1 AFTER it (arm rests + cushion lip) so the character sits inside.
+function armchair(x,y,s,o={}){const c=o.col||'#b5523b',c2=o.col2||'#9a4230';X.save();X.translate(x,y);X.scale(s,s);
+ if(!o.front){gshadow(0,0,300,.3);rr(-60-170,-30,30,40,8,'#5a3a26',6);rr(200,-30,30,40,8,'#5a3a26',6);
+  path(()=>{X.moveTo(-230,-260);X.quadraticCurveTo(-250,-640,-120,-660);X.lineTo(120,-660);X.quadraticCurveTo(250,-640,230,-260);X.closePath()},c,8);vol(()=>{X.moveTo(-230,-260);X.quadraticCurveTo(-250,-640,-120,-660);X.lineTo(120,-660);X.quadraticCurveTo(250,-640,230,-260);X.closePath()},0,-500,240,200);
+  for(let k=0;k<3;k++)circ(-90+k*90,-520,8,c2,0);rr(-240,-300,480,280,40,c2,8)}
+ else{rr(-280,-340,110,330,46,c,8);rr(170,-340,110,330,46,c,8);circ(-225,-330,52,c,8);circ(225,-330,52,c,8);rr(-200,-90,400,70,30,c2,7)}
+ X.restore()}
+// wallcal(x,y,s,{weeks:6,marks:'x'|'heart', n, p, month}) — month wall calendar; Sunday column gets n marks (X or heart) that pop in as p goes 0..1.
+function wallcal(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const W=420,H=440;gshadow(0,H/2+20,180,.15);line([[0,-H/2-40],[0,-H/2]],5,'#555');circ(0,-H/2-44,9,'#888',4);
+ rr(-W/2,-H/2,W,H,18,'#fff',7);rr(-W/2,-H/2,W,86,18,'#e53935',0);X.fillStyle='#e53935';X.fillRect(-W/2,-H/2+50,W,36);txt(o.month||'SUNDAYS',0,-H/2+44,44,'#fff',0);
+ const wk=o.weeks||6,cw=W/7-6,chh=(H-110)/wk;for(let r=0;r<wk;r++)for(let c=0;c<7;c++){X.fillStyle=c==6?'#ffe9e6':'#f1f1f1';X.fillRect(-W/2+8+c*(cw+5),-H/2+96+r*chh,cw,chh-6)}
+ const n=o.n==null?wk:o.n,p=o.p==null?1:o.p;for(let r=0;r<n;r++){const k=C(p*n-r);if(k<=0)continue;const cx=-W/2+8+6*(cw+5)+cw/2,cy=-H/2+96+r*chh+chh/2-3;X.save();X.translate(cx,cy);X.scale(eo(k)*1.0,eo(k)*1.0);
+  if(o.marks=='heart'){path(()=>{X.moveTo(0,14);X.bezierCurveTo(-30,-6,-16,-30,0,-14);X.bezierCurveTo(16,-30,30,-6,0,14)},'#ff3d71',3)}else{line([[-18,-18],[18,18]],7,'#e53935');line([[18,-18],[-18,18]],7,'#e53935')}X.restore()}
+ X.restore()}
+// teacup(x,y,s,{t,steam}) — cup on saucer with curling steam.
+function teacup(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);ell(0,0,70,16,'#fff',6);path(()=>{X.moveTo(-50,-60);X.lineTo(50,-60);X.quadraticCurveTo(46,-4,0,-4);X.quadraticCurveTo(-46,-4,-50,-60);X.closePath()},'#fff',6);
+ X.lineWidth=7;X.strokeStyle='#222';X.beginPath();X.arc(56,-36,18,-1.4,1.4);X.stroke();ell(0,-60,50,10,'#a0522d',4);rr(-50,-44,100,10,4,'#7ec8e3',0);
+ if(o.steam!==0){X.globalAlpha=.55;for(let k=0;k<3;k++){const ph=(t*.8+k/3)%1;X.lineWidth=6;X.strokeStyle='#fff';X.beginPath();for(let j=0;j<8;j++){const yy=-70-j*14-ph*30,xx=(k-1)*20+Math.sin(j*.8+t*3+k)*10;j?X.lineTo(xx,yy):X.moveTo(xx,yy)}X.stroke()}X.globalAlpha=1}
+ X.restore()}
