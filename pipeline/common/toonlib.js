@@ -245,3 +245,19 @@ function wbin(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);X
  rr(96,-372,26,46,8,dk,6);
  if(o.flies){for(let k=0;k<4;k++){const a=(o.t||0)*6+k*1.6;txt('·',Math.cos(a)*90,-470+Math.sin(a*1.3)*40,60,'#111',0)}}
  X.restore()}
+
+// ================= PARKING METER (craft ladder 2026-11-12 09:00) =================
+// pmeter(x,y,s,o): parking meter on a post, feet at y. o.l1/o.l2 = two display lines (e.g. 'PAID UNTIL','2:00 PM'),
+// o.col display text colour, o.flash (true = display blinks red), o.coin 0..1 coin dropping into the slot, o.t time,
+// o.shake px wobble, o.glow (display glow). Head centre ≈ y-560*s.
+function pmeter(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x+(o.shake?Math.sin(t*70)*o.shake:0),y);X.scale(s,s);
+ if(typeof gshadow==='function')gshadow(0,0,70,.3);
+ rr(-16,-430,32,430,8,'#5d6470',7);rr(-34,-20,68,24,6,'#4a505a',6);
+ path(()=>{X.moveTo(-110,-430);X.lineTo(-110,-640);X.quadraticCurveTo(-110,-730,0,-735);X.quadraticCurveTo(110,-730,110,-640);X.lineTo(110,-430);X.quadraticCurveTo(0,-405,-110,-430)},'#9aa6b4',8);
+ if(typeof vol==='function')vol(()=>{X.rect(-110,-735,220,320)},-20,-590,110,170);
+ rr(-84,-690,168,120,18,'#0f1a14',7);const bl=o.flash?(Math.floor(t*6)%2):1;
+ if(o.glow!==false&&bl&&typeof glow==='function')glow(0,-630,120,o.flash?'255,80,60':'120,255,170',.25);
+ if(bl){txt(o.l1||'PAID UNTIL',0,-660,24,o.col||'#7dffb0',0,'800 ');txt(o.l2||'2:00 PM',0,-612,o.l2&&o.l2.length>8?30:40,o.col||'#7dffb0',0,'900 ')}
+ rr(-24,-548,48,14,6,'#222',4);rr(-60,-510,120,46,10,'#7b8592',5);txt('P',0,-487,32,'#fff',0);
+ if(o.coin!=null&&o.coin<1){const p=C(o.coin);const cy=lerp(-760,-545,eo(p));X.save();X.translate(lerp(60,0,p),cy);X.rotate(p*9);X.scale(lerp(1,.6,p),1);circ(0,0,30,'#f2c94c',6);circ(0,0,20,null,4,'#c79a22');X.restore()}
+ X.restore()}
