@@ -353,3 +353,14 @@ function todo(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const it=o.item
   if(lt>0){X.save();X.translate(W/2-92,yy);X.rotate(-.14);const z=lerp(2.2,1,eo(lt));X.scale(z,z);X.globalAlpha=C(lt*3)*sp;path(()=>X.roundRect(-82,-28,164,56,10),'#fff',6,'#e53935');txt('LATER',0,2,36,'#e53935',0);X.restore()}
   X.restore()}
  X.restore()}
+// concert ticket prop (2026-11-12 22:00): perforated stub, title, date, barcode, optional glow + pop-in
+// ticket(x,y,s,{rot,col,col2,title,sub,glow,p,stub})
+function ticket(x,y,s,o={}){const p=o.p==null?1:C(o.p);if(p<=0)return;X.save();X.translate(x,y);X.rotate(o.rot||0);const k=s*(o.p==null?1:lerp(.3,1,eo(p))*(1+.15*Math.sin(Math.PI*p)));X.scale(k,k);
+ if(o.glow)glow(0,0,260,o.glow,.45);const c1=o.col||'#ff4f7b',c2=o.col2||'#ffd23f';
+ X.save();X.globalAlpha=.25;rr(-196,-86,400,180,22,'#000',0);X.restore();
+ path(()=>{X.moveTo(-200,-90);X.lineTo(200,-90);X.lineTo(200,-22);X.arc(200,0,22,-Math.PI/2,Math.PI/2,true);X.lineTo(200,90);X.lineTo(-200,90);X.lineTo(-200,22);X.arc(-200,0,22,Math.PI/2,-Math.PI/2,true);X.closePath()},c1,7);
+ X.save();X.setLineDash([10,10]);line([[90,-82],[90,82]],5,'rgba(255,255,255,.75)');X.restore();
+ rr(-178,-70,250,140,14,'rgba(255,255,255,.18)',0);
+ txt(o.title||'CONCERT',-52,-24,46,'#fff',8);txt(o.sub||'FRI · 10:00',-52,34,32,c2,6,'800 ');
+ for(let i=0;i<9;i++){X.fillStyle='rgba(255,255,255,.9)';X.fillRect(106+i*9,-56,i%3?4:7,112)}
+ txt('★',145,-70,26,c2,0);X.restore()}
