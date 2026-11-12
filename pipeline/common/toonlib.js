@@ -25,6 +25,7 @@ function toon(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);c
  if(o.hair=='bun'){path(()=>{X.ellipse(0,0,hw,hh,0,Math.PI*1.02,Math.PI*1.98)},'#d9d9d9',8)}
  if(o.hair=='pinkbun'){path(()=>{X.ellipse(0,0,hw,hh,0,Math.PI*1.02,Math.PI*1.98)},'#ff8ccf',8)}
  if(o.hair=='messy'){path(()=>{X.ellipse(0,0,hw,hh,0,Math.PI*1.05,Math.PI*1.95)},'#c9772e',8)}
+ if(o.hair=='bald'){[-1,1].forEach(d=>{for(let k=0;k<3;k++)circ(d*(hw*.9+4),-hh*.32+k*26,24,o.hairc||'#d9d9d9',6)});X.globalAlpha=.55;ell(-hw*.3,-hh*.62,hw*.28,hh*.12,'#fff',0,-.3);X.globalAlpha=1}  // bald dome + grey side tufts (o.hairc)
  if(o.headband){rr(-hw+6,-hh*.62,hw*2-12,26,10,'#e53935',6)}
  const E=o.eyes||'sleepy',lk=o.look||0;const ey=-22;
  const eye=(ex,r,lid,pupil)=>{circ(ex,ey,r,'#fff',7);if(E!='closed'){circ(ex+lk*r/40,ey+(lid>0?r*.25:0),pupil,O,0);circ(ex+lk*r/40-pupil*.35,ey-pupil*.3+(lid>0?r*.25:0),pupil*.3,'#fff',0)}
@@ -278,3 +279,14 @@ function crt(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);g
  if(o.scr)txt(o.scr,0,o.scr2?-330:-305,o.scr.length>12?30:38,'#fff',6);if(o.scr2)txt(o.scr2,0,-270,30,'#ffe14d',6);
  glow(0,-305,260,o.glowc||'90,150,255',.35);circ(150,-150,8,'#5ad16a',0);
  rr(-230,-50,460,50,12,'#d9d2bb',7);for(let r=0;r<2;r++)for(let k=0;k<9;k++)rr(-210+k*47,-42+r*20,38,14,3,'#bdb59c',0);X.restore()}
+
+// ---- pillbox(x,y,s,{full:[7 bools]|n, open:-1..6, lidP:0-1, t}): weekly pill organizer (M T W T F S S), 2026-11-12. full: which days still hold pills
+// (array, or a number = first n days full). open: index of the day whose lid is flipping open (lidP 0..1). Bottom-centre at (x,y), width ~560*s.
+function pillbox(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const D='MTWTFSS',W=76,full=Array.isArray(o.full)?o.full:D.split('').map((_,i)=>i<(o.full==null?7:o.full));
+ gshadow(0,0,320,.25);rr(-290,-110,580,110,22,'#ffffff',8);vol(()=>X.roundRect(-290,-110,580,110,22),0,-60,290,60);
+ for(let i=0;i<7;i++){const cx=-246+i*82;rr(cx-W/2+4,-98,W-8,86,14,'#eef3f7',5);
+  if(full[i]){circ(cx-12,-46,15,['#ff6b6b','#ffd23f','#7fd1ff','#8ff07a','#c4b2ff','#ff9fd6','#ffb74d'][i],5);ell(cx+14,-38,13,9,'#ffffff',4,.4)}
+  const lp=i===o.open?eo(C(o.lidP||0)):0;X.save();X.translate(cx,-104);X.scale(1,1-lp*1.9);
+  X.globalAlpha=.92;rr(-W/2+2,-22,W-4,30,10,['#ff8a80','#ffd54f','#81d4fa','#a5d6a7','#b39ddb','#f48fb1','#ffcc80'][i],5);X.globalAlpha=1;
+  if(lp<.5)txt(D[i],0,-7,26,'#151515',0);X.restore()}
+ X.restore()}

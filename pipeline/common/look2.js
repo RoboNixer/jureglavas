@@ -32,3 +32,16 @@ function freeze(p,t=0,label='⏸ PAUSED'){if(p<=0)return;X.save();X.setTransform
  const g=X.createRadialGradient(540,960,500,540,960,1200);g.addColorStop(0,'rgba(0,10,30,0)');g.addColorStop(1,'rgba(0,10,30,.55)');X.globalAlpha=C(p);X.fillStyle=g;X.fillRect(0,0,1080,1920);
  X.globalAlpha=.08*C(p);X.fillStyle='#fff';for(let yy=(t*240)%12;yy<1920;yy+=12)X.fillRect(0,yy,1080,2);
  X.globalAlpha=C(p*2);if(label){X.font="900 54px Inter";const w=X.measureText(label).width+60;rr(1020-w,150,w,90,45,'rgba(10,20,40,.8)',0);txt(label,1020-w/2,196,50,'#fff',0)}X.restore()}
+
+// ---- split2(t,drawA,drawB,o): diagonal split screen, 2026-11-12. drawA(t) = left/top world, drawB(t) = right world; each is drawn in its own
+// clipped panel with its own camera o.camA/o.camB = [cx,cy,zoom] (world centred in its half). o.slant (px, default 160) tilts the seam,
+// o.badge = text in a dark pill on the seam (e.g. '800 KM'), o.p = 0..1 seam wipe-in. Screen space; call as the whole shot.
+function split2(t,drawA,drawB,o={}){const sl=o.slant==null?160:o.slant,p=o.p==null?1:eo(C(o.p)),mx=540,top=-40,bot=1960;
+ const seam=(y)=>mx+sl*(.5-y/1920);const panel=(left,fn,cm)=>{X.save();X.setTransform(1,0,0,1,0,0);X.beginPath();
+  if(left){X.moveTo(-10,top);X.lineTo(seam(top),top);X.lineTo(seam(bot),bot);X.lineTo(-10,bot)}else{X.moveTo(1090,top);X.lineTo(seam(top),top);X.lineTo(seam(bot),bot);X.lineTo(1090,bot)}
+  X.closePath();X.clip();const c=cm||[540,960,1];const off=left?-270:270;const dx=(1-p)*(left?-600:600);
+  cam(c[0]-(off+dx)/c[2],c[1],c[2],t,.3);fn(t);X.restore()};
+ panel(1,drawA,o.camA);panel(0,drawB,o.camB);X.setTransform(1,0,0,1,0,0);
+ X.lineWidth=22;X.strokeStyle='#151515';X.beginPath();X.moveTo(seam(top),top);X.lineTo(seam(bot),bot);X.stroke();X.lineWidth=10;X.strokeStyle='#fff';X.stroke();
+ if(o.badge){const by=o.badgeY||820,bx=seam(by);X.save();X.translate(bx,by);const k=C(sp(o.bp==null?1:o.bp,13,.5));X.scale(k,k);X.font="900 64px Inter";const w=X.measureText(o.badge).width+70;
+  rr(-w/2,-52,w,104,52,'#151515',0);rr(-w/2+8,-44,w-16,88,44,o.badgeCol||'#ffd23f',0);X.fillStyle='#151515';X.textAlign='center';X.textBaseline='middle';X.fillText(o.badge,0,4);X.restore()}}
