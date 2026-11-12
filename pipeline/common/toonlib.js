@@ -310,3 +310,30 @@ function teacup(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s
  X.lineWidth=7;X.strokeStyle='#222';X.beginPath();X.arc(56,-36,18,-1.4,1.4);X.stroke();ell(0,-60,50,10,'#a0522d',4);rr(-50,-44,100,10,4,'#7ec8e3',0);
  if(o.steam!==0){X.globalAlpha=.55;for(let k=0;k<3;k++){const ph=(t*.8+k/3)%1;X.lineWidth=6;X.strokeStyle='#fff';X.beginPath();for(let j=0;j<8;j++){const yy=-70-j*14-ph*30,xx=(k-1)*20+Math.sin(j*.8+t*3+k)*10;j?X.lineTo(xx,yy):X.moveTo(xx,yy)}X.stroke()}X.globalAlpha=1}
  X.restore()}
+
+// ================= DRILL + OLD BOOK (craft ladder 2026-11-12 18:00) =================
+// drill(x,y,s,o): cordless power drill, handle bottom at (x,y). o.col body colour, o.t time, o.spin (true = bit spins + motion lines),
+// o.dust 0..1 dust layer + o.cob (cobweb strands from the top), o.rot radians, o.flip mirror.
+function drill(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s*(o.flip?-1:1),s);const col=o.col||'#f2b33d',dk=o.dark||'#2b2b30',t=o.t||0;
+ gshadow&&o.shadow&&gshadow(0,6,90,.25);
+ rr(-46,-40,92,40,10,dk,7);rr(-40,-34,80,24,6,'#4a4a52',0);              // battery
+ path(()=>{X.moveTo(-30,-40);X.lineTo(-38,-150);X.lineTo(22,-150);X.lineTo(30,-40);X.closePath()},dk,7); // grip
+ rr(-14,-128,22,30,6,'#e04b3a',4);                                        // trigger
+ rr(-70,-230,190,90,30,col,8);if(typeof vol==='function')vol(()=>X.roundRect(-70,-230,190,90,30),20,-190,95,45); // body
+ for(let k=0;k<4;k++)line([[-50+k*14,-216],[-50+k*14,-158]],5,'rgba(0,0,0,.25)');
+ rr(118,-212,46,54,10,dk,6);                                              // chuck
+ const sp=o.spin?t*40:0;X.save();X.translate(164,-185);rr(0,-7,110,14,4,'#c9ccd3',4);for(let k=0;k<5;k++){const xx=10+k*20+((sp*6)%20);if(xx<104)line([[xx,-7],[xx+10,7]],4,'#7d828e')}X.restore();
+ if(o.spin){for(let k=0;k<3;k++)line([[290,-215+k*30],[330,-215+k*30]],6,'rgba(255,255,255,.8)')}
+ if(o.dust){X.globalAlpha=C(o.dust)*.75;for(let k=0;k<14;k++)ell(-60+rnd(k)*200,-232+rnd(k+5)*10,14+rnd(k+2)*12,7,'#b8b0a2',0);X.globalAlpha=1}
+ if(o.cob){X.globalAlpha=.8;for(let k=0;k<5;k++){const a=-1.2+k*.35;line([[20,-232],[20+Math.cos(a)*170,-232-Math.abs(Math.sin(a))*150-60]],3,'rgba(255,255,255,.9)')}
+  for(let r2=1;r2<4;r2++){X.beginPath();for(let k=0;k<5;k++){const a=-1.2+k*.35;const px=20+Math.cos(a)*55*r2,py=-232-Math.abs(Math.sin(a))*50*r2-20*r2;k?X.lineTo(px,py):X.moveTo(px,py)}X.strokeStyle='rgba(255,255,255,.8)';X.lineWidth=2.5;X.stroke()}X.globalAlpha=1}
+ X.restore()}
+// oldbook(x,y,s,o): thick leather-bound antique book (closed), centred at (x,y). o.rot radians, o.dust 0..1 (dust puff + specks), o.label spine/cover text, o.col leather colour.
+function oldbook(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);const col=o.col||'#7a3b22';
+ rr(-120,-150,240,300,14,'#efe2bf',7);for(let k=0;k<6;k++)line([[112,-130+k*50],[112,-110+k*50]],3,'#c9b98f');   // page block
+ rr(-130,-160,236,320,16,col,8);if(typeof vol==='function')vol(()=>X.roundRect(-130,-160,236,320,16),-10,0,120,160);
+ rr(-130,-160,40,320,12,'rgba(0,0,0,.25)',0);for(let k=0;k<3;k++)rr(-136,-110+k*100,52,14,6,'#c9a24a',3);  // spine bands
+ rr(-70,-90,150,90,10,null,5,'#c9a24a');txt(o.label||'1668',5,-45,40,'#e8c35a',0);
+ for(let k=0;k<4;k++)circ(-100+k*0+rnd(k)*170,-150+rnd(k+3)*300,5,'rgba(255,255,255,.35)',0);
+ if(o.dust){const d=o.dust;X.globalAlpha=C(1.2-d);for(let k=0;k<10;k++){const a=k*.63;circ(Math.cos(a)*(120+d*160),Math.sin(a)*(120+d*120),26+d*30,'rgba(210,200,180,.7)',0)}X.globalAlpha=1}
+ X.restore()}
