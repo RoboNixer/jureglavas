@@ -68,3 +68,14 @@ function membar(x,y,s,p,o={}){p=C(p);const t=o.t||0,W=o.w||300,H=118;X.save();X.
  txt(Math.round(p*100)+'%',0,4,62,low?'#ff4d4d':'#ffffff',10);txt(o.label||'MEMORY',0,-H/2-34,34,'#ffffff',9,'900 ');
  if(o.drip){for(let k=0;k<4;k++){const ph=((t*1.3+k*.27)%1);X.globalAlpha=1-ph;circ(-W/2+40+k*70,H/2+10+ph*140,9-ph*4,col,0)}X.globalAlpha=1}
  if(o.blink&&low)glow(0,0,W*.8,'255,60,60',.4);X.restore()}
+
+// frost(p,t): screen-space 'the room just froze' overlay — cool blue tint, frosted edge vignette, ice crystals that GROW in from all four edges with p (0..1), twinkling glints. Use for an icy stare / cold reaction; animate p down to 'melt'.
+function frost(p,t=0){if(p<=0)return;p=C(p);X.save();X.setTransform(1,0,0,1,0,0);
+ X.globalCompositeOperation='multiply';X.fillStyle=`rgba(165,200,255,${.5*p})`;X.fillRect(0,0,1080,1920);X.globalCompositeOperation='source-over';
+ const g=X.createRadialGradient(540,880,lerp(1500,420,p),540,880,1250);g.addColorStop(0,'rgba(230,245,255,0)');g.addColorStop(1,`rgba(236,248,255,${.8*p})`);X.fillStyle=g;X.fillRect(0,0,1080,1920);
+ X.strokeStyle=`rgba(255,255,255,${.85*p})`;X.lineCap='round';
+ const br=(x,y,a,len,d)=>{if(d>3||len<8)return;const x2=x+Math.cos(a)*len,y2=y+Math.sin(a)*len;X.lineWidth=Math.max(2,6.5-d*1.5);X.beginPath();X.moveTo(x,y);X.lineTo(x2,y2);X.stroke();for(let s=1;s<=2;s++){const mx=x+(x2-x)*s/3,my=y+(y2-y)*s/3;br(mx,my,a+.75,len*.42,d+1);br(mx,my,a-.75,len*.42,d+1)}};
+ for(let k=0;k<26;k++){const side=k%4,u=rnd(k+3);let x,y,a;if(side==0){x=u*1080;y=0;a=Math.PI/2}else if(side==1){x=1080;y=u*1920;a=Math.PI}else if(side==2){x=u*1080;y=1920;a=-Math.PI/2}else{x=0;y=u*1920;a=0}
+  a+=(rnd(k+9)-.5)*.9;br(x,y,a,(110+rnd(k+5)*230)*eo(p),0)}
+ for(let k=0;k<16;k++){X.globalAlpha=p*(.4+.6*Math.abs(Math.sin(t*3+k*1.7)));const sd=k%2;circ(sd?rnd(k)*150:1080-rnd(k)*150,rnd(k+20)*1920,3+rnd(k+4)*5,'#fff',0)}
+ X.restore()}

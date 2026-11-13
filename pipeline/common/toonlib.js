@@ -35,6 +35,7 @@ function toon(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);c
  else if(E=='sleepy'){eye(-42,30,.5,11);eye(44,26,.55,10)}
  else if(E=='wide'){eye(-44,38,0,9);eye(46,30,0,8)}
  else if(E=='crazy'){eye(-46,40,0,8);X.save();X.translate(0,6);eye(46,24,0,12);X.restore()}
+ else if(E=='wink'){eye(-44,34,0,10);path(()=>{X.moveTo(20,ey+6);X.quadraticCurveTo(44,ey-20,68,ey+6)},null,9);line([[18,-70],[70,-80]],10)}
  else if(E=='angry'){eye(-42,30,.35,12);eye(44,28,.35,12);line([[-80,-62],[-16,-38]],12);line([[80,-62],[16,-38]],12)}
  if(o.unibrow&&E!='angry')line([[-74,-64],[-30,-70],[0,-62],[30,-70],[74,-64]],12,'#3a2a1a');
  if(o.glasses){circ(-42,ey,40,null,8);circ(44,ey,38,null,8);line([[-2,ey],[6,ey]],6);X.globalAlpha=.25;circ(-42,ey,36,'#bfe6ff',0);circ(44,ey,34,'#bfe6ff',0);X.globalAlpha=1}
