@@ -364,3 +364,10 @@ function ticket(x,y,s,o={}){const p=o.p==null?1:C(o.p);if(p<=0)return;X.save();X
  txt(o.title||'CONCERT',-52,-24,46,'#fff',8);txt(o.sub||'FRI · 10:00',-52,34,32,c2,6,'800 ');
  for(let i=0;i<9;i++){X.fillStyle='rgba(255,255,255,.9)';X.fillRect(106+i*9,-56,i%3?4:7,112)}
  txt('★',145,-70,26,c2,0);X.restore()}
+// wineb: wine bottle prop (optional gift bow, glint). o:{rot,col,bow,glint,label}
+function wineb(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);const c=o.col||'#5a1626';
+ path(()=>{X.moveTo(-34,90);X.lineTo(-34,-30);X.quadraticCurveTo(-34,-62,-12,-78);X.lineTo(-12,-130);X.lineTo(12,-130);X.lineTo(12,-78);X.quadraticCurveTo(34,-62,34,-30);X.lineTo(34,90);X.quadraticCurveTo(0,100,-34,90)},c,7);
+ vol(()=>{X.rect(-34,-80,68,170)},0,10,34,90);rr(-16,-150,32,26,6,'#c9a24a',5);rr(-30,-8,60,58,8,o.label||'#f3e7cf',5);circ(0,20,10,c,0);
+ line([[-20,-40],[-22,70]],6,'rgba(255,255,255,.35)');
+ if(o.bow){path(()=>{X.moveTo(0,-70);X.quadraticCurveTo(-40,-100,-36,-60);X.closePath()},'#e53935',4);path(()=>{X.moveTo(0,-70);X.quadraticCurveTo(40,-100,36,-60);X.closePath()},'#e53935',4);circ(0,-70,8,'#c62828',3)}
+ if(o.glint){X.globalAlpha=.6+.4*Math.sin((o.t||0)*8);txt('✦',-26,-60,30,'#fff',0);X.globalAlpha=1}X.restore()}

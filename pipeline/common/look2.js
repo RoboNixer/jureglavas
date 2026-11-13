@@ -57,3 +57,14 @@ function rewind(p,t=0,label='◀◀ REWIND'){if(p<=0)return;const a=C(p);X.save(
  const g=X.createRadialGradient(540,960,520,540,960,1250);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.6)');X.globalAlpha=a;X.fillStyle=g;X.fillRect(0,0,1080,1920);
  if(label&&(t*3)%1<.72){X.globalAlpha=a;X.font="900 66px Inter";X.fillStyle='#fff';X.textAlign='left';X.textBaseline='middle';X.shadowColor='rgba(0,0,0,.6)';X.shadowBlur=8;X.fillText(label,70,190)}
  X.restore()}
+// membar: battery-style "MEMORY" gauge with live %, colour green->yellow->red, blinks when low, optional drips leaking out (p 0..1 = how full). o:{label,blink,drip,t,w}
+function membar(x,y,s,p,o={}){p=C(p);const t=o.t||0,W=o.w||300,H=118;X.save();X.translate(x,y);X.scale(s,s);
+ const col=p>.6?'#3ddc84':p>.3?'#ffd23f':'#ff4d4d',low=p<.15&&(t*4)%1<.5;
+ X.save();X.shadowColor='rgba(0,0,0,.35)';X.shadowBlur=18;rr(-W/2,-H/2,W,H,26,'#1d1f2b',8);X.restore();rr(W/2+4,-24,22,48,8,'#1d1f2b',6);
+ const iw=W-28;X.save();X.beginPath();X.roundRect(-iw/2,-H/2+14,iw,H-28,16);X.clip();X.fillStyle='#2c3040';X.fillRect(-iw/2,-H/2,iw,H);
+ if(!low||p>0){const g=X.createLinearGradient(0,-H/2,0,H/2);g.addColorStop(0,'rgba(255,255,255,.35)');g.addColorStop(.45,col);g.addColorStop(1,col);X.fillStyle=g;X.fillRect(-iw/2,-H/2,iw*p,H);
+  for(let k=0;k<3;k++){const wx=-iw/2+iw*p;X.fillStyle='rgba(255,255,255,.25)';X.fillRect(wx-4,-H/2+((t*90+k*30)%H),4,10)}}
+ X.restore();
+ txt(Math.round(p*100)+'%',0,4,62,low?'#ff4d4d':'#ffffff',10);txt(o.label||'MEMORY',0,-H/2-34,34,'#ffffff',9,'900 ');
+ if(o.drip){for(let k=0;k<4;k++){const ph=((t*1.3+k*.27)%1);X.globalAlpha=1-ph;circ(-W/2+40+k*70,H/2+10+ph*140,9-ph*4,col,0)}X.globalAlpha=1}
+ if(o.blink&&low)glow(0,0,W*.8,'255,60,60',.4);X.restore()}
