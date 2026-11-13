@@ -120,3 +120,25 @@ function proom(t,o={}){const hz=o.hz||1240;const g=X.createLinearGradient(0,-200
  if(o.night){X.save();X.globalCompositeOperation='multiply';X.fillStyle='rgba(90,90,160,.35)';X.fillRect(-3000,-3000,8000,8000);X.restore()}}
 function psofa(x,y,s=1,c='#5a7fb5',c2='#4a6a9a'){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;X.fillStyle='#000';X.beginPath();X.ellipse(0,10,420,40,0,0,7);X.fill();X.globalAlpha=1;
  const g=X.createLinearGradient(0,-330,0,0);g.addColorStop(0,c);g.addColorStop(1,c2);X.fillStyle=g;X.beginPath();X.roundRect(-360,-330,720,220,50);X.fill();X.beginPath();X.roundRect(-400,-160,800,150,40);X.fill();X.fillStyle=c2;X.beginPath();X.roundRect(-430,-250,100,250,40);X.fill();X.beginPath();X.roundRect(330,-250,100,250,40);X.fill();X.restore()}
+
+// ---------- craft ladder 2026-11-13 18:00: laundry kit ----------
+// washer(x,floorY,s,{door:0..1 open, t, spin:1, glow}) front-loader washing machine standing on the floor
+function washer(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;X.fillStyle='#000';X.beginPath();X.ellipse(0,6,230,26,0,0,7);X.fill();X.globalAlpha=1;
+ rr(-200,-470,400,470,34,'#f4f6f8',9);rr(-200,-470,400,110,34,'#e3e8ee',0);line([[-196,-360],[196,-360]],6,'#c5ced8');
+ circ(130,-415,26,'#d7dde4',6);circ(130,-415,8,O,0);rr(-170,-436,150,40,10,'#9fd8ff',5);
+ if(o.on){X.fillStyle='#2ecc71';X.beginPath();X.arc(60,-415,9,0,7);X.fill()}
+ circ(0,-185,140,'#dfe5ea',8);X.save();X.beginPath();X.arc(0,-185,104,0,7);X.clip();X.fillStyle='#4a5a6e';X.fillRect(-110,-295,220,220);
+ const sp=o.spin?t*6:0;for(let k=0;k<5;k++){const a=sp+k*1.26;ell(Math.cos(a)*48,-185+Math.sin(a)*48,42,30,['#e86a5a','#5a8fe8','#f2c94c','#7bc86c','#c77ddb'][k],4,a)}
+ if(o.spin){X.fillStyle='rgba(140,200,255,.35)';X.fillRect(-110,-185+Math.sin(t*4)*10,220,120)}X.restore();
+ X.globalAlpha=.5;path(()=>{X.arc(0,-185,88,3.6,4.4)},null,10,'#fff');X.globalAlpha=1;
+ const d=C(o.door||0);if(d>0){X.save();X.translate(-140,-185);X.scale(Math.cos(d*1.35),1);circ(140,0,118,'rgba(200,230,255,.55)',9);X.restore()}else circ(0,-185,104,null,9);
+ X.restore()}
+// stink(x,y,t,a,s) rising green stink cloud with wavy lines
+function stink(x,y,t,a=1,s=1){if(a<=0)return;X.save();X.globalAlpha=C(a)*.85;for(let k=0;k<7;k++){const ph=((t*.6+k/7)%1),px=x+Math.sin(k*2.1+t*1.5)*70*s+(k-3)*26*s,py=y-ph*360*s,r=(40+ph*70)*s;X.globalAlpha=C(a)*.55*(1-ph);circ(px,py,r,'#9bd36a',0)}
+ X.globalAlpha=C(a)*.9;for(let k=0;k<3;k++){const bx=x+(k-1)*70*s;path(()=>{X.moveTo(bx,y-40*s);for(let j=1;j<=6;j++)X.lineTo(bx+Math.sin(t*5+j+k)*18*s,y-40*s-j*40*s)},null,9*s,'#5fa83a')}X.restore()}
+// rack(x,floorY,s,t) drying rack with laundry that sways in a breeze
+function rack(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);line([[-230,0],[-150,-430]],10,'#8a9099');line([[230,0],[150,-430]],10,'#8a9099');line([[-170,-330],[170,-330]],8,'#8a9099');line([[-190,-220],[190,-220]],8,'#8a9099');
+ const it=[[-120,-330,'#e86a5a'],[10,-330,'#5a8fe8'],[120,-330,'#f2c94c'],[-70,-220,'#7bc86c'],[80,-220,'#c77ddb']];it.forEach(([ix,iy,c],k)=>{X.save();X.translate(ix,iy);X.rotate(Math.sin(t*2+k)*.06);rr(-46,0,92,110,12,c,6);line([[-30,24],[30,24]],4,'rgba(255,255,255,.5)');X.restore()});X.restore()}
+// hoodie(x,y,s,c) a hoodie held by the hood (draw in a holdR callback)
+function hoodie(x,y,s=1,c='#e86a5a'){X.save();X.translate(x,y);X.scale(s,s);ell(0,10,60,46,c,7);path(()=>{X.moveTo(-90,40);X.lineTo(90,40);X.lineTo(120,150);X.lineTo(80,160);X.lineTo(70,290);X.lineTo(-70,290);X.lineTo(-80,160);X.lineTo(-120,150);X.closePath()},c,7);rr(-50,190,100,50,14,'rgba(0,0,0,.12)',0);line([[-12,50],[-16,110]],4);line([[12,50],[16,110]],4);X.restore()}
