@@ -71,13 +71,16 @@ Owner: "Make the video more related, so the viewer feels like 'that's me', so th
 - The topic must pass the Memopai fit test in section 0c. The hook is a claim about the viewer's pain or Memopai's surprising ability (examples in 0c), in the first 2 s.
 - No graphic violence, no real-person likenesses beyond generic toons, no copyrighted characters.
 
-## 1b. Visual style per video (owner: "use different styles for different videos")
-The `stickman-story-video` skill has two looks, and both are already in `engine.html` / `toonlib.js`. Do not make every video an Officer Gary toon.
-- **STORY** → goofy toon comedy look (skill section 7): Gary or another original toon character.
-- **FUN FACT** → stickman look (skill sections 1–6): `man()/guy()/dave()`, painted flat backgrounds, the fact's own characters, like `pipeline/examples/napo` and `pluto`. No Gary.
-- **PRODUCTIVITY** → alternate: use the look the previous PRODUCTIVITY entry in `topics_log.md` did NOT use.
-- Add `style: toon` or `style: stickman` to the topics_log line and compare the two looks in the scoreboard.
-- Take the LOOK and the tooling from the skill. Its pacing rules ("something changes every 1–2 s", 22–25 lines, 35–55 s) are replaced by Story rules v2 below.
+## 1b. Visual style: LOOK v3 "ILLUSTRATED" is now the default for EVERY video (owner, 2026-11-13)
+Owner sent screenshots of a top stickman-allegory reel (42k likes, 198 shares) and asked: "make the video better and more related, and the style like this — the characters, the background, the objects, everything amazing and professional." Older looks (Gary toon, plain stickman `man()`) are retired unless a story truly needs them.
+Use `pipeline/common/look3.js` (auto-loaded by build.sh; demo + preview in `pipeline/examples/look3_demo/`):
+- **Characters `sm(x,y,s,o)`**: big round white head, huge expressive eyes (pupils `look:[x,y]`, `lid` for smug/tired, `eyes:'wink'|'happy'|'closed'|'dizzy'`), thick brows (`brow:'worried'|'angry'|'up'|'smug'|'sad'`), mouths (`smile|smirk|frown|o|open|tongue|grin|wavy`, `talk:t` flaps), long thin black limbs, black mitten hands, oval shoes, soft head shading, `sweat`, `tear`, `blush`. Poses: `armL/armR/bendL/bendR/legL/legR` (deg), `walk:t`, `crawl:1`, `lean`, `tilt`. Colour a concept character with `col`/`limb`/`out` (e.g. a red "Deadline" or grey "Later"). Hands: `holdR/holdL(fn)` get WORLD coords and draw ON TOP.
+- **Our cast (original, never copy another channel's characters):** YOU = white head + `hair:'curl'`; HER = `hair:'bun', hairc:'#e2508a', lashes:1`; **MEMO = `memo(x,y,s,{t,wave,hop,glow})`, the Memopai mascot as an on-set character** (it can walk in, wave, save the day); concept characters = coloured `sm()` with a label. Never use a green apple-head character or the reference reel's umbrella/desert gag.
+- **Top LABEL card `label3(text,p)`**: white rounded card at the top naming who/what the scene is about, with one emoji ("Your memory 🙃", "Deadline 😏", "You at 11:58 PM 😰", "Memopai 😎"). This is the format's main hook: labelled characters turn a feeling into a person, so the viewer instantly thinks "that's me". One label per shot; it counts as the one text element besides captions.
+- **Painted backgrounds:** `psky()` + `pclouds()` + `psun()` + `prain()`, `proad(t,{wet|dry|road:0|hz})` (perspective road, bushes, puddles with ripples, cracked desert earth), `proom(t,{win,night,rain,frame,lamp,plant,curtain})` interiors with window light, `psofa()`. Distant layers are blurred with `pblur()` for depth. Keep look2 helpers (glow, rays, sparkles, confetti, impact, notif, phoneUI) on top.
+- **Framing like the reference:** characters BIG (scale 1.1–1.35, feet at y≈1760, heads ~y 550–800), 1–2 characters per shot, simple background with one strong light/weather mood that matches the emotion (rain = trouble, harsh sun = deadline, warm room = sorted). Faces stay above y 1400 (captions).
+- **Story shape that fits this look ("allegory with labels"):** two labelled characters, a reversal. E.g. "Your memory" laughs off a reminder → later begs; "Later" vs "Deadline"; YOU alone in the rain vs YOU + MEMO under one umbrella. Memopai is still the star (0c) and the viewer is still the main character (0d); the label tells them which one is them.
+- Log `style: look3` in topics_log and compare it with the old looks on the scoreboard.
 
 ## 2. Story rules v2 (2026-11-11 evening, owner feedback: "too much is happening, hard to keep up, doesn't make sense")
 These rules OVERRIDE anything older, including "something new on screen every 1–2 s" in the task prompt and in section 2b.
