@@ -371,3 +371,30 @@ function wineb(x,y,s,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(
  line([[-20,-40],[-22,70]],6,'rgba(255,255,255,.35)');
  if(o.bow){path(()=>{X.moveTo(0,-70);X.quadraticCurveTo(-40,-100,-36,-60);X.closePath()},'#e53935',4);path(()=>{X.moveTo(0,-70);X.quadraticCurveTo(40,-100,36,-60);X.closePath()},'#e53935',4);circ(0,-70,8,'#c62828',3)}
  if(o.glint){X.globalAlpha=.6+.4*Math.sin((o.t||0)*8);txt('✦',-26,-60,30,'#fff',0);X.globalAlpha=1}X.restore()}
+
+// plant(x,y,s,o): potted house plant (pot base at y). o.wilt 0..1 (0 lush upright green, 1 drooping brown), o.dead 1 = bare brown stalks + fallen leaves,
+// o.bloom 0..1 pink flowers on the tips, o.t sway time, o.n stems (default 6), o.pot colour, o.big leaf size multiplier. Leaves recolour green->brown with wilt.
+function plant(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);const t=o.t||0,w=C(o.wilt||0),dead=o.dead?1:0,n=o.n||6,big=o.big||1;
+ const mix=(a,b,k)=>{const pa=a.match(/\w\w/g).map(h=>parseInt(h,16)),pb=b.match(/\w\w/g).map(h=>parseInt(h,16));return'rgb('+pa.map((v,i)=>Math.round(v+(pb[i]-v)*k)).join(',')+')'};
+ const kk=dead?1:w,leafC=mix('3fae4a','a3843f',kk),leafD=mix('2d8a3a','7d6230',kk),stemC=mix('2f7d39','7a5a2c',kk);
+ gshadow(0,6,120,.3);
+ const leaf=(lx,ly,a,sz,c)=>{X.save();X.translate(lx,ly);X.rotate(a);X.beginPath();X.ellipse(0,-sz*.5,sz*.32,sz*.55,0,0,7);X.fillStyle=c;X.fill();X.lineWidth=6;X.strokeStyle=O;X.stroke();X.beginPath();X.moveTo(0,-sz*.05);X.lineTo(0,-sz*.9);X.lineWidth=3;X.strokeStyle='rgba(0,0,0,.25)';X.stroke();X.restore()};
+ for(let k=0;k<n;k++){const u=n>1?k/(n-1)-.5:0,sd=u<0?-1:1;const sway=Math.sin(t*1.6+k)*.05*(1-w);
+  const a0=u*1.1+sway,L=(230-Math.abs(u)*70)*(1-w*.15);const tipA=a0*(1+w*.8)+sd*w*(1.5+Math.abs(u))+(Math.abs(u)<.1?w*1.3:0);
+  const bx=0,by=-118,cx=bx+Math.sin(a0)*L*.55,cy=by-Math.cos(a0)*L*.55,ex=cx+Math.sin(tipA)*L*.5,ey=cy-Math.cos(tipA)*L*.5;
+  X.beginPath();X.moveTo(bx,by);X.quadraticCurveTo(cx,cy,ex,ey);X.lineWidth=16;X.strokeStyle=O;X.stroke();X.lineWidth=8;X.strokeStyle=stemC;X.stroke();
+  if(!dead){leaf(ex,ey,tipA,95*big*(1-w*.25),leafC);leaf((bx+cx)/2+(cx-bx)*.3,(by+cy)/2+(cy-by)*.3,a0+sd*.9+sd*w*.8,70*big*(1-w*.25),leafD);
+   if(o.bloom>0){const b=eo(C(o.bloom));circ(ex+Math.sin(tipA)*60,ey-Math.cos(tipA)*60,22*b,'#ff7aa8',5);circ(ex+Math.sin(tipA)*60,ey-Math.cos(tipA)*60,8*b,'#ffe14d',0)}}}
+ if(dead){for(let k=0;k<5;k++){X.save();X.translate(-150+k*70,-6);X.scale(1,.45);leaf(0,0,1.3+k*.4,60,'#9a7a3c');X.restore()}}
+ // pot
+ path(()=>{X.moveTo(-82,-120);X.lineTo(82,-120);X.lineTo(64,0);X.lineTo(-64,0);X.closePath()},o.pot||'#d0683f',8);rr(-98,-142,196,36,10,o.pot2||'#e07a4f',8);
+ vol(()=>{X.beginPath();X.moveTo(-82,-120);X.lineTo(82,-120);X.lineTo(64,0);X.lineTo(-64,0);X.closePath()},0,-60,90,70);
+ ell(0,-142,86,10,'#5a3a22',0);X.restore()}
+
+// wcan(x,y,s,o): watering can (base at y). o.tilt radians (pour forward), o.pour 0..1 water stream + drops from the spout, o.t time, o.col
+function wcan(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);X.rotate(o.tilt||0);const t=o.t||0,col=o.col||'#3aa0d8';
+ X.beginPath();X.arc(-10,-150,70,Math.PI*1.05,Math.PI*1.95);X.lineWidth=26;X.strokeStyle=O;X.stroke();X.lineWidth=14;X.strokeStyle=col;X.stroke();
+ path(()=>{X.moveTo(60,-110);X.lineTo(200,-210);X.lineTo(214,-190);X.lineTo(70,-60);X.closePath()},col,8);ell(212,-206,24,14,'#2c7fb0',6);
+ rr(-90,-140,170,140,24,col,8);vol(()=>X.roundRect(-90,-140,170,140,24),-5,-70,85,70);rr(-90,-90,170,18,0,'rgba(255,255,255,.35)',0);
+ if(o.pour>0){X.save();X.translate(212,-206);X.rotate(-(o.tilt||0));for(let k=0;k<14;k++){const q=((t*2.2+k/14)%1);const dx=20+q*60,dy=q*q*420;X.globalAlpha=C(o.pour)*(1-q*.6);circ(dx+Math.sin(k*3)*8,dy,9-q*3,'#7fd3ff',3)}X.restore()}
+ X.restore()}
