@@ -1,6 +1,6 @@
 # Memopai daily video — runbook for each scheduled run
 
-One run = ONE brand-new ~30 s vertical video (1080×1920, 30 fps), published to Memopai's TikTok, Instagram and Facebook.
+One run = ONE brand-new ~30 s vertical video (1080×1920, 30 fps), published to Memopai's Instagram and Facebook (all 7 slots) and TikTok (only the 12, 16, 18 and 20 o'clock slots).
 Repo: `RoboNixer/jureglavas`, branch `memopai-media`. Everything you need is in `pipeline/`.
 
 ## 0. Setup (fresh session)
@@ -121,7 +121,7 @@ cd ~/jg && git add $D && git commit -m "Daily video <slot>: <title>" && git push
 curl -sI https://raw.githubusercontent.com/RoboNixer/jureglavas/memopai-media/$D/<file>.mp4 | head -1   # must be 200
 ```
 Buffer (organization "Memopai", id `6af20c415819f36cb2c5beef`), one `create_post` per channel:
-- TikTok `6af20f6d62b70b94b0d3b4c1`: metadata `{tiktok:{title:"<short hook + emoji>"}}`
+- TikTok `6af20f6d62b70b94b0d3b4c1`: metadata `{tiktok:{title:"<short hook + emoji>"}}` — **ONLY for the 12:00, 16:00, 18:00 and 20:00 slots (owner, 2026-11-13: max 4 TikTok uploads a day). The 09:00, 14:00 and 22:00 videos go to Instagram + Facebook only.**
 - Instagram `6af20e7c62b70b94b0d3a965`: metadata `{instagram:{type:"reel", shouldShareToFeed:true}}`
 - Facebook `6af20d1762b70b94b0d3928c`: metadata `{facebook:{type:"reel"}}`
 - All three: `schedulingType:"automatic"`, asset `{video:{url:<raw URL>, metadata:{thumbnailOffset:0, title:"<title>"}}}`.
