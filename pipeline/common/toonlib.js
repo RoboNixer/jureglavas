@@ -233,7 +233,7 @@ function endcard(t,r,o={}){NOFX=1;X.setTransform(1,0,0,1,0,0);
  const g=X.createLinearGradient(0,0,0,1920);g.addColorStop(0,'#17123d');g.addColorStop(.55,'#2b2070');g.addColorStop(1,'#0d2748');X.fillStyle=g;X.fillRect(0,0,1080,1920);
  glow(540,620,640,'150,140,255',.5);for(let k=0;k<26;k++){const a=.25+.5*Math.abs(Math.sin(t*1.7+k));X.globalAlpha=a;circ(rnd(k)*1080,rnd(k+50)*1300+((t*18+k*40)%60),2+rnd(k+9)*4,'#fff',0)}X.globalAlpha=1;
  const p=C(sp(r,12,.5)),bob=Math.sin(t*3)*14;
- if(MAS.complete&&MAS.naturalWidth){const w=580*p,h=w*MAS.height/MAS.width;X.save();X.globalAlpha=.3;X.fillStyle='#000';X.beginPath();X.ellipse(540,930,230*p-bob,26,0,0,7);X.fill();X.restore();X.drawImage(MAS,540-w/2,620-h/2+bob,w,h)}
+ if(MAS.complete&&MAS.naturalWidth){const w=580*p,h=w*MAS.height/MAS.width;X.save();X.globalAlpha=.3;X.fillStyle='#000';X.beginPath();X.ellipse(540,930,Math.max(1,230*p-bob),26,0,0,7);X.fill();X.restore();X.drawImage(MAS,540-w/2,620-h/2+bob,w,h)}
  const a1=C((r-.2)/.3);X.save();X.globalAlpha=a1;X.translate(0,lerp(40,0,eo(a1)));txt('Memopai',540,1060,156,'#ffffff',0);txt(o.tag||'Your reminder assistant on WhatsApp',540,1172,46,'#cfd3ff',0,'600 ');X.restore();
  const a2=C(sp(r-.5,14,.5));if(a2>0){X.save();X.translate(540,1290);X.scale(a2,a2);X.font="900 66px 'Inter Display',Inter";const u=o.url||'memopai.com',w=X.measureText(u).width+110;X.fillStyle='#25d366';X.beginPath();X.roundRect(-w/2,-58,w,116,58);X.fill();txt(u,0,2,66,'#08301a',0);X.restore()}}
 
