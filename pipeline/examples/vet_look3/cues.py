@@ -1,0 +1,12 @@
+# scratch-scratch in frame 1
+for k in range(8):add(sfx,bp(noise(.09),2500,8000)*env(int(.09*SR),.002,.03),0.15+k*0.17,.35)
+add(sfx,whoosh(.35),2.9,.4)
+drone(T('v1'),T('s2'),44,.05)
+add(sfx,whoosh(.3,.4),T('s1')+1.2,.5);add(sfx,pop(500),T('s1')+1.4,.4)
+add(sfx,pop(1300),T('s1')+2.75,.35)
+add(sfx,whoosh(.4),8.6,.4);chime(8.9);musicbox(8.9,T('cta'),[72,76,79,76],.3,.07)
+add(sfx,whoosh(.4),9.75,.4);add(sfx,pop(1100),10.6,.5)
+add(sfx,pop(1500),12.6,.6)
+buzz(T('s4')+.05,.6);add(sfx,whoosh(.35),T('s4')+1.25,.4);add(sfx,pop(900),T('s4')+1.75,.5)
+add(sfx,whoosh(.4),T('v2')-.1,.4)
+bounce(T("p1")-.3,T("cta"),2,.45);add(sfx,pop(1600),T('p1')-.25,.5);chime(T('cta'))
