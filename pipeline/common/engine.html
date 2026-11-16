@@ -120,9 +120,9 @@ function phoneUI(x,y,s,t,msgs){X.save();X.translate(x,y);X.scale(s,s);
  X.fillStyle='#008069';X.fillRect(-300,-640,600,210);
  rr(-70,-618,140,40,20,'#000',0);
  X.font="600 26px Inter";X.fillStyle='#fff';X.textAlign='left';X.textBaseline='middle';X.fillText('9:41',-240,-598);
- X.font="400 40px Inter";X.fillText('‹',-270,-488);avatar(-180,-488,44,0);
- X.font="800 40px Inter";X.fillStyle='#fff';X.fillText('Memopai',-118,-506);X.font="400 26px Inter";X.fillText(t%1.2<.6&&msgs.typing?'typing…':'online',-118,-466);
- let yy=-380;msgs.list.forEach(m=>{if(t<m.a)return;const p=C((t-m.a)/.22);yy+=(m.voice?vbubble(m.me?270:-270,yy,m.me,p,m.time,t,m.pl||0,m.dur||'0:03'):bubble(m.me?270:-270,yy,470,m.text,m.me,p,m.time))+22});
+ X.font="400 40px Inter";X.fillText('‹',-270,-488);if(msgs.avf)msgs.avf(-180,-488,44);else avatar(-180,-488,44,0);
+ X.font="800 40px Inter,'Noto Color Emoji'";X.fillStyle='#fff';X.fillText(msgs.name||'Memopai',-118,-506);X.font="400 26px Inter";X.fillText(t%1.2<.6&&msgs.typing?'typing…':(msgs.sub||'online'),-118,-466);
+ let yy=-380;msgs.list.forEach(m=>{if(t<m.a)return;const p=C((t-m.a)/.22);if(m.date){X.save();X.globalAlpha=C(p*2);X.font="700 26px Inter";const dw=X.measureText(m.date).width+44;rr(-dw/2,yy,dw,46,14,'#e1f2fb',0);X.fillStyle='#54656f';X.textAlign='center';X.textBaseline='middle';X.fillText(m.date,0,yy+24);X.restore();X.textAlign='left';yy+=66;return}yy+=(m.voice?vbubble(m.me?270:-270,yy,m.me,p,m.time,t,m.pl||0,m.dur||'0:03'):bubble(m.me?270:-270,yy,470,m.text,m.me,p,m.time))+22});
  X.fillStyle='#f0f0f0';X.fillRect(-300,520,600,140);rr(-270,545,450,74,37,'#fff',0);X.font="400 30px Inter";X.fillStyle='#8696a0';X.fillText('Message',-230,582);circ(235,582,38,'#00a884',0);
  X.restore();X.restore()}
 function notif(y,p,title,body){X.save();X.globalAlpha=C(p*2);X.translate(0,lerp(-260,0,eo(p)));rr(60,y,960,230,48,'rgba(250,250,252,.97)',6);
