@@ -200,3 +200,15 @@ function xtree(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,4,1
  X.fillStyle='#ffd23f';X.strokeStyle='#151515';X.lineWidth=5;X.beginPath();for(let k=0;k<10;k++){const rad=k%2?18:40,a=-Math.PI/2+k*Math.PI/5;X.lineTo(Math.cos(a)*rad,-455+Math.sin(a)*rad)}X.closePath();X.fill();X.stroke();glow(0,-455,90,'255,220,90',.45);X.restore()}
 // psnow(t,a,n): soft falling snow over the whole frame (world coords)
 function psnow(t,a=.8,n=110){X.save();for(let k=0;k<n;k++){const sx=(k*137.5)%1500-200,sp=60+(k%7)*18,yy=((k*311)%2100+t*sp)%2100-100,xx=sx+Math.sin(t*1.2+k)*24,rad=4+(k%4)*2.5;X.globalAlpha=a*(.45+(k%3)*.2);X.fillStyle='#fff';X.beginPath();X.arc(xx,yy,rad,0,7);X.fill()}X.restore()}
+// tap(): chrome wall tap over a sink/pot; o.drip=1 animates a water drop forming, falling and rippling every o.per s (offset o.off),
+// o.fall = drop distance (px, unscaled), o.fixed = 0..1 shows a green ✅ sparkle (no drip). Sync drip SFX to the same per/off.
+function tap(x,y,s=1,o={}){const t=o.t||0,per=o.per||.85,off=o.off||0,fall=o.fall||300;X.save();X.translate(x,y);X.scale(s,s);
+ rr(-150,-40,60,80,14,'#b9c2cc',6);rr(-100,-28,170,56,26,'#d6dde5',6);path(()=>{X.moveTo(40,-28);X.quadraticCurveTo(130,-30,130,40);X.lineTo(130,70);X.lineTo(90,70);X.lineTo(90,40);X.quadraticCurveTo(90,22,40,26);X.closePath()},'#d6dde5',6);
+ ell(110,72,26,10,'#9aa6b2',4);rr(-60,-100,90,60,16,'#e5484d',5);rr(-30,-60,30,36,6,'#b9c2cc',5);X.fillStyle='rgba(255,255,255,.7)';X.fillRect(-90,-20,120,8);
+ if(o.drip){const ph=(((t-off)/per)%1+1)%1;const dx=110;
+  if(ph<.55){const k=ph/.55;X.save();X.fillStyle='#7cc4ff';X.strokeStyle='#151515';X.lineWidth=4;X.beginPath();const r=8+k*14;X.ellipse(dx,82+r,r*.8,r,0,0,7);X.fill();X.stroke();X.restore()}
+  else if(ph<.75){const k=(ph-.55)/.2,yy=100+k*k*fall;X.save();X.fillStyle='#7cc4ff';X.strokeStyle='#151515';X.lineWidth=4;X.beginPath();X.moveTo(dx,yy-36);X.quadraticCurveTo(dx+22,yy,dx,yy+18);X.quadraticCurveTo(dx-22,yy,dx,yy-36);X.fill();X.stroke();X.restore()}
+  else{const k=(ph-.75)/.25;X.save();X.globalAlpha=1-k;X.strokeStyle='#bfe3ff';X.lineWidth=6;for(let j=0;j<2;j++){X.beginPath();X.ellipse(dx,100+fall+10,30+k*90+j*30,8+k*20+j*6,0,0,7);X.stroke()}
+   for(let j=0;j<4;j++){circ(dx+(j-1.5)*26*(1+k),100+fall-k*70*Math.sin((j+1)*.8),7,'#7cc4ff',0)}X.restore()}}
+ if(o.fixed>0){sparkles(110,180,C(o.fixed),10,160,'#7cf0a0')}
+ X.restore()}
