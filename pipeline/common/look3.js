@@ -27,6 +27,9 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  else{leg(-1,(o.legL!=null?o.legL:6)+ph*26,w!=null?Math.max(0,ph)*30:0);leg(1,(o.legR!=null?o.legR:6)-ph*26,w!=null?Math.max(0,-ph)*30:0)}
  // body
  limbStroke([hip,o.crawl?[10,-350]:[nx*.5,(hipY+neckY)/2],neck]);
+ // craft ladder 2026-11-17: o.dress (colour) = A-line dress over the body; o.bow (colour) = bow tie at the neck
+ if(o.dress&&!o.crawl){const d1=P(neck[0]-46,neck[1]+40),d2=P(neck[0]+46,neck[1]+40),d3=P(hip[0]+150,hip[1]+190),d4=P(hip[0]-150,hip[1]+190);X.fillStyle=o.dress;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...d1);X.lineTo(...d2);X.quadraticCurveTo(...P(hip[0]+70,hip[1]-40),...d3);X.quadraticCurveTo(...P(hip[0],hip[1]+215),...d4);X.quadraticCurveTo(...P(hip[0]-70,hip[1]-40),...d1);X.fill();X.stroke();X.fillStyle='rgba(0,0,0,.06)';X.beginPath();X.moveTo(...P(hip[0]+20,hip[1]-60));X.lineTo(...d3);X.quadraticCurveTo(...P(hip[0]+60,hip[1]+205),...P(hip[0]+40,hip[1]+200));X.fill()}
+ if(o.bow&&!o.crawl){const[bx,by]=P(neck[0],neck[1]+18);X.save();X.translate(bx,by);X.scale(s,s);X.fillStyle=o.bow;X.strokeStyle=OUT;X.lineWidth=6;for(const d of[-1,1]){X.beginPath();X.moveTo(0,0);X.lineTo(d*46,-24);X.lineTo(d*46,24);X.closePath();X.fill();X.stroke()}X.beginPath();X.arc(0,0,11,0,7);X.fill();X.stroke();X.restore()}
  // arms
  const arm=(d,a,bend)=>{const sh=[neck[0]+d*6,neck[1]+40];const A=(a!=null?a:14+(w!=null?(d>0?-ph:ph)*28:0))*Math.PI/180;const ex=sh[0]+Math.sin(A)*d*150,ey=sh[1]+Math.cos(A)*150;const B=(((a!=null?a:14)+(bend||0)))*Math.PI/180;const hx=ex+Math.sin(B)*d*140,hy=ey+Math.cos(B)*140;
   limbStroke([sh,[ex,ey],[hx,hy]]);const[wx,wy]=P(hx,hy);X.save();X.translate(wx,wy);X.fillStyle=o.col?OUT:OUT;X.beginPath();X.ellipse(0,0,31*s,27*s,0,0,7);X.fill();X.beginPath();X.ellipse(-fl*d*-20*s,-16*s,12*s,16*s,-.5,0,7);X.fill();
@@ -36,10 +39,13 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  // head
  const R=125,hc=o.crawl?[300,-470]:[neck[0]+Math.sin(lean)*60,neck[1]-R+8];const[HX,HY]=P(hc[0],hc[1]);
  X.save();X.translate(HX,HY);X.rotate(((o.tilt||0)+(o.crawl?8:0))*Math.PI/180*fl);X.scale(s,s);
+ // craft ladder 2026-11-17: o.veil = translucent bridal veil behind the head (+ tiny flower crown)
+ if(o.veil){X.save();X.globalAlpha=.78;const vg=X.createLinearGradient(0,-R,0,R*3.2);vg.addColorStop(0,'#ffffff');vg.addColorStop(1,'rgba(240,244,255,.55)');X.fillStyle=vg;X.strokeStyle='rgba(150,160,190,.7)';X.lineWidth=5;X.beginPath();X.moveTo(-R*.7,-R*.9);X.quadraticCurveTo(-R*1.7,R*.6,-R*1.55,R*3.1);X.quadraticCurveTo(0,R*3.4,R*1.55,R*3.1);X.quadraticCurveTo(R*1.7,R*.6,R*.7,-R*.9);X.quadraticCurveTo(0,-R*1.35,-R*.7,-R*.9);X.fill();X.stroke();X.restore()}
  if(o.hair=='bun'){X.fillStyle=o.hairc||'#e2508a';X.strokeStyle=OUT;X.lineWidth=9;X.beginPath();X.arc(0,-R-34,52,0,7);X.fill();X.stroke()}
  X.fillStyle=col;X.strokeStyle=OUT;X.lineWidth=10;X.beginPath();X.arc(0,0,R,0,7);X.fill();
  const g=X.createRadialGradient(-R*.35,-R*.45,R*.1,0,0,R*1.05);g.addColorStop(0,'rgba(255,255,255,.35)');g.addColorStop(.7,'rgba(255,255,255,0)');g.addColorStop(1,o.col?'rgba(0,0,0,.18)':'rgba(120,120,160,.22)');X.fillStyle=g;X.fill();X.stroke();
  if(o.hair=='bun'){X.fillStyle=o.hairc||'#e2508a';X.beginPath();X.moveTo(-R*.95,-R*.3);X.quadraticCurveTo(-R*.6,-R*1.2,0,-R*1.02);X.quadraticCurveTo(R*.6,-R*1.2,R*.95,-R*.3);X.quadraticCurveTo(R*.5,-R*.75,0,-R*.7);X.quadraticCurveTo(-R*.5,-R*.75,-R*.95,-R*.3);X.fill();X.stroke()}
+ if(o.veil){for(let k=-3;k<=3;k++){const a=-Math.PI/2+k*.28;X.fillStyle=k%2?'#ffd1dc':'#fff6c8';X.strokeStyle=OUT;X.lineWidth=4;X.beginPath();X.arc(Math.cos(a)*R*1.0,Math.sin(a)*R*1.0,15,0,7);X.fill();X.stroke()}}
  if(o.hair=='curl'){X.lineWidth=9;X.beginPath();X.moveTo(-14,-R+4);X.bezierCurveTo(-30,-R-50,30,-R-60,18,-R-24);X.stroke()}
  if(o.hair=='spike'){X.fillStyle=o.hairc||'#151515';for(let k=-2;k<=2;k++){X.beginPath();X.moveTo(k*34-18,-R+12);X.lineTo(k*40,-R-46+Math.abs(k)*10);X.lineTo(k*34+18,-R+12);X.fill()}}
  if(o.party){const pc=o.party===1?'#ff5a7a':o.party;X.save();X.rotate(-.18);X.fillStyle=pc;X.strokeStyle=OUT;X.lineWidth=8;X.beginPath();X.moveTo(-58,-R+18);X.lineTo(0,-R-150);X.lineTo(58,-R+18);X.closePath();X.fill();X.stroke();X.fillStyle='#ffd23f';for(let k=0;k<3;k++){X.beginPath();X.arc(-20+k*20,-R-20-k*38,9,0,7);X.fill()}X.fillStyle='#fff';X.beginPath();X.arc(0,-R-156,20,0,7);X.fill();X.stroke();X.restore()}
@@ -212,3 +218,27 @@ function tap(x,y,s=1,o={}){const t=o.t||0,per=o.per||.85,off=o.off||0,fall=o.fal
    for(let j=0;j<4;j++){circ(dx+(j-1.5)*26*(1+k),100+fall-k*70*Math.sin((j+1)*.8),7,'#7cc4ff',0)}X.restore()}}
  if(o.fixed>0){sparkles(110,180,C(o.fixed),10,160,'#7cf0a0')}
  X.restore()}
+
+// ---------- craft ladder 2026-11-17: wedding kit ----------
+// string lights hanging in catenaries across the top of a room
+function strlights(t,y=200,n=4,sag=90){for(let k=0;k<n;k++){const x0=-80+k*310,x1=x0+330;X.strokeStyle='rgba(60,40,30,.55)';X.lineWidth=3;X.beginPath();X.moveTo(x0,y);X.quadraticCurveTo((x0+x1)/2,y+sag*2,x1,y);X.stroke();
+ for(let j=1;j<8;j++){const u=j/8,bx=x0+(x1-x0)*u,by=(1-u)*(1-u)*y+2*u*(1-u)*(y+sag*2)+u*u*y;const tw=.65+.35*Math.sin(t*3+j*1.7+k);glow(bx,by+10,46,'255,214,140',.5*tw);circ(bx,by+10,9,'#fff3c4',0)}}}
+// flower arch (behind the couple's table)
+function farch(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.strokeStyle='#f6efe6';X.lineWidth=26;X.beginPath();X.moveTo(-300,0);X.lineTo(-300,-420);X.arc(0,-420,300,Math.PI,0);X.lineTo(300,0);X.stroke();
+ for(let k=0;k<26;k++){const a=Math.PI+k/25*Math.PI,r=300,fx=Math.cos(a)*r,fy=-420+Math.sin(a)*r;circ(fx,fy,22+(k%3)*6,['#ffb3c6','#fff','#ffd6a5','#f28bb0'][k%4],3);if(k%2)ell(fx+18,fy+14,16,9,'#7cbf7c',0)}
+ for(const d of[-1,1])for(let k=0;k<5;k++)circ(d*300+(k%2?14:-12),-60-k*70,20,['#ffb3c6','#fff','#f28bb0'][k%3],3);X.restore()}
+// round guest table with white cloth (o.num = name card, o.flowers, o.glass)
+function rtable(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,10,300,34,'#000',0);X.globalAlpha=1;
+ const g=X.createLinearGradient(0,-170,0,0);g.addColorStop(0,'#ffffff');g.addColorStop(1,'#e6e8f0');X.fillStyle=g;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-280,-150);X.quadraticCurveTo(-300,-60,-260,0);X.quadraticCurveTo(0,30,260,0);X.quadraticCurveTo(300,-60,280,-150);X.closePath();X.fill();X.stroke();
+ ell(0,-150,280,46,'#fbfbff',7);if(o.flowers!==0){for(let k=0;k<5;k++)circ(-30+k*15,-196-(k%2)*16,18,['#ffb3c6','#fff','#f28bb0'][k%3],3);rr(-18,-180,36,30,6,'#cfe8ff',4)}
+ if(o.num){rr(80,-200,90,64,8,'#fff',5);txt(o.num,125,-168,44,'#151515',0)}if(o.glass)champ(-150,-150,1);X.restore()}
+function champ(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.strokeStyle='#151515';X.lineWidth=5;X.fillStyle='rgba(255,226,140,.9)';X.beginPath();X.moveTo(-22,-110);X.lineTo(22,-110);X.lineTo(14,-50);X.quadraticCurveTo(0,-38,-14,-50);X.closePath();X.fill();X.stroke();X.beginPath();X.moveTo(0,-42);X.lineTo(0,-6);X.moveTo(-20,-4);X.lineTo(20,-4);X.stroke();for(let k=0;k<3;k++)circ(-6+k*6,-90+k*12,3,'#fff',0);X.restore()}
+// tiny kids' table with a crayon drawing (front edge at y)
+function kidtable(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.22;ell(0,180,330,30,'#000',0);X.globalAlpha=1;
+ for(const d of[-1,1])rr(d*260-14,0,28,180,8,'#f2a65a',5);rr(-330,-46,660,56,12,'#ffd23f',7);rr(-330,6,660,22,6,'#e8b92c',0);
+ X.save();X.rotate(-.06);rr(-120,-70,200,30,4,'#fff',4);X.restore();line([[-90,-58],[-40,-62],[0,-54]],4,'#e0533d');
+ const cs=['#e0533d','#4a8fe0','#7cc47c','#b07ae0'];for(let k=0;k<4;k++){X.save();X.translate(120+k*34,-56);X.rotate(.3+k*.2);rr(-6,-26,12,52,4,cs[k],3);X.restore()}X.restore()}
+function crayon(x,y,s=1,col='#4a8fe0'){X.save();X.translate(x,y);X.scale(s,s);X.rotate(-.5);rr(-9,-44,18,80,5,col,4);path(()=>{X.moveTo(-9,-44);X.lineTo(0,-64);X.lineTo(9,-44)},col,4);X.restore()}
+function hallW(t,o={}){proom(t,{win:null,frame:null,plant:0,lamp:0,wall:o.sun?'#fbe9df':'#f1d7cc',wall2:o.sun?'#f3d2c2':'#ddb8a8',floor:'#d9b38c',floor2:'#b48a62'});
+ strlights(t,170,4,80);pblur(5,()=>{farch(540,1240,1.1);rtable(170,1300,.7,{flowers:1});rtable(910,1300,.7,{flowers:1})});
+ glow(540,700,600,'255,226,170',o.sun?.5:.32)}
