@@ -191,3 +191,12 @@ function locker(x,y,s,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s
  const arm=(sd)=>{const bx=sd*262,by=-560;const ex=bx+sd*(up?90:lerp(60,110,sh)),ey=by+(up?-170:lerp(80,-40,sh));X.beginPath();X.moveTo(bx,by);X.lineTo(ex,ey);X.stroke();X.fillStyle='#151515';X.beginPath();X.ellipse(ex,ey,22,20,0,0,7);X.fill()};arm(-1);arm(1);
  X.restore()}
 function shoebox(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);rr(-80,-80,160,80,8,'#e8743c',5);rr(-88,-96,176,26,6,'#f28a50',5);rr(-20,-96,40,26,0,'#fff',0);X.restore()}
+// ---- craft ladder 2026-11-17 09:00: seasonal kit ----
+// xtree(x,y,s,t): small Christmas tree standing at (x,y) with twinkling lights + star
+function xtree(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,4,150,.25);rr(-30,-70,60,70,8,'#7a4a2a',5);rr(-70,-40,140,40,10,'#c4523f',5);
+ const tiers=[[-70,210,150],[-200,170,140],[-320,125,130]];
+ for(const[ty,w,h]of tiers){X.fillStyle='#2f8a4e';X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-w,ty);X.lineTo(w,ty);X.lineTo(0,ty-h);X.closePath();X.fill();X.stroke();X.fillStyle='rgba(255,255,255,.12)';X.beginPath();X.moveTo(-w*.2,ty-h*.1);X.lineTo(0,ty-h);X.lineTo(-w*.55,ty-h*.1);X.fill()}
+ const cols=['#ffd23f','#ff5a7a','#7cd0ff','#7cf0a0'];for(let k=0;k<14;k++){const a=k*2.39,rr2=(k%5)/5,lx=Math.sin(a)*(40+rr2*120),ly=-90-k*22;const on=.5+.5*Math.sin(t*4+k*1.7);X.globalAlpha=.4+.6*on;circ(lx*(1-(-ly-90)/400),ly,9,cols[k%4],0);X.globalAlpha=1}
+ X.fillStyle='#ffd23f';X.strokeStyle='#151515';X.lineWidth=5;X.beginPath();for(let k=0;k<10;k++){const rad=k%2?18:40,a=-Math.PI/2+k*Math.PI/5;X.lineTo(Math.cos(a)*rad,-455+Math.sin(a)*rad)}X.closePath();X.fill();X.stroke();glow(0,-455,90,'255,220,90',.45);X.restore()}
+// psnow(t,a,n): soft falling snow over the whole frame (world coords)
+function psnow(t,a=.8,n=110){X.save();for(let k=0;k<n;k++){const sx=(k*137.5)%1500-200,sp=60+(k%7)*18,yy=((k*311)%2100+t*sp)%2100-100,xx=sx+Math.sin(t*1.2+k)*24,rad=4+(k%4)*2.5;X.globalAlpha=a*(.45+(k%3)*.2);X.fillStyle='#fff';X.beginPath();X.arc(xx,yy,rad,0,7);X.fill()}X.restore()}
