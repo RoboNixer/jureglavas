@@ -49,6 +49,9 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  if(o.hair=='curl'){X.lineWidth=9;X.beginPath();X.moveTo(-14,-R+4);X.bezierCurveTo(-30,-R-50,30,-R-60,18,-R-24);X.stroke()}
  if(o.hair=='spike'){X.fillStyle=o.hairc||'#151515';for(let k=-2;k<=2;k++){X.beginPath();X.moveTo(k*34-18,-R+12);X.lineTo(k*40,-R-46+Math.abs(k)*10);X.lineTo(k*34+18,-R+12);X.fill()}}
  if(o.party){const pc=o.party===1?'#ff5a7a':o.party;X.save();X.rotate(-.18);X.fillStyle=pc;X.strokeStyle=OUT;X.lineWidth=8;X.beginPath();X.moveTo(-58,-R+18);X.lineTo(0,-R-150);X.lineTo(58,-R+18);X.closePath();X.fill();X.stroke();X.fillStyle='#ffd23f';for(let k=0;k<3;k++){X.beginPath();X.arc(-20+k*20,-R-20-k*38,9,0,7);X.fill()}X.fillStyle='#fff';X.beginPath();X.arc(0,-R-156,20,0,7);X.fill();X.stroke();X.restore()}
+ // craft ladder 2026-11-17 22:00: o.santa = floppy red Santa hat with white fur band + pompom (true or a colour)
+ if(o.santa){const sc=o.santa===1||o.santa===true?'#e2353a':o.santa;X.save();X.rotate(.12);X.fillStyle=sc;X.strokeStyle=OUT;X.lineWidth=8;X.beginPath();X.moveTo(-R*.92,-R*.55);X.quadraticCurveTo(-R*.5,-R*1.55,R*.35,-R*1.45);X.quadraticCurveTo(R*1.15,-R*1.35,R*1.2,-R*.6);X.quadraticCurveTo(R*.9,-R*1.05,R*.6,-R*.9);X.lineTo(R*.92,-R*.55);X.closePath();X.fill();X.stroke();
+  X.fillStyle='#fff';X.beginPath();X.roundRect?X.roundRect(-R*1.0,-R*.78,R*2.0,R*.36,R*.18):X.rect(-R,-R*.78,R*2,R*.36);X.fill();X.stroke();X.beginPath();X.arc(R*1.2,-R*.55,R*.2,0,7);X.fill();X.stroke();X.restore()}
  if(o.blush){X.fillStyle='rgba(255,110,140,.35)';X.beginPath();X.ellipse(-78,38,24,14,0,0,7);X.ellipse(78,38,24,14,0,0,7);X.fill()}
  // eyes
  const E=o.eyes||'wide',lk=o.look||[0,0],lid=C(o.lid||0);const blink=(o.blink!==0)&&((t*1.0+(o.seed||0))%3.7)<.12;
@@ -299,3 +302,20 @@ function towtruck(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale
  const on=Math.sin(t*14)>0;rr(170,-530,90,50,18,on?'#ff8a00':'#a85a10',6);if(on)glow(215,-505,160,'255,150,30',.6);
  for(const wx of[-470,-200,250]){circ(wx,-80,90,'#222',8);circ(wx,-80,44,'#c8ccd2',6);const a=t*(o.spin||0);line([[wx,-80],[wx+Math.cos(a)*36,-80+Math.sin(a)*36]],7,'#8a9099')}
  X.restore()}
+
+// ---- craft ladder 2026-11-17 22:00: Secret Santa kit ----
+// fresh(x,y,s,o): little pine-tree car air freshener on a string (top of string at x,y). o: t (swing), price ('€2.49' sticker), string (len px, default 70)
+function fresh(x,y,s=1,o={}){const t=o.t||0,L=o.string==null?70:o.string;X.save();X.translate(x,y);X.rotate(Math.sin(t*2.2)*.12*(o.swing==null?1:o.swing));X.scale(s,s);
+ X.strokeStyle='#d8c08a';X.lineWidth=4;X.beginPath();X.moveTo(0,0);X.lineTo(0,L);X.stroke();X.translate(0,L);
+ X.fillStyle='#2fa34a';X.strokeStyle='#151515';X.lineWidth=6;X.lineJoin='round';X.beginPath();X.moveTo(0,0);X.lineTo(34,40);X.lineTo(18,40);X.lineTo(48,82);X.lineTo(26,82);X.lineTo(60,128);X.lineTo(10,128);X.lineTo(10,150);X.lineTo(-10,150);X.lineTo(-10,128);X.lineTo(-60,128);X.lineTo(-26,82);X.lineTo(-48,82);X.lineTo(-18,40);X.lineTo(-34,40);X.closePath();X.fill();X.stroke();
+ X.fillStyle='rgba(255,255,255,.25)';X.beginPath();X.moveTo(0,8);X.lineTo(-24,40);X.lineTo(-8,40);X.closePath();X.fill();
+ if(o.price){X.save();X.translate(30,96);X.rotate(-.22);rr(-34,-17,68,34,8,'#ffd23f',4);txt(o.price,0,2,20,'#111',0,'800 ');X.restore()}
+ X.restore()}
+// teabox(x,y,s,o): a fancy tea gift box with a bow (bottom-centre at x,y). o: col
+function teabox(x,y,s=1,o={}){const c=o.col||'#2f6d5a';X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,4,120,16,'#000',0);X.globalAlpha=1;
+ rr(-110,-150,220,150,16,c,6);rr(-118,-170,236,40,12,'#3f8a72',6);rr(-14,-170,28,170,4,'#ffd23f',0);X.strokeStyle='#151515';X.lineWidth=5;X.strokeRect(-14,-170,28,170);
+ X.fillStyle='#ffd23f';X.strokeStyle='#151515';X.lineWidth=5;for(const d of[-1,1]){X.beginPath();X.ellipse(d*32,-186,34,18,d*.4,0,7);X.fill();X.stroke()}circ(0,-182,14,'#ffd23f',5);
+ rr(-80,-110,160,64,12,'#f6efe1',4);txt('TEA 🍵',0,-76,30,'#2f4a3f',0,"800 ");X.restore()}
+// santabowl(x,y,s): Santa hat turned upside down as the name-draw bowl, paper slips sticking out
+function santabowl(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);for(let k=0;k<4;k++){X.save();X.rotate(-.5+k*.32);rr(-14,-120,28,70,4,'#fff',4);X.restore()}
+ X.fillStyle='#e2353a';X.strokeStyle='#151515';X.lineWidth=6;X.beginPath();X.moveTo(-90,-60);X.quadraticCurveTo(-80,40,0,46);X.quadraticCurveTo(80,40,90,-60);X.closePath();X.fill();X.stroke();rr(-100,-78,200,36,18,'#fff',6);X.restore()}
