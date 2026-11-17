@@ -1,0 +1,8 @@
+add(sfx,pop(900),0.15,.35)
+add(sfx,whoosh(.35),T('s1')-.1,.4);add(sfx,pop(700),T('s1')+.2,.4);add(sfx,impact(.5),T('s1')+.45,.35)
+add(sfx,whoosh(.35),T('s2')-.1,.4);add(sfx,pop(1000),T('s2')+2.0,.35);add(sfx,pop(1150),T('s2')+2.6,.35);add(sfx,pop(1300),T('s2')+3.2,.35);add(sfx,pop(500),T('s2')+3.9,.4)
+add(sfx,whoosh(.45,.4),T('s3')-.05,.5);add(sfx,pop(1300),T('s3')+.5,.5);chime(T('s3')+.8);musicbox(T('s3')+.6,T('cta'),[72,76,79,76],.3,.12)
+add(sfx,whoosh(.4),T('s3')+2.6,.4);add(sfx,pop(1500),T('s3')+4.45,.5)
+add(sfx,whoosh(.4),T('s4')-.1,.4);buzz(T('s4')+.5,.6);add(sfx,pop(1200),T('s4')+2.1,.4)
+add(sfx,whoosh(.45),T('m2')-.1,.4);add(sfx,pop(1600),T('m2')+1.2,.4)
+bounce(T('p1'),T('cta'),2,.7);chime(T('cta'))

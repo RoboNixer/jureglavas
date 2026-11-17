@@ -242,3 +242,27 @@ function crayon(x,y,s=1,col='#4a8fe0'){X.save();X.translate(x,y);X.scale(s,s);X.
 function hallW(t,o={}){proom(t,{win:null,frame:null,plant:0,lamp:0,wall:o.sun?'#fbe9df':'#f1d7cc',wall2:o.sun?'#f3d2c2':'#ddb8a8',floor:'#d9b38c',floor2:'#b48a62'});
  strlights(t,170,4,80);pblur(5,()=>{farch(540,1240,1.1);rtable(170,1300,.7,{flowers:1});rtable(910,1300,.7,{flowers:1})});
  glow(540,700,600,'255,226,170',o.sun?.5:.32)}
+
+// craft ladder 2026-11-17 18:00: hallway() front-door set (promoted from dino_look3), wclock(), tupper() food container with MOM tape + stack() wobbling tower
+function wclock(x,y,s,h,m){X.save();X.translate(x,y);X.scale(s,s);circ(0,0,90,'#fff',8);for(let k=0;k<12;k++){const a=k/12*Math.PI*2;line([[Math.sin(a)*70,-Math.cos(a)*70],[Math.sin(a)*80,-Math.cos(a)*80]],5,'#333')}
+ const ha=((h%12)+m/60)/12*Math.PI*2,ma=m/60*Math.PI*2;line([[0,0],[Math.sin(ha)*45,-Math.cos(ha)*45]],10,'#151515');line([[0,0],[Math.sin(ma)*66,-Math.cos(ma)*66]],7,'#151515');circ(0,0,8,'#e0533d',0);X.restore()}
+function hallway(t,o={}){proom(t,Object.assign({win:null,frame:null,plant:180,lamp:0,wall:'#f4e3c9',wall2:'#e8cda8',floor:'#b98a5e',floor2:'#94673f'},o));
+ const dx=o.dx||760;X.save();rr(dx-200,420,400,830,14,'#fff8ef',0);rr(dx-170,450,340,800,10,o.doorc||'#3f7f9e',8);
+ rr(dx-120,500,240,250,12,o.night?'#2a3466':(o.rainy?'#9fb2c7':'#cfeeff'),6);if(o.rainy){X.save();X.beginPath();X.rect(dx-120,500,240,250);X.clip();prain(t,.7,25);X.restore()}else if(!o.night)glow(dx,620,260,'255,250,220',.4);
+ circ(dx+120,880,22,'#e8c15a',6);rr(dx-110,800,220,30,8,'rgba(0,0,0,.15)',0);
+ X.restore();
+ // hooks + coats on the left wall
+ line([[90,640],[330,640]],12,'#7a5a3a');for(const[cx,c]of[[150,'#e86a5a'],[270,'#7bb36a']]){line([[cx,640],[cx,670]],8,'#555');path(()=>{X.moveTo(cx-55,670);X.lineTo(cx+55,670);X.lineTo(cx+70,900);X.lineTo(cx-70,900);X.closePath()},c,6)}
+ if(o.clock)wclock(545,560,.6,7,52)}
+// ---- craft ladder: food container ("Mom's Tupperware") + wobbling stack, marker tape "MOM" on the front ----
+const LIDS=['#e0533d','#4a8fe0','#f2b33d','#7bb36a','#b07ae0','#e86aa0','#3dbfb0'];
+function tupper(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);const w=o.w||150,h=o.h||70,lid=o.lid||'#4a8fe0';
+ // body (translucent) with optional soup inside
+ path(()=>{X.moveTo(-w/2,-h);X.lineTo(w/2,-h);X.lineTo(w/2-10,0);X.lineTo(-w/2+10,0);X.closePath()},'rgba(235,245,250,.92)',5);
+ if(o.full)path(()=>{X.moveTo(-w/2+6,-h+16);X.lineTo(w/2-6,-h+16);X.lineTo(w/2-13,-5);X.lineTo(-w/2+13,-5);X.closePath()},o.full,0);
+ X.fillStyle='rgba(255,255,255,.55)';X.fillRect(-w/2+14,-h+8,10,h-18);
+ rr(-w/2-8,-h-18,w+16,22,9,lid,5);
+ if(o.tag!==0){X.save();X.rotate(-.04);rr(-36,-h+14,72,30,4,'#fffbe6',3);X.font="800 22px 'Comic Sans MS',Inter";X.fillStyle='#222';X.textAlign='center';X.textBaseline='middle';X.fillText('MOM',0,-h+30);X.restore()}
+ X.restore()}
+function stack(x,y,s,n,t=0,o={}){const wob=o.wob||0;let yy=0;for(let i=0;i<n;i++){const k=i/(Math.max(1,n-1));const sway=Math.sin(t*7+i*.6)*wob*k*28;const w=150-((i*37)%40);const h=58+((i*23)%26);
+  tupper(x+sway*s+(((i*53)%30)-15)*s,y+yy*s,s,{w,h,lid:LIDS[(i+(o.off||0))%LIDS.length],rot:sway*.004,full:o.full,tag:(i%2==0||o.full)?1:0});yy-=h+22}}
