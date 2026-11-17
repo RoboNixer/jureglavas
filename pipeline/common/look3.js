@@ -266,3 +266,36 @@ function tupper(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.sca
  X.restore()}
 function stack(x,y,s,n,t=0,o={}){const wob=o.wob||0;let yy=0;for(let i=0;i<n;i++){const k=i/(Math.max(1,n-1));const sway=Math.sin(t*7+i*.6)*wob*k*28;const w=150-((i*37)%40);const h=58+((i*23)%26);
   tupper(x+sway*s+(((i*53)%30)-15)*s,y+yy*s,s,{w,h,lid:LIDS[(i+(o.off||0))%LIDS.length],rot:sway*.004,full:o.full,tag:(i%2==0||o.full)?1:0});yy-=h+22}}
+
+// ---- craft ladder 2026-11-17 20:00: car kit ----
+// engIcon(x,y,s,on,t): the orange check-engine warning symbol (glows + pulses when on)
+function engIcon(x,y,s=1,on=1,t=0){X.save();X.translate(x,y);X.scale(s,s);const c=on?'#ffa21a':'#4a4f5a';
+ if(on)glow(0,0,150,'255,160,30',.55+.15*Math.sin(t*6));
+ X.fillStyle=c;X.strokeStyle=c;X.lineWidth=10;X.lineJoin='round';
+ X.fillRect(-46,-26,84,56);X.fillRect(-20,-44,34,18);X.fillRect(-62,-12,16,30);X.fillRect(38,-14,14,12);X.fillRect(38,8,14,12);X.fillRect(52,-20,10,46);
+ X.restore()}
+// pcar(x,groundY,s,o): side-view hatchback, front = +x. o: col, t, spin (wheel speed), steam (0..1), flip, driver:{eyes,mouth,brow,sweat}, light (dash icon in window), bounce
+function pcar(x,y,s=1,o={}){const t=o.t||0,col=o.col||'#e2533d',col2=o.col2||'#b93a28';X.save();X.translate(x,y-(o.bounce?Math.abs(Math.sin(t*9))*6:0));X.scale(s*(o.flip?-1:1),s);
+ X.save();X.globalAlpha=.22;X.fillStyle='#000';X.beginPath();X.ellipse(0,8,470,26,0,0,7);X.fill();X.restore();
+ path(()=>{X.moveTo(-300,-250);X.lineTo(-210,-460);X.quadraticCurveTo(-200,-480,-170,-480);X.lineTo(150,-480);X.quadraticCurveTo(180,-480,200,-455);X.lineTo(330,-260);X.closePath()},col,8);
+ rr(-450,-270,900,190,60,col,8);rr(-430,-160,860,40,18,col2,0);
+ path(()=>{X.moveTo(-270,-265);X.lineTo(-195,-440);X.lineTo(-20,-440);X.lineTo(-20,-265);X.closePath()},'#bfe1f2',6);
+ path(()=>{X.moveTo(10,-265);X.lineTo(10,-440);X.lineTo(150,-440);X.lineTo(285,-265);X.closePath()},'#bfe1f2',6);
+ X.save();X.globalAlpha=.45;line([[-150,-420],[-210,-290]],14,'#fff');line([[90,-420],[40,-300]],14,'#fff');X.restore();
+ if(o.driver){const d=o.driver;X.save();path(()=>{X.moveTo(10,-265);X.lineTo(10,-440);X.lineTo(150,-440);X.lineTo(285,-265);X.closePath()},null,0);X.clip();
+  X.scale(o.flip?-1:1,1);const hx=(o.flip?-1:1)*120;circ(hx,-330,78,'#fff',7);ell(hx+18,-345,15,20,'#151515',0);ell(hx+52,-345,13,18,'#151515',0);circ(hx+22,-352,5,'#fff',0);circ(hx+55,-352,5,'#fff',0);
+  path(()=>{X.arc(hx+34,-305,20,0.15,Math.PI-.15)},null,6);path(()=>{X.moveTo(hx-20,-405);X.quadraticCurveTo(hx+10,-450,hx+30,-400)},null,8);X.restore()}
+ line([[-60,-230],[-20,-230]],10,'#333');line([[150,-230],[190,-230]],10,'#333');
+ rr(400,-230,52,44,14,'#ffe9a0',5);rr(-452,-235,36,50,10,'#ff5a4a',5);
+ for(const wx of[-270,270]){circ(wx,-80,98,'#222',8);circ(wx,-80,52,'#c8ccd2',6);const a=t*(o.spin||0);for(let k=0;k<5;k++){const b=a+k*Math.PI*2/5;line([[wx,-80],[wx+Math.cos(b)*44,-80+Math.sin(b)*44]],7,'#8a9099')}circ(wx,-80,12,'#555',0)}
+ X.restore();
+ if(o.steam>0){for(let k=0;k<7;k++){const ph=(t*.5+k/7)%1;X.save();X.globalAlpha=o.steam*.55*Math.sin(ph*Math.PI);X.fillStyle='#eef1f5';X.beginPath();X.arc(x+(o.flip?-1:1)*(320*s)+Math.sin(k*2+t)*30,y-300*s-ph*420,(40+ph*70)*s,0,7);X.fill();X.restore()}}}
+// towtruck(x,groundY,s,o): yellow tow truck, front = +x; o.flip, o.t, o.spin, o.beacon (blink)
+function towtruck(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);
+ X.save();X.globalAlpha=.22;X.fillStyle='#000';X.beginPath();X.ellipse(-80,8,560,26,0,0,7);X.fill();X.restore();
+ rr(-620,-250,700,90,20,'#5b6270',8);line([[-600,-250],[-450,-420],[-380,-420]],18,'#3b4250');circ(-380,-410,16,'#3b4250',0);line([[-380,-410],[-380,-300]],6,'#222');
+ rr(60,-480,330,400,46,'#f2b632',8);path(()=>{X.moveTo(110,-450);X.lineTo(300,-450);X.lineTo(360,-320);X.lineTo(110,-320);X.closePath()},'#bfe1f2',6);
+ rr(380,-200,40,60,12,'#ffe9a0',5);rr(-640,-190,640,80,20,'#f2b632',8);txt('TOW',-300,-148,52,'#3b4250',0);
+ const on=Math.sin(t*14)>0;rr(170,-530,90,50,18,on?'#ff8a00':'#a85a10',6);if(on)glow(215,-505,160,'255,150,30',.6);
+ for(const wx of[-470,-200,250]){circ(wx,-80,90,'#222',8);circ(wx,-80,44,'#c8ccd2',6);const a=t*(o.spin||0);line([[wx,-80],[wx+Math.cos(a)*36,-80+Math.sin(a)*36]],7,'#8a9099')}
+ X.restore()}
