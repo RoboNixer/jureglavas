@@ -1,0 +1,8 @@
+add(sfx,whoosh(.35),0.0,.3);add(sfx,pop(900),0.25,.35)
+add(sfx,whoosh(.35),T('s1')-.1,.4);add(sfx,pop(1200),T('s1')+.6,.45)
+drone(T('s1b'),T('s2'),46,.05)
+add(sfx,whoosh(.45,.4),T('s2')-.05,.5);add(sfx,pop(1300),T('s2')+.6,.5);musicbox(T('s2')+.5,T('cta'),[72,76,79,76],.3,.12)
+chime(T('s2')+1.9)
+buzz(T('s4')+.15,.6);add(sfx,pop(1500),T('s4')+.6,.5);add(sfx,whoosh(.35),T('s4')+2.45,.4);add(sfx,pop(1800),T('s4')+2.85,.5)
+add(sfx,whoosh(.45),T('f2')-.1,.4)
+bounce(T('p1'),T('cta'),2,.7);chime(T('cta'))
