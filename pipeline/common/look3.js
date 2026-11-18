@@ -343,3 +343,27 @@ function ffplate(x,y,s=1,n=5){X.save();X.translate(x,y);X.scale(s,s);X.fillStyle
  for(let k=0;k<n;k++){X.save();X.translate(-80+k*38,-14+(k%2)*8);X.rotate(-.25+k*.12);rr(-46,-13,92,26,10,'#e8a33a',5);X.fillStyle='rgba(255,255,255,.25)';X.fillRect(-36,-8,60,5);X.restore()}X.fillStyle='#d8322c';X.beginPath();X.arc(110,-6,22,0,7);X.fill();X.restore()}
 // ffinger(x,y,s,rot): one fish finger (for holdR/holdL)
 function ffinger(x,y,s=1,rot=-.4){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);rr(-55,-15,110,30,11,'#e8a33a',6);X.fillStyle='rgba(255,255,255,.3)';X.fillRect(-42,-9,70,6);X.restore()}
+
+// ---------- craft ladder 2026-11-18 12:00: arrivals hall + cardboard sign ----------
+// arrivals(t,{night,warm}) airport arrivals hall: big window (night sky + plane lights), ARRIVALS board, sliding doors, glossy floor
+function arrivals(t,o={}){const n=o.night;const g=X.createLinearGradient(0,-200,0,1250);g.addColorStop(0,n?'#aeb6c6':'#e6ebf1');g.addColorStop(1,n?'#8f99ab':'#cdd5df');X.fillStyle=g;X.fillRect(-3000,-3000,8000,4300);
+ X.save();X.beginPath();X.rect(-200,380,1480,560);X.clip();const sk=X.createLinearGradient(0,380,0,940);if(n){sk.addColorStop(0,'#141c3a');sk.addColorStop(1,'#3a4772')}else{sk.addColorStop(0,'#ff9e6b');sk.addColorStop(1,'#ffd9a0')}X.fillStyle=sk;X.fillRect(-200,380,1480,560);
+ if(n){for(let i=0;i<30;i++){X.globalAlpha=.4+.6*Math.abs(Math.sin(t*2+i));circ(-150+rnd(i)*1400,400+rnd(i+5)*300,2+rnd(i+2)*2,'#fff',0)}X.globalAlpha=1;const px=(t*90)%1700-300;circ(px,520,7,(t%1<.5)?'#ff4a4a':'#fff',0);glow(px,520,40,'255,120,120',.5)}else psun(820,700,90,t);
+ X.fillStyle=n?'#232b45':'#a38b8a';X.fillRect(-200,860,1480,80);X.restore();
+ X.fillStyle=n?'#d7dce4':'#f1f3f6';for(let k=0;k<6;k++)X.fillRect(-200+k*300,380,18,560);X.fillRect(-200,370,1480,20);X.fillRect(-200,930,1480,24);
+ // board
+ rr(640,130,330,90,14,'#1b1f2a',5);txt('ARRIVALS',770,176,46,'#ffd23f',0);txt('✈',915,176,46,'#ffd23f',0,'400 ');
+ // sliding doors
+ rr(330,960,420,300,8,n?'#6f7c93':'#b9c6d6',6);rr(340,970,195,290,4,'rgba(200,230,255,.45)',0);rr(545,970,195,290,4,'rgba(200,230,255,.45)',0);
+ const fg=X.createLinearGradient(0,1240,0,2000);fg.addColorStop(0,n?'#b9c0cb':'#e2e5ea');fg.addColorStop(1,n?'#98a1ae':'#c4cad3');X.fillStyle=fg;X.fillRect(-3000,1240,8000,3000);X.strokeStyle='rgba(0,0,0,.07)';X.lineWidth=3;for(let k=-8;k<=8;k++){X.beginPath();X.moveTo(540+k*50,1240);X.lineTo(540+k*300,2000);X.stroke()}
+ X.save();X.globalAlpha=.12;rr(330,1250,420,120,10,'#fff',0);X.restore();
+ if(o.warm)glow(540,700,800,'255,220,160',.35)}
+// csign(x,y,s,text,{rev:0..1 marker reveal, rot, heart}) cardboard sign (taped box flap) with marker writing
+function csign(x,y,s=1,text='WELCOME HOME',o={}){const rev=o.rev==null?1:o.rev;X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=14;
+ path(()=>{X.moveTo(-210,-120);X.lineTo(205,-128);X.lineTo(214,118);X.lineTo(-206,124);X.closePath()},'#d6a76a',6);X.shadowColor='transparent';
+ X.strokeStyle='rgba(120,80,30,.35)';X.lineWidth=4;X.beginPath();X.moveTo(-200,-60);X.lineTo(205,-64);X.stroke();
+ rr(-60,-140,120,34,4,'rgba(240,235,200,.85)',0);
+ X.save();X.beginPath();X.rect(-200,-120,400*rev,250);X.clip();const ws=text.split(' ');
+ X.font="900 66px 'Comic Sans MS','Inter Display',Inter";X.fillStyle='#1a1a1a';X.textAlign='center';X.textBaseline='middle';X.save();X.rotate(-.04);X.fillText(ws[0]||'',-10,-30);X.fillText(ws.slice(1).join(' '),-30,40);X.restore();
+ if(o.heart!==0){X.save();X.translate(150,50);X.rotate(.2);X.fillStyle='#e8463c';X.beginPath();X.moveTo(0,22);X.bezierCurveTo(-40,-6,-26,-38,0,-18);X.bezierCurveTo(30,-42,40,-4,0,22);X.fill();X.restore()}
+ X.restore();X.restore()}
