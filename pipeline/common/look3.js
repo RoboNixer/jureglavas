@@ -367,3 +367,48 @@ function csign(x,y,s=1,text='WELCOME HOME',o={}){const rev=o.rev==null?1:o.rev;X
  X.font="900 66px 'Comic Sans MS','Inter Display',Inter";X.fillStyle='#1a1a1a';X.textAlign='center';X.textBaseline='middle';X.save();X.rotate(-.04);X.fillText(ws[0]||'',-10,-30);X.fillText(ws.slice(1).join(' '),-30,40);X.restore();
  if(o.heart!==0){X.save();X.translate(150,50);X.rotate(.2);X.fillStyle='#e8463c';X.beginPath();X.moveTo(0,22);X.bezierCurveTo(-40,-6,-26,-38,0,-18);X.bezierCurveTo(30,-42,40,-4,0,22);X.fill();X.restore()}
  X.restore();X.restore()}
+
+// ---------- craft ladder 2026-11-18 14:00 (Dad's 60th): dad (glasses + moustache), cake(), muffin(), bunting(), bakery(), cakebox() ----------
+function specs(hx,hy,s){X.save();X.translate(hx,hy);X.scale(s,s);X.strokeStyle='#3a2a20';X.lineWidth=7;X.fillStyle='rgba(190,225,255,.16)';
+ for(const d of[-1,1]){X.beginPath();X.roundRect(d*50-50,-56,100,78,22);X.fill();X.stroke()}X.beginPath();X.moveTo(-8,-22);X.quadraticCurveTo(0,-30,8,-22);X.stroke();X.restore()}
+function stache(hx,hy,s,c='#9aa0aa'){X.save();X.translate(hx,hy);X.scale(s,s);X.fillStyle=c;X.strokeStyle='#151515';X.lineWidth=4;X.beginPath();
+ X.moveTo(0,-6);X.bezierCurveTo(-30,-22,-62,-12,-70,10);X.bezierCurveTo(-48,4,-22,8,0,4);X.bezierCurveTo(22,8,48,4,70,10);X.bezierCurveTo(62,-12,30,-22,0,-6);X.closePath();X.fill();X.stroke();X.restore()}
+// dad(x,y,s,o) = sm() with grey spiky hair + glasses + moustache (pass any sm options)
+function dad(x,y,s,o={}){sm(x,y,s,Object.assign({hair:'spike',hairc:'#b8bdc6'},o));const fl=o.flip?-1:1,lk=o.look||[0,0];const hx=x+(lk[0]||0)*14*s*fl,hy=y-845*s;
+ specs(hx+(lk[0]||0)*6*s*fl,hy+82*s+(lk[1]||0)*10*s,s*1.0);stache(hx,hy+(o.mouth==='open'||o.mouth==='o'||o.mouth==='grin'?100:112)*s,s*.85)}
+// cake(x,y,s,{tiers,num,lit,t}) two-tier birthday cake on a stand, number candles
+function cake(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.2;ell(0,10,230,26,'#000',0);X.globalAlpha=1;rr(-40,-40,80,40,8,'#e9eef5',5);ell(0,-40,230,30,'#ffffff',6);
+ rr(-200,-230,400,190,26,'#ffd9e6',7);for(let k=-4;k<=4;k++)ell(k*46,-226,26,22,'#fff',5);
+ line([[-196,-140],[-150,-120],[-100,-145],[-50,-118],[0,-142],[50,-118],[100,-145],[150,-120],[196,-140]],8,'#ff7aa8');
+ rr(-130,-380,260,160,24,'#fff3d6',7);for(let k=-2;k<=2;k++)ell(k*50,-376,24,20,'#fff',5);
+ for(let k=0;k<7;k++)circ(-110+k*37,-300+(k%2)*24,9,['#ff5a7a','#4a8fe0','#7cc47c','#ffd23f'][k%4],0);
+ if(o.num){X.font="900 120px 'Inter Display',Inter";X.textAlign='center';X.textBaseline='alphabetic';const ds=String(o.num).split('');ds.forEach((d,i)=>{const dx=(i-(ds.length-1)/2)*80;X.lineWidth=10;X.strokeStyle='#151515';X.strokeText(d,dx,-390);X.fillStyle=['#4a8fe0','#ff5a7a'][i%2];X.fillText(d,dx,-390);
+  if(o.lit!==0){const fy=-500+Math.sin(t*14+i)*3;glow(dx,fy,70,'255,200,90',.6);path(()=>{X.moveTo(dx,fy-30);X.quadraticCurveTo(dx+16,fy,dx,fy+12);X.quadraticCurveTo(dx-16,fy,dx,fy-30)},'#ffb02e',3)}})}
+ X.restore()}
+// muffin(x,y,s,{t,candle,lit}) a sad little supermarket muffin with one candle
+function muffin(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ path(()=>{X.moveTo(-46,0);X.lineTo(46,0);X.lineTo(58,-62);X.lineTo(-58,-62);X.closePath()},'#7fb7e8',5);for(let k=-2;k<=2;k++)line([[k*20,-4],[k*24,-60]],3,'rgba(0,0,0,.2)');
+ X.fillStyle='#8a5a34';X.strokeStyle='#151515';X.lineWidth=5;X.beginPath();X.moveTo(-66,-58);X.bezierCurveTo(-70,-120,70,-120,66,-58);X.closePath();X.fill();X.stroke();
+ for(let k=0;k<5;k++)circ(-36+k*18,-82-(k%2)*10,5,'#3a2010',0);
+ if(o.candle!==0){rr(-6,-160,12,64,4,'#ffffff',4);for(let k=0;k<3;k++)line([[-6,-150+k*18],[6,-142+k*18]],3,'#ff5a7a');if(o.lit!==0){const fy=-176+Math.sin(t*12)*2;glow(0,fy,50,'255,200,90',.5);path(()=>{X.moveTo(0,fy-24);X.quadraticCurveTo(12,fy,0,fy+8);X.quadraticCurveTo(-12,fy,0,fy-24)},'#ffb02e',3)}}
+ X.restore()}
+function plate(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);ell(0,0,110,24,'#ffffff',5);ell(0,-3,76,14,'#eef1f6',0);X.restore()}
+// bunting(t,y,n) colourful party flags across the top of a room
+function bunting(t,y=420,sag=60){const cs=['#ff5a7a','#ffd23f','#4a8fe0','#7cc47c','#b07ae0'];for(let r=0;r<2;r++){const x0=-120+r*600,x1=x0+720;X.strokeStyle='rgba(60,40,30,.6)';X.lineWidth=4;X.beginPath();X.moveTo(x0,y);X.quadraticCurveTo((x0+x1)/2,y+sag*2,x1,y);X.stroke();
+ for(let k=1;k<10;k++){const q=k/10,bx=lerp(x0,x1,q),by=y+sag*4*q*(1-q)+Math.sin(t*2+k)*3;path(()=>{X.moveTo(bx-26,by);X.lineTo(bx+26,by);X.lineTo(bx,by+60)},cs[(k+r)%5],3)}}}
+function numBalloon(x,y,s,t,txt60='60',col='#ffd23f'){const bx=x+Math.sin(t*1.4)*10*s,by=y+Math.sin(t*1.9)*8*s;X.save();X.strokeStyle='#666';X.lineWidth=3;X.beginPath();X.moveTo(bx,by+80*s);X.quadraticCurveTo(bx+20*s,by+250*s,x,y+420*s);X.stroke();
+ X.font=`900 ${230*s}px 'Inter Display',Inter`;X.textAlign='center';X.textBaseline='middle';X.lineWidth=14*s;X.strokeStyle='#151515';X.strokeText(txt60,bx,by);X.fillStyle=col;X.fillText(txt60,bx,by);X.globalAlpha=.4;X.fillStyle='#fff';X.fillText(txt60,bx-8*s,by-10*s);X.restore()}
+function partyRoom(t,o={}){proom(t,{win:o.win==null?820:o.win,night:0,frame:[260,560],plant:o.plant==null?0:o.plant,lamp:0,wall:o.sun?'#ffe9d2':'#efd7c2',wall2:o.sun?'#f7d3b0':'#d8b89c',curtain:'#7cc47c',curtain2:'#5aa45a'});
+ bunting(t,330,55);if(o.sun)glow(820,560,700,'255,236,180',.5)}
+// bakery(t,{case}) shop interior: tiled wall, chalkboard, shelves of bread, glass counter display
+function bakery(t,o={}){const g=X.createLinearGradient(0,-200,0,1250);g.addColorStop(0,'#fdf0dc');g.addColorStop(1,'#f2d9b4');X.fillStyle=g;X.fillRect(-3000,-3000,8000,4300);
+ X.strokeStyle='rgba(160,110,60,.14)';X.lineWidth=3;for(let yy=560;yy<1240;yy+=70){X.beginPath();X.moveTo(-3000,yy);X.lineTo(5000,yy);X.stroke()}
+ rr(80,150,400,250,16,'#2f3a33',10);txt('CAKES',280,230,62,'#fff',0);txt('to order 🎂',280,320,46,'#ffd23f',0,'700 ');
+ for(const sy of[480,700]){rr(600,sy,460,22,6,'#a8723e',4);for(let k=0;k<4;k++){ell(650+k*110,sy-30,48,30,'#d99a50',5);line([[630+k*110,sy-40],[670+k*110,sy-22]],4,'rgba(255,255,255,.5)')}}
+ X.fillStyle='#b88a5c';X.fillRect(-3000,1240,8000,3000)}
+function counter(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);rr(-600,-330,1200,330,16,'#e8c79c',7);rr(-560,-300,1120,200,12,'rgba(210,235,255,.55)',5);line([[-560,-200],[560,-200]],5,'rgba(255,255,255,.7)');rr(-620,-360,1240,40,10,'#c0905e',6);X.restore()}
+// cakebox(x,y,s) white bakery box with a ribbon and a little window
+function cakebox(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,6,150,18,'#000',0);X.globalAlpha=1;rr(-140,-200,280,200,14,'#ffffff',6);rr(-150,-226,300,40,10,'#f6f6f6',6);rr(-60,-150,120,80,10,'rgba(255,200,220,.9)',4);rr(-12,-226,24,226,4,'#ff5a7a',0);
+ X.save();X.translate(0,-232);path(()=>{X.moveTo(0,0);X.bezierCurveTo(-60,-40,-60,20,0,0);X.bezierCurveTo(60,-40,60,20,0,0)},'#ff5a7a',4);X.restore();X.restore()}
+
