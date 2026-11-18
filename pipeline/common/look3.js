@@ -412,3 +412,11 @@ function counter(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);rr(-600,-330,12
 function cakebox(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,6,150,18,'#000',0);X.globalAlpha=1;rr(-140,-200,280,200,14,'#ffffff',6);rr(-150,-226,300,40,10,'#f6f6f6',6);rr(-60,-150,120,80,10,'rgba(255,200,220,.9)',4);rr(-12,-226,24,226,4,'#ff5a7a',0);
  X.save();X.translate(0,-232);path(()=>{X.moveTo(0,0);X.bezierCurveTo(-60,-40,-60,20,0,0);X.bezierCurveTo(60,-40,60,20,0,0)},'#ff5a7a',4);X.restore();X.restore()}
 
+
+// craft ladder 2026-11-18 18:00 (leave_look3)
+// printer(x,y,s,t): office printer sitting on a surface at y (bottom centre), blinking light, paper tray
+function printer(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);rr(-150,-170,300,170,22,'#e9ecef',7);rr(-150,-170,300,46,18,'#cfd5db',6);rr(-110,-60,220,30,8,'#9aa3ad',5);
+ rr(-90,-230,180,70,6,'#fff',5);circ(110,-100,12,Math.sin(t*5)>0?'#25d366':'#1b6b3a',3);rr(60,-112,30,24,5,'#3b4250',0);X.restore()}
+// oooCard(x,y,s): little folded desk card '🌴 Out of office' standing on a surface at y
+function oooCard(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);path(()=>{X.moveTo(-110,0);X.lineTo(-90,-120);X.lineTo(90,-120);X.lineTo(110,0);X.closePath()},'#fff',6);
+ txt('🌴',0,-84,40,'#111',0,'400 ');txt('Out of office',0,-34,22,'#151515',0,'800 ');X.restore()}
