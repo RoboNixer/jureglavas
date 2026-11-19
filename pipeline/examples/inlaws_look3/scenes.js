@@ -21,6 +21,18 @@ function pot(x,y,s,t){X.save();X.translate(x,y);X.scale(s,s);rr(-120,-120,240,12
  X.save();X.globalAlpha=.5;for(let k=0;k<3;k++){const ph=(t*.6+k/3)%1;X.globalAlpha=.45*(1-ph);circ(x-40*s+k*40*s+Math.sin(t*3+k)*10,y-170*s-ph*160,22+ph*20,'#ffffff',0)}X.restore()}
 const TUE={night:1,lamp:0,win:780,wall:'#e8dccb',wall2:'#d4c2a8'};
 
+function chatList(x,y,s,r,rows,tap){X.save();X.translate(x,y);X.scale(s,s);
+ rr(-320,-660,640,1320,92,'#1b1b1f',10);rr(-298,-638,596,1276,74,'#ffffff',0);X.save();X.beginPath();X.roundRect(-298,-638,596,1276,74);X.clip();
+ X.fillStyle='#008069';X.fillRect(-300,-640,600,190);rr(-70,-618,140,40,20,'#000',0);
+ X.font="600 26px Inter";X.fillStyle='#fff';X.textAlign='left';X.textBaseline='middle';X.fillText(CLT||'21:00',-240,-598);X.font="800 46px Inter";X.fillText('WhatsApp',-250,-505);
+ rows.forEach((w,i)=>{const yy=-400+i*150;if(w.hi){X.fillStyle=`rgba(37,211,102,${.10+.08*Math.sin(r*8)})`;X.fillRect(-300,yy-70,600,148)}
+  if(tap&&i==tap.i&&r>tap.a){const q=C((r-tap.a)/.4);X.globalAlpha=1-q;circ(0,yy,40+q*260,'rgba(0,0,0,.08)',0);X.globalAlpha=1}
+  if(w.memo)avatar(-220,yy,52,0);else{circ(-220,yy,52,w.col||'#b07ae0',0);txt(w.e||'🙂',-220,yy+3,52,'#111',0,'400 ')}
+  X.textAlign='left';X.font="800 34px Inter,'Noto Color Emoji'";X.fillStyle='#111';X.fillText(w.n,-145,yy-22);X.font=(w.hi?"700 ":"400 ")+"28px Inter,'Noto Color Emoji'";X.fillStyle=w.hi?'#111':'#667781';X.fillText(w.m,-145,yy+24);
+  X.textAlign='right';X.font="500 24px Inter";X.fillStyle=w.hi?'#1fa855':'#667781';X.fillText(w.time,265,yy-22);if(w.hi){circ(240,yy+24,22,'#25d366',0);X.textAlign='center';X.font="800 24px Inter";X.fillStyle='#fff';X.fillText('1',240,yy+25)}
+  X.fillStyle='#eef0f1';X.fillRect(-145,yy+74,445,2)});
+ X.restore();X.restore()}
+function avH(x,y,r){circ(x,y,r,'#ffd1dc',0);txt('💕',x,y+3,r*1.1,'#111',0,'400 ');X.textAlign='left'}
 // A: 0.0 Sunday 12:58, front door, you in pyjamas, in-laws on the doorstep
 function doorA(t,r,lab){cam(560,1120,lerp(1.06,1.12,C(r/3.4)),t,.15);opendoor(t,{inside:()=>inlaws(t,0,r)});
  sm(260,1880,1.28,Object.assign({t,pj:1,eyes:'wide',brow:'worried',mouth:'o',sweat:1,look:[.65,-.05],tilt:-3,armL:35,bendL:95,holdL:(x,y)=>mug(x+10,y+5,1.1),armR:25,bendR:20},YOU));
@@ -50,12 +62,15 @@ sh(T('s2'),(t,r)=>{cam(560,1060,1.05,t,.15);kitchen(t,TUE);glow(700,700,600,'255
  const fl=C((r-.7)/.8);if(fl<1){const px=lerp(560,520,eo(fl)),py=lerp(hy-230,hy+200,eo(fl))-Math.sin(fl*Math.PI)*120;pill(px,py,'👵👴 Sun 13:00',1-fl*.6)}else sparkles(520,hy+180,C((r-1.5)/.5),8,120,'#7cf0a0');
  label3(r<.5?'Next time 🎤':'Memopai 😎',C((r<.5?r:r-.5)/.2))});
 // E: the chat: voice note -> "Got it" -> Saturday divider -> the reminder arrives
-const E0=T('s2')+2.55;
+const E0=T('s2')+2.55,E1=E0+2.6;let CLT='10:00';
 sh(E0,(t,r)=>{NOFX=1;X.setTransform(1,0,0,1,0,0);X.fillStyle='#1f3b4d';X.fillRect(0,0,1080,1920);glow(540,900,700,'140,220,255',.3);
  const sat=T('s3')-E0;
  phoneUI(540,900,1.28,r,{typing:r>.95&&r<1.2,list:[{a:.05,me:1,voice:1,pl:C((r-.1)/.9),dur:'0:04',time:'Tue 19:12'},{a:1.2,me:0,text:'Got it ✅ Sat 10:00 · In-laws Sunday 13:00 👵👴',time:'19:12'},{a:sat+.05,date:'SATURDAY'},{a:sat+.75,me:0,text:'⏰ In-laws TOMORROW 13:00 👵👴 Time to get ready!',time:'10:00'}]});
  if(r>sat+.75&&r<sat+1.6)glow(540,1200,500,'130,240,160',.35*(1-C((r-sat-.75)/.85)))});
 // G: Sunday 12:58 again: the door opens on you in a shirt + bow tie; partner: "A bow tie? Okay, show-off."; then sorted
+// E2: the chat list: the reminder sits on top, right above her chat
+sh(E1,(t,r)=>{NOFX=1;X.setTransform(1,0,0,1,0,0);const g=X.createLinearGradient(0,0,0,1920);g.addColorStop(0,'#3a5a7a');g.addColorStop(1,'#f2c98a');X.fillStyle=g;X.fillRect(0,0,1080,1920);glow(540,600,700,'255,236,170',.4);
+ chatList(540,900,1.28,r,[{memo:1,hi:1,n:'Memopai',m:'⏰ In-laws tomorrow 13:00',time:'10:00'},{n:'Babe 💕',e:'💕',col:'#ffd1dc',m:"Coffee? ☕",time:'09:41'},{n:'Mom ❤️',e:'👩',col:'#ffe0a8',m:'Call me when you can',time:'Fri'},{n:'Team 💼',e:'💼',col:'#cfe0ff',m:'Notes from today',time:'Fri'}],null)});
 sh(T('s4'),(t,r)=>{const p1=r>T('p1')-T('s4'),pr=r-(T('p1')-T('s4'));cam(560,1120,lerp(1.04,1.1,C(r/6)),t,.15);opendoor(t,{wall:'#f8ead6',wall2:'#efd9bb',inside:()=>inlaws(t,1,r)});
  const fr=r>T('f2')-T('s4')&&!p1;
  sm(130,1800,.95,Object.assign({t,flip:1,eyes:'happy',brow:'up',mouth:fr?'open':'grin',talk:fr?t:null,look:[.6,0],armL:fr?150+Math.sin(t*9)*10:30,bendL:fr?-150:20,armR:20,bendR:20},HER));
