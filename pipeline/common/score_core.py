@@ -88,7 +88,10 @@ def sparkle(t0):
 def creak(t0,d=1.0): k=int(d*SR);tt=np.arange(k)/SR;add(sfx,bp(np.sign(np.sin(2*np.pi*np.cumsum(90+40*np.sin(tt*7))/SR))*.3,300,2000)*np.sin(np.pi*tt/d)*.5,t0)
 def bubbles(t0,n=6):
     for k in range(n): f=500+rng.random()*900;kk=int(.08*SR);tt=np.arange(kk)/SR;add(sfx,np.sin(2*np.pi*np.cumsum(f+f*3*tt/.08)/SR)*env(kk,.002,.03)*.35,t0+k*.09)
+import os
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'music2.py')).read())   # MUSIC v2: beat() + legacy beds redirected to it
 exec(open('cues.py').read())
+_finish_music()
 # ---- voice + duck + mix
 v,vsr=sf.read('vo.wav');v=signal.resample_poly(v,SR,vsr);v=np.pad(v,(0,max(0,N-len(v))))[:N]
 e=np.abs(v);a=int(.06*SR);e=np.convolve(e,np.ones(a)/a,'same');on=(e>0.02).astype(float)
@@ -96,10 +99,12 @@ g=np.zeros(N);x=0
 for i in range(0,N,64):
     tg=on[i];c=1-np.exp(-64/((0.04 if tg>x else .3)*SR));x+=(tg-x)*c;g[i:i+64]=x
 bed=mus*.6*(1-.75*g)+sfx*.75*(1-.6*g)   # v2: duck music AND sfx harder under speech so the voice is always clear
+gl=np.ones(N)
 for l in L:   # audibility check: voice must sit well above the bed on every line
     i,j=int(l['t0']*SR),int(l['t1']*SR);d=20*np.log10((np.sqrt(np.mean(v[i:j]**2))+1e-9)/(np.sqrt(np.mean(bed[i:j]**2))+1e-9))
-    if d<12: k=10**((12-d)/20);bed[i:j]/=k;print('ducked bed under',l['tag'],round(d,1),'dB -> 12 dB')
-mix=v+bed+lp(noise(DUR),800)*.008
+    if d<12: k=10**((12-d)/20);gl[i:j]=1/k;print('ducked bed under',l['tag'],round(d,1),'dB -> 12 dB')
+w_=int(.25*SR);gl=np.convolve(np.pad(gl,(w_,w_),mode='edge'),np.hanning(w_)/np.hanning(w_).sum(),'same')[w_:-w_];bed*=gl   # smooth, no audible gain steps between lines
+mix=v+bed
 f=int(.5*SR);mix[-f:]*=np.linspace(1,0,f)
 pk=np.percentile(np.abs(mix),99.95);mix=mix/pk*.9;mix=np.where(np.abs(mix)>.92,np.sign(mix)*(.92+.08*np.tanh((np.abs(mix)-.92)/.08)),mix)
 sf.write('mix.wav',np.stack([mix,mix],1).astype(np.float32),SR);print('ok',DUR)
