@@ -20,7 +20,7 @@ function shotA(t,r,lab){cam(540,1040,lerp(1.04,1.12,C(r/3.5)),t,.12);office(t,{c
  sm(560,1990,1.25,Object.assign({t,eyes:bz?'wide':'open',brow:bz?'worried':'flat',mouth:bz?'o':'flat',sweat:r>1.4,look:bz?[-.2,.6]:[.4,0],armR:bz?135:30,bendR:bz?-140:20,holdR:(x,y)=>phoneH(x,y+10,-.15,bz),armL:30,bendL:20},YOU));
  desk(540,1450,1.0,{laptop:1,lx:230,mug:1});
  if(bz){const sh2=Math.sin(t*60)*4;X.save();X.globalAlpha=.55;for(let k=1;k<3;k++)circ(410+sh2,1090,40+k*22,null,5);X.restore()}
- if(r>.35&&r<2.5)notif(150,C((r-.35)/.3),'Son 🧢','locked out 🙃');
+ if(r>.35&&r<2.5)notif(338,C((r-.35)/.3),'Son 🧢','locked out 🙃');
  if(lab&&r>=2.5)label3('You, 15:42 😩',C((r-2.5)/.2))}
 sh(0,(t,r)=>shotA(t,r,1));
 
@@ -28,8 +28,8 @@ sh(0,(t,r)=>shotA(t,r,1));
 const B0=T('s1'),BZ=1.7;
 function shotB(t,r,lab){const zp=eo(C((r-BZ)/.6));cam(lerp(560,250,zp),lerp(1080,690,zp),lerp(1.04,2.3,zp),t,.1);
  housefront(t,{rain:1,keys:1,glowKeys:C((r-BZ-.3)/.4)});
- const s=.95,top=1300;sm(600,top+340*s,s,sitO(Object.assign({t,flip:0,eyes:'open',lid:.35,brow:'sad',mouth:'wavy',tear:0,sweat:1,look:[.6,.2],armL:150,bendL:-150,holdL:(x,y)=>phoneH(x,y+10,.2,1),armR:30,bendR:20},SON)));
- const wx=lerp(1340,930,eo(C(r/1.1)));sm(wx,1840,1.1,Object.assign({t,flip:1,walk:r<1.1?t:null,eyes:'open',lid:.3,brow:'flat',mouth:'flat',look:[-.6,.1],armR:150,bendR:-150,holdR:(x,y)=>umbrella3(x,y,1.0,{rot:-.1,col:'#4a8fe0'}),armL:20,bendL:10},YOU));
+ const s=.95,top=1300;sm(540,top+340*s,s,sitO(Object.assign({t,flip:0,eyes:'open',lid:.35,brow:'sad',mouth:'wavy',tear:0,sweat:1,look:[.6,.2],armL:150,bendL:-150,holdL:(x,y)=>phoneH(x,y+10,.2,1),armR:30,bendR:20},SON)));
+ const wx=lerp(1340,790,eo(C(r/1.1)));sm(wx,1800,1.0,Object.assign({t,flip:1,walk:r<1.1?t:null,eyes:'open',lid:.3,brow:'flat',mouth:'flat',look:[-.6,.1],armR:150,bendR:-150,holdR:(x,y)=>umbrella3(x,y,1.0,{rot:-.1,col:'#4a8fe0'}),armL:20,bendL:10},YOU));
  prain(t,.65,95);
  if(lab)label3(r<BZ+.2?'Your kid, 16:05 🌧️':'The keys 🔑',C((r<BZ+.2?r:r-BZ-.2)/.2))}
 sh(B0,(t,r)=>shotB(t,r,1));
@@ -57,18 +57,18 @@ sh(E0,(t,r)=>{const on=r>PG,gr=C((r-PG-.6)/.5);cam(540,1040,lerp(1.04,1.1,C(r/7)
  hookBoard(470,720,gr<.5,t);
  const s=1.18,y=1780;
  const reach=on&&gr<1;
- sm(330,y,s,Object.assign({t,flip:0,eyes:on?(gr>=1?'happy':'open'):'open',lid:on?0:.4,brow:on?'up':'flat',mouth:gr>=1?'grin':(on?'o':'flat'),look:on?[.6,-.4]:[.2,.5],
+ sm(380,y,s,Object.assign({t,flip:0,eyes:on?(gr>=1?'happy':'open'):'open',lid:on?0:.4,brow:on?'up':'flat',mouth:gr>=1?'grin':(on?'o':'flat'),look:on?[.6,-.4]:[.2,.5],
   armR:reach?165:(gr>=1?40:40),bendR:reach?-10:20,armL:on&&!reach?120:30,bendL:on&&!reach?-120:20,holdL:on&&!reach?(x,yy)=>phoneH(x,yy+10,.15,1):null,
   holdR:gr>=1?(x,yy)=>keys3(x,yy-20,.7,{rot:.2}):(reach&&gr>.4?(x,yy)=>keys3(x,yy-20,.85,{rot:0}):null)},SON));
- if(!on){loadbar(400,HD(y,s)-250,.85,.72,t)}
+ if(!on){loadbar(470,HD(y,s)-250,.8,.72,t)}
  if(on){const sh2=Math.sin(t*60)*4;if(r<PG+.8){X.save();X.globalAlpha=.55;for(let k=1;k<3;k++)circ(200+sh2,1060,40+k*22,null,5);X.restore()}}
- if(on&&r<PG+1.3)notif(150,C((r-PG)/.3),'Memopai','⏰ 07:40 · 🔑 Keys!');
- if(!on)label3('His brain (still loading) 🚧',C(r/.2));else if(r>=PG+1.3)label3('Your kid, 07:40 🔑',C((r-PG-1.3)/.2))});
+ if(on&&r<PG+1.3)notif(338,C((r-PG)/.3),'Memopai','⏰ 07:40 · 🔑 Keys!');
+ if(!on)label3('His brain: loading 🚧',C(r/.2));else if(r>=PG+1.3)label3('Your kid, 07:40 🔑',C((r-PG-1.3)/.2))});
 
 // F: 15:42 sunshine: he unlocks the front door himself
 const F0=T('p1'),G0=T('p1')+2.5;
-sh(F0,(t,r)=>{cam(600,1050,lerp(1.05,1.12,C(r/2.5)),t,.1);housefront(t,{sun:1,door:C((r-1.2)/.6)});
- const s=1.12;sm(700,1810,s,Object.assign({t,flip:1,eyes:'happy',brow:'up',mouth:'grin',look:[-.4,-.2],armR:95,bendR:-20,holdR:(x,y)=>keys3(x-10,y-30,.8,{rot:Math.sin(t*10)*.5}),armL:20,bendL:10},SON));
+sh(F0,(t,r)=>{cam(640,1050,lerp(1.05,1.12,C(r/2.5)),t,.1);housefront(t,{sun:1,door:C((r-1.2)/.6)});
+ const s=1.12;sm(760,1810,s,Object.assign({t,flip:1,eyes:'happy',brow:'up',mouth:'grin',look:[-.4,-.2],armR:95,bendR:-20,holdR:(x,y)=>keys3(x-10,y-30,.8,{rot:Math.sin(t*10)*.5}),armL:20,bendL:10},SON));
  label3('Your kid, 15:42 ☀️',C(r/.2))});
 
 // G: you at your desk, coffee, phone face down

@@ -101,7 +101,7 @@ Owner sent phone screenshots of our TikTok and Instagram posts: the label card t
 | FACES + key props | inside x 140..900, y 300..1380. Feet and floor may run lower; background may fill the whole frame. |
 
 **The engine now enforces this for the standard overlays (do not undo it, do not pass bigger sizes):**
-- Captions: 92 px, max 700 px wide, 2 lines max, bottom edge at y 1610, auto-shrink for long words.
+- Captions: 92 px, max 650 px wide (x 215..865), 2 lines max, bottom edge at y 1610, auto-shrink for long words.
 - `label3()`: card max 780 px wide, top never above y 300, font shrinks to fit. Keep labels SHORT (max ~18 characters + one emoji) so they stay big.
 - `notif()`: drawn in screen space, inset to x 127..953, never above y 290. Call it as `notif(338,p,title,body)`.
 - `phoneUI()`: capped at scale 1.16 and centred. `endcard()` and the cover (`mkcover.py`) are inset too: cover lines max 780 px wide, y 440..800, so they survive the profile-grid crop.
