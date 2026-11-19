@@ -33,6 +33,12 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  if(o.pj&&!o.crawl){const pc=o.pj===1?'#9fc0ec':o.pj;const a=P(neck[0]-70,neck[1]+20),b=P(neck[0]+70,neck[1]+20),c=P(hip[0]+95,hip[1]+70),d=P(hip[0]-95,hip[1]+70);X.save();X.fillStyle=pc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.save();X.clip();X.strokeStyle='rgba(255,255,255,.8)';X.lineWidth=12*s;for(let k=-4;k<=4;k++){X.beginPath();X.moveTo(...P(neck[0]+k*30,neck[1]));X.lineTo(...P(hip[0]+k*40,hip[1]+90));X.stroke()}X.restore();X.stroke();
   X.fillStyle='#ffffff';X.beginPath();X.moveTo(...P(neck[0]-46,neck[1]+16));X.lineTo(...P(neck[0],neck[1]+70));X.lineTo(...P(neck[0]+46,neck[1]+16));X.closePath();X.fill();X.stroke();
   for(let k=0;k<3;k++){const[bx,by]=P(neck[0]+(hip[0]-neck[0])*(.3+k*.25),neck[1]+(hip[1]-neck[1])*(.3+k*.25)+40);X.beginPath();X.arc(bx,by,7*s,0,7);X.fillStyle='#fff';X.fill();X.stroke()}X.restore()}
+// craft ladder 2026-11-19 16:00: o.tee (colour) = band/tour T-shirt (crew neck, short sleeves, big star print, 'TOUR' text)
+ if(o.tee&&!o.crawl){const tc=o.tee===1?'#7a3fd0':o.tee;const a=P(neck[0]-78,neck[1]+18),b=P(neck[0]+78,neck[1]+18),c=P(hip[0]+88,hip[1]+40),d=P(hip[0]-88,hip[1]+40);X.save();X.fillStyle=tc;X.strokeStyle=OUT;X.lineWidth=8*s;
+  X.beginPath();X.moveTo(...a);X.lineTo(...P(neck[0]-128,neck[1]+70));X.lineTo(...P(neck[0]-100,neck[1]+110));X.lineTo(...P(neck[0]-74,neck[1]+92));X.lineTo(...d);X.lineTo(...c);X.lineTo(...P(neck[0]+74,neck[1]+92));X.lineTo(...P(neck[0]+100,neck[1]+110));X.lineTo(...P(neck[0]+128,neck[1]+70));X.lineTo(...b);X.closePath();X.fill();X.stroke();
+  X.beginPath();X.arc(...P(neck[0],neck[1]+14),30*s,0.1*Math.PI,0.9*Math.PI);X.stroke();
+  const[cx,cy]=P((neck[0]+hip[0])/2,(neck[1]+hip[1])/2+20);X.fillStyle='#ffd23f';X.beginPath();for(let k=0;k<10;k++){const ang=-Math.PI/2+k*Math.PI/5,rad=(k%2?20:46)*s;X.lineTo(cx+Math.cos(ang)*rad,cy+Math.sin(ang)*rad)}X.closePath();X.fill();X.lineWidth=5*s;X.stroke();
+  X.font=`900 ${26*s}px Inter`;X.fillStyle='#fff';X.textAlign='center';X.textBaseline='middle';X.fillText('TOUR',cx,cy+66*s);X.restore()}
 // craft ladder 2026-11-18: o.towel (colour) = bath towel wrapped round the waist (with stripe + tucked corner)
  if(o.towel&&!o.crawl){const tc=o.towel===1?'#5aa9e6':o.towel;const a=P(hip[0]-78,hip[1]-70),b=P(hip[0]+78,hip[1]-70),c=P(hip[0]+92,hip[1]+120),d=P(hip[0]-92,hip[1]+120);X.fillStyle=tc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.stroke();X.strokeStyle='rgba(255,255,255,.75)';X.lineWidth=10*s;X.beginPath();X.moveTo(...P(hip[0]-86,hip[1]+88));X.lineTo(...P(hip[0]+86,hip[1]+88));X.stroke();X.strokeStyle=OUT;X.lineWidth=6*s;X.beginPath();X.moveTo(...P(hip[0]+40,hip[1]-70));X.lineTo(...P(hip[0]+55,hip[1]+40));X.stroke()}
  if(o.bow&&!o.crawl){const[bx,by]=P(neck[0],neck[1]+18);X.save();X.translate(bx,by);X.scale(s,s);X.fillStyle=o.bow;X.strokeStyle=OUT;X.lineWidth=6;for(const d of[-1,1]){X.beginPath();X.moveTo(0,0);X.lineTo(d*46,-24);X.lineTo(d*46,24);X.closePath();X.fill();X.stroke()}X.beginPath();X.arc(0,0,11,0,7);X.fill();X.stroke();X.restore()}
@@ -516,3 +522,23 @@ function shopIn(t,o={}){const g=X.createLinearGradient(0,-200,0,1250);g.addColor
   for(let j=0;j<5;j++){const ix=500+j*120;if(r==2){eggbox(ix+50,sy+120,.42,{})}else{rr(ix,sy+20,90,100,10,['#e0533d','#ffd23f','#5fa8d8','#4fae55','#b07ae0'][(j+r)%5],5);rr(ix+15,sy+45,60,26,6,'rgba(255,255,255,.7)',0)}}}
  const fg=X.createLinearGradient(0,1240,0,1920);fg.addColorStop(0,'#cfd6d0');fg.addColorStop(1,'#aab3ac');X.fillStyle=fg;X.fillRect(-3000,1240,8000,1000);
  X.globalAlpha=.25;for(let k=-4;k<12;k++)line([[k*140,1240],[k*220-400,1920]],3,'#fff');X.globalAlpha=1}
+
+// ---------- craft ladder 2026-11-19 16:00: ticket-drop kit ----------
+// laptop3(x,y,s,{mode:'queue'|'sold'|'ok', n:'48,213', p:0..1 reveal, t}) front-facing laptop on a table, ticket-site screen with queue number / SOLD OUT / 2 tickets ✓
+function laptop3(x,y,s=1,o={}){const m=o.mode||'queue',p=o.p==null?1:o.p,t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);gshadow(0,24,300,.3);
+ path(()=>{X.moveTo(-300,0);X.lineTo(300,0);X.lineTo(340,30);X.lineTo(-340,30);X.closePath()},'#aab3bd',7);rr(-280,-380,560,372,22,'#2e3440',8);
+ const bg=m=='sold'?'#2a1420':m=='ok'?'#0f2a1d':'#14182a';rr(-256,-356,512,324,10,bg,0);rr(-256,-356,512,52,10,'#1f6fe5',0);txt('🎟️ tickets',-150,-330,28,'#fff',0,'800 ');circ(200,-330,8,'#ff5f57',0);circ(225,-330,8,'#ffbd2e',0);
+ X.save();X.globalAlpha=C(p*2);
+ if(m=='queue'){txt('You are number',0,-262,30,'#b9c3e0',0,'700 ');txt('#'+(o.n||'48,213'),0,-188,92,'#ffd23f',0,'900 ');txt('in line',0,-122,30,'#b9c3e0',0,'700 ');rr(-200,-88,400,22,11,'#2a3150',0);rr(-200,-88,400*(.03+.02*Math.sin(t*2)),22,11,'#ffd23f',0)}
+ else if(m=='sold'){X.save();X.translate(0,-190);X.rotate(-.12);X.scale(lerp(1.8,1,eo(C(p))),lerp(1.8,1,eo(C(p))));X.strokeStyle='#ff3b4e';X.lineWidth=12;X.strokeRect(-200,-62,400,124);txt('SOLD OUT',0,4,78,'#ff3b4e',0,'900 ');X.restore()}
+ else{circ(0,-226,54,'#25d366',0);txt('✓',0,-222,66,'#fff',0,'900 ');txt('2 tickets',0,-138,56,'#fff',0,'900 ');txt('Row 12 🎉',0,-82,34,'#9be8b6',0,'800 ')}
+ X.restore();X.restore()}
+// lightstick(x,y,s,t,col) glowing concert light stick (held: pass world coords from holdR/holdL)
+function lightstick(x,y,s=1,t=0,col='255,120,230'){X.save();X.translate(x,y);X.rotate(-.35+Math.sin(t*6)*.25);X.scale(s,s);glow(0,-150,120,col,.55);rr(-14,-60,28,90,10,'#2b2b33',5);rr(-30,-210,60,160,30,`rgb(${col})`,6);X.globalAlpha=.6;rr(-14,-196,14,120,7,'#fff',0);X.restore()}
+// concert(t,o) arena: dark stage with moving coloured beams, screen glow, crowd silhouettes with raised arms + phone lights, haze
+function concert(t,o={}){const g=X.createLinearGradient(0,-300,0,1500);g.addColorStop(0,'#0c0820');g.addColorStop(1,'#2a1550');X.fillStyle=g;X.fillRect(-3000,-3000,8000,4600);
+ rr(140,330,800,420,16,'#1a1238',6);const sg=X.createLinearGradient(0,330,0,750);sg.addColorStop(0,'#ff5ab4');sg.addColorStop(1,'#6a4cff');X.save();X.globalAlpha=.55+.15*Math.sin(t*3);rr(160,350,760,380,10,sg,0);X.restore();txt('★',540,540,180,'#ffd23f',0,'900 ');
+ X.save();X.globalCompositeOperation='lighter';const cols=['255,80,200','90,140,255','255,220,90','120,255,200'];for(let k=0;k<4;k++){const sx=120+k*280,ang=Math.sin(t*1.3+k*1.7)*.5;X.save();X.translate(sx,240);X.rotate(ang);const bg=X.createLinearGradient(0,0,0,1400);bg.addColorStop(0,`rgba(${cols[k]},.45)`);bg.addColorStop(1,`rgba(${cols[k]},0)`);X.fillStyle=bg;X.beginPath();X.moveTo(-18,0);X.lineTo(18,0);X.lineTo(200,1400);X.lineTo(-200,1400);X.closePath();X.fill();X.restore()}X.restore();
+ rr(-200,800,1480,60,0,'#120c26',0);
+ pblur(2,()=>{for(let r=0;r<2;r++)for(let k=0;k<11;k++){const x=-40+k*110+(r?55:0),y=1010+r*90+Math.sin(t*5+k*1.3)*8;X.fillStyle=r?'#1c1235':'#150d2a';circ(x,y-70,34,X.fillStyle,0);rr(x-40,y-40,80,200,30,X.fillStyle,0);if((k+r)%3==0){line([[x+30,y-30],[x+60,y-130]],12,X.fillStyle);circ(x+62,y-140,7,'#fff8d0',0);glow(x+62,y-140,30,'255,248,200',.6)}}});
+ X.fillStyle='rgba(30,18,60,.9)';X.fillRect(-3000,1250,8000,3000);bokeh(t,'255,140,220',10,250,900)}
