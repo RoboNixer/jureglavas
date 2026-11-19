@@ -1,0 +1,11 @@
+add(sfx,pop(1500),0.3,.5)
+# yowl-ish whoop for the cat at the start, a sting when she glares
+add(sfx,whoop(),0.5,.35);add(sfx,boing(),1.7,.35)
+drone(0,T('s3'),46,.06)
+add(sfx,whoosh(.35),T('s1')-.1,.5);add(sfx,pop(800),T('s1')+.4,.45)
+add(sfx,whoosh(.35),T('s2')-.1,.45)
+add(sfx,whoosh(.5,.4),T('s3')-.05,.5);add(sfx,pop(1200),T('s3')+.2,.55);chime(T('s3')+.3)
+musicbox(T('s3'),T('cta'),[72,76,79,76],.3,.12);add(sfx,whoosh(.4),T('s3')+1.3,.4)
+add(sfx,pop(1100),T('y1')-.2,.6);add(sfx,pop(1500),T('y1')+1.75,.6)
+buzz(T('s4')+.25,.6);add(sfx,pop(1300),T('s4')+1.6,.6)
+bounce(T('p1'),T('cta'),2,.7);chime(T('cta'))

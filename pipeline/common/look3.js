@@ -420,3 +420,55 @@ function printer(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);rr(-150,-17
 // oooCard(x,y,s): little folded desk card '🌴 Out of office' standing on a surface at y
 function oooCard(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);path(()=>{X.moveTo(-110,0);X.lineTo(-90,-120);X.lineTo(90,-120);X.lineTo(110,0);X.closePath()},'#fff',6);
  txt('🌴',0,-84,40,'#111',0,'400 ');txt('Out of office',0,-34,22,'#151515',0,'800 ');X.restore()}
+
+// ---------- craft ladder 2026-11-19 09:00: cat kit ----------
+// cat3(x,floorY,s,{t,look:[x,y],lid:0..1 (judging),eyes:'open'|'happy'|'closed'|'wide',mouth:'w'|'meow'|'smile'|'flat',brow:'angry'|null,col,stripe,curl:1 (loaf pose, side view),purr:1,flip})
+function cat3(x,y,s=1,o={}){const t=o.t||0,col=o.col||'#f2a24e',st=o.stripe||'#d9782a',OUT='#151515',fl=o.flip?-1:1;X.save();X.translate(x,y);X.scale(s*fl,s);X.lineJoin='round';X.lineCap='round';
+ X.globalAlpha=.2;ell(0,6,o.curl?230:150,22,'#000',0);X.globalAlpha=1;
+ const sw=Math.sin(t*(o.purr?1.4:3.2))*(o.purr?.15:.35);
+ if(o.curl){// loaf: body oval, head on the right, tail wrapped around front
+  X.save();X.translate(-150,-60);X.rotate(sw*.3);X.strokeStyle=OUT;X.lineWidth=46;X.beginPath();X.moveTo(0,0);X.quadraticCurveTo(-60,40,40,70);X.quadraticCurveTo(150,90,230,60);X.stroke();X.strokeStyle=col;X.lineWidth=32;X.stroke();X.restore();
+  ell(0,-90,210,95,col,7);for(let k=0;k<4;k++){X.strokeStyle=st;X.lineWidth=12;X.beginPath();X.moveTo(-120+k*60,-175);X.quadraticCurveTo(-110+k*60,-130,-125+k*60,-100);X.stroke()}
+  X.save();X.translate(170,-140);catHead(t,o,col,st,OUT,.85);X.restore();
+  if(o.purr){X.save();X.globalAlpha=.8;for(let k=0;k<3;k++){const q=(t*.6+k/3)%1;X.globalAlpha=(1-q)*.9;txt(k%2?'♥':'z',260+q*60+k*20,-330-q*160,46-q*10,k%2?'#ff5a7a':'#6a7aa8',0)}X.restore()}
+  X.restore();return}
+ // tail
+ X.save();X.translate(90,-40);X.rotate(sw);X.strokeStyle=OUT;X.lineWidth=40;X.beginPath();X.moveTo(0,0);X.bezierCurveTo(110,-10,150,-120,90,-210);X.stroke();X.strokeStyle=col;X.lineWidth=26;X.stroke();X.restore();
+ // body (sitting pear)
+ path(()=>{X.moveTo(-120,0);X.bezierCurveTo(-150,-120,-100,-260,0,-270);X.bezierCurveTo(100,-260,150,-120,120,0);X.closePath()},col,7);
+ path(()=>{X.moveTo(-55,-10);X.bezierCurveTo(-70,-120,-40,-210,0,-215);X.bezierCurveTo(40,-210,70,-120,55,-10);X.closePath()},'#fff3e2',0);
+ for(let k=0;k<3;k++){X.strokeStyle=st;X.lineWidth=12;X.beginPath();X.moveTo(-128+k*6,-60-k*55);X.lineTo(-90+k*6,-70-k*55);X.stroke();X.beginPath();X.moveTo(128-k*6,-60-k*55);X.lineTo(90-k*6,-70-k*55);X.stroke()}
+ // paws
+ ell(-45,-8,40,24,col,6);ell(45,-8,40,24,col,6);
+ X.save();X.translate(0,-300);catHead(t,o,col,st,OUT,1);X.restore();X.restore()}
+function catHead(t,o,col,st,OUT,k){X.scale(k,k);
+ for(const d of[-1,1]){path(()=>{X.moveTo(d*60,-110);X.lineTo(d*120,-215);X.lineTo(d*140,-70);X.closePath()},col,7);path(()=>{X.moveTo(d*80,-115);X.lineTo(d*118,-180);X.lineTo(d*126,-95);X.closePath()},'#ffb3c0',0)}
+ ell(0,0,150,125,col,7);
+ const hg=X.createRadialGradient(-50,-60,10,0,0,170);hg.addColorStop(0,'rgba(255,255,255,.25)');hg.addColorStop(1,'rgba(0,0,0,.10)');X.fillStyle=hg;X.beginPath();X.ellipse(0,0,146,121,0,0,7);X.fill();
+ for(let k=-1;k<=1;k++){X.strokeStyle=st;X.lineWidth=11;X.beginPath();X.moveTo(k*34,-122);X.lineTo(k*28,-80);X.stroke()}
+ ell(0,52,70,46,'#fff3e2',0);
+ const lk=o.look||[0,0],E=o.eyes||'open',lid=o.lid||0;
+ for(const d of[-1,1]){const ex=d*58,ey=-10;
+  if(E==='happy'||E==='closed'){X.strokeStyle=OUT;X.lineWidth=8;X.beginPath();if(E==='happy')X.arc(ex,ey+12,26,Math.PI*1.15,Math.PI*1.85);else{X.moveTo(ex-26,ey);X.quadraticCurveTo(ex,ey+16,ex+26,ey)}X.stroke();continue}
+  const R=E==='wide'?50:44;ell(ex,ey,R*.92,R,'#d8f07a',6);
+  const px=ex+lk[0]*14,py=ey+lk[1]*14;X.fillStyle=OUT;X.beginPath();X.ellipse(px,py,E==='wide'?20:12,R*.78,0,0,7);X.fill();circ(px-8,py-16,7,'#fff',0);
+  if(lid>0){X.fillStyle=col;X.beginPath();X.moveTo(ex-R-4,ey-R-6);X.lineTo(ex+R+4,ey-R-6);X.lineTo(ex+R+4,ey-R+lid*R*1.25+(o.brow==='angry'?-d*10:0));X.lineTo(ex-R-4,ey-R+lid*R*1.25+(o.brow==='angry'?d*10:0));X.closePath();X.fill();X.strokeStyle=OUT;X.lineWidth=7;X.beginPath();X.moveTo(ex-R+2,ey-R+lid*R*1.25+(o.brow==='angry'?d*10:0));X.lineTo(ex+R-2,ey-R+lid*R*1.25+(o.brow==='angry'?-d*10:0));X.stroke()}}
+ path(()=>{X.moveTo(-14,30);X.lineTo(14,30);X.lineTo(0,46);X.closePath()},'#ff8fa3',4);
+ const M=o.mouth||'w';X.strokeStyle=OUT;X.lineWidth=6;
+ if(M==='meow'){const op=.6+.4*Math.abs(Math.sin(t*5));path(()=>{X.ellipse(0,74,26,30*op,0,0,7)},'#7a1f2e',6);ell(0,88,14,8*op,'#ff7a90',0)}
+ else if(M==='flat'){X.beginPath();X.moveTo(-22,66);X.lineTo(22,66);X.stroke()}
+ else{X.beginPath();X.moveTo(0,46);X.lineTo(0,56);X.moveTo(-30,56);X.quadraticCurveTo(-15,72,0,56);X.quadraticCurveTo(15,72,30,56);X.stroke()}
+ X.strokeStyle='rgba(20,20,20,.7)';X.lineWidth=4;for(const d of[-1,1])for(let k=0;k<3;k++){X.beginPath();X.moveTo(d*60,40+k*14);X.lineTo(d*170,22+k*26);X.stroke()}}
+// catbowl(x,floorY,s,fill 0..1)
+function catbowl(x,y,s=1,fill=0){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,4,130,16,'#000',0);X.globalAlpha=1;
+ if(fill>0){for(let k=0;k<14;k++){const a=-80+(k*29)%160,b=-62-((k*17)%3)*10*fill;ell(a,b,18,13,'#a0603a',3)}}
+ path(()=>{X.moveTo(-120,-60);X.lineTo(120,-60);X.lineTo(95,0);X.lineTo(-95,0);X.closePath()},'#4a8fe0',7);ell(0,-60,120,20,fill>0?'#a0603a':'#2f63a8',6);
+ if(fill>0)for(let k=0;k<9;k++)ell(-80+k*20,-64-(k%3)*6,14,10,'#b8744a',3);
+ txt('🐟',0,-26,34,'#fff',0,'400 ');X.restore()}
+// pouch(x,y,s,rot,{open,empty}) cat-food foil pouch
+function pouch(x,y,s=1,rot=0,o={}){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);
+ path(()=>{X.moveTo(-60,-90);X.lineTo(60,-90);X.lineTo(66,90);X.quadraticCurveTo(0,104,-66,90);X.closePath()},'#7b5cd6',6);
+ if(!o.open){rr(-62,-104,124,22,4,'#9a80ea',5)}else{path(()=>{X.moveTo(-60,-90);X.lineTo(-40,-112);X.lineTo(-20,-90);X.lineTo(0,-108);X.lineTo(20,-90);X.lineTo(40,-112);X.lineTo(60,-90)},null,5)}
+ circ(0,-10,40,'#fff',0);txt('🐟',0,2,46,'#fff',0,'400 ');txt('CAT',0,62,26,'#fff',0);X.restore()}
+// catbag(x,y,s) big bag of cat food
+function catbag(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);path(()=>{X.moveTo(-80,-140);X.lineTo(80,-140);X.lineTo(95,100);X.lineTo(-95,100);X.closePath()},'#2fb37a',6);rr(-85,-160,170,30,6,'#25935f',5);circ(0,-30,52,'#fff',0);txt('🐟',0,-16,56,'#fff',0,'400 ');txt('CAT FOOD',0,62,26,'#fff',0);X.restore()}
