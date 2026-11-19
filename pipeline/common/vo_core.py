@@ -7,14 +7,20 @@ SR=24000
 exec(open('script.py').read())   # defines S, and optionally VO/PITCH overrides, CAPFIX
 VO_D={'N':'af_heart',   # narrator is a WOMAN again (owner 2026-11-19: "use the voice of the woman, it feels more native and human"); do not switch back to am_michael
       'G':'am_puck','D':'am_onyx','K':'af_sky','F':'af_bella','M':'am_michael','B':'bm_george'}
-PITCH_D={'G':1.22,'D':0.84,'K':1.3,'F':1.1}
+PITCH_D={'G':1.22,'D':0.84,'K':1.14}   # v4: F is no longer pitch-shifted (resampling makes voices chipmunky/robotic); the kid is shifted only a little
 VO=dict(VO_D,**globals().get('VOX',{}));PITCH=dict(PITCH_D,**globals().get('PITCHX',{}))
 LAB={'N':'her','G':'gary','D':'death','K':'kid','F':'fairy','M':'him','B':'him'}
 # --- Storyteller voice v2 (2026-11-11, owner: "voice must be heard all the time, no whispering, real storyteller") ---
 # * ':w' is no longer a whisper: it is a full-voice, slightly slower "soft" line. ':s' is an energetic line, not a distorted shout.
 # * every line is levelled to the same loudness, so nothing drops out under the music.
 # * speeds are capped (MAXSP) so the narrator never rushes. VO values may be blends: 'af_heart*0.6+af_bella*0.4'.
-MAXSP=globals().get('MAXSP',1.32)   # v3: owner wants it faster and more dynamic
+# --- Voice v4 NATURAL (owner, 2026-11-19: "less robotic, better tonality, better voice colour, and the characters also") ---
+# * no vocoder by default (EXPR=0): the WORLD pitch-stretch + per-line register jumps were the main source of the robotic, buzzy tone
+# * speed is capped at 1.16: Kokoro clips syllables when pushed to 1.3. Write fewer words instead of speeding up.
+# * every line goes through polish(): rumble filter, less mud, presence + air, gentle compression, a touch of warmth and a tiny room
+# * lines never butt up against each other: at least MINGAP seconds of breath between them
+MAXSP=min(globals().get('MAXSP',1.16),1.16);MINGAP=globals().get('MINGAP',0.16);POLISH=globals().get('POLISH',1)
+if globals().get('OLDVOICE'): MAXSP=1.38;MINGAP=0;POLISH=0   # only for A/B comparisons
 def style(name):
     if '+' not in name and '*' not in name: return name
     acc=None
@@ -26,7 +32,7 @@ def level(a,target):
     return np.tanh(a/0.9)*0.9 if np.max(np.abs(a))>0.9 else a
 # --- expressive(): makes a line less monotone by stretching its pitch movement (k), moving its register (st semitones)
 # and exaggerating loud/quiet syllables (ek). Uses the WORLD vocoder (pip install pyworld). Needs pyworld; without it the line is left as it is. Per-line register comes from REG={'tag':+2,...} in script.py (semitones).
-EXPR=globals().get('EXPR',1.55);REG=globals().get('REG',{})   # on by default (owner picked this over the flat voice); EXPR=0 in script.py turns it off
+EXPR=(1.55 if globals().get('OLDVOICE') else 0);REG=globals().get('REG',{})   # v4: OFF. The vocoder made the voice robotic; script.py can no longer turn it on
 AUTOREG=[0.0,1.0,-1.0,0.5,-2.0,1.5]   # narrator register per line (semitones) when REG has no entry, so no two lines sit on the same note
 def expressive(a,k=1.5,st=0.0,ek=1.25):
     try: import pyworld as pw
@@ -38,6 +44,17 @@ def expressive(a,k=1.5,st=0.0,ek=1.25):
     y=pw.synthesize(f1,sp,ap,SR,5.0)[:len(x)]
     n=int(.03*SR);e=np.sqrt(np.convolve(y**2,np.ones(n)/n,'same'))+1e-6;ref=np.median(e[e>0.1*e.max()]);g=np.clip((e/ref)**(ek-1),0.5,1.8)
     return (y*g).astype(a.dtype)
+def polish(a):
+    x=a.astype(np.float64)
+    x=signal.lfilter(*signal.butter(2,75/(SR/2),'high'),x)                      # rumble out
+    x=peq(x,260,-1.8,0.9);x=peq(x,3300,2.2,0.8);x=peq(x,9500,3.5,0.6)              # less mud, presence, air
+    e=np.sqrt(signal.lfilter([1-np.exp(-1/(.008*SR))],[1,-np.exp(-1/(.008*SR))],x**2))+1e-7
+    act=e[e>0.05*e.max()];ref=np.sqrt(np.mean(act**2));over=np.maximum(e/(ref*.9),1.0);gr=over**(-0.45)   # soft 1.8:1 compression above the line's own level
+    gr=signal.lfilter([1-np.exp(-1/(.06*SR))],[1,-np.exp(-1/(.06*SR))],gr);x=x*gr
+    x=np.tanh(x/np.max(np.abs(x))*1.25)/1.25*np.max(np.abs(x))                  # a touch of warmth
+    k=int(.22*SR);ir=np.random.default_rng(3).standard_normal(k)*np.exp(-np.arange(k)/(.05*SR));ir[:int(.004*SR)]=0
+    ir=signal.lfilter(*signal.butter(2,[300/(SR/2),5000/(SR/2)],'band'),ir);ir/=np.sqrt(np.sum(ir**2))
+    return (x+signal.fftconvolve(x,ir)[:len(x)]*.055).astype(a.dtype)                # tiny room so it is not bone dry
 def trim(a,th=0.008):
     i=np.where(np.abs(a)>th)[0];return a[max(0,i[0]-int(.012*SR)):i[-1]+int(.06*SR)]
 def peq(x,f0,g_db,q):
@@ -70,16 +87,19 @@ for gap,spec,sp_,text,tag in S:
         a,_=K.create(text,voice=style(VO[v]),speed=sp_,lang='en-gb' if VO[v].startswith('b') else 'en-us');a=trim(a);g=.8
     if EXPR and v not in PITCH: a=expressive(a,EXPR,REG.get(tag,2.0 if mod=='s' else (-1.5 if mod=='w' else AUTOREG[len(tl)%len(AUTOREG)])))
     if mod=='s': a=shout(a)
+    if POLISH: a=polish(a)
     a=level(a,0.16*(1.4 if mod=='s' else 1.0))   # ':s' = punchy line, about 3 dB louder
     lab=LAB[v]+(('_'+mod) if mod else '')
     cap=text.replace('Memo Pie','Memopai')
     for k_,v_ in globals().get('CAPFIX',{}).items(): cap=cap.replace(k_,v_)
+    gap=max(gap,MINGAP) if tl else gap
     t+=gap;tl.append(dict(t0=round(t,3),t1=round(t+len(a)/SR,3),text=cap,tag=tag,voice=lab));out.append((t,a));t+=len(a)/SR
 T=t+globals().get('TAIL',1.6)
 v=np.zeros(int(T*SR))
 for st,a in out: i=int(st*SR);v[i:i+len(a)]+=a
 b,a=signal.butter(2,70/(SR/2),'high');v=signal.lfilter(b,a,v)
-v=peq(v,180,2.0,0.8); v=peq(v,3200,1.8,1.0); v=peq(v,7500,-1.5,1.2)
+if POLISH: v=peq(v,170,1.5,0.8)   # v4: body only; presence and air are set per line in polish()
+else: v=peq(v,180,2.0,0.8); v=peq(v,3200,1.8,1.0); v=peq(v,7500,-1.5,1.2)
 v=v/np.max(np.abs(v))*0.95
 sf.write('vo.wav',v.astype(np.float32),SR);json.dump(dict(total=round(T,2),lines=tl),open('timeline.json','w'),indent=1)
 for l in tl: print(l['t0'],l['t1'],l['tag'],l['voice'],l['text'])
