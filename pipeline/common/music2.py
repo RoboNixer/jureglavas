@@ -61,7 +61,8 @@ def beat(a,z,turn=None,key=None,g=1.0,seed=None):
         # drums
         kt=[(0,1.0),(2.5,.85)]+([(3.5,.6)] if b%2 else []) if full else [(0,.55)]
         for bt,v in kt:
-            tt=t0+bt*q+(sw if bt%1 else 0)+hu(.006);put(kk,kick_(v),max(0,tt));i=int(max(0,tt)*SR);e=np.exp(-np.arange(int(.3*SR))/(.11*SR));j=min(n,i+len(e));pump[i:j]=np.minimum(pump[i:j],1-.38*v*e[:j-i])
+            tt=t0+bt*q+(sw if bt%1 else 0)+hu(.006);put(kk,kick_(v),max(0,tt));i=int(max(0,tt)*SR);e=np.exp(-np.arange(int(.3*SR))/(.11*SR));j=min(n,i+len(e))
+            if j>i: pump[i:j]=np.minimum(pump[i:j],1-.38*v*e[:j-i])
         if full:
             for bt in (1,3): put(sn,snare_(.8+.2*r.random()),t0+bt*q+.006+hu(.008))
             for e8 in range(8):
