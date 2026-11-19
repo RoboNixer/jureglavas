@@ -4,18 +4,19 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
 #cv{position:absolute;left:0;top:0}
-#cap{position:absolute;left:30px;right:30px;top:1400px;text-align:center;font-family:'Inter Display',Inter,'Noto Color Emoji';font-weight:900;font-size:118px;line-height:1.02;letter-spacing:-.02em;color:#fff;-webkit-text-stroke:16px #111;paint-order:stroke fill;z-index:5}
+/* SAFE ZONE 2026-11-19 (owner): captions live in x 190..890, bottom edge at y 1610 (grow upward), never under the TikTok/IG buttons or description */
+#cap{position:absolute;left:190px;right:190px;top:auto;bottom:310px;text-align:center;font-family:'Inter Display',Inter,'Noto Color Emoji';font-weight:900;font-size:92px;line-height:1.04;letter-spacing:-.02em;color:#fff;-webkit-text-stroke:13px #111;paint-order:stroke fill;z-index:5}
 #cap.q{color:#ff6b5a}
 #cap.e{color:#9fd3ff;font-style:italic}
-#cap.w{color:#cfd6e2;font-style:italic;font-size:92px;-webkit-text-stroke:12px #111}
-#cap.s{color:#ffe14d;font-size:140px}
+#cap.w{color:#cfd6e2;font-style:italic;font-size:80px;-webkit-text-stroke:11px #111}
+#cap.s{color:#ffe14d;font-size:104px}
 #cap.g{color:#8ff07a}
-#cap.gs{color:#8ff07a;font-size:146px}
+#cap.gs{color:#8ff07a;font-size:106px}
 #cap.d{color:#c4b2ff}
 #cap.f{color:#ff9fd6}
-#cap.fw{color:#ffc3e6;font-style:italic;font-size:92px;-webkit-text-stroke:12px #111}
+#cap.fw{color:#ffc3e6;font-style:italic;font-size:80px;-webkit-text-stroke:11px #111}
 #cap.k{color:#ffb74d}
-#cap span{display:inline-block;margin:0 .13em}
+#cap span{display:inline-block;margin:0 .11em}
 #cap span.on{color:#ffe14d;transform:scale(1.07) rotate(-1.5deg)}
 #cap.s span.on,#cap.gs span.on{color:#fff}
 #cv{transform-origin:50% 45%}
@@ -113,7 +114,8 @@ function vbubble(edge,y,me,p,time,t,pl,dur){const w=430,h=118;const bx=me?edge-w
  circ(bx+92+pl*266,cy,11,me?'#00a884':'#34b7f1',0);
  avatar(bx+w-48,cy,30,0);circ(bx+w-30,cy+22,12,'#00a884',0);X.font="700 16px Inter";X.fillStyle='#fff';X.textAlign='center';X.textBaseline='middle';X.fillText('🎤',bx+w-30,cy+22);
  X.font="500 24px Inter";X.fillStyle='#667781';X.textAlign='left';X.fillText(dur,bx+92,y+h-22);if(time){X.textAlign='right';X.fillText(time+(me?'  ✓✓':''),bx+w-90,y+h-22)}X.restore();return h}
-function phoneUI(x,y,s,t,msgs){X.save();X.translate(x,y);X.scale(s,s);
+// SAFE ZONE 2026-11-19: full-screen chat phone is capped at scale 1.16 and kept centred so bubbles stay inside x 150..900
+function phoneUI(x,y,s,t,msgs){if(s>1.16){s=1.16;x=540;y=Math.max(y,930)}X.save();X.translate(x,y);X.scale(s,s);
  rr(-320,-660,640,1320,92,'#1b1b1f',10);rr(-298,-638,596,1276,74,'#efe7dc',0);
  X.save();X.beginPath();X.roundRect(-298,-638,596,1276,74);X.clip();
  for(let i=0;i<40;i++){X.globalAlpha=.5;circ(-280+rnd(i)*560,-600+rnd(i+7)*1220,6+rnd(i+3)*10,'#e0d3c2',0)}X.globalAlpha=1;
@@ -125,7 +127,8 @@ function phoneUI(x,y,s,t,msgs){X.save();X.translate(x,y);X.scale(s,s);
  let yy=-380;msgs.list.forEach(m=>{if(t<m.a)return;const p=C((t-m.a)/.22);if(m.date){X.save();X.globalAlpha=C(p*2);X.font="700 26px Inter";const dw=X.measureText(m.date).width+44;rr(-dw/2,yy,dw,46,14,'#e1f2fb',0);X.fillStyle='#54656f';X.textAlign='center';X.textBaseline='middle';X.fillText(m.date,0,yy+24);X.restore();X.textAlign='left';yy+=66;return}yy+=(m.voice?vbubble(m.me?270:-270,yy,m.me,p,m.time,t,m.pl||0,m.dur||'0:03'):bubble(m.me?270:-270,yy,470,m.text,m.me,p,m.time))+22});
  X.fillStyle='#f0f0f0';X.fillRect(-300,520,600,140);rr(-270,545,450,74,37,'#fff',0);X.font="400 30px Inter";X.fillStyle='#8696a0';X.fillText('Message',-230,582);circ(235,582,38,'#00a884',0);
  X.restore();X.restore()}
-function notif(y,p,title,body){X.save();X.globalAlpha=C(p*2);X.translate(0,lerp(-260,0,eo(p)));rr(60,y,960,230,48,'rgba(250,250,252,.97)',6);
+// SAFE ZONE 2026-11-19: the banner is drawn in SCREEN space (ignores cam), inset to x 127..953 and never higher than y 290
+function notif(y,p,title,body){X.save();X.setTransform(1,0,0,1,0,0);y=Math.max(y,338);X.globalAlpha=C(p*2);X.translate(540,lerp(-420,0,eo(p)));X.scale(.86,.86);X.translate(-540,0);rr(60,y,960,230,48,'rgba(250,250,252,.97)',6);
  X.save();X.beginPath();X.roundRect(100,y+40,84,84,20);X.fillStyle='#25d366';X.fill();X.restore();avatar(142,y+82,38,0);
  X.font="800 38px Inter";X.fillStyle='#111';X.textAlign='left';X.textBaseline='middle';X.fillText(title,210,y+66);X.font="500 28px Inter";X.fillStyle='#888';X.textAlign='right';X.fillText('now',985,y+66);
  X.textAlign='left';X.font="600 36px Inter,'Noto Color Emoji'";X.fillStyle='#222';wrapT(body,760,X.font).forEach((l,i)=>X.fillText(l,210,y+122+i*46));X.restore()}
@@ -172,8 +175,8 @@ function camLife(i,r,t){const punch=i>0?.055*(1-eo(r/.22)):0;const z=1+.035*C(r/
 function render(t){SHK=0;FL=0;X.setTransform(1,0,0,1,0,0);X.fillStyle='#000';X.fillRect(0,0,1080,1920);
  let i=0;for(let k=0;k<S.length;k++)if(t>=S[k].a)i=k;const s=S[i];const r=t-s.a;X.save();NOFX=0;s.fn(t,r);X.restore();X.setTransform(1,0,0,1,0,0);if(!NOFX)postFX(t);camLife(i,r,t);
  if(i>0&&r<.12){X.fillStyle=`rgba(255,255,255,${(1-r/.12)*.25})`;X.fillRect(0,0,1080,1920)}
- let ci=-1;CH.forEach((c,k)=>{if(t>=c.a-.03&&t<c.b)ci=k});if(ci!==lastC){lastC=ci;lastW=-1;CAP.innerHTML=ci<0?'':CH[ci].ws.map(w=>'<span>'+w.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>').join('');CAP.className=ci<0?'':({him:'q',echo:'e',her_w:'w',her_s:'s',gary:'g',gary_s:'gs',death:'d',fairy:'f',fairy_w:'fw',kid:'k',kid_s:'k'})[CH[ci].q]||''}
- if(ci>=0){let wi=0;CH[ci].wt.forEach((a,k)=>{if(t>=a-.03)wi=k});if(wi!==lastW){lastW=wi;[...CAP.children].forEach((e,k)=>e.className=k===wi?'on':'')}const p=C((t-CH[ci].a)/.09);const sh_=/_s$/.test(CH[ci].q)?1:0;CAP.style.transform=`scale(${lerp(sh_?1.3:1.2,1,eo(p))}) rotate(${sh_?Math.sin(t*40)*2.5:0}deg) translate(${sh_?Math.sin(t*53)*6:0}px,0)`;}
+ let ci=-1;CH.forEach((c,k)=>{if(t>=c.a-.03&&t<c.b)ci=k});if(ci!==lastC){lastC=ci;lastW=-1;CAP.innerHTML=ci<0?'':CH[ci].ws.map(w=>'<span>'+w.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</span>').join('');CAP.className=ci<0?'':({him:'q',echo:'e',her_w:'w',her_s:'s',gary:'g',gary_s:'gs',death:'d',fairy:'f',fairy_w:'fw',kid:'k',kid_s:'k'})[CH[ci].q]||'';CAP.style.fontSize='';if(ci>=0){let fs=parseFloat(getComputedStyle(CAP).fontSize);while(fs>54&&(CAP.scrollWidth>CAP.clientWidth+2||CAP.offsetHeight>fs*2.4)){fs-=4;CAP.style.fontSize=fs+'px'}}}
+ if(ci>=0){let wi=0;CH[ci].wt.forEach((a,k)=>{if(t>=a-.03)wi=k});if(wi!==lastW){lastW=wi;[...CAP.children].forEach((e,k)=>e.className=k===wi?'on':'')}const p=C((t-CH[ci].a)/.09);const sh_=/_s$/.test(CH[ci].q)?1:0;CAP.style.transform=`scale(${lerp(sh_?1.14:1.1,1,eo(p))}) rotate(${sh_?Math.sin(t*40)*1.5:0}deg) translate(${sh_?Math.sin(t*53)*4:0}px,0)`;}
  document.getElementById('flash').style.opacity=FL;document.getElementById('grain').style.backgroundPosition=`${(t*977)%512}px ${(t*631)%512}px`}
 window.render=render;document.fonts.ready.then(()=>render(0));render(0);
 </script></body></html>

@@ -85,6 +85,39 @@ The video is not a story the viewer watches. It is a mirror, then a way out. Eve
 
 **Gate (replaces the 0c/0d gate questions; fresh subagent, script only):** (a) retell in one sentence; (b) what is Memopai and what did it do; (c) does it work without Memopai (must be no); (d) "Which exact moment made you think 'that's me'? Quote it." (must quote a specific line from the first 6 s; "generally relatable" = rewrite); (e) "After the ending, do you want your own life to look like that? Would you try it?" (must be a clear yes); (f) anything preachy, shaming, exaggerated or dishonest about what the product does (must be nothing). Rewrite until all six pass.
 
+## 0f. SAFE ZONES + DESIGNER FINISH (owner, 2026-11-19 20:10, top priority together with 0e)
+Owner sent phone screenshots of our TikTok and Instagram posts: the label card touched both screen edges and sat under the app's top tabs, captions ran edge to edge and under the Like/Save/Share buttons. Owner: "Make the layout perfect: nothing touching the screen edges, everything seen, professional, like designers made it. Texts, overlays and everything else must not come even close to the edges. And make the videos even more amazing: better visuals, better story, more creative."
+
+**Why it happened:** phones are taller than 9:16, so TikTok and Instagram zoom the video and CUT about 50-100 px off the left and right; then they draw their own UI on top (tabs at the top, buttons down the right side, username + description at the bottom).
+
+**The safe box (1080x1920 coordinates). Everything a viewer must read or recognise stays inside it:**
+| Zone | Rule |
+|---|---|
+| Sides | x < 100 and x > 980 may be cut off completely. Nothing important there, ever. |
+| Top | y < 270 is under the app tabs. |
+| Bottom | y > 1640 is under the username + description. |
+| Right column | x > 900 between y 950 and 1640 is under Like / Comment / Save / Share. |
+| TEXT box | all text and UI overlays inside x 150..900 (centred on 540 is fine up to 700 px wide), y 300..1610. |
+| FACES + key props | inside x 140..900, y 300..1380. Feet and floor may run lower; background may fill the whole frame. |
+
+**The engine now enforces this for the standard overlays (do not undo it, do not pass bigger sizes):**
+- Captions: 92 px, max 700 px wide, 2 lines max, bottom edge at y 1610, auto-shrink for long words.
+- `label3()`: card max 780 px wide, top never above y 300, font shrinks to fit. Keep labels SHORT (max ~18 characters + one emoji) so they stay big.
+- `notif()`: drawn in screen space, inset to x 127..953, never above y 290. Call it as `notif(338,p,title,body)`.
+- `phoneUI()`: capped at scale 1.16 and centred. `endcard()` and the cover (`mkcover.py`) are inset too: cover lines max 780 px wide, y 440..800, so they survive the profile-grid crop.
+
+**What YOU must do in every scene (the engine cannot do it for you):**
+- Compose for the safe box: main character centred around x 330..750, second character no further out than x 820 (centre). No character, hand-held prop, speech bubble, pill, clock or sign with meaning outside x 140..900. With `cam()` zooms, check the zoomed position, not the world position.
+- Any `txt()`, `pill()`, sign, phone or prop text you draw yourself follows the TEXT box. Leave at least 50 px of air between a text element and the box edge, and between two text elements.
+- One focal point per shot, placed on the centre line or a third; backgrounds may be rich but calm behind the text.
+- **Safe-zone check (mandatory, twice):** the preview sheet from `build.sh` now paints the unsafe zones red; after `finish.sh`, run `python3 ~/jg/pipeline/safecheck.py $P/final.mp4` and LOOK at `safe.jpg`. If any text, face or key prop touches red: fix and rebuild. Publishing with red overlaps is not allowed. (`SAFE=0 bash build.sh ...` gives a clean sheet when you need to judge the art.)
+
+**Designer finish + more creative (owner asked for "ultra amazing", so raise the bar each run):**
+- Consistent margins and alignment: overlays share the same centre line; never two overlays at once (label OR notification OR pill).
+- Every shot needs a reason to look: one piece of motion with anticipation and follow-through (a hop, a slide, a flying thought, a door swing), one light mood, three depth layers. No static talking-head shot longer than 2.5 s.
+- One fresh visual idea per video that no earlier video used (a new camera move, a visual metaphor for the full head, a clever transition between "before" and "after" in the same framing), and one line in the script that would work as a joke on its own.
+- Story: keep 0e (one mirror moment, the way out, the fixed life), but aim for a sharper first frame (the consequence, in a picture) and a payoff image that reverses the first frame. Keep the story at 20-26 s; cut lines before you speed them up.
+
 ## 1. Pick a topic that is NOT in `daily/topics_log.md`
 - The category comes from the rotation in `daily/learnings.md`. Log entries must include it: `- <date> | <HH:00> | <CATEGORY> | <title> | <premise> | <file>`.
 - `git pull` first, then read `daily/topics_log.md`. Never repeat a topic, fact, premise or punchline. Also avoid repeating the same *format* in back-to-back slots (alternate Officer Gary comedy / history fun fact / myth-buster / science-space / animal fact / "what if they had phones").
@@ -135,6 +168,7 @@ node render.js                                 # -> s_a..s_d.mp4 (about 2 min)
 bash ~/jg/pipeline/finish.sh $P <cover_t> "LINE ONE" "LINE TWO" "pill subtitle" "#ffd23f" $P/final.mp4
 ```
 - Cover: pick `cover_t` at a clean, character-heavy frame. LINE ONE + LINE TWO is the hook (short, ALL CAPS). The cover becomes frame 1 of the video, which is the thumbnail.
+- Safe zones (section 0f): `python3 ~/jg/pipeline/safecheck.py $P/final.mp4` → look at `safe.jpg`; nothing readable or important may touch red.
 - QA: `ffmpeg -i final.mp4 -vf "fps=2,scale=120:213,tile=12x9" -frames:v 1 qa.jpg`. Look at every tile for overlaps, cut-off text, faces under captions or blank shots. Fix before publishing.
 
 ## 4. Host + publish

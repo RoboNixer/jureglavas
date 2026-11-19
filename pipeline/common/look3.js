@@ -112,9 +112,12 @@ function memo(x,y,s,o={}){const t=o.t||0,h=Math.max(0,Math.sin(C(o.hop||0)*Math.
  X.strokeStyle='#151515';X.fillStyle='#151515';X.lineWidth=14*s;for(const d of[-1,1]){const up=d>0&&o.wave;const a0=up?-.9+Math.sin(t*12)*.35:.35;const sx=x+d*120*s,sy=by-190*s;const ex=sx+d*Math.cos(a0)*130*s,ey=sy+Math.sin(a0)*130*s;X.beginPath();X.moveTo(sx,sy);X.lineTo(ex,ey);X.stroke();X.beginPath();X.arc(ex,ey,24*s,0,7);X.fill()}X.restore()}
 
 // ---------- top label card (the scene's subject, e.g. "Your memory 🙃") ----------
-function label3(text,p=1,y=300){if(p<=0)return;X.save();X.setTransform(1,0,0,1,0,0);X.translate(540,y);const k=eo(C(p));X.scale(lerp(.6,1,k),lerp(.6,1,k));X.globalAlpha=C(p*2);
- X.font="900 104px 'Inter Display',Inter,'Noto Color Emoji'";const w=Math.min(1000,X.measureText(text).width+90);X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=24;X.shadowOffsetY=8;X.fillStyle='#fff';X.beginPath();X.roundRect(-w/2,-82,w,164,30);X.fill();X.shadowColor='transparent';
- X.fillStyle='#111';X.textAlign='center';X.textBaseline='middle';X.fillText(text,0,6,w-60);X.restore()}
+// SAFE ZONE 2026-11-19 (owner: "nothing near the screen edges"): the card is at most 780 px wide (x 150..930), its top never above y 300,
+// and the font shrinks to fit instead of the card growing. Drawn in SCREEN space.
+function label3(text,p=1,y=372){if(p<=0)return;y=Math.max(y,372);X.save();X.setTransform(1,0,0,1,0,0);X.translate(540,y);const k=eo(C(p));X.scale(lerp(.6,1,k),lerp(.6,1,k));X.globalAlpha=C(p*2);
+ let fs=86;X.font=`900 ${fs}px 'Inter Display',Inter,'Noto Color Emoji'`;while(X.measureText(text).width>700&&fs>46){fs-=2;X.font=`900 ${fs}px 'Inter Display',Inter,'Noto Color Emoji'`}
+ const w=X.measureText(text).width+80,h=fs*1.62;X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=24;X.shadowOffsetY=8;X.fillStyle='#fff';X.beginPath();X.roundRect(-w/2,-h/2,w,h,28);X.fill();X.shadowColor='transparent';
+ X.fillStyle='#111';X.textAlign='center';X.textBaseline='middle';X.fillText(text,0,fs*.05);X.restore()}
 
 // ---------- painted backgrounds (soft gradients, depth blur, light) ----------
 function pblur(px,fn){X.save();X.filter=`blur(${px}px)`;fn();X.restore()}
