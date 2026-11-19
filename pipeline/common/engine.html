@@ -130,8 +130,8 @@ function phoneUI(x,y,s,t,msgs){if(s>1.16){s=1.16;x=540;y=Math.max(y,930)}X.save(
 // SAFE ZONE 2026-11-19: the banner is drawn in SCREEN space (ignores cam), inset to x 127..953 and never higher than y 290
 function notif(y,p,title,body){X.save();X.setTransform(1,0,0,1,0,0);y=Math.max(y,338);X.globalAlpha=C(p*2);X.translate(540,lerp(-420,0,eo(p)));X.scale(.86,.86);X.translate(-540,0);rr(60,y,960,230,48,'rgba(250,250,252,.97)',6);
  X.save();X.beginPath();X.roundRect(100,y+40,84,84,20);X.fillStyle='#25d366';X.fill();X.restore();avatar(142,y+82,38,0);
- X.font="800 38px Inter";X.fillStyle='#111';X.textAlign='left';X.textBaseline='middle';X.fillText(title,210,y+66);X.font="500 28px Inter";X.fillStyle='#888';X.textAlign='right';X.fillText('now',985,y+66);
- X.textAlign='left';X.font="600 36px Inter,'Noto Color Emoji'";X.fillStyle='#222';wrapT(body,760,X.font).forEach((l,i)=>X.fillText(l,210,y+122+i*46));X.restore()}
+ X.font="800 48px Inter,'Noto Color Emoji'";X.fillStyle='#111';X.textAlign='left';X.textBaseline='middle';X.fillText(title,210,y+64);X.font="500 30px Inter";X.fillStyle='#888';X.textAlign='right';X.fillText('now',985,y+64);
+ X.textAlign='left';X.font="600 46px Inter,'Noto Color Emoji'";X.fillStyle='#222';wrapT(body,770,X.font).slice(0,2).forEach((l,i)=>X.fillText(l,210,y+128+i*54));X.restore()}
 const S=[];const sh=(a,fn)=>S.push({a,fn});let FL=0;
 let CROWDY=1192;function crowd(x0,x1,t,seed=0,skip){for(let x=x0,k=0;x<x1;x+=95,k++){if(skip&&skip(k))continue;const hs=['fez','straw','flat','fez','slouch',null];man(x,CROWDY,.42,{hat:hs[(k+seed)%6],face:k%3?'happy':'neutral',coat:['#6b5b8a','#4f7a5a','#8a5a4a','#5a6f8a'][k%4],buttons:false,armR:(k%2)?-160+Math.sin(t*10+k)*30:null})}}
 function stampFit(label,col='#e53935',rot=-12){X.save();X.rotate(rot*Math.PI/180);X.font="900 104px 'Inter Display',Inter";const w=X.measureText(label).width+90;X.globalAlpha=.95;X.lineWidth=14;X.strokeStyle=col;X.strokeRect(-w/2,-90,w,180);txt(label,0,4,104,col,0);X.restore()}
