@@ -579,3 +579,45 @@ function broom(x,y,s=1,rot=.15){X.save();X.translate(x,y);X.rotate(rot);X.scale(
  path(()=>{X.moveTo(-80,358);X.lineTo(80,358);X.lineTo(100,470);X.lineTo(-100,470);X.closePath()},'#e8c25a',6);for(let k=-3;k<=3;k++)line([[k*24,372],[k*30,462]],4,'#b8902a');X.restore()}
 // kidbag(x,y,s,col): kid's backpack seen from the side/back, drawn BEFORE the kid so it sits behind the body; (x,y) = kid's feet
 function kidbag(x,y,s=1,col='#ffb02e',fl=1){X.save();X.translate(x-fl*70*s,y-560*s);X.scale(s,s);rr(-80,-110,160,220,40,col,8);rr(-60,0,120,80,20,'rgba(0,0,0,.12)',5);circ(0,-60,12,'#151515',0);X.restore()}
+
+// ---- craft ladder 2026-11-19 20:00: front-door exterior + keys + umbrella + loading bar ----
+// keys3(x,y,s,o): key ring with two keys + a tag (o.rot, o.glow); hangs from (x,y)
+function keys3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);if(o.glow)glow(0,60,140,'255,220,90',.55*o.glow);
+ X.lineWidth=7;X.strokeStyle='#151515';X.beginPath();X.arc(0,24,22,0,7);X.stroke();X.strokeStyle='#c9ced6';X.lineWidth=4;X.beginPath();X.arc(0,24,22,0,7);X.stroke();
+ const key=(a,c)=>{X.save();X.translate(0,40);X.rotate(a);circ(0,16,17,c,6);circ(0,16,6,'#151515',0);rr(-6,28,12,60,3,c,5);rr(6,62,12,8,2,c,4);rr(6,76,10,8,2,c,4);X.restore()};
+ key(.35,'#f2c14e');key(-.3,'#c9ced6');X.save();X.translate(0,40);X.rotate(.05);rr(-18,22,36,46,8,'#e0533d',5);X.restore();X.restore()}
+// umbrella3(hx,hy,s,o): open umbrella held at the handle (hx,hy) in WORLD coords; o.col, o.rot
+function umbrella3(hx,hy,s=1,o={}){X.save();X.translate(hx,hy);X.rotate(o.rot||0);X.scale(s,s);const c=o.col||'#4a8fe0';
+ line([[0,0],[0,-330]],9,'#151515');path(()=>{X.arc(-22,0,22,0,Math.PI)},null,8,'#151515');
+ path(()=>{X.moveTo(-260,-300);X.quadraticCurveTo(0,-560,260,-300);for(let k=3;k>=-3;k--){X.quadraticCurveTo(k*86+43,-330,k*86-43+0.001,-300)}X.closePath()},c,8);
+ X.save();X.globalAlpha=.25;path(()=>{X.moveTo(-90,-300);X.quadraticCurveTo(0,-520,90,-300);X.closePath()},'#fff',0);X.restore();circ(0,-440,10,'#151515',0);X.restore()}
+// loadbar(x,y,s,p,t): a "brain still loading" progress bar with stripes + percent, blinking
+function loadbar(x,y,s=1,p=.72,t=0){X.save();X.translate(x,y);X.scale(s,s);X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=16;rr(-230,-50,460,100,50,'#fff',7);X.shadowColor='transparent';
+ X.save();X.beginPath();X.roundRect(-210,-30,420*p,60,30);X.clip();X.fillStyle='#ffb02e';X.fillRect(-210,-30,420,60);X.fillStyle='rgba(255,255,255,.35)';const off=(t*60)%60;for(let k=-2;k<10;k++){X.beginPath();X.moveTo(-210+k*60+off,30);X.lineTo(-180+k*60+off,-30);X.lineTo(-150+k*60+off,-30);X.lineTo(-180+k*60+off,30);X.fill()}X.restore();
+ rr(-210,-30,420,60,30,null,5);if(Math.sin(t*5)>-.3)txt(Math.round(p*100)+'%',0,2,40,'#151515',0,'900 ');X.restore()}
+// housefront(t,o): street view of a front door with steps + a window showing the hallway hook (o.keys: keys hang inside, o.rain, o.sun, o.door 0..1 open, o.glowKeys)
+// door spans x 500..800, door bottom/top-step surface y=1300, lower step surface y=1390, pavement from 1480
+function housefront(t,o={}){if(o.rain){psky('#5d6b80','#8592a6','#a7b1c0',900)}else{psky('#7fc0f0','#cfe9ff','#fff1d6',900);psun(900,240,80,t)}
+ pclouds(t,220,o.rain?'#9aa5b5':'#fbfbff',o.rain?'#7c879a':'#d9e2f0',4,3);
+ const g=X.createLinearGradient(0,330,0,1480);g.addColorStop(0,o.rain?'#cfc3ae':'#f3e3c4');g.addColorStop(1,o.rain?'#a99c86':'#ddc79f');X.fillStyle=g;X.fillRect(-200,330,1480,1150);
+ X.save();X.globalAlpha=.16;X.strokeStyle='#5a4630';X.lineWidth=3;for(let y=360;y<1480;y+=52){X.beginPath();X.moveTo(-200,y);X.lineTo(1280,y);X.stroke()}X.restore();
+ path(()=>{X.moveTo(-220,360);X.lineTo(540,120);X.lineTo(1300,360);X.closePath()},o.rain?'#6e4a3e':'#9a5a44',8);
+ // window (left) with the hallway behind it
+ const wx=250,wy=700;rr(wx-170,wy-190,340,380,14,'#fffaf2',8);X.save();X.beginPath();X.rect(wx-150,wy-170,300,340);X.clip();
+ const ig=X.createLinearGradient(0,wy-170,0,wy+170);ig.addColorStop(0,'#f4e3c9');ig.addColorStop(1,'#e2c49c');X.fillStyle=ig;X.fillRect(wx-150,wy-170,300,340);glow(wx,wy-40,220,'255,226,170',.5);
+ line([[wx-110,wy-60],[wx+110,wy-60]],10,'#7a5a3a');for(const hx of[wx-60,wx+60])line([[hx,wy-60],[hx,wy-38]],7,'#555');
+ rr(wx-110,wy+70,220,100,8,'#b98a5e',5);
+ if(o.keys)keys3(wx+30,wy-50,1.3,{rot:Math.sin(t*2)*.08,glow:o.glowKeys||0});
+ X.restore();if(o.rain){X.save();X.globalAlpha=.25;X.fillStyle='#b8c8da';X.fillRect(wx-150,wy-170,300,340);X.restore()}
+ line([[wx,wy-170],[wx,wy+170]],12,'#fffaf2');line([[wx-150,wy],[wx+150,wy]],12,'#fffaf2');rr(wx-190,wy+180,380,30,8,'#fffaf2',7);
+ // door
+ rr(480,520,340,800,14,'#fff8ef',8);const op=C(o.door||0);rr(500,540,300,760,8,'#1d1d24',0);
+ X.save();X.translate(500,0);X.scale(1-op*.75,1);rr(0,540,300,760,8,o.doorc||'#2f6d5e',8);rr(40,600,220,260,10,'rgba(0,0,0,.12)',5);rr(40,920,220,300,10,'rgba(0,0,0,.12)',5);circ(255,930,16,'#e8c15a',6);X.restore();
+ rr(590,470,120,40,10,'#fff8ef',6);txt('12',650,491,30,'#333',0,'900 ');
+ // steps
+ rr(400,1300,500,90,8,'#b9b2a6',7);rr(360,1390,580,90,8,'#a49d91',7);
+ // pavement + plants
+ const pg=X.createLinearGradient(0,1480,0,1920);pg.addColorStop(0,o.rain?'#8a8f98':'#c9c3b6');pg.addColorStop(1,o.rain?'#5f646d':'#a7a094');X.fillStyle=pg;X.fillRect(-200,1480,1480,500);
+ X.save();X.globalAlpha=.25;X.strokeStyle='#333';X.lineWidth=3;for(let x=-100;x<1200;x+=240){X.beginPath();X.moveTo(x,1480);X.lineTo(x-120,1920);X.stroke()}X.restore();
+ for(const bx of[60,1010]){X.fillStyle='#d8774a';X.beginPath();X.moveTo(bx-60,1480);X.lineTo(bx+60,1480);X.lineTo(bx+48,1390);X.lineTo(bx-48,1390);X.fill();for(let k=0;k<6;k++){X.save();X.translate(bx,1390);X.rotate(-1.1+k*.44);X.fillStyle=k%2?'#4f9a50':'#62b062';X.beginPath();X.ellipse(0,-70,26,80,0,0,7);X.fill();X.restore()}}
+ if(o.rain){X.save();X.globalAlpha=.35;for(const[px,pw]of[[300,160],[800,120]]){X.fillStyle='#c7d3e0';X.beginPath();X.ellipse(px,1700,pw,22,0,0,7);X.fill();X.strokeStyle='#fff';X.lineWidth=3;const rr2=(t*60)%40;X.beginPath();X.ellipse(px,1700,rr2*2,rr2*.4,0,0,7);X.stroke()}X.restore()}}
