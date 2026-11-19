@@ -3,6 +3,10 @@
 One run = ONE brand-new ~30 s vertical video (1080×1920, 30 fps), published to Memopai's Instagram and Facebook (all 7 slots) and TikTok (only the 12, 16, 18 and 20 o'clock slots).
 Repo: `RoboNixer/jureglavas`, branch `memopai-media`. Everything you need is in `pipeline/`.
 
+> **OWNER UPDATES, 2026-11-19 evening (given live by the owner; NEWER than the scheduled task prompt, so where the prompt differs, these win):**
+> 1. **The narrator is a WOMAN again** ("use the voice of the woman, it feels more native and human"). Where the task prompt says "the narrator is a man" / "male narrator", read "woman": use the default narrator voice (`N` = `af_heart` in `vo_core.py`) and never override it with a male voice. Details in section 2.
+> 2. **Safe zones + designer finish** (section 0f): nothing readable or important near the screen edges or under the TikTok/Instagram UI; run the safe-zone check before publishing.
+
 ## 0. Setup (fresh session)
 ```bash
 git clone -b memopai-media https://github.com/RoboNixer/jureglavas ~/jg   # or use the attached repo clone
