@@ -8,13 +8,13 @@
 //  armL/armR (deg from straight down; 90 = sideways, 160 = up), bendL/bendR (elbow deg), legL/legR (deg), walk (time -> walk cycle), crawl:1 (on all fours),
 //  look:[lx,ly] (-1..1 pupils), lid (0..1 upper eyelid, .45 = smug/tired), brow:'worried'|'angry'|'up'|'smug'|'flat'|'sad', mouth:'smile'|'smirk'|'frown'|'o'|'open'|'tongue'|'grin'|'wavy'|'flat',
 //  eyes:'wide'|'closed'|'happy'|'wink'|'dizzy', sweat, blush, tear, hair:'curl'|'bun'|'spike', hairc, lashes, flip, tilt (deg head tilt), lean (deg body), holdR/holdL(fn(hx,hy) in WORLD coords, drawn on top), talk (time -> mouth flaps)
-function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff',limb=o.limb||(o.col?o.col:OUT),fl=o.flip?-1:1;
+function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff',limb=o.limb||(o.col?o.col:(o.pj?(o.pj===1?'#9fc0ec':o.pj):OUT)),fl=o.flip?-1:1;
  const w=o.walk;const ph=w!=null?Math.sin(w*9):0;const bob=w!=null?Math.abs(Math.cos(w*9))*14:0;const br=Math.sin(t*2.2)*4;
  const P=(lx,ly)=>[x+lx*s*fl,y+ly*s];const hands={};
  X.save();X.lineCap='round';X.lineJoin='round';
  // shadow
  X.save();X.globalAlpha=.22;X.fillStyle='#1a1020';X.beginPath();X.ellipse(x,y+6*s,170*s,26*s,0,0,7);X.fill();X.restore();
- const LW=17*s,limbStroke=(pts)=>{if(o.col){X.strokeStyle=OUT;X.lineWidth=LW+9*s;poly(pts);}X.strokeStyle=limb;X.lineWidth=LW;poly(pts)};
+ const LW=(o.pj?24:17)*s,limbStroke=(pts)=>{if(o.col||o.pj){X.strokeStyle=OUT;X.lineWidth=LW+9*s;poly(pts);}X.strokeStyle=limb;X.lineWidth=LW;poly(pts)};
  const poly=(pts)=>{X.beginPath();X.moveTo(...P(...pts[0]));for(let i=1;i<pts.length;i++)X.lineTo(...P(...pts[i]));X.stroke()};
  const lean=(o.lean||0)*Math.PI/180;
  let hipY=-340-bob*.3,neckY=-650-bob+br*.3;const nx=Math.sin(lean)*310;
@@ -29,6 +29,10 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  limbStroke([hip,o.crawl?[10,-350]:[nx*.5,(hipY+neckY)/2],neck]);
  // craft ladder 2026-11-17: o.dress (colour) = A-line dress over the body; o.bow (colour) = bow tie at the neck
  if(o.dress&&!o.crawl){const d1=P(neck[0]-46,neck[1]+40),d2=P(neck[0]+46,neck[1]+40),d3=P(hip[0]+150,hip[1]+190),d4=P(hip[0]-150,hip[1]+190);X.fillStyle=o.dress;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...d1);X.lineTo(...d2);X.quadraticCurveTo(...P(hip[0]+70,hip[1]-40),...d3);X.quadraticCurveTo(...P(hip[0],hip[1]+215),...d4);X.quadraticCurveTo(...P(hip[0]-70,hip[1]-40),...d1);X.fill();X.stroke();X.fillStyle='rgba(0,0,0,.06)';X.beginPath();X.moveTo(...P(hip[0]+20,hip[1]-60));X.lineTo(...d3);X.quadraticCurveTo(...P(hip[0]+60,hip[1]+205),...P(hip[0]+40,hip[1]+200));X.fill()}
+// craft ladder 2026-11-19: o.pj (true or colour) = striped pyjama top (neck to below the hip, pocket, collar) + thick pale sleeves/legs
+ if(o.pj&&!o.crawl){const pc=o.pj===1?'#9fc0ec':o.pj;const a=P(neck[0]-70,neck[1]+20),b=P(neck[0]+70,neck[1]+20),c=P(hip[0]+95,hip[1]+70),d=P(hip[0]-95,hip[1]+70);X.save();X.fillStyle=pc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.save();X.clip();X.strokeStyle='rgba(255,255,255,.8)';X.lineWidth=12*s;for(let k=-4;k<=4;k++){X.beginPath();X.moveTo(...P(neck[0]+k*30,neck[1]));X.lineTo(...P(hip[0]+k*40,hip[1]+90));X.stroke()}X.restore();X.stroke();
+  X.fillStyle='#ffffff';X.beginPath();X.moveTo(...P(neck[0]-46,neck[1]+16));X.lineTo(...P(neck[0],neck[1]+70));X.lineTo(...P(neck[0]+46,neck[1]+16));X.closePath();X.fill();X.stroke();
+  for(let k=0;k<3;k++){const[bx,by]=P(neck[0]+(hip[0]-neck[0])*(.3+k*.25),neck[1]+(hip[1]-neck[1])*(.3+k*.25)+40);X.beginPath();X.arc(bx,by,7*s,0,7);X.fillStyle='#fff';X.fill();X.stroke()}X.restore()}
 // craft ladder 2026-11-18: o.towel (colour) = bath towel wrapped round the waist (with stripe + tucked corner)
  if(o.towel&&!o.crawl){const tc=o.towel===1?'#5aa9e6':o.towel;const a=P(hip[0]-78,hip[1]-70),b=P(hip[0]+78,hip[1]-70),c=P(hip[0]+92,hip[1]+120),d=P(hip[0]-92,hip[1]+120);X.fillStyle=tc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.stroke();X.strokeStyle='rgba(255,255,255,.75)';X.lineWidth=10*s;X.beginPath();X.moveTo(...P(hip[0]-86,hip[1]+88));X.lineTo(...P(hip[0]+86,hip[1]+88));X.stroke();X.strokeStyle=OUT;X.lineWidth=6*s;X.beginPath();X.moveTo(...P(hip[0]+40,hip[1]-70));X.lineTo(...P(hip[0]+55,hip[1]+40));X.stroke()}
  if(o.bow&&!o.crawl){const[bx,by]=P(neck[0],neck[1]+18);X.save();X.translate(bx,by);X.scale(s,s);X.fillStyle=o.bow;X.strokeStyle=OUT;X.lineWidth=6;for(const d of[-1,1]){X.beginPath();X.moveTo(0,0);X.lineTo(d*46,-24);X.lineTo(d*46,24);X.closePath();X.fill();X.stroke()}X.beginPath();X.arc(0,0,11,0,7);X.fill();X.stroke();X.restore()}
