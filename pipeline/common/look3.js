@@ -710,3 +710,32 @@ function parcel3(x,y,s=1,o={}){const t=o.t||0,W=380,H=250,sq=o.squash||0;X.save(
  if(o.items||o.mugDrop!=null){const md=o.mugDrop==null?1:C(o.mugDrop);if(md>0){const my=lerp(-H-520,-H-26,eo(md));pmug(-120,my,1)}}
  X.restore()}
 function ctable(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.22;ell(0,6,230,22,'#000',0);X.globalAlpha=1;for(const lx of[-150,150])line([[lx,-130],[lx*1.1,0]],16,'#6a4428');ell(0,-140,230,46,'#a8724a',7);ell(0,-150,215,38,'#c48a5a',0);X.restore()}
+
+// craft ladder 2026-11-20 14:00 (trip_look3): hotelbed(x,floorY,s,{front:1 = duvet front panel drawn OVER legs, hb,hb2 headboard cols}), nightstand3(x,y,s,{warm,lamp:0}), suitcase3(x,y,s,{open,col}), headLoop(cx,cy,t,[emoji],alpha,radius) worry icons orbiting a head
+function hotelbed(x,y,s=1,o={}){// y = floor line under the bed front
+ X.save();X.translate(x,y);X.scale(s,s);
+ if(!o.front){gshadow(0,6,560,.3);
+  // headboard
+  const hg=X.createLinearGradient(0,-900,0,-420);hg.addColorStop(0,o.hb||'#7d8fb0');hg.addColorStop(1,o.hb2||'#62739a');X.fillStyle=hg;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.roundRect(-560,-900,1120,520,40);X.fill();X.stroke();
+  X.strokeStyle='rgba(0,0,0,.18)';X.lineWidth=4;for(let k=-3;k<=3;k++){X.beginPath();X.moveTo(k*150,-880);X.lineTo(k*150,-400);X.stroke()}
+  for(let k=-3;k<=3;k++)circ(k*150-75,-650,6,'rgba(0,0,0,.25)',0);
+  // pillows
+  for(const px of[-260,260]){X.save();X.translate(px,-470);X.rotate(px<0?-.04:.04);rr(-200,-90,400,170,70,'#fbfbff',7);X.strokeStyle='rgba(120,130,170,.25)';X.lineWidth=4;X.beginPath();X.moveTo(-150,0);X.quadraticCurveTo(0,30,150,0);X.stroke();X.restore()}
+  // mattress top / duvet back part
+  const dg=X.createLinearGradient(0,-430,0,-250);dg.addColorStop(0,'#ffffff');dg.addColorStop(1,'#e3e8f3');X.fillStyle=dg;X.lineWidth=7;X.strokeStyle='#151515';X.beginPath();X.roundRect(-600,-420,1200,200,40);X.fill();X.stroke();
+ }else{
+  // front of the bed: duvet front panel + runner, drawn OVER the sitter's legs
+  const fg=X.createLinearGradient(0,-260,0,0);fg.addColorStop(0,'#f4f6fb');fg.addColorStop(1,'#d8deeb');X.fillStyle=fg;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.roundRect(-620,-260,1240,210,36);X.fill();X.stroke();
+  X.fillStyle=o.run||'#c0504d';X.fillRect(-620,-205,1240,58);X.strokeStyle='rgba(0,0,0,.25)';X.lineWidth=4;X.strokeRect(-620,-205,1240,58);
+  rr(-600,-55,1200,55,10,'#5b4636',6);
+ }
+ X.restore()}
+function nightstand3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,4,150,.3);rr(-120,-260,240,260,14,'#a7724a',6);rr(-100,-200,200,70,10,'#946240',4);circ(0,-165,9,'#e8c15a',3);
+ if(o.lamp!==0){glow(0,-470,o.warm?320:180,'255,214,150',o.warm?.55:.25);line([[0,-262],[0,-380]],10,'#4a3a32');path(()=>{X.moveTo(-70,-380);X.lineTo(70,-380);X.lineTo(50,-480);X.lineTo(-50,-480);X.closePath()},'#ffe6b0',6)}
+ X.restore()}
+function suitcase3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,4,170,.3);const c=o.col||'#e0533d';
+ if(o.open){rr(-170,-120,340,120,18,c,7);rr(-150,-108,300,96,12,'#f6e7d6',0);rr(-120,-100,110,50,10,'#7fb2e0',4);rr(10,-96,120,40,10,'#ffd23f',4);rr(-170,-330,340,210,18,c,7);rr(-150,-312,300,170,12,'rgba(0,0,0,.12)',0)}
+ else{line([[-50,-470],[-50,-360]],12,'#333');line([[50,-470],[50,-360]],12,'#333');line([[-56,-470],[56,-470]],14,'#333');rr(-150,-360,300,350,30,c,7);for(const k of[-75,0,75])line([[k,-340],[k,-30]],5,'rgba(0,0,0,.18)');circ(-110,0,16,'#222',0);circ(110,0,16,'#222',0)}
+ X.restore()}
+// worry icons circling the head
+function headLoop(cx,cy,t,icons,a=1,rad=300){for(let i=0;i<icons.length;i++){const ang=t*1.3+i/icons.length*Math.PI*2;emo(cx+Math.cos(ang)*rad,cy+Math.sin(ang)*rad*.42-40,icons[i],.85,a)}}
