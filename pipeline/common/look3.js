@@ -738,4 +738,4 @@ function suitcase3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(
  else{line([[-50,-470],[-50,-360]],12,'#333');line([[50,-470],[50,-360]],12,'#333');line([[-56,-470],[56,-470]],14,'#333');rr(-150,-360,300,350,30,c,7);for(const k of[-75,0,75])line([[k,-340],[k,-30]],5,'rgba(0,0,0,.18)');circ(-110,0,16,'#222',0);circ(110,0,16,'#222',0)}
  X.restore()}
 // worry icons circling the head
-function headLoop(cx,cy,t,icons,a=1,rad=300){for(let i=0;i<icons.length;i++){const ang=t*1.3+i/icons.length*Math.PI*2;emo(cx+Math.cos(ang)*rad,cy+Math.sin(ang)*rad*.42-40,icons[i],.85,a)}}
+function headLoop(cx,cy,t,icons,a=1,rad=300){for(let i=0;i<icons.length;i++){const ang=t*1.3+i/icons.length*Math.PI*2;(typeof emo=='function'?emo:function(x,y,e,s,a){if(a<=0)return;X.save();X.globalAlpha=C(a);X.translate(x,y);X.scale(s,s);circ(0,0,62,'#fff',6);X.font="64px 'Noto Color Emoji'";X.textAlign='center';X.textBaseline='middle';X.fillText(e,0,4);X.restore()})(cx+Math.cos(ang)*rad,cy+Math.sin(ang)*rad*.42-40,icons[i],.85,a)}}
