@@ -693,3 +693,20 @@ function pitch(t,o={}){X.setTransform(1,0,0,1,0,0);
  if(o.goal!==0)goal3(540,1010,1.0);
  if(o.bench)bench3(o.bench[0],o.bench[1],o.bench[2]||.6);
 }
+// ---- craft ladder 2026-11-20: parcel3(x,floorY,s,{items,t,ring,squash}) cardboard parcel with tape, shipping label, barcode and 'this side up' arrows;
+// items:1 turns it into 'furniture' (mug, TV remote, little plant on top); mugDrop:0..1 animates the mug landing. ctable(x,floorY,s) small round coffee table.
+function pmug(x,y,s=1,col='#ffd23f'){X.save();X.translate(x,y);X.scale(s,s);rr(-30,-70,60,70,10,col,5);X.lineWidth=7;X.strokeStyle='#151515';X.beginPath();X.arc(34,-36,17,-1.3,1.3);X.stroke();X.globalAlpha=.5;for(let k=0;k<2;k++){X.beginPath();X.moveTo(-10+k*18,-84);X.quadraticCurveTo(-22+k*18,-110,-6+k*18,-132);X.strokeStyle='#ffffff';X.lineWidth=5;X.stroke()}X.restore()}
+function parcel3(x,y,s=1,o={}){const t=o.t||0,W=380,H=250,sq=o.squash||0;X.save();X.translate(x,y);X.scale(s*(1+sq*.04),s*(1-sq*.04));
+ X.globalAlpha=.22;ell(0,6,W*.62,22,'#000',0);X.globalAlpha=1;
+ path(()=>{X.moveTo(-W/2,-H);X.lineTo(-W/2+60,-H-60);X.lineTo(W/2+60,-H-60);X.lineTo(W/2,-H);X.closePath()},'#d9a86a',6);
+ path(()=>{X.moveTo(W/2,-H);X.lineTo(W/2+60,-H-60);X.lineTo(W/2+60,-60);X.lineTo(W/2,0);X.closePath()},'#b98450',6);
+ rr(-W/2,-H,W,H,4,'#c9945a',6);
+ X.fillStyle='rgba(230,200,140,.85)';X.fillRect(-28,-H,56,H);X.beginPath();X.moveTo(-28+30,-H-60);X.lineTo(28+30,-H-60);X.lineTo(28,-H);X.lineTo(-28,-H);X.fill();
+ rr(-W/2+30,-H+60,130,90,6,'#ffffff',3);for(let k=0;k<9;k++)X.fillRect(-W/2+44+k*11,-H+110,k%3?4:7,28);X.fillStyle='#333';X.fillRect(-W/2+44,-H+76,90,6);X.fillRect(-W/2+44,-H+90,60,6);
+ X.strokeStyle='#5a3a1a';X.lineWidth=5;for(const ax of[90,140]){X.beginPath();X.moveTo(ax,-60);X.lineTo(ax,-110);X.moveTo(ax-14,-94);X.lineTo(ax,-110);X.lineTo(ax+14,-94);X.stroke()}
+ if(o.ring){X.globalAlpha=.35;X.strokeStyle='#7a4a20';X.lineWidth=5;X.beginPath();X.ellipse(-90,-H-26,40,12,0,0,7);X.stroke();X.beginPath();X.ellipse(130,-H-34,36,11,0,0,7);X.stroke();X.globalAlpha=1}
+ if(o.items){rr(70,-H-46,110,30,10,'#2a2d34',4);for(let k=0;k<3;k++)circ(95+k*28,-H-31,6,k?'#8a8f99':'#e0533d',0);
+  const px=-30,py=-H-30;rr(px-34,py-50,68,52,8,'#d8774a',4);for(let k=0;k<5;k++){X.save();X.translate(px,py-50);X.rotate(-.9+k*.45+Math.sin(t*1.5+k)*.04);X.fillStyle=k%2?'#4f9a50':'#62b062';X.beginPath();X.ellipse(0,-40,14,42,0,0,7);X.fill();X.restore()}}
+ if(o.items||o.mugDrop!=null){const md=o.mugDrop==null?1:C(o.mugDrop);if(md>0){const my=lerp(-H-520,-H-26,eo(md));pmug(-120,my,1)}}
+ X.restore()}
+function ctable(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.22;ell(0,6,230,22,'#000',0);X.globalAlpha=1;for(const lx of[-150,150])line([[lx,-130],[lx*1.1,0]],16,'#6a4428');ell(0,-140,230,46,'#a8724a',7);ell(0,-150,215,38,'#c48a5a',0);X.restore()}
