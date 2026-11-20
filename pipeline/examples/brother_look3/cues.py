@@ -1,0 +1,8 @@
+add(sfx,whoosh(.35),0.0,.3)
+add(sfx,whoosh(.35),T('m1')-.08,.4)
+add(sfx,whoosh(.45,.4),T('s2')-.08,.5);add(sfx,pop(1300),T('s2')+.25,.45);beat(0,DUR,turn=T('s2'))
+add(sfx,whoosh(.35),T('s2')+3.0,.35)
+chime(T('s3')+.45)
+add(sfx,whoosh(.35),T('s3')+1.75,.4);buzz(T('s3')+1.95,.6)
+add(sfx,whoosh(.35),T('p1')-.08,.4)
+chime(T('cta'))
