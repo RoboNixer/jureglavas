@@ -821,3 +821,31 @@ function bathdoor(t,o={}){proom(t,{win:null,frame:null,plant:o.plant||0,lamp:o.l
  if(op<.15){X.save();X.globalCompositeOperation='screen';const g=X.createLinearGradient(0,y1-10,0,y1+70);g.addColorStop(0,'rgba(255,240,190,.8)');g.addColorStop(1,'rgba(255,240,190,0)');X.fillStyle=g;X.fillRect(dx-dw/2,y1-6,dw,80);X.restore()}}
 // reachArm(x0,y0,x1,y1,s) a thin arm with a mitten hand poking out of a gap (x0,y0 = where it leaves the gap)
 function reachArm(x0,y0,x1,y1,s=1){X.save();X.lineCap='round';X.strokeStyle='#151515';X.lineWidth=17*s;X.beginPath();X.moveTo(x0,y0);X.quadraticCurveTo((x0+x1)/2,y0-30*s,x1,y1);X.stroke();X.fillStyle='#151515';X.beginPath();X.ellipse(x1,y1,26*s,22*s,0,0,7);X.fill();X.beginPath();X.ellipse(x1+6*s,y1-24*s,9*s,16*s,-.3,0,7);X.fill();X.restore()}
+
+// ---------- craft ladder 2026-11-21 16:00: restaurant kit + stopwatch ----------
+// bistro(t,{night,day,win}) cosy restaurant: dark green wainscot, warm wall, big window with blurred city lights, string lights, wall lamps
+function bistro(t,o={}){const night=o.night!==0;const g=X.createLinearGradient(0,-200,0,1300);g.addColorStop(0,night?'#5a3b34':'#d9a77f');g.addColorStop(1,night?'#7a5040':'#e8c39c');X.fillStyle=g;X.fillRect(-3000,-3000,8000,4400);
+ const wx=o.win==null?540:o.win;X.save();X.beginPath();X.roundRect(wx-300,330,600,640,30);X.clip();const wg=X.createLinearGradient(0,330,0,970);wg.addColorStop(0,night?'#1b2546':'#9fd0f0');wg.addColorStop(1,night?'#3b3a66':'#e6f2ff');X.fillStyle=wg;X.fillRect(wx-300,330,600,640);
+ if(night)pblur(6,()=>{for(let k=0;k<16;k++){const bx=wx-280+rnd(k+3)*560,by=420+rnd(k+9)*520;X.fillStyle=['rgba(255,210,120,.8)','rgba(255,150,120,.7)','rgba(180,210,255,.7)'][k%3];X.beginPath();X.arc(bx,by,18+rnd(k)*26,0,7);X.fill()}});
+ X.restore();rr(wx-300,330,600,640,30,null,14);line([[wx,330],[wx,970]],12,'#3a241c');line([[wx-300,650],[wx+300,650]],12,'#3a241c');
+ X.fillStyle=night?'#23443a':'#3f7a64';X.fillRect(-3000,1000,8000,500);X.strokeStyle='rgba(0,0,0,.18)';X.lineWidth=6;for(let x=-1000;x<2200;x+=140){X.beginPath();X.moveTo(x,1010);X.lineTo(x,1490);X.stroke()}
+ X.fillStyle='#e8d2a8';X.fillRect(-3000,990,8000,22);
+ for(const lx of[150,930]){rr(lx-14,560,28,90,8,'#3a241c',5);ell(lx,540,46,34,'#ffd98a',6);glow(lx,560,240,'255,200,120',night?.55:.25)}
+ const fg=X.createLinearGradient(0,1500,0,2000);fg.addColorStop(0,'#6b3f2a');fg.addColorStop(1,'#4a2a1c');X.fillStyle=fg;X.fillRect(-3000,1500,8000,1500);
+ strlights(t,240,4,70);if(night)X.save(),X.globalCompositeOperation='multiply',X.fillStyle='rgba(120,90,150,.18)',X.fillRect(-3000,-3000,8000,8000),X.restore()}
+// chair3(x,y,s,{col}) bentwood bistro chair seen from the front (back + top rail), y = floor
+function chair3(x,y,s=1,o={}){const c=o.col||'#5a3424';X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,6,130,18,'#000',0);X.globalAlpha=1;
+ for(const lx of[-95,95])line([[lx,-560],[lx*1.05,0]],20,'#151515'),line([[lx,-560],[lx*1.05,0]],12,c);
+ rr(-120,-640,240,90,40,c,8);rr(-95,-470,190,30,14,c,7);rr(-130,-300,260,46,18,c,8);X.restore()}
+// bread3(x,y,s,full) wicker bread basket on a table (full=1 rolls, 0 = crumbs only)
+function bread3(x,y,s=1,full=1){X.save();X.translate(x,y);X.scale(s,s);
+ if(full)for(let k=0;k<3;k++){ell(-50+k*50,-60-(k%2)*16,48,34,'#e0a45a',6,(k-1)*.3);line([[-70+k*50,-70-(k%2)*16],[-34+k*50,-58-(k%2)*16]],5,'#b5733a')}
+ else{for(let k=0;k<6;k++)circ(-60+k*24,-34+(k%2)*6,5,'#e0a45a',0)}
+ X.fillStyle='#c48a4a';X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-110,-50);X.lineTo(110,-50);X.lineTo(80,10);X.lineTo(-80,10);X.closePath();X.fill();X.stroke();
+ X.strokeStyle='rgba(90,50,20,.5)';X.lineWidth=4;for(let k=-3;k<=3;k++){X.beginPath();X.moveTo(k*30,-48);X.lineTo(k*24,8);X.stroke()}X.restore()}
+// stopwatch3(x,y,s,{sec,label,t}) big chrome stopwatch: sweep hand at `sec` (0..90), digital readout; turns red past 60
+function stopwatch3(x,y,s=1,o={}){const sec=o.sec||0,over=sec>60;X.save();X.translate(x,y);X.scale(s,s);rr(-40,-250,80,50,14,'#b8c4cf',7);circ(0,-260,26,'#e0533d',7);
+ circ(0,0,210,'#dfe6ec',10);circ(0,0,180,'#ffffff',6);for(let k=0;k<60;k++){const a=k/60*Math.PI*2,r0=k%5?165:150;line([[Math.sin(a)*r0,-Math.cos(a)*r0],[Math.sin(a)*172,-Math.cos(a)*172]],k%5?3:6,'#333')}
+ if(over){X.fillStyle='rgba(224,83,61,.22)';X.beginPath();X.moveTo(0,0);X.arc(0,0,172,-Math.PI/2,-Math.PI/2+(sec-60)/60*Math.PI*2);X.closePath();X.fill()}
+ const a=sec/60*Math.PI*2;line([[0,0],[Math.sin(a)*150,-Math.cos(a)*150]],9,over?'#e0533d':'#151515');circ(0,0,14,over?'#e0533d':'#151515',0);
+ rr(-80,40,160,74,16,'#151515',0);txt(Math.floor(sec)+' s',0,79,52,over?'#ff8a70':'#7cf0a0',0);X.restore()}

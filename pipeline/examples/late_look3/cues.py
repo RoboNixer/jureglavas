@@ -1,0 +1,8 @@
+beat(0,DUR,turn=T('s2'))
+add(sfx,whoosh(.35),T('r1')-.15,.35)
+add(sfx,whoosh(.35),T('s2')-.1,.35)
+add(sfx,whoosh(.35),T('f1')-.1,.35)
+buzz(T('f1')+3.9,.6);chime(T('f1')+4.0)
+add(sfx,whoosh(.35),T('b2')-.12,.35)
+add(sfx,whoosh(.35),T('p1')-.1,.35)
+chime(T('cta'))
