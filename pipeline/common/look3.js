@@ -789,3 +789,35 @@ function chargeStand(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshado
  const pl=C(o.plug||0);X.strokeStyle='#f4f4f4';X.lineWidth=9;X.lineCap='round';X.beginPath();X.moveTo(40,-262);X.bezierCurveTo(120,-262,lerp(260,150,pl),lerp(-300,-380,pl),lerp(230,185,pl),lerp(-330,-430,pl));X.stroke();X.strokeStyle='#151515';X.lineWidth=3;X.stroke();
  const j=o.buzz!=null?Math.sin(o.buzz*60)*4:0;X.save();X.translate(j,0);if(o.on)glow(-10,-270,150,'130,240,160',.5);rr(-80,-282,150,30,10,'#1b1b1f',5);rr(-72,-278,134,20,6,o.on?'#25d366':'#3a4a66',0);X.restore();
  X.restore()}
+
+// ---- craft ladder 2026-11-21 14:00: toilet-roll kit ----
+// troll(x,y,s,{empty,kitchen,rot,tail}) a roll seen from the front, (x,y)=centre. empty = bare cardboard tube; kitchen = tall kitchen roll with a blue print
+function troll(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.lineJoin='round';
+ const K=o.kitchen,E=o.empty,w=E?50:(K?100:80),h=E?110:(K?250:120);
+ const g=X.createLinearGradient(-w,0,w,0);if(E){g.addColorStop(0,'#a8743f');g.addColorStop(.5,'#d9a46a');g.addColorStop(1,'#9a6838')}else{g.addColorStop(0,'#dfe4ea');g.addColorStop(.45,'#ffffff');g.addColorStop(1,'#cfd6de')}
+ X.fillStyle=g;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-w,-h/2);X.lineTo(-w,h/2);X.ellipse(0,h/2,w,w*.32,0,Math.PI,0,true);X.lineTo(w,-h/2);X.closePath();X.fill();X.stroke();
+ if(K){X.save();X.beginPath();X.rect(-w,-h/2,2*w,h);X.clip();X.fillStyle='#6fa8e8';for(let r=0;r<5;r++)for(let c=-2;c<=2;c++){const xx=c*40+(r%2)*20,yy=-h/2+40+r*48;X.beginPath();X.moveTo(xx,yy-12);X.quadraticCurveTo(xx+12,yy,xx,yy+12);X.quadraticCurveTo(xx-12,yy,xx,yy-12);X.fill()}X.restore()}
+ X.fillStyle=E?'#c58f55':'#f4f6f8';X.beginPath();X.ellipse(0,-h/2,w,w*.32,0,0,7);X.fill();X.stroke();
+ const cw=E?w*.78:w*.34;X.fillStyle='#b9824a';X.beginPath();X.ellipse(0,-h/2,cw,cw*.32,0,0,7);X.fill();X.stroke();X.fillStyle='#5a3a1e';X.beginPath();X.ellipse(0,-h/2,cw*.7,cw*.22,0,0,7);X.fill();
+ if(o.tail){X.fillStyle='#fff';X.beginPath();X.moveTo(w-4,-h/2+10);X.lineTo(w+6,h/2+o.tail);X.lineTo(w-60,h/2+o.tail+8);X.lineTo(w-62,h/2);X.closePath();X.fill();X.stroke()}
+ X.restore()}
+// rolltower(x,floorY,s,{rows,t,wob}) a pyramid of toilet rolls standing on the floor
+function rolltower(x,y,s=1,o={}){const rows=o.rows||5,t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;X.fillStyle='#000';X.beginPath();X.ellipse(0,8,rows*85,24,0,0,7);X.fill();X.globalAlpha=1;
+ for(let r=0;r<rows;r++){const n=rows-r;for(let k=0;k<n;k++){const xx=(k-(n-1)/2)*164+Math.sin(t*3+r)*(o.wob||0)*r*2;troll(xx,-60-r*122,1,{})}}X.restore()}
+// rollpack(x,y,s,{txt}) a plastic-wrapped jumbo pack (2x3 rolls) with a label, (x,y)=centre
+function rollpack(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);for(let r=0;r<2;r++)for(let c=-1;c<=1;c++)troll(c*120,-62+r*124,.74,{});
+ X.fillStyle='rgba(200,230,255,.28)';X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.roundRect(-190,-160,380,330,40);X.fill();X.stroke();
+ X.fillStyle='rgba(255,255,255,.5)';X.beginPath();X.roundRect(-170,-145,40,280,20);X.fill();
+ rr(-110,-20,220,74,16,'#3d8fe0',6);X.font="900 44px Inter";X.fillStyle='#fff';X.textAlign='center';X.textBaseline='middle';X.fillText(o.txt||'XXL 24',0,18);X.restore()}
+// bathdoor(t,{open,dx,warm,inside}) hallway wall with a bathroom door hinged on the left, pushed open (0..1) into a bright tiled bathroom; inside() draws behind the door slab
+function bathdoor(t,o={}){proom(t,{win:null,frame:null,plant:o.plant||0,lamp:o.lamp||0,night:o.night?1:0,wall:'#efd9bf',wall2:'#dcc0a0',floor:'#b98a5e',floor2:'#94673f'});
+ const dx=o.dx||600,dw=360,y0=380,y1=1300,op=o.open||0;
+ rr(dx-dw/2-30,y0-30,dw+60,y1-y0+40,10,'#fff8ef',8);
+ X.save();X.beginPath();X.rect(dx-dw/2,y0,dw,y1-y0);X.clip();X.fillStyle='#cfe6ee';X.fillRect(dx-dw/2,y0,dw,y1-y0);X.strokeStyle='rgba(255,255,255,.7)';X.lineWidth=4;for(let y=y0;y<y1;y+=90){X.beginPath();X.moveTo(dx-dw/2,y);X.lineTo(dx+dw/2,y);X.stroke()}
+ X.fillStyle='#e9eef2';X.fillRect(dx-dw/2,y1-120,dw,120);glow(dx,y0+200,420,'255,248,220',.6);if(o.inside)o.inside();X.restore();
+ const sw=dw*(1-op*.82);path(()=>{X.moveTo(dx-dw/2,y0);X.lineTo(dx-dw/2+sw,y0+40*op);X.lineTo(dx-dw/2+sw,y1-30*op);X.lineTo(dx-dw/2,y1)},'#f6efe4',8);
+ path(()=>{X.moveTo(dx-dw/2+sw*.15,y0+120);X.lineTo(dx-dw/2+sw*.85,y0+120+28*op);X.lineTo(dx-dw/2+sw*.85,y0+420);X.lineTo(dx-dw/2+sw*.15,y0+420)},null,5,'rgba(0,0,0,.18)');
+ circ(dx-dw/2+sw*.86,(y0+y1)/2+30,13,'#c9b06a',5);
+ if(op<.15){X.save();X.globalCompositeOperation='screen';const g=X.createLinearGradient(0,y1-10,0,y1+70);g.addColorStop(0,'rgba(255,240,190,.8)');g.addColorStop(1,'rgba(255,240,190,0)');X.fillStyle=g;X.fillRect(dx-dw/2,y1-6,dw,80);X.restore()}}
+// reachArm(x0,y0,x1,y1,s) a thin arm with a mitten hand poking out of a gap (x0,y0 = where it leaves the gap)
+function reachArm(x0,y0,x1,y1,s=1){X.save();X.lineCap='round';X.strokeStyle='#151515';X.lineWidth=17*s;X.beginPath();X.moveTo(x0,y0);X.quadraticCurveTo((x0+x1)/2,y0-30*s,x1,y1);X.stroke();X.fillStyle='#151515';X.beginPath();X.ellipse(x1,y1,26*s,22*s,0,0,7);X.fill();X.beginPath();X.ellipse(x1+6*s,y1-24*s,9*s,16*s,-.3,0,7);X.fill();X.restore()}
