@@ -31,7 +31,7 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  // craft ladder 2026-11-17: o.dress (colour) = A-line dress over the body; o.bow (colour) = bow tie at the neck
  if(o.dress&&!o.crawl){const d1=P(neck[0]-46,neck[1]+40),d2=P(neck[0]+46,neck[1]+40),d3=P(hip[0]+150,hip[1]+190),d4=P(hip[0]-150,hip[1]+190);X.fillStyle=o.dress;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...d1);X.lineTo(...d2);X.quadraticCurveTo(...P(hip[0]+70,hip[1]-40),...d3);X.quadraticCurveTo(...P(hip[0],hip[1]+215),...d4);X.quadraticCurveTo(...P(hip[0]-70,hip[1]-40),...d1);X.fill();X.stroke();X.fillStyle='rgba(0,0,0,.06)';X.beginPath();X.moveTo(...P(hip[0]+20,hip[1]-60));X.lineTo(...d3);X.quadraticCurveTo(...P(hip[0]+60,hip[1]+205),...P(hip[0]+40,hip[1]+200));X.fill()}
 // craft ladder 2026-11-19: o.pj (true or colour) = striped pyjama top (neck to below the hip, pocket, collar) + thick pale sleeves/legs
- if(o.pj&&!o.crawl){const pc=o.pj===1?'#9fc0ec':o.pj;const a=P(neck[0]-70,neck[1]+20),b=P(neck[0]+70,neck[1]+20),c=P(hip[0]+95,hip[1]+70),d=P(hip[0]-95,hip[1]+70);X.save();X.fillStyle=pc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.save();X.clip();X.strokeStyle='rgba(255,255,255,.8)';X.lineWidth=12*s;for(let k=-4;k<=4;k++){X.beginPath();X.moveTo(...P(neck[0]+k*30,neck[1]));X.lineTo(...P(hip[0]+k*40,hip[1]+90));X.stroke()}X.restore();X.stroke();
+ if(o.pj&&!o.crawl){const pc=o.pj===1?'#9fc0ec':o.pj;const a=P(neck[0]-70,neck[1]+20),b=P(neck[0]+70,neck[1]+20),c=P(hip[0]+95,hip[1]+70),d=P(hip[0]-95,hip[1]+70);X.save();X.fillStyle=pc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.save();X.clip();X.strokeStyle='rgba(255,255,255,.8)';X.lineWidth=12*s;for(let k=-4;k<=4;k++){X.beginPath();X.moveTo(...P(neck[0]+k*30,neck[1]));X.lineTo(...P(hip[0]+k*40,hip[1]+90));X.stroke()}X.restore();X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.stroke();
   X.fillStyle='#ffffff';X.beginPath();X.moveTo(...P(neck[0]-46,neck[1]+16));X.lineTo(...P(neck[0],neck[1]+70));X.lineTo(...P(neck[0]+46,neck[1]+16));X.closePath();X.fill();X.stroke();
   for(let k=0;k<3;k++){const[bx,by]=P(neck[0]+(hip[0]-neck[0])*(.3+k*.25),neck[1]+(hip[1]-neck[1])*(.3+k*.25)+40);X.beginPath();X.arc(bx,by,7*s,0,7);X.fillStyle='#fff';X.fill();X.stroke()}X.restore()}
 // craft ladder 2026-11-19 22:00: o.num with o.tee = football shirt (big shirt number instead of star + TOUR)
@@ -756,3 +756,36 @@ function mirror3(x,y,w,h){X.save();X.shadowColor='rgba(0,0,0,.18)';X.shadowBlur=
 // tcup(x,y,s,brushes): toothbrush cup on a sink edge; (x,y)=cup bottom centre; brushes=[{col,wear}]
 function tcup(x,y,s=1,brushes=[]){X.save();X.translate(x,y);X.scale(s,s);brushes.forEach((b,i)=>toothbrush(-14+i*30,-80,.62,(i-(brushes.length-1)/2)*.28,b));
  rr(-60,-150,120,150,22,'#7fd1c3',6);rr(-44,-136,18,110,9,'rgba(255,255,255,.35)',0);X.restore()}
+
+// ---------- craft ladder 2026-11-21 12:00 (grey tick): WhatsApp delivery ticks, a WhatsApp chat with ticks + a contact avatar, phone-on-charger prop, wall key hook ----------
+// watick(x,y,s,kind): kind 1 = single grey tick (sent, NOT delivered), 2 = double grey (delivered), 3 = double blue (read). (x,y) = right end.
+function watick(x,y,s=1,kind=1){X.save();X.translate(x,y);X.scale(s,s);X.lineCap='round';X.lineJoin='round';X.lineWidth=4.5;X.strokeStyle=kind==3?'#34b7f1':'#8696a0';
+ const one=(dx)=>{X.beginPath();X.moveTo(dx-20,-2);X.lineTo(dx-12,7);X.lineTo(dx+2,-11);X.stroke()};if(kind==1)one(0);else{one(-9);X.beginPath();X.moveTo(-6,5);X.lineTo(-4,7);X.lineTo(10,-11);X.stroke()}X.restore()}
+// waBubble: one chat bubble with time + ticks (me) ; returns height
+function waBubble(edge,y,maxW,str,me,p,time,kind=1,o={}){if(p<=0)return 0;const F="500 36px Inter,'Noto Color Emoji'";const lines=wrapT(str,maxW-64,F);X.font=F;const lw=Math.max(...lines.map(l=>X.measureText(l).width))+64+(time?110:0);const w=Math.min(maxW,lw);const h=lines.length*48+42+(time?26:0);const bx=me?edge-w:edge;
+ X.save();X.globalAlpha=C(p*1.6);const sc=lerp(.7,1,eo(p));X.translate(edge,y);X.scale(sc,sc);X.translate(-edge,-y);
+ rr(bx,y,w,h,26,o.bg||(me?'#d9fdd3':'#ffffff'),4);X.font=F;X.fillStyle='#111';X.textAlign='left';X.textBaseline='top';lines.forEach((l,i)=>X.fillText(l,bx+30,y+22+i*48));
+ if(time){X.font="500 24px Inter";X.fillStyle='#667781';X.textAlign='right';X.fillText(time,bx+w-(me?62:22),y+h-36);if(me)watick(bx+w-22,y+h-26,1.1,kind)}
+ if(o.ring){X.save();X.globalAlpha=C(o.ring);X.strokeStyle='#ff3b30';X.lineWidth=7;X.beginPath();X.arc(bx+w-36,y+h-26,34+Math.sin(o.t*8)*4,0,7);X.stroke();X.restore()}
+ X.restore();return h}
+// waChat(x,y,s,r,o): WhatsApp chat screen with any contact. o.name, o.sub (e.g. 'last seen yesterday at 16:02'), o.av(x,y,r) avatar painter, o.clock, o.list=[{a,me,text,time,kind,ring}|{a,date}]
+function waChat(x,y,s,r,o){X.save();X.translate(x,y);X.scale(s,s);
+ rr(-320,-660,640,1320,92,'#1b1b1f',10);rr(-298,-638,596,1276,74,'#efe7dc',0);X.save();X.beginPath();X.roundRect(-298,-638,596,1276,74);X.clip();
+ for(let i=0;i<40;i++){X.globalAlpha=.5;circ(-280+rnd(i)*560,-600+rnd(i+7)*1220,6+rnd(i+3)*10,'#e0d3c2',0)}X.globalAlpha=1;
+ X.fillStyle='#008069';X.fillRect(-300,-640,600,210);rr(-70,-618,140,40,20,'#000',0);
+ X.font="600 26px Inter";X.fillStyle='#fff';X.textAlign='left';X.textBaseline='middle';X.fillText(o.clock||'9:41',-240,-598);
+ X.font="400 40px Inter";X.fillText('‹',-270,-488);if(o.av)o.av(-180,-488,44);else avatar(-180,-488,44,0);
+ X.font="800 40px Inter,'Noto Color Emoji'";X.fillStyle='#fff';X.textAlign='left';X.fillText(o.name||'Mom',-118,-506);X.font="400 25px Inter";X.fillText(o.sub||'online',-118,-466);
+ let yy=-380;(o.list||[]).forEach(m=>{if(r<m.a)return;const p=C((r-m.a)/.22);if(m.date){X.save();X.globalAlpha=C(p*2);X.font="700 26px Inter,'Noto Color Emoji'";const dw=X.measureText(m.date).width+44;rr(-dw/2,yy,dw,46,14,'#e1f2fb',0);X.fillStyle='#54656f';X.textAlign='center';X.textBaseline='middle';X.fillText(m.date,0,yy+24);X.restore();yy+=66;return}
+  yy+=waBubble(m.me?270:-270,yy,470,m.text,m.me,p,m.time,m.kind||1,{ring:m.ring,t:r,bg:m.bg})+22});
+ X.fillStyle='#f0f0f0';X.fillRect(-300,520,600,140);rr(-270,545,450,74,37,'#fff',0);X.font="400 30px Inter";X.fillStyle='#8696a0';X.textAlign='left';X.fillText('Message',-230,582);circ(235,582,38,'#00a884',0);
+ X.restore();X.restore()}
+// keyhook(x,y,s,hasKeys): small wooden key rack on the wall, keys hanging (or empty)
+function keyhook(x,y,s=1,has=1){X.save();X.translate(x,y);X.scale(s,s);rr(-80,-24,160,48,12,'#a7724a',5);for(const dx of[-44,0,44]){circ(dx,14,7,'#d9d9d9',4)}if(has)keys3(0,10,.8);X.restore()}
+// chargeStand(x,y,s,o): phone lying on a little side table, cable to a wall socket; o.on (screen lit), o.plug (0..1 cable plugged), o.buzz (time -> shake), o.lvl (0..1 battery shown on screen)
+function chargeStand(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,4,200,.3);
+ rr(-150,-250,300,36,14,'#a7724a',6);line([[-115,-214],[-125,0]],13,'#7a5030');line([[115,-214],[125,0]],13,'#7a5030');
+ rr(150,-470,70,96,12,'#f4efe6',5);circ(172,-430,6,'#333',0);circ(198,-430,6,'#333',0);
+ const pl=C(o.plug||0);X.strokeStyle='#f4f4f4';X.lineWidth=9;X.lineCap='round';X.beginPath();X.moveTo(40,-262);X.bezierCurveTo(120,-262,lerp(260,150,pl),lerp(-300,-380,pl),lerp(230,185,pl),lerp(-330,-430,pl));X.stroke();X.strokeStyle='#151515';X.lineWidth=3;X.stroke();
+ const j=o.buzz!=null?Math.sin(o.buzz*60)*4:0;X.save();X.translate(j,0);if(o.on)glow(-10,-270,150,'130,240,160',.5);rr(-80,-282,150,30,10,'#1b1b1f',5);rr(-72,-278,134,20,6,o.on?'#25d366':'#3a4a66',0);X.restore();
+ X.restore()}
