@@ -739,3 +739,20 @@ function suitcase3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(
  X.restore()}
 // worry icons circling the head
 function headLoop(cx,cy,t,icons,a=1,rad=300){for(let i=0;i<icons.length;i++){const ang=t*1.3+i/icons.length*Math.PI*2;(typeof emo=='function'?emo:function(x,y,e,s,a){if(a<=0)return;X.save();X.globalAlpha=C(a);X.translate(x,y);X.scale(s,s);circ(0,0,62,'#fff',6);X.font="64px 'Noto Color Emoji'";X.textAlign='center';X.textBaseline='middle';X.fillText(e,0,4);X.restore()})(cx+Math.cos(ang)*rad,cy+Math.sin(ang)*rad*.42-40,icons[i],.85,a)}}
+
+// ---- craft ladder 2026-11-21 (toothbrush video) ----
+// toothbrush(x,y,s,rot,o): (x,y) = grip point (where a hand holds it); the head points up (local -y), bristles face +x.
+// o.wear 0..1 splays the tufts into a 'palm tree' fan; o.col handle colour; o.fresh>0 adds a sparkle glint.
+function toothbrush(x,y,s=1,rot=0,o={}){const w=o.wear||0,col=o.col||'#3fa9f5';X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);X.lineCap='round';
+ for(let i=0;i<7;i++){const yy=-322+i*14,c=(i-3)/3,a=c*w*1.05+(rnd(i+3)-.5)*w*.35,L=46+w*(26+rnd(i+11)*16);X.save();X.translate(14,yy);X.rotate(a);
+  rr(-4,-6,L+4,12,6,i%2?'#ffffff':'#bfe6ff',3);if(o.paste&&!w)rr(L-14,-12,26,24,10,'#f3f8ff',0);X.restore()}
+ rr(-16,-336,32,108,15,col,5);rr(-9,-236,18,206,9,col,5);rr(-15,-40,30,176,15,col,5);rr(-6,-10,12,110,6,'rgba(255,255,255,.35)',0);
+ if(o.fresh){X.save();X.globalAlpha=C(o.fresh)*(.6+.4*Math.sin((o.t||0)*6));txt('✨',70,-360,54,'#fff',0,'400 ');X.restore()}
+ X.restore()}
+// mirror3(x,y,w,h): wall mirror with a soft frame and diagonal reflection streaks; (x,y) = top-left.
+function mirror3(x,y,w,h){X.save();X.shadowColor='rgba(0,0,0,.18)';X.shadowBlur=18;rr(x-18,y-18,w+36,h+36,30,'#f7f4ee',6);X.shadowColor='transparent';
+ const g=X.createLinearGradient(x,y,x+w,y+h);g.addColorStop(0,'#e6f3f8');g.addColorStop(1,'#bcd6e2');X.fillStyle=g;X.beginPath();X.roundRect(x,y,w,h,20);X.fill();
+ X.save();X.beginPath();X.roundRect(x,y,w,h,20);X.clip();X.globalAlpha=.5;X.fillStyle='#ffffff';for(const [a,b] of[[.15,.08],[.38,.04]]){X.beginPath();X.moveTo(x+w*a,y+h);X.lineTo(x+w*(a+.25),y);X.lineTo(x+w*(a+.25+b),y);X.lineTo(x+w*(a+b),y+h);X.closePath();X.fill()}X.restore();X.restore()}
+// tcup(x,y,s,brushes): toothbrush cup on a sink edge; (x,y)=cup bottom centre; brushes=[{col,wear}]
+function tcup(x,y,s=1,brushes=[]){X.save();X.translate(x,y);X.scale(s,s);brushes.forEach((b,i)=>toothbrush(-14+i*30,-80,.62,(i-(brushes.length-1)/2)*.28,b));
+ rr(-60,-150,120,150,22,'#7fd1c3',6);rr(-44,-136,18,110,9,'rgba(255,255,255,.35)',0);X.restore()}
