@@ -922,3 +922,32 @@ function catcam(x,y,s,t,o={}){const fill=o.fill||0;X.save();X.translate(x,y);X.s
  txt('LIVE · Cat cam',-30,-375,30,'#fff',0,'800 ');txt(o.day||'Day 3',160,-375,26,'#ffd23f',0,'800 ');
  X.globalAlpha=.08;for(let k=0;k<30;k++){X.fillStyle='#fff';X.fillRect(-240,-420+k*28+((t*80)%28),480,2)}X.globalAlpha=1;
  X.restore();rr(-60,-452,120,16,8,'#333',0);X.restore()}
+
+// ---- craft ladder 2026-11-21 22:00 (lunch_look3) ----
+// lunchbox3(x,y,s,o): kid's lunchbox, (x,y) = bottom centre. o.open 0..1 lifts + tilts the lid back;
+// o.mould = fuzzy green sandwich inside, o.faces = tiny bacteria faces in the fuzz (o.hats = party hats), o.clean = empty + shine, o.col body colour, o.t time
+function lunchbox3(x,y,s=1,o={}){const t=o.t||0,w=260,h=120,col=o.col||'#4fc3c8',op=C(o.open||0);X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ X.globalAlpha=.18;ell(0,6,w*.62,16,'#000',0);X.globalAlpha=1;
+ if(op>0){rr(-w/2+8,-h-26,w-16,40,12,'#2e3b40',5);
+  if(o.mould){X.save();X.beginPath();X.rect(-w/2,-h-260,w,260);X.clip();sandwich(-10,-h+6,1.15,{rot:-.08});
+   for(let k=0;k<26;k++){const a=rnd(k+3)*6.28,rr2=rnd(k+11)*95,bx=-10+Math.cos(a)*rr2,by=-h-30+Math.sin(a)*rr2*.45-rnd(k+5)*30,br=14+rnd(k+7)*18+Math.sin(t*3+k)*2;circ(bx,by,br,k%3?'#8bc34a':'#c5e1a5',0)}
+   if(o.faces){for(let k=0;k<5;k++){const bx=-90+k*45,by=-h-40-((k%2)*34)+Math.sin(t*6+k)*6;circ(bx,by,20,'#9ccc65',4);circ(bx-6,by-3,4,'#151515',0);circ(bx+6,by-3,4,'#151515',0);
+     X.beginPath();X.arc(bx,by+4,7,0,Math.PI);X.strokeStyle='#151515';X.lineWidth=3;X.stroke();
+     if(o.hats)path(()=>{X.moveTo(bx-13,by-14);X.lineTo(bx+13,by-14);X.lineTo(bx+2,by-48)},['#ff5a7a','#ffd23f','#5ab0ff','#b06aff','#4cd27a'][k],3)}}
+   X.restore()}
+  if(o.clean){X.save();X.globalAlpha=.7;line([[-w/2+30,-h-14],[-w/2+70,-h-2]],6,'#ffffff');X.restore()}}
+ rr(-w/2,-h,w,h,26,col,7);rr(-w/2+18,-h+18,w-36,26,12,'rgba(255,255,255,.35)',0);rr(-40,-h-12,80,22,10,'#ff8a65',5);
+ X.save();X.translate(-w/2+4,-h-4);X.rotate(-op*1.15);X.translate(0,-op*8);rr(-4,-34,w,36,16,col,7);rr(w/2-44,-50,80,20,10,'#2e3b40',5);X.restore();
+ if(o.clean){X.save();X.globalAlpha=.8;line([[-w/2+28,-h+70],[-w/2+60,-h+30]],7,'#fff');X.restore()}
+ X.restore()}
+// schoolbag3(x,y,s,o): kid's school backpack, (x,y) = bottom centre; o.open 0..1 folds the top flap back;
+// o.inner(fn) draws content inside the opening (local coords, opening top at y=-300); o.col
+function schoolbag3(x,y,s=1,o={}){const col=o.col||'#7e57c2',op=C(o.open||0);X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.2;ell(0,8,170,20,'#000',0);X.globalAlpha=1;
+ rr(-170,-320,340,320,60,col,8);rr(-120,-150,240,120,30,'rgba(0,0,0,.14)',6);rr(-60,-120,120,16,8,'#ffd23f',0);
+ const flap=()=>{X.save();X.translate(0,-320);X.scale(1,1-op*1.6);rr(-176,-10,352,150,60,col,8);circ(0,110,14,'#151515',0);X.restore()};
+ if(op>0){flap();rr(-140,-330,280,56,24,'#3a2a5a',6);
+  const bk=['#ef5350','#42a5f5','#66bb6a'];for(let k=0;k<3;k++)rr(-120+k*70,-372+k*6,58,70,6,bk[k],5);
+  if(o.inner){X.save();X.beginPath();X.rect(-200,-900,400,600);X.clip();o.inner();X.restore()}}
+ if(op<=0)flap();
+ X.restore()}
