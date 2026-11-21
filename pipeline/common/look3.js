@@ -849,3 +849,39 @@ function stopwatch3(x,y,s=1,o={}){const sec=o.sec||0,over=sec>60;X.save();X.tran
  if(over){X.fillStyle='rgba(224,83,61,.22)';X.beginPath();X.moveTo(0,0);X.arc(0,0,172,-Math.PI/2,-Math.PI/2+(sec-60)/60*Math.PI*2);X.closePath();X.fill()}
  const a=sec/60*Math.PI*2;line([[0,0],[Math.sin(a)*150,-Math.cos(a)*150]],9,over?'#e0533d':'#151515');circ(0,0,14,over?'#e0533d':'#151515',0);
  rr(-80,40,160,74,16,'#151515',0);txt(Math.floor(sec)+' s',0,79,52,over?'#ff8a70':'#7cf0a0',0);X.restore()}
+
+// ---------- craft ladder 2026-11-21 18:00: teen bedroom door + retainer kit ----------
+// teenDoor(t,{dx,open,night,warm,inside}) hallway with a teen's bedroom door: lightning sticker, purple LED glow leaking under/through the gap
+function teenDoor(t,o={}){proom(t,{win:null,frame:null,plant:o.plant||0,lamp:o.lamp||0,night:o.night?1:0,wall:o.night?'#d9c6b4':'#efd9bf',wall2:o.night?'#b9a08c':'#dcc0a0',floor:'#b98a5e',floor2:'#94673f'});
+ const dx=o.dx||640,dw=360,y0=380,y1=1300,op=o.open||0,led=o.led==null?1:o.led,pl=.75+.25*Math.sin(t*3);
+ rr(dx-dw/2-30,y0-30,dw+60,y1-y0+40,10,'#fff8ef',8);
+ X.save();X.beginPath();X.rect(dx-dw/2,y0,dw,y1-y0);X.clip();const g=X.createLinearGradient(dx-dw/2,0,dx+dw/2,0);g.addColorStop(0,'#3a2a6e');g.addColorStop(1,'#1d2a5a');X.fillStyle=g;X.fillRect(dx-dw/2,y0,dw,y1-y0);
+ glow(dx+60,y0+300,420,'170,90,255',.55*led*pl);if(o.inside)o.inside();X.restore();
+ const sw=dw*(1-op*.82);path(()=>{X.moveTo(dx-dw/2,y0);X.lineTo(dx-dw/2+sw,y0+40*op);X.lineTo(dx-dw/2+sw,y1-30*op);X.lineTo(dx-dw/2,y1)},'#e9e2d6',8);
+ path(()=>{X.moveTo(dx-dw/2+sw*.15,y0+120);X.lineTo(dx-dw/2+sw*.85,y0+120+28*op);X.lineTo(dx-dw/2+sw*.85,y0+420);X.lineTo(dx-dw/2+sw*.15,y0+420)},null,5,'rgba(0,0,0,.16)');
+ if(op<.5){X.save();X.translate(dx-dw/2+sw*.5,y0+250);X.scale(1-op*.8,1);path(()=>{X.moveTo(10,-70);X.lineTo(-30,8);X.lineTo(2,8);X.lineTo(-12,70);X.lineTo(34,-14);X.lineTo(2,-14);X.closePath()},'#ffd23f',6);X.restore()}
+ circ(dx-dw/2+sw*.86,(y0+y1)/2+30,13,'#c9b06a',5);
+ X.save();X.globalCompositeOperation='screen';const g2=X.createLinearGradient(0,y1-10,0,y1+90);g2.addColorStop(0,`rgba(180,110,255,${.85*led*pl})`);g2.addColorStop(1,'rgba(180,110,255,0)');X.fillStyle=g2;X.fillRect(dx-dw/2-20,y1-6,dw+40,100);X.restore()}
+// retainer3(x,y,s,{rot}) clear plastic retainer seen from above: U-shaped tray with white teeth
+function retainer3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ X.lineCap='round';X.strokeStyle='rgba(200,235,255,.75)';X.lineWidth=64;X.beginPath();X.arc(0,0,110,Math.PI*.05,Math.PI*.95,true);X.stroke();
+ X.strokeStyle='rgba(60,120,160,.55)';X.lineWidth=5;X.beginPath();X.arc(0,0,142,Math.PI*.05,Math.PI*.95,true);X.stroke();X.beginPath();X.arc(0,0,78,Math.PI*.05,Math.PI*.95,true);X.stroke();
+ for(let k=0;k<12;k++){const a=Math.PI*(.1+k*.8/11),r=110;X.save();X.translate(Math.cos(a)*r,-Math.sin(a)*r);X.rotate(-a+Math.PI/2);rr(-13,-22,26,44,10,'#ffffff',3);X.restore()}
+ X.restore()}
+// retCase(x,y,s,{open,col}) the plastic retainer case (lid hinged at the back)
+function retCase(x,y,s=1,o={}){const c=o.col||'#3fa7e0',op=o.open==null?1:o.open;X.save();X.translate(x,y);X.scale(s,s);gshadow(0,40,190,.3);
+ if(op>0){X.save();X.scale(1,op);rr(-170,-230,340,190,70,c,7);rr(-140,-205,280,140,50,'rgba(255,255,255,.18)',0);X.restore()}
+ rr(-170,-60,340,120,60,c,7);rr(-150,-46,300,80,40,'#e9f6ff',4);rr(-30,-70,60,22,8,'#2b7fb4',4);X.restore()}
+// junkDrawer(x,y,s,t,{dust}) an open desk drawer from above: cables, a sock, crumpled paper, an old charger, cobweb + dust motes
+function junkDrawer(x,y,s=1,t=0,o={}){X.save();X.translate(x,y);X.scale(s,s);
+ rr(-430,-330,860,660,20,'#8a5a36',8);rr(-395,-295,790,590,12,'#5e3b22',0);
+ X.save();X.beginPath();X.rect(-395,-295,790,590);X.clip();
+ line([[-380,-200],[-200,-260],[-60,-140],[120,-250],[380,-170]],12,'#151515');line([[-380,40],[-260,-60],[-120,60],[0,-20]],10,'#f0f0f0');
+ rr(250,-260,110,70,10,'#f0f0f0',5);line([[300,-190],[300,-120],[200,-60]],8,'#f0f0f0');
+ path(()=>{X.moveTo(-360,160);X.quadraticCurveTo(-300,90,-230,130);X.lineTo(-150,250);X.quadraticCurveTo(-170,300,-230,290);X.lineTo(-300,210);X.quadraticCurveTo(-360,220,-360,160)},'#e86a5a',6);for(let k=0;k<3;k++)line([[-330+k*14,150+k*20],[-260+k*14,120+k*20]],6,'#ffffff');
+ X.save();X.translate(250,170);X.rotate(.3);circ(0,0,70,'#fdfbf5',6);line([[-40,-20],[10,10],[40,-30]],4,'#c9c2b0');line([[-30,30],[20,20]],4,'#c9c2b0');X.restore();
+ if(o.inner)o.inner();
+ if(o.dust){X.save();X.globalAlpha=.25*o.dust;X.fillStyle='#d8d0c0';X.fillRect(-395,-295,790,590);X.restore();X.save();X.globalAlpha=.6*o.dust;X.strokeStyle='#ffffff';X.lineWidth=3;for(let k=0;k<5;k++){X.beginPath();X.moveTo(395,-295+k*30);X.quadraticCurveTo(395-k*30-20,-295+k*18,395-k*32,-295);X.stroke()}line([[395,-295],[260,-160]],3,'#ffffff');X.restore()}
+ X.restore();
+ if(o.dust)for(let k=0;k<14;k++){const px=-380+rnd(k)*760,py=-280+((rnd(k+9)*560+t*30*(.5+rnd(k+3)))%560);X.save();X.globalAlpha=.55;circ(px,py,3+rnd(k+5)*4,'#fff5dc',0);X.restore()}
+ X.restore()}
