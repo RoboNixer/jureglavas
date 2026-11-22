@@ -983,3 +983,60 @@ function volcano3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale
   line([[150,-24],[150,-150]],6,'#151515');X.fillStyle='#ffd23f';X.beginPath();X.moveTo(150,-150);X.lineTo(220,-128);X.lineTo(150,-106);X.closePath();X.fill();X.lineWidth=5;X.stroke();
  }
  X.restore()}
+// ---- craft ladder 2026-11-22 12:00 (hamster): pet-hamster kit ----
+// hamster3(x,floorY,s,{t,cheeks 0..1,munch,eyes:'open'|'closed'|'wide',lid,look:[x,y],fat,seed}) chubby sitting hamster
+function hamster3(x,y,s=1,o={}){const t=o.t||0,OUT='#151515',col=o.col||'#e9a557',fat=1+(o.fat||0)*.18,ch=C(o.cheeks||0),mu=o.munch?Math.abs(Math.sin(t*9))*.12:0;
+ X.save();X.translate(x,y);X.scale(s,s);X.lineJoin='round';X.lineCap='round';
+ X.globalAlpha=.22;ell(0,4,120*fat,16,'#000',0);X.globalAlpha=1;
+ // feet
+ ell(-48,-6,26,13,'#ffc2b8',5);ell(48,-6,26,13,'#ffc2b8',5);
+ // body (pear) + belly
+ ell(0,-95,105*fat,100,col,7);ell(0,-72,66*fat,68,'#fff4e2',0);
+ const hg=X.createRadialGradient(-40,-150,10,0,-95,150);hg.addColorStop(0,'rgba(255,255,255,.28)');hg.addColorStop(1,'rgba(0,0,0,.10)');X.fillStyle=hg;X.beginPath();X.ellipse(0,-95,101*fat,96,0,0,7);X.fill();
+ // head
+ const hy=-205;
+ for(const d of[-1,1]){ell(d*62,hy-70,30,30,col,6);ell(d*62,hy-68,17,17,'#ffb3c0',0)}
+ ell(0,hy,98,82,col,7);
+ // cheeks pouches (puff)
+ const cr=26+ch*44+mu*40;for(const d of[-1,1]){ell(d*(70+ch*26),hy+30,cr,cr*.86,col,7);ell(d*(70+ch*26),hy+36,cr*.7,cr*.55,'#fff4e2',0)}
+ ell(0,hy+30,50,36,'#fff4e2',0);
+ // eyes
+ const E=o.eyes||'open',lk=o.look||[0,0];
+ for(const d of[-1,1]){const ex=d*38,ey=hy-12;
+  if(E==='closed'){X.strokeStyle=OUT;X.lineWidth=7;X.beginPath();X.moveTo(ex-15,ey);X.quadraticCurveTo(ex,ey+11,ex+15,ey);X.stroke();continue}
+  const R=E==='wide'?24:19;circ(ex,ey,R,OUT,0);circ(ex-6+lk[0]*5,ey-7+lk[1]*5,R*.36,'#fff',0);circ(ex+6,ey+6,R*.15,'#fff',0);
+  if(o.lid){X.fillStyle=col;X.fillRect(ex-R-3,ey-R-3,2*R+6,(2*R+6)*o.lid);X.strokeStyle=OUT;X.lineWidth=5;X.beginPath();X.moveTo(ex-R,ey-R-3+(2*R+6)*o.lid);X.lineTo(ex+R,ey-R-3+(2*R+6)*o.lid);X.stroke()}}
+ // nose + mouth + whiskers
+ ell(0,hy+16,10,7,'#ff8fa3',3);X.strokeStyle=OUT;X.lineWidth=4;X.beginPath();X.moveTo(0,hy+23);X.lineTo(0,hy+31);X.moveTo(-12,hy+34);X.quadraticCurveTo(-6,hy+40,0,hy+31);X.quadraticCurveTo(6,hy+40,12,hy+34);X.stroke();
+ X.strokeStyle='rgba(20,20,20,.55)';X.lineWidth=3;for(const d of[-1,1])for(let k=0;k<2;k++){X.beginPath();X.moveTo(d*40,hy+22+k*10);X.lineTo(d*(118+ch*30),hy+10+k*20);X.stroke()}
+ // paws (holding a seed when munching)
+ const py=hy+78-mu*30;ell(-22,py,16,13,'#ffc2b8',4);ell(22,py,16,13,'#ffc2b8',4);
+ if(o.seed){X.save();X.translate(0,py-14);X.rotate(.3);ell(0,0,10,18,'#6b4a2a',4);X.strokeStyle='#f3e6c8';X.lineWidth=3;X.beginPath();X.moveTo(0,-12);X.lineTo(0,12);X.stroke();X.restore()}
+ if(E==='closed'&&o.zz){X.save();for(let k=0;k<3;k++){const q=(t*.5+k/3)%1;X.globalAlpha=(1-q)*.9;txt('z',100+q*60+k*14,hy-80-q*140,52-q*14,'#6a7aa8',0)}X.restore()}
+ X.restore()}
+// cage3(x,floorY,s,{t,inner:fn,fill 0..1 bowl,wheel spin}) wire hamster cage with tray, bedding, wheel, bottle, bowl
+function cage3(x,y,s=1,o={}){const t=o.t||0,W=300,H=330;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,8,W+30,24,'#000',0);X.globalAlpha=1;
+ // back bars
+ X.strokeStyle='rgba(120,130,150,.55)';X.lineWidth=5;for(let k=-W+20;k<W;k+=34){X.beginPath();X.moveTo(k,-70);X.lineTo(k,-H-60);X.stroke()}
+ // wheel
+ X.save();X.translate(170,-200);circ(0,0,92,null,0);X.strokeStyle='#5aa0e0';X.lineWidth=12;X.beginPath();X.arc(0,0,92,0,7);X.stroke();X.rotate((o.spin||0)*t*4);X.lineWidth=5;for(let k=0;k<8;k++){X.rotate(Math.PI/4);X.beginPath();X.moveTo(0,0);X.lineTo(92,0);X.stroke()}circ(0,0,14,'#3d7fc0',4);X.restore();X.strokeStyle='#3d7fc0';X.lineWidth=10;X.beginPath();X.moveTo(170,-200);X.lineTo(170,-80);X.stroke();
+ // water bottle
+ rr(-W+30,-H-20,46,150,18,'rgba(190,230,255,.75)',5);rr(-W+30,-H+50,46,80,18,'rgba(110,190,250,.8)',0);X.strokeStyle='#888';X.lineWidth=6;X.beginPath();X.moveTo(-W+53,-H+130);X.lineTo(-W+53,-H+170);X.stroke();
+ // tray + bedding
+ path(()=>{X.moveTo(-W,-90);X.lineTo(W,-90);X.lineTo(W-14,0);X.lineTo(-W+14,0);X.closePath()},'#4fc3c8',7);
+ X.fillStyle='#f3dca0';X.beginPath();X.moveTo(-W+10,-88);for(let k=0;k<=24;k++)X.lineTo(-W+10+k*(2*W-20)/24,-96-((k*37)%11));X.lineTo(W-10,-88);X.fill();
+ // bowl
+ X.save();X.translate(-130,-92);path(()=>{X.moveTo(-60,-34);X.lineTo(60,-34);X.lineTo(46,0);X.lineTo(-46,0);X.closePath()},'#ffb02e',6);ell(0,-34,60,12,o.fill>0?'#a0703a':'#d98a12',5);
+ if(o.fill>0)for(let k=0;k<10;k++)ell(-44+k*10,-38-((k*7)%3)*5*o.fill,8,6,k%2?'#6b4a2a':'#e0b060',2);X.restore();
+ if(o.inner&&!o.front)o.inner();
+ // front bars + roof
+ X.strokeStyle='#8a94a8';X.lineWidth=6;for(let k=-W+4;k<=W;k+=42){X.beginPath();X.moveTo(k,-90);X.lineTo(k,-H-40);X.stroke()}
+ X.beginPath();X.moveTo(-W,-H-40);X.quadraticCurveTo(0,-H-130,W,-H-40);X.lineWidth=10;X.stroke();X.lineWidth=6;X.beginPath();X.moveTo(-W,-180);X.lineTo(W,-180);X.stroke();
+ X.beginPath();X.moveTo(-40,-H-115);X.quadraticCurveTo(0,-H-170,40,-H-115);X.lineWidth=8;X.stroke();
+ if(o.inner&&o.front)o.inner();
+ X.restore()}
+// hfood(x,y,s,rot,{pour}) bag of hamster food
+function hfood(x,y,s=1,rot=0,o={}){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);
+ path(()=>{X.moveTo(-58,-90);X.lineTo(58,-90);X.lineTo(68,90);X.lineTo(-68,90);X.closePath()},'#ffd23f',6);rr(-62,-106,124,22,4,'#f0b41a',5);
+ circ(0,-10,42,'#fff',0);txt('🐹',0,2,48,'#fff',0,'400 ');txt('FOOD',0,62,24,'#6b4a2a',0);X.restore()}
