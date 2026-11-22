@@ -1,0 +1,7 @@
+{"slides":[
+ {"type":"cover","bg":"purple","foot":true,"kicker":"MEET MEMOPAI","title":"Your reminder assistant, *in WhatsApp*.","sub":"Text it like a friend. It reminds you at the right time."},
+ {"type":"text","title":"No new app. No account.","body":["Memopai is a contact in your *WhatsApp*.","You message it the way you'd message a friend.","It remembers, so your head doesn't have to."]},
+ {"type":"tip","n":1,"title":"Just type it","me":"Remind me tomorrow at 8 to call Mom","reply":"✅ Got it! Tomorrow · 08:00\n📞 Call Mom"},
+ {"type":"tip","n":2,"title":"Or say it","me":"🎤 Voice note · 0:04\n\"In 20 minutes, take the laundry out\"","reply":"✅ Got it! In 20 min\n🧺 Take the laundry out"},
+ {"type":"cta","title":"Say it once. We'll remind you.","lines":["Works 24/7, even when your phone is silent.","English · Hrvatski · Bosanski · Srpski"],"button":"memopai.com"}
+]}

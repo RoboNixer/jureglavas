@@ -1,0 +1,7 @@
+{"slides":[
+ {"type":"cover","bg":"purple","foot":true,"kicker":"ON REPEAT","title":"Set it once. *Forever.*","sub":"Daily, weekly, monthly. Until you say stop."},
+ {"type":"tip","n":1,"title":"Every week","me":"Every Wednesday at 7 pm: bins out","reply":"✅ Got it! Every Wed · 19:00\n🗑️ Bins out"},
+ {"type":"tip","n":2,"title":"Every month","me":"Every first of the month: pay the rent","reply":"✅ Got it! 1st of every month\n🏠 Pay the rent"},
+ {"type":"tip","n":3,"title":"Every weekday","me":"Weekdays at 8:15: take your lunch","reply":"✅ Got it! Mon–Fri · 08:15\n🥪 Take your lunch"},
+ {"type":"cta","title":"The boring stuff, on autopilot.","lines":["Say \"stop\" any time."],"button":"memopai.com"}
+]}

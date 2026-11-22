@@ -1,0 +1,7 @@
+{"slides":[
+ {"type":"cover","bg":"green","foot":true,"kicker":"REMIND OTHERS","title":"Stop being *everyone's* reminder.","sub":"Memopai can remind Mom, your kid or your flatmate, in their own WhatsApp."},
+ {"type":"tip","n":1,"title":"You set it once","me":"Every day at 9, remind Mom to take her pills","reply":"✅ Got it! Every day · 09:00\n💊 Mom: take your pills\nInvite sent to Mom's WhatsApp"},
+ {"type":"text","title":"She taps Accept. That's all.","body":["No app for her. *No account.*","The reminder lands in *her* WhatsApp, every day.","You can add up to 10 people."]},
+ {"type":"tip","n":2,"title":"Works for the whole house","me":"Every Sunday at 6, remind my son: mugs back to the kitchen","reply":"✅ Got it! Every Sun · 18:00\n☕ Mugs back to the kitchen!"},
+ {"type":"cta","title":"Say it once. They get reminded.","lines":["You stop nagging. Everyone stays on time."],"button":"memopai.com"}
+]}

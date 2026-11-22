@@ -3,6 +3,12 @@
 One run = ONE brand-new ~30 s vertical video (1080×1920, 30 fps), published to Memopai's Instagram and Facebook (all 7 slots) and TikTok (only the 12, 16, 18 and 20 o'clock slots).
 Repo: `RoboNixer/jureglavas`, branch `memopai-media`. Everything you need is in `pipeline/`.
 
+> **OWNER UPDATE 2026-11-22 21:50 (live): PROFESSIONAL GRID. "Make the main grid look good, like a professional business, put the reels out of the main grid; on the main should be what Memopai is."**
+> 1. **Every Instagram REEL is posted Reels-tab only:** `metadata {instagram:{type:"reel", shouldShareToFeed:false}}` (was true). Reels still get distributed in the Reels tab/Explore; they just don't land on the profile grid. This overrides section 4 and 0g.
+> 2. **The grid = brand posts only:** carousels and single images (1080x1350, key content inside the centred 3:4 area x 40..1040) made with `pipeline/slides/render_slides.py`. Every grid cover is a `cover` slide with `foot:true` and its `bg` rotating **purple → cream → green** in posting order, so the three grid columns stay one colour each (purple left, cream middle, green right as seen on the profile). Before choosing `bg`, look at the last grid post's cover in `daily/` and take the next colour. Title max ~6 words with one *highlight*, the mascot on every cover.
+> 3. **Cornerstone set (posted 2026-11-22 22:20-22:45, `daily/2026-11-22/2230_BrandGrid/`):** a Meet Memopai, b How it works, c Remind others, d On repeat, e FAQ, f 9 reminders worth setting. The owner pins a/b/c to the top of the profile (pinning is not possible via Buffer). Do not repost these; new grid posts build on them.
+> 4. Facebook is unchanged (reels stay reels).
+
 > **OWNER UPDATE 2026-11-22 evening: MARKETING PLAN v1 (section 0g). Each slot now has a job and a format (reel, carousel, photo mode, Stories). Read 0g first: it decides WHAT you make in this run. The owner is never on camera.**
 >
 > **OWNER UPDATES, 2026-11-19 evening (given live by the owner; NEWER than the scheduled task prompt, so where the prompt differs, these win):**
@@ -223,7 +229,7 @@ curl -sI https://raw.githubusercontent.com/RoboNixer/jureglavas/memopai-media/$D
 ```
 Buffer (organization "Memopai", id `6af20c415819f36cb2c5beef`), one `create_post` per channel:
 - TikTok `6af20f6d62b70b94b0d3b4c1`: metadata `{tiktok:{title:"<short hook + emoji>"}}` — **ONLY for the 12:00, 16:00, 18:00 and 20:00 slots (owner, 2026-11-13: max 4 TikTok uploads a day). The 09:00, 14:00 and 22:00 videos go to Instagram + Facebook only.**
-- Instagram `6af20e7c62b70b94b0d3a965`: metadata `{instagram:{type:"reel", shouldShareToFeed:true}}`
+- Instagram `6af20e7c62b70b94b0d3a965`: metadata `{instagram:{type:"reel", shouldShareToFeed:false}}` (Reels tab only, owner 2026-11-22: the grid is for brand posts)
 - Facebook `6af20d1762b70b94b0d3928c`: metadata `{facebook:{type:"reel"}}`
 - All three: `schedulingType:"automatic"`, asset `{video:{url:<raw URL>, metadata:{thumbnailOffset:0, title:"<title>"}}}`.
 - Timing: if the slot time (e.g. 14:00 Europe/Zagreb) is still ≥3 min in the future, use `mode:"customScheduled"` with `dueAt` = slot time with the correct Zagreb offset (+01:00 in winter, +02:00 in summer). Otherwise use `mode:"shareNow"`.

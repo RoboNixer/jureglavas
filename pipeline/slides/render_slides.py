@@ -5,7 +5,8 @@ usage: python3 render_slides.py deck.json OUTDIR [--size feed|tall|both]
   feed = 1080x1350 (Instagram + Facebook carousel, 4:5)
   tall = 1080x1920 (TikTok photo mode, Instagram/Facebook Stories)
 deck.json = {"slides":[{...}, ...]}  slide types:
-  cover : kicker, title (use *word* for the yellow highlight), sub, [mascot:true]
+  cover : kicker, title (use *word* for the yellow highlight), sub, [mascot:true], [bg: purple|cream|green], [foot:true]
+          (grid posts: covers rotate bg purple → cream → green so the profile grid reads as one brand system)
   tip   : n, title, me (your WhatsApp message), reply (Memopai's reply), [note]
   text  : title, body (list of lines), [mascot]
   cta   : title, lines (list), button (default "memopai.com")
@@ -30,6 +31,10 @@ body{width:%(W)dpx;height:%(H)dpx;overflow:hidden;font-family:'Inter Display',In
 .s{position:relative;width:%(W)dpx;height:%(H)dpx;overflow:hidden;display:flex;flex-direction:column;}
 .purple{background:radial-gradient(circle at 30%% 20%%,#5b3fc4 0,#2b1e74 55%%,#1a1150 100%%);color:#fff}
 .cream{background:#f3ece1;color:#1b1b1f}
+.green{background:radial-gradient(circle at 30%% 20%%,#2fe07a 0,#16a352 60%%,#0d7a3c 100%%);color:#fff}
+.green .kicker{background:#fff;color:#0d7a3c}
+.cream .kicker{background:#2b1e74;color:#fff}
+.cover .foot{opacity:.9}
 .cream:before{content:'';position:absolute;inset:0;background-image:radial-gradient(#e2d6c4 3px,transparent 3px);background-size:46px 46px;opacity:.55}
 .pad{position:relative;padding:%(PT)dpx %(PX)dpx %(PB)dpx %(PX)dpx;flex:1;display:flex;flex-direction:column}
 .kicker{display:inline-block;align-self:flex-start;background:#25d366;color:#0b3d1f;font-weight:800;font-size:30px;letter-spacing:.06em;padding:12px 24px;border-radius:40px}
@@ -54,8 +59,9 @@ body{width:%(W)dpx;height:%(H)dpx;overflow:hidden;font-family:'Inter Display',In
 .lines{margin-top:40px;display:flex;flex-direction:column;gap:22px;align-items:center}
 .lines div{font-size:52px;font-weight:600;text-align:center;line-height:1.25}
 .btn{align-self:center;margin-top:48px;background:#25d366;color:#0b3d1f;font-weight:900;font-size:56px;padding:26px 64px;border-radius:80px;box-shadow:0 10px 0 #179b4a}
-.text .title{font-size:72px}
-.body{margin-top:40px;display:flex;flex-direction:column;gap:24px}.body div{font-size:44px;line-height:1.3;font-weight:600}
+.text .pad{justify-content:center;padding-bottom:220px}
+.text .title{font-size:88px}
+.body{margin-top:48px;display:flex;flex-direction:column;gap:30px}.body div{font-size:54px;line-height:1.3;font-weight:600}
 """
 
 def page(sl, i, n, tall):
@@ -63,7 +69,9 @@ def page(sl, i, n, tall):
     foot = f'<div class="foot"><span>memopai.com</span><div class="dots">{dots}</div></div>'
     if t == 'cover':
         m = f'<img class="mascot" src="data:image/png;base64,{MASCOT}" style="width:{460 if tall else 440}px;right:{80 if tall else 70}px;bottom:{440 if tall else 60}px;transform:rotate(8deg)">' if sl.get('mascot', True) else ''
-        return f'<div class="s purple cover"><div class="pad"><span class="kicker">{esc(sl.get("kicker"))}</span><div class="title">{hl(sl["title"])}</div><div class="sub">{hl(sl.get("sub",""))}</div></div>{m}</div>'
+        bg = sl.get('bg', 'purple')
+        cf = '<div class="foot"><span>memopai.com</span><span></span></div>' if sl.get('foot') else ''
+        return f'<div class="s {bg} cover"><div class="pad"><span class="kicker">{esc(sl.get("kicker"))}</span><div class="title">{hl(sl["title"])}</div><div class="sub">{hl(sl.get("sub",""))}</div></div>{m}{cf}</div>'
     if t == 'tip':
         note = f'<div class="note">{hl(sl["note"])}</div>' if sl.get('note') else ''
         return (f'<div class="s cream tip"><div class="pad"><span class="num">{esc(str(sl["n"]))}</span><div class="title">{hl(sl["title"])}</div>'
