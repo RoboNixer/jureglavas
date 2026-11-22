@@ -3,6 +3,8 @@
 One run = ONE brand-new ~30 s vertical video (1080×1920, 30 fps), published to Memopai's Instagram and Facebook (all 7 slots) and TikTok (only the 12, 16, 18 and 20 o'clock slots).
 Repo: `RoboNixer/jureglavas`, branch `memopai-media`. Everything you need is in `pipeline/`.
 
+> **OWNER UPDATE 2026-11-22 evening: MARKETING PLAN v1 (section 0g). Each slot now has a job and a format (reel, carousel, photo mode, Stories). Read 0g first: it decides WHAT you make in this run. The owner is never on camera.**
+>
 > **OWNER UPDATES, 2026-11-19 evening (given live by the owner; NEWER than the scheduled task prompt, so where the prompt differs, these win):**
 > 1. **The narrator is a WOMAN again** ("use the voice of the woman, it feels more native and human"). Where the task prompt says "the narrator is a man" / "male narrator", read "woman": use the default narrator voice (`N` = `af_heart` in `vo_core.py`) and never override it with a male voice. Details in section 2.
 > 2. **Safe zones + designer finish** (section 0f): nothing readable or important near the screen edges or under the TikTok/Instagram UI; run the safe-zone check before publishing.
@@ -124,6 +126,40 @@ Owner sent phone screenshots of our TikTok and Instagram posts: the label card t
 - Every shot needs a reason to look: one piece of motion with anticipation and follow-through (a hop, a slide, a flying thought, a door swing), one light mood, three depth layers. No static talking-head shot longer than 2.5 s.
 - One fresh visual idea per video that no earlier video used (a new camera move, a visual metaphor for the full head, a clever transition between "before" and "after" in the same framing), and one line in the script that would work as a joke on its own.
 - Story: keep 0e (one mirror moment, the way out, the fixed life), but aim for a sharper first frame (the consequence, in a picture) and a payoff image that reverses the first frame. Keep the story at 20-26 s; cut lines before you speed them up.
+
+## 0g. MARKETING PLAN v1: EVERY SLOT HAS A JOB AND A FORMAT (owner, 2026-11-22 evening, top priority together with 0c/0e/0f)
+Owner: "make a marketing plan so people actually see this is a real business and start using it: posts, stories, slideshows, a picture then a video when you slide, different kinds of videos, one for virality, one for followers, one for comments, one for customers... you do everything, start today." **The owner will NOT be on camera**: no founder videos; the mascot Memo is the face. Full plan (research, numbers, funnel): https://claude.ai/artifact/YNgiYCLJk9LG9GLyx5ZAho
+Why: 49 reels a week in one format and one job got views but ~0 shares, comments, follows or chats. Research 2026: reels win reach, carousels win saves/engagement (9x saves vs single images, ~2x engagement per person reached vs reels), sends are the top signal for non-followers, a caption question lifts comments ~37%.
+
+**This replaces "make ONE video" in the task prompt: make the ONE post this slot's row asks for.** Sections 0c-0f still apply to every format (Memopai is the star, viewer is "you", safe zones, honest features, never "free").
+
+| Slot | Job | Format | Channels |
+|---|---|---|---|
+| 09:00 | FOLLOWERS (saves) | Carousel: useful list ("7 reminders every parent should set") or a comic carousel of the best recent story. PLUS the day's Stories (below) | IG carousel + FB multi-image |
+| 12:00 | VIRALITY | Illustrated look3 "that's me" reel (unchanged) | IG, FB, TikTok |
+| 14:00 | CUSTOMERS | Rotating product post (table below) | IG, FB |
+| 16:00 | VIRALITY | Chat-only story reel (whole story in WhatsApp bubbles with `phoneUI`/`waChat`, typing sounds) OR split-screen before/after reel | IG, FB, TikTok |
+| 18:00 | COMMENTS | TikTok photo mode (tall slides) + the same question as an IG/FB quiz/opinion carousel. Caption ends with ONE easy question ("Which one are you? 1-6 👇") | IG, FB, TikTok |
+| 20:00 | VIRALITY | Illustrated look3 "that's me" reel (unchanged) | IG, FB, TikTok |
+| 22:00 | FOLLOWERS | Series reel: Fri "Forgot it Friday", Sun "Set up your week", other days a fast list reel ("5 reminders every dog owner needs", 5 beats x 3 s, each beat = the exact words to text Memopai) | IG, FB |
+
+**14:00 customer rotation (by weekday):** Mon = demo reel "3 reminders in 10 seconds" (animated WhatsApp screen: voice note → ✅ Got it → the reminder arrives) · Tue = "Remind Mom" demo reel (her phone, she taps Accept once) · Wed = "Memo explains" reel (the mascot `memo()` hosts in a look3 set and answers ONE real question: "Do I need an app?", "Can you remind my mom?", "Voice notes?", "What languages?") · Thu = FAQ carousel (how it works, remind others, languages EN/HR/BS/SR, recurring + snooze, it's paid, how to stop) · Fri = demo reel with a still claim cover · Sat = "What people use Memopai for" carousel (use cases as examples, NEVER invented quotes or testimonials; real user screenshots only if the owner supplies them) · Sun = "Set up your week" carousel (5 messages to send Memopai every Sunday night). Customer CTA = "memopai.com, link in bio" (do NOT use "comment MEMO and we'll DM you" until the owner confirms someone or a tool answers those DMs).
+
+**Category rotation:** STORY → FUN FACT → PRODUCTIVITY now runs over the three VIRALITY reels only (12, 16, 20). Other slots log their JOB as the category (FOLLOWERS / CUSTOMERS / COMMENTS) and the rotation skips them (look at the last STORY/FUN FACT/PRODUCTIVITY line).
+
+**Carousels, photo mode, Stories: the slides renderer** (`pipeline/slides/render_slides.py`, example `pipeline/examples/bf_carousel/deck.json`):
+```bash
+python3 ~/jg/pipeline/slides/render_slides.py deck.json out --size both   # feed_NN.png 1080x1350 (IG/FB) + tall_NN.png 1080x1920 (TikTok photo mode, Stories)
+```
+Slide types: `cover` (kicker, title with *highlight*, sub), `tip` (n, title, me = the exact WhatsApp message, reply = Memopai's ✅ confirmation, note), `text`, `cta`, `story` (tall only). 6-10 slides: slide 1 = the hook as a claim about the viewer, last = CTA. One idea per slide, max ~22 words. Compute every weekday/date with python (`calendar`) before writing it. LOOK at a contact sheet of every slide before publishing (no clipped text, nothing in the bottom 400 px or right 180 px of tall slides). New slide types/looks go into render_slides.py (craft ladder).
+Host: `daily/<date>/<HHMM>_<Slug>/feed_NN.png, tall_NN.png, deck.json`, push, check one raw URL = 200.
+Buffer (same channel IDs as section 4):
+- Instagram carousel: `metadata {instagram:{type:"post", shouldShareToFeed:true}}`, `assets` = 2-20 `{image:{url, metadata:{altText}}}` (feed_*.png).
+- Facebook: `metadata {facebook:{type:"post"}}`, same images.
+- TikTok photo mode: `metadata {tiktok:{title}}`, assets = the tall_*.png images (only on TikTok slots 12/16/18/20).
+- Stories (09:00 run schedules them for the day, 2-3 frames at about 10:30, 15:30 and 19:30): Instagram `{instagram:{type:"story", shouldShareToFeed:false, link:"https://memopai.com"}}` (link sticker) + Facebook `{facebook:{type:"story"}}`, one tall image each. Frames: a tip ("Text Memopai this tonight: ..."), a reshare-style teaser of the day's reel, a "Set your reminder in 10 seconds 👇" link frame. Interactive polls can't be posted through Buffer; ask the question as text instead.
+**Separate captions per platform (never one caption pasted 3x):** Instagram = hook + save or comment prompt + one Memopai line + memopai.com + max 3 hashtags (testing fewer hashtags, Metricool 2026: posts with hashtags got -32% views); Facebook = warmer, longer, "share this with..." (older, family audience); TikTok = short hook + one question + 3-4 hashtags.
+**Measure by job** in learnings.md: virality = sends + watch %, followers = saves + follows, comments = comments per 1,000 views, customers = link clicks (when available) and new WhatsApp chats reported by the owner.
 
 ## 1. Pick a topic that is NOT in `daily/topics_log.md`
 - The category comes from the rotation in `daily/learnings.md`. Log entries must include it: `- <date> | <HH:00> | <CATEGORY> | <title> | <premise> | <file>`.
