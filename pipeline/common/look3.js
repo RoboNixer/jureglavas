@@ -1129,3 +1129,34 @@ function cart3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,
   path(()=>{X.moveTo(-90,0);X.lineTo(90,0);X.lineTo(90,170);X.lineTo(-90,170);X.closePath()},back?'#ff3b4e':'#ffd23f',7);circ(0,24,9,'#fff',4);
   txt(back?g.to:g.from,0,90,58,back?'#fff':'#151515',0,'900 ');txt(back?(g.sub2||''):(g.sub1||''),0,140,22,back?'#ffe2e5':'#151515',0,'800 ');X.restore()}
  X.restore()}
+// craft ladder 2026-11-22 20:00: checkin(t,{dawn}) airport check-in hall (big windows with dawn/morning sky + a plane, DEPARTURES board, queue posts);
+// checkdesk(x,y,s,{n}) check-in counter (draw AFTER the agent, BEFORE the passenger); passport3(x,y,s,{open,rot,ring}) burgundy passport, open = data page with expiry line (ring = red circle on the date);
+// bpass(x,y,s,{rot}) boarding pass
+function checkin(t,o={}){const d=o.dawn;const g=X.createLinearGradient(0,-200,0,1250);g.addColorStop(0,d?'#c3c9d6':'#eef1f5');g.addColorStop(1,d?'#a5aec0':'#d6dce4');X.fillStyle=g;X.fillRect(-3000,-3000,8000,4300);
+ X.save();X.beginPath();X.rect(-200,330,1480,640);X.clip();const sk=X.createLinearGradient(0,330,0,970);if(d){sk.addColorStop(0,'#1d2448');sk.addColorStop(.7,'#5b4f7a');sk.addColorStop(1,'#f0956b')}else{sk.addColorStop(0,'#7cc3f0');sk.addColorStop(1,'#d8f0ff')}X.fillStyle=sk;X.fillRect(-200,330,1480,640);
+ if(d){for(let i=0;i<24;i++){X.globalAlpha=.3+.5*Math.abs(Math.sin(t*1.5+i));circ(-150+rnd(i)*1400,350+rnd(i+7)*250,2+rnd(i+3)*2,'#fff',0)}X.globalAlpha=1}else{psun(860,520,80,t);pclouds(t,560,'#ffffff','#e3eef8',3,2)}
+ // parked plane silhouette
+ X.save();X.translate(lerp(380,420,(t*.02)%1),860);X.fillStyle=d?'#2c3350':'#f7f9fc';X.strokeStyle=d?'#1a1f36':'#9aa7b8';X.lineWidth=5;X.beginPath();X.ellipse(0,0,330,46,0,0,7);X.fill();X.stroke();
+ X.beginPath();X.moveTo(-60,10);X.lineTo(-170,110);X.lineTo(-110,110);X.lineTo(40,10);X.closePath();X.fill();X.stroke();X.beginPath();X.moveTo(-270,-20);X.lineTo(-330,-130);X.lineTo(-280,-130);X.lineTo(-210,-30);X.closePath();X.fill();X.stroke();
+ for(let k=-4;k<=5;k++)circ(k*44,-8,8,d?'#ffd27a':'#7ea6d8',0);X.restore();
+ X.fillStyle=d?'#232a44':'#9aa3ae';X.fillRect(-200,905,1480,70);X.restore();
+ X.fillStyle=d?'#cfd5df':'#f4f6f9';for(let k=0;k<6;k++)X.fillRect(-200+k*300,330,18,640);X.fillRect(-200,320,1480,20);X.fillRect(-200,962,1480,24);
+ const fg=X.createLinearGradient(0,980,0,2000);fg.addColorStop(0,d?'#aab2bf':'#e4e7ec');fg.addColorStop(1,d?'#8c95a3':'#c6ccd5');X.fillStyle=fg;X.fillRect(-3000,980,8000,3000);X.strokeStyle='rgba(0,0,0,.06)';X.lineWidth=3;for(let k=-8;k<=8;k++){X.beginPath();X.moveTo(540+k*50,980);X.lineTo(540+k*300,2000);X.stroke()}
+ if(o.warm)glow(540,640,800,'255,220,160',.35);if(d)glow(540,900,700,'255,160,120',.18)}
+function checkdesk(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,6,360,.3);
+ rr(-340,-400,680,400,18,'#f2f4f7',7);rr(-340,-400,680,70,18,'#1f6fe5',0);rr(-340,-400,680,400,18,'transparent',7);
+ txt('✈ CHECK-IN '+(o.n||'12'),0,-364,40,'#fff',0,'900 ');rr(-300,-300,600,250,12,'rgba(31,111,229,.08)',0);
+ rr(-370,-430,740,40,12,'#c9d1dc',6);// lip
+ if(o.screen!==0){X.save();X.translate(150,-430);X.rotate(-.08);rr(-70,-110,140,100,10,'#2e3440',5);rr(-60,-100,120,80,6,o.ok?'#25d366':o.no?'#ff5a64':'#7ea6d8',0);X.restore()}
+ X.restore()}
+function passport3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.shadowColor='rgba(0,0,0,.28)';X.shadowBlur=18;X.shadowOffsetY=8;
+ if(!o.open){rr(-120,-170,240,340,18,'#7a1f2b',7);X.shadowColor='transparent';circ(0,-30,52,'transparent',0);X.strokeStyle='#e8c66a';X.lineWidth=6;X.beginPath();X.arc(0,-30,50,0,7);X.stroke();txt('★',0,-30,54,'#e8c66a',0,'400 ');txt('PASSPORT',0,90,34,'#e8c66a',0,'900 ');rr(-40,120,80,24,6,'#e8c66a',0)}
+ else{rr(-330,-230,660,460,22,'#7a1f2b',7);X.shadowColor='transparent';rr(-312,-212,300,424,12,'#f3e6ef',0);rr(12,-212,300,424,12,'#eef2ff',0);
+  rr(-282,-170,130,160,10,'#d9dde6',4);circ(-217,-110,34,'#fff',5);path(()=>{X.moveTo(-262,-14);X.quadraticCurveTo(-217,-80,-172,-14)},'#fff',5);
+  for(let k=0;k<4;k++)rr(-130,-170+k*44,100,16,6,'rgba(60,60,90,.25)',0);
+  txt('PASSPORT',162,-170,30,'#7a1f2b',0,'900 ');txt('EXPIRES',162,-60,30,'#5b6070',0,'800 ');txt(o.date||'14 MAR 2027',162,-8,40,o.ring?'#d62d3a':'#1b1f2a',0,'900 ');
+  for(let k=0;k<3;k++)rr(40,70+k*36,240,14,6,'rgba(60,60,90,.18)',0);
+  if(o.ring){const p=C(o.ring);X.strokeStyle='#ff3b4a';X.lineWidth=9;X.beginPath();X.ellipse(162,-12,150,52,-.05,-1.6,-1.6+p*6.5);X.stroke()}}
+ X.restore()}
+function bpass(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=14;rr(-150,-70,300,140,14,'#ffffff',5);X.shadowColor='transparent';rr(-150,-70,300,40,14,'#1f6fe5',0);txt('BOARDING ✈',0,-50,24,'#fff',0,'900 ');
+ for(let k=0;k<12;k++)X.fillRect(40+k*8,-8,k%3?3:6,60);X.fillStyle='#333';rr(-130,-10,140,16,6,'rgba(0,0,0,.25)',0);rr(-130,20,100,16,6,'rgba(0,0,0,.18)',0);X.restore()}

@@ -1,14 +1,11 @@
 S=[
- (0.05,'N:s',1.26,"Six AM. Check-in. Bags packed. And she hands your passport back.",'h1'),
- (0.1,'F',1.02,"I'm so sorry... this expired in September.",'a1'),
- (0.22,'N',1.32,"The beach. Gone. You knew it ran out 'sometime this year'.",'s1'),
- (0.2,'N',1.3,"Rewind. Booking night. One WhatsApp voice note to Memo Pie.",'s2'),
- (0.1,'N',1.2,"'We fly October first. Two months before: check passports.'",'y1'),
- (0.4,'N',1.32,"August first. Buzz. September?! You renew it in time.",'s3'),
- (0.12,'F',1.04,"Enjoy your trip!",'a2'),
- (0.28,'N:w',1.06,"Same desk. Same six AM. This time, the beach.",'p1'),
- (0.55,'N',1.2,"Say it once, then pack. Message Memo Pie on WhatsApp.",'cta'),
+ (0.05,'N:s',1.16,"July: I'll renew my passport later. Now it's 5:40 a.m., and check-in says no.",'h1'),
+ (0.1,'M',1.1,"Sorry. It expires in March.",'m1'),
+ (0.14,'N',1.16,"March?! Lots of countries want six months left.",'f1'),
+ (0.3,'N',1.14,"So this time, the second you see that date, you tell Memo Pie.",'s2'),
+ (0.14,'N',1.14,"One voice note on WhatsApp. No alarm to set.",'s2b'),
+ (0.2,'N',1.14,"September first, buzz. You book the renewal.",'s3'),
+ (0.3,'N:w',1.04,"Same desk. Same 5:40. This time, you're boarding.",'p1'),
+ (0.4,'N',1.14,"Check yours tonight. Then just text Memo Pie on WhatsApp.",'cta'),
 ]
-VOX={'F':'bf_isabella*0.6+af_sarah*0.4'}
-PITCHX={'F':1.02}
-CAPFIX={'Six AM':'06:00','six AM':'06:00','Memo Pie':'Memopai','October first':'Oct 1st','August first':'Aug 1st'}
+CAPFIX={'Memo Pie':'Memopai','5:40 a.m.':'05:40','Same 5:40':'Same 05:40'}
