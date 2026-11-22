@@ -1160,3 +1160,14 @@ function passport3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.
  X.restore()}
 function bpass(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=14;rr(-150,-70,300,140,14,'#ffffff',5);X.shadowColor='transparent';rr(-150,-70,300,40,14,'#1f6fe5',0);txt('BOARDING ✈',0,-50,24,'#fff',0,'900 ');
  for(let k=0;k<12;k++)X.fillRect(40+k*8,-8,k%3?3:6,60);X.fillStyle='#333';rr(-130,-10,140,16,6,'rgba(0,0,0,.25)',0);rr(-130,20,100,16,6,'rgba(0,0,0,.18)',0);X.restore()}
+
+// ---- craft ladder 2026-11-22 22:00 (week_look3): monday3() = 'Monday' as a concept character ----
+// monday3(x,floorY,s,o): grey-violet sm() wearing a tear-off calendar page on its head (red band 'MON', big date).
+// o passes through to sm (eyes, brow, mouth, arms...); o.day text (default 'MON'), o.num (default '23'), o.tiny:1 softens it (rounder smile, pastel).
+function monday3(x,y,s=1,o={}){const tiny=o.tiny;const base=Object.assign({col:tiny?'#c9c3e6':'#8f8aa8',limb:'#3a3550',out:'#2a2540',lid:tiny?0:.35,brow:tiny?'up':'smug',mouth:tiny?'smile':'smirk'},o);
+ sm(x,y,s,base);const hy=y-767*s;X.save();X.translate(x,hy-150*s);X.rotate(Math.sin((o.t||0)*2)*.05);X.scale(s,s);
+ X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=12;rr(-78,-120,156,140,16,'#fffdf8',6);X.shadowColor='transparent';
+ X.save();X.beginPath();X.roundRect(-78,-120,156,140,16);X.clip();X.fillStyle='#e0453a';X.fillRect(-80,-122,160,44);X.restore();
+ X.strokeStyle='#151515';X.lineWidth=6;X.beginPath();X.roundRect(-78,-120,156,140,16);X.stroke();
+ for(const k of[-40,0,40])circ(k,-122,7,'#555',0);
+ txt(o.day||'MON',0,-98,30,'#fff',0,'900 ');txt(o.num||'23',0,-28,62,'#222',0,'900 ');X.restore()}
