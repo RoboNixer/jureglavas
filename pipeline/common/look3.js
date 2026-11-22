@@ -951,3 +951,35 @@ function schoolbag3(x,y,s=1,o={}){const col=o.col||'#7e57c2',op=C(o.open||0);X.s
   if(o.inner){X.save();X.beginPath();X.rect(-200,-900,400,600);X.clip();o.inner();X.restore()}}
  if(op<=0)flap();
  X.restore()}
+// craft ladder 2026-11-22 09:00: volcano3(x,y,s,o) school-project volcano, (x,y) = bottom centre on a table.
+// o.sad=1: the 21:30 emergency build (cereal box, ketchup bottle taped upside down in it, toilet-roll crater, tape strips, one red drip; o.t animates the drip)
+// default: the proper painted papier-mache cone on a green board with red lava streaks; o.erupt 0..1 bubbles foam out of the crater; o.t animates.
+// tape3(x,y,s,rot): a roll of sticky tape (prop for hands). glueStick(x,y,s,rot).
+function tape3(x,y,s=1,rot=0){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);circ(0,0,46,'#cfd8e3',7);circ(0,0,24,'#f4e6cc',6);X.globalAlpha=.6;rr(30,-10,70,20,4,'#e8eef5',0);X.globalAlpha=1;X.restore()}
+function glueStick(x,y,s=1,rot=0){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);rr(-22,-110,44,110,10,'#7e57c2',6);rr(-22,-150,44,46,10,'#ffd23f',6);rr(-14,-40,28,12,4,'#fff',0);X.restore()}
+function volcano3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);X.lineJoin='round';
+ X.globalAlpha=.22;ell(0,6,o.sad?170:260,24,'#000',0);X.globalAlpha=1;
+ if(o.sad){
+  // ketchup bottle, upside down, sticking out of the box top
+  X.save();X.rotate(.18);rr(-34,-430,68,170,22,'#e23b2e',7);rr(-20,-262,40,40,8,'#f4f4f4',6);rr(-26,-380,52,60,8,'#fff',0);X.fillStyle='#e23b2e';X.font="900 30px Inter";X.textAlign='center';X.fillText('K',0,-338);X.restore();
+  // cereal box
+  rr(-120,-300,240,300,10,'#f4c430',7);rr(-120,-210,240,64,0,'#e2503b',0);line([[-120,-210],[120,-210]],5,'#151515');line([[-120,-146],[120,-146]],5,'#151515');
+  for(const [cx,cy] of [[-60,-80],[0,-60],[55,-95],[-25,-110],[40,-40]])circ(cx,cy,16,'#ffb347',5);
+  // toilet roll crater on top
+  X.save();X.translate(-60,-300);X.rotate(-.12);rr(-34,-90,68,90,6,'#d9a46a',6);ell(0,-90,34,11,'#8a5a2e',5);X.restore();
+  // tape strips
+  X.globalAlpha=.7;X.save();X.rotate(-.5);rr(-150,-200,150,26,4,'#e8eef5',4);X.restore();X.save();X.rotate(.45);rr(-20,-330,140,26,4,'#e8eef5',4);X.restore();X.globalAlpha=1;
+  // one red drip down the box
+  const d=(t*.35)%1;line([[30,-300],[30,-300+60*Math.min(1,d*1.6)]],12,'#e23b2e');if(d>.6)circ(30,-300+60+ (d-.6)*300,10,'#e23b2e',0);
+ }else{
+  rr(-250,-24,500,30,10,'#5fae4a',6);
+  X.fillStyle='#8a5a3a';X.strokeStyle='#151515';X.lineWidth=8;X.beginPath();X.moveTo(-220,-20);X.quadraticCurveTo(-120,-140,-60,-330);X.lineTo(60,-330);X.quadraticCurveTo(120,-140,220,-20);X.closePath();X.fill();X.stroke();
+  X.fillStyle='#a8754e';X.beginPath();X.moveTo(-150,-30);X.quadraticCurveTo(-80,-150,-40,-320);X.lineTo(-10,-320);X.quadraticCurveTo(-40,-150,-60,-30);X.closePath();X.fill();
+  // lava streaks
+  for(const [lx,len,w] of [[-30,180,26],[20,240,22],[45,120,18]]){X.fillStyle='#ff4a2e';X.beginPath();X.moveTo(lx-w/2,-330);X.quadraticCurveTo(lx-w/2+lx*.4,-330+len*.6,lx+lx*.5,-330+len);X.quadraticCurveTo(lx+w/2+lx*.5,-330+len*.5,lx+w/2,-330);X.closePath();X.fill();X.lineWidth=4;X.stroke()}
+  ell(0,-332,62,16,'#3a2416',6);
+  const e=C(o.erupt||0);if(e>0){for(let k=0;k<9;k++){const a=k/9*Math.PI*2+t*2,rr2=26+12*Math.sin(t*5+k);circ(Math.cos(a)*40*e,-350-30*e-Math.abs(Math.sin(a))*40*e+4*Math.sin(t*6+k),rr2*e,k%3?'#ffffff':'#ff7a5a',4)}}
+  // little flag
+  line([[150,-24],[150,-150]],6,'#151515');X.fillStyle='#ffd23f';X.beginPath();X.moveTo(150,-150);X.lineTo(220,-128);X.lineTo(150,-106);X.closePath();X.fill();X.lineWidth=5;X.stroke();
+ }
+ X.restore()}
