@@ -1069,3 +1069,32 @@ function cupboard3(x,y,s=1,o={}){const op=C(o.open==null?1:o.open);X.save();X.tr
  const dw=440*(1-op*.86);path(()=>{X.moveTo(220,0);X.lineTo(220-dw,-op*30);X.lineTo(220-dw,440+op*30);X.lineTo(220,440)},'#efe3cc',7);
  if(op<.95)circ(220-dw*.88,230,10,'#b89a72',4);
  X.restore()}
+
+// ---- craft ladder 2026-11-22 16:00: gym kit ----
+// sock3(x,y,s,{t,stand,clean,rot}) tube sock, (x,y)=floor point under the heel. stand = stiff and upright, wobbling on its own (+ flies)
+function sock3(x,y,s=1,o={}){const t=o.t||0,cl=o.clean;X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(10,4,90,12,'#000',0);X.globalAlpha=1;
+ X.rotate((o.rot||0)+(o.stand?Math.sin(t*3.1)*.06:0));X.lineJoin='round';
+ const body=cl?'#ffffff':'#e6dcc2',str=cl?'#4a8fe0':'#a99a74';
+ path(()=>{X.moveTo(-40,-260);X.lineTo(40,-260);X.lineTo(44,-60);X.quadraticCurveTo(50,-30,90,-28);X.quadraticCurveTo(140,-24,140,0);X.lineTo(-30,0);X.quadraticCurveTo(-46,0,-46,-30);X.closePath()},body,7);
+ rr(-48,-275,96,36,12,body,7);line([[-42,-225],[42,-225]],9,str);line([[-42,-200],[42,-200]],9,str);
+ if(!cl){X.globalAlpha=.35;ell(70,-12,40,12,'#7a6a3a',0);ell(-10,-120,20,30,'#9a8a5a',0);X.globalAlpha=1;
+  if(o.stand)for(let k=0;k<3;k++){const a=t*4+k*2.1;const fx=Math.cos(a)*90,fy=-300+Math.sin(a*1.3)*40;circ(fx,fy,7,'#151515',0);X.globalAlpha=.6;ell(fx-6,fy-8,7,4,'#cfe6ff',0);ell(fx+6,fy-8,7,4,'#cfe6ff',0);X.globalAlpha=1}}
+ X.restore()}
+// gymbag3(x,y,s,{open,stink,clean,t}) duffel gym bag, (x,y)=floor point under its centre
+function gymbag3(x,y,s=1,o={}){const t=o.t||0,op=C(o.open||0),cl=o.clean;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,6,250,24,'#000',0);X.globalAlpha=1;X.lineJoin='round';
+ const c=cl?'#2fa8a0':'#2b7f78',c2=cl?'#23877f':'#1f625c';
+ // handles
+ X.strokeStyle='#151515';X.lineWidth=20;X.lineCap='round';X.beginPath();X.moveTo(-90,-200);X.quadraticCurveTo(0,-330,90,-200);X.stroke();X.strokeStyle='#333c48';X.lineWidth=12;X.stroke();
+ rr(-230,-215,460,215,100,c,8);
+ X.fillStyle=c2;X.beginPath();X.roundRect(-230,-80,460,80,[0,0,100,100]);X.fill();
+ ell(-205,-108,40,90,c2,7);ell(205,-108,40,90,c2,7);
+ // white stripe + logo dot
+ line([[-150,-60],[150,-60]],10,'rgba(255,255,255,.75)');circ(0,-130,22,'#fff',5);
+ if(op>0){X.fillStyle='#1a1a1a';X.beginPath();X.ellipse(0,-212,160*op,34*op+4,0,0,7);X.fill();X.lineWidth=7;X.strokeStyle='#151515';X.stroke();
+  // a sock + a shirt poking out
+  X.save();X.translate(-50,-215);X.rotate(-.5-op*.3+Math.sin(t*3)*.05);rr(-20,-110*op,40,110*op,14,'#e6dcc2',6);X.restore();
+  X.save();X.translate(60,-218);X.rotate(.4);rr(-40,-70*op,80,70*op,18,'#e86a5a',6);X.restore()}
+ else{X.setLineDash([10,8]);line([[-160,-212],[160,-212]],5,'#e8c15a');X.setLineDash([])}
+ if(cl){X.globalAlpha=.6;ell(-120,-160,40,14,'#ffffff',0);X.globalAlpha=1}
+ X.restore()}
