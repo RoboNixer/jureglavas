@@ -1040,3 +1040,32 @@ function cage3(x,y,s=1,o={}){const t=o.t||0,W=300,H=330;X.save();X.translate(x,y
 function hfood(x,y,s=1,rot=0,o={}){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);
  path(()=>{X.moveTo(-58,-90);X.lineTo(58,-90);X.lineTo(68,90);X.lineTo(-68,90);X.closePath()},'#ffd23f',6);rr(-62,-106,124,22,4,'#f0b41a',5);
  circ(0,-10,42,'#fff',0);txt('🐹',0,2,48,'#fff',0,'400 ');txt('FOOD',0,62,24,'#6b4a2a',0);X.restore()}
+
+// craft ladder 2026-11-22 14:00 (mugs_look3)
+// mug3(x,y,s,o): one mug standing on a surface at y (bottom centre); o.col body colour, o.stain tea ring, o.fuzz 0..1 green mould poking out, o.face (mould gets eyes), o.t
+function mug3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);const c=o.col||'#ffffff';
+ X.globalAlpha=.2;ell(0,4,52,10,'#000',0);X.globalAlpha=1;
+ X.lineWidth=8;X.strokeStyle='#151515';X.beginPath();X.arc(46,-52,22,-1.25,1.25);X.stroke();X.lineWidth=4;X.strokeStyle=c;X.beginPath();X.arc(46,-52,22,-1.25,1.25);X.stroke();
+ rr(-44,-100,88,100,14,c,6);ell(0,-100,44,11,'#3a2a1c',5);
+ if(o.stain){X.globalAlpha=.45;line([[-36,-74],[36,-74]],6,'#8a5a2a');X.globalAlpha=1}
+ if(o.stripe)rr(-44,-64,88,16,0,o.stripe,0);
+ const f=C(o.fuzz||0);if(f>0){for(let k=0;k<9;k++){const a=k/8*Math.PI,rx=Math.cos(a)*38,bob=Math.sin(t*3+k)*4;circ(rx*.9,-104-Math.sin(a)*28*f-bob,(16+8*(k%3))*f,k%2?'#8fcf5a':'#6db03f',4)}
+  circ(0,-130*f-6,26*f,'#9bd86a',4);
+  if(o.face&&f>.6){circ(-12,-136,7,'#fff',3);circ(12,-136,7,'#fff',3);circ(-11,-135,3,'#151515',0);circ(13,-135,3,'#151515',0);X.lineWidth=4;X.strokeStyle='#151515';X.beginPath();X.arc(0,-124,8,.2,Math.PI-.2);X.stroke()}}
+ X.restore()}
+// mugpile3(x,y,s,o): a wobbling tower/pile of dirty mugs on a desk at y; o.t, o.mould (index of the mouldy mug, -1 none), o.wob wobble amount
+function mugpile3(x,y,s=1,o={}){const t=o.t||0,wb=(o.wob==null?1:o.wob)*Math.sin(t*3.2)*.025;X.save();X.translate(x,y);X.scale(s,s);
+ const cols=['#ffffff','#ffd23f','#5a8fe8','#ff7a6a','#7bc86c','#c77ddb','#f2a24c','#ffffff','#4fc3c9'];
+ const pos=[[-150,0],[-50,0],[50,0],[150,0],[-100,-104],[0,-104],[100,-104],[-50,-208],[50,-208]];
+ pos.forEach(([px,py],k)=>{X.save();X.rotate(wb*(1-py/300));mug3(px,py,1,{col:cols[k],stain:1,stripe:k%3==1?'rgba(0,0,0,.12)':null,fuzz:k===o.mould?1:0,face:k===o.mould&&o.face,t,rot:(k%2?-.04:.05)});X.restore()});
+ X.restore()}
+// cupboard3(x,y,s,o): wall cupboard, top at y; o.open 0..1 door swing, o.full mugs on the shelves
+function cupboard3(x,y,s=1,o={}){const op=C(o.open==null?1:o.open);X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.18;rr(-210,14,440,440,14,'#000',0);X.globalAlpha=1;
+ rr(-220,0,440,440,14,'#f3ecdf',7);rr(-196,24,392,392,8,'#d9c7a8',4);line([[-196,220],[196,220]],8,'#b89a72');
+ if(o.full){const cl=['#ffd23f','#5a8fe8','#ff7a6a','#7bc86c','#c77ddb','#4fc3c9','#f2a24c','#ffffff'];for(let r=0;r<2;r++)for(let k=0;k<4;k++)mug3(-138+k*92,212+r*196,.62,{col:cl[r*4+k]})}
+ else{X.globalAlpha=.35;for(let k=0;k<3;k++){ell(-120+k*120,214,30,6,'#8a7050',0);ell(-120+k*120,410,30,6,'#8a7050',0)}X.globalAlpha=1}
+ // door: hinged on the right edge, swings open toward the viewer
+ const dw=440*(1-op*.86);path(()=>{X.moveTo(220,0);X.lineTo(220-dw,-op*30);X.lineTo(220-dw,440+op*30);X.lineTo(220,440)},'#efe3cc',7);
+ if(op<.95)circ(220-dw*.88,230,10,'#b89a72',4);
+ X.restore()}
