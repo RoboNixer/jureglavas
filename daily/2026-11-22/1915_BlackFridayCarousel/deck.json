@@ -1,0 +1,11 @@
+{"slides":[
+ {"type":"cover","kicker":"BLACK FRIDAY · FRI 27 NOV","title":"Your brain *won't* remember Friday.","sub":"Set these 6 reminders tonight 👉"},
+ {"type":"tip","n":1,"title":"The thing in your cart","me":"Remind me Friday at 8: buy the headphones 🎧","reply":"✅ Got it! Fri 27 Nov · 08:00\n🎧 Buy the headphones","note":"The best deals sell out first. Be early."},
+ {"type":"tip","n":2,"title":"Check prices the night before","me":"Remind me Thursday at 9 pm: check my cart prices","reply":"✅ Got it! Thu 26 Nov · 21:00\n🛒 Check your cart prices","note":"So you can tell a *real deal* from a fake one."},
+ {"type":"tip","n":3,"title":"Remind someone else","me":"Remind my sister Friday at 9: the stroller deal 👶","reply":"✅ Got it! I'll remind her in her WhatsApp. Invite sent.","note":"She taps Accept once. *No app, no account.*"},
+ {"type":"tip","n":4,"title":"Don't miss Cyber Monday","me":"Remind me Monday at 9: Cyber Monday, laptop 💻","reply":"✅ Got it! Mon 30 Nov · 09:00\n💻 Cyber Monday: laptop","note":"Some of the best tech deals land on Monday."},
+ {"type":"tip","n":5,"title":"The return window","me":"Remind me December 11 at 9: return the jacket if it doesn't fit","reply":"✅ Got it! Fri 11 Dec · 09:00\n🧥 Return the jacket?","note":"Check your shop's return policy first."},
+ {"type":"tip","n":6,"title":"The trial you'll forget","me":"Remind me December 20 at 10: cancel the trial I don't use","reply":"✅ Got it! Sun 20 Dec · 10:00\n📺 Cancel the trial?","note":"Free trials love forgetful people."},
+ {"type":"cta","title":"Say it once. We'll remind you.","lines":["Memopai is a WhatsApp contact.","Type it, or send a voice note.","💾 *Save this* for Friday."],"button":"memopai.com"},
+ {"type":"story","kicker":"BLACK FRIDAY IS FRIDAY","title":"Don't forget *the deal*.","sub":"Set your reminder in 10 seconds, right in WhatsApp.","button":"Tap the link 👇"}
+]}
