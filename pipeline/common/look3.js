@@ -1231,3 +1231,43 @@ function lostbox3(x,y,s=1,o={}){const n=o.n==null?8:o.n,t=o.t||0;X.save();X.tran
  rr(-300,-300,600,300,26,'#3f8fd9',8);rr(-300,-300,600,46,18,'#5aa6ea',6);
  for(const hx of[-170,170])rr(hx-60,-200,120,40,20,'#2b6fb0',5);
  X.restore()}
+
+// ---------- craft ladder 2026-11-23 14:00: city bus stop kit ----------
+// street3(t,{dusk}) side-view city street: painted sky, blurred skyline, road band, kerb, pavement. busstop3(x,y,s,{eta,dusk}) glass shelter with a roof, LED board and bench.
+// bus3(x,y,s,{door,t}) side-view city bus (y = road line), doors open with door 0..1. drybag3(x,y,s) dry-cleaning bag on a hanger.
+function street3(t,o={}){const d=o.dusk?1:0;
+ if(d){psky('#3b3f7a','#d9779a','#ffc58a',1000);psun(800,880,120,t)}else{psky('#8fd0ff','#cfeaff','#fff3dc',1000);psun(880,260,85,t)}
+ pclouds(t,300,d?'#ffd6c8':'#fbfbff',d?'#e6a3b5':'#d9e2f0');
+ pblur(3,()=>{const cols=d?['#6d5f8f','#7d6a96','#5d5480','#8a6f92']:['#c9d6e6','#b5c5da','#d9cdbd','#c3b8cf'];
+  for(let k=0;k<8;k++){const x=-120+k*170,h=380+rnd(k+3)*360;rr(x,1000-h,150,h+20,6,cols[k%4],0);
+   for(let r=0;r<h/90-1;r++)for(let c=0;c<2;c++)rr(x+28+c*60,1000-h+40+r*90,36,46,4,d?(rnd(k*9+r*3+c)>.45?'#ffd98a':'#4a4470'):'rgba(255,255,255,.55)',0)}});
+ X.fillStyle=d?'#4f4a63':'#7d858d';X.fillRect(-3000,1000,8000,330);
+ X.fillStyle='rgba(255,255,255,.75)';for(let k=0;k<7;k++)X.fillRect(-60+k*190,1150,110,14);
+ X.fillStyle=d?'#8a8296':'#c9c4ba';X.fillRect(-3000,1330,8000,40);
+ const g=X.createLinearGradient(0,1370,0,1920);g.addColorStop(0,d?'#a89aa6':'#ddd6ca');g.addColorStop(1,d?'#7d7186':'#bdb3a4');X.fillStyle=g;X.fillRect(-3000,1370,8000,700);
+ X.strokeStyle='rgba(0,0,0,.08)';X.lineWidth=3;for(let k=0;k<9;k++){X.beginPath();X.moveTo(-100+k*160,1370);X.lineTo(-260+k*200,1920);X.stroke()}
+ if(d)glow(800,900,900,'255,170,120',.35);else glow(880,300,700,'255,240,200',.3)}
+function busstop3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);
+ rr(-20,-900,26,900,6,'#3d4650',5);rr(400,-900,26,900,6,'#3d4650',5);
+ X.globalAlpha=.32;rr(10,-860,390,640,8,'#bfe3f5',4);X.globalAlpha=1;line([[60,-820],[150,-640]],8,'rgba(255,255,255,.7)');
+ rr(-60,-960,540,70,18,'#2e8b57',7);circ(-60+40,-925,22,'#fff',0);txt('🚌',-20,-922,30,'#000',0);
+ rr(-4,-470,30,470,0,'rgba(0,0,0,0)',0);
+ if(o.eta){rr(60,-830,300,110,16,'#151515',6);txt(o.eta,210,-772,56,'#ffb02e',0,'800 ')}
+ rr(40,-330,350,36,10,'#b07a4a',6);rr(70,-294,18,120,4,'#5a3c25',4);rr(340,-294,18,120,4,'#5a3c25',4);
+ X.restore()}
+function bus3(x,y,s=1,o={}){const op=o.door||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.fillStyle='rgba(0,0,0,.22)';X.beginPath();X.ellipse(0,10,900,40,0,0,7);X.fill();
+ rr(-880,-720,1760,640,70,'#e0533d',9);rr(-880,-260,1760,90,0,'#c2412e',0);rr(-880,-720,1760,80,60,'#f47a5d',0);
+ for(let k=0;k<6;k++){const wx=-780+k*250;if(k==2)continue;rr(wx,-620,200,230,22,'#bfe3f5',6);line([[wx+30,-590],[wx+80,-440]],10,'rgba(255,255,255,.75)')}
+ const dx=-280,dw=220;rr(dx-8,-628,dw+16,560,14,'#3a3a44',6);X.fillStyle='#2b2b33';X.fillRect(dx,-620,dw,545);
+ for(const sd of[0,1]){const w=dw/2*(1-op*.82),px=sd?dx+dw-w:dx;X.save();X.globalAlpha=.85;rr(px,-620,w,545,8,'#bfe3f5',5);X.restore()}
+ rr(780,-620,90,250,30,'#bfe3f5',6);circ(840,-170,30,'#ffd23f',5);
+ rr(-200,-345,560,60,14,'#fff',0);txt('12 · CITY CENTRE',80,-312,36,'#e0533d',0,'800 ');
+ for(const wx of[-560,560]){circ(wx,-70,95,'#1b1b1f',0);circ(wx,-70,45,'#9aa0aa',6)}
+ X.restore()}
+function drybag3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);X.rotate(o.rot||0);
+ line([[0,-30],[0,-70]],7,'#555');X.strokeStyle='#555';X.lineWidth=7;X.beginPath();X.arc(0,-85,16,Math.PI*.1,Math.PI*1.2,true);X.stroke();
+ line([[-110,0],[0,-30],[110,0]],9,'#666');
+ X.globalAlpha=.9;path(()=>{X.moveTo(-120,0);X.lineTo(120,0);X.lineTo(135,380);X.lineTo(-135,380);X.closePath()},'#2c3e66',6);
+ X.globalAlpha=.45;path(()=>{X.moveTo(-125,-6);X.lineTo(125,-6);X.lineTo(140,390);X.lineTo(-140,390);X.closePath()},'#e8f4ff',4);X.globalAlpha=1;
+ line([[-40,20],[-20,300]],6,'rgba(255,255,255,.6)');rr(-60,120,120,40,10,'#fff',3);txt('CLEAN',0,141,22,'#2c3e66',0,'800 ');X.restore()}
