@@ -1322,3 +1322,38 @@ function tapwater(x,y,len=120,t=0,a=1){if(a<=0)return;X.save();X.globalAlpha=.85
 function foam3(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);X.fillStyle='#ffffff';X.strokeStyle='#cfe3ee';X.lineWidth=3;
  for(let k=0;k<9;k++){const a=k/9*Math.PI*2,r=26+rnd(k)*8;X.beginPath();X.arc(Math.cos(a)*34,Math.sin(a)*14+4,r*.6+Math.sin(t*6+k)*2,0,7);X.fill();X.stroke()}
  for(let k=0;k<5;k++){const q=(t*.8+k/5)%1;X.globalAlpha=1-q;X.beginPath();X.arc(-50+k*25+Math.sin(t*3+k)*10,-20-q*120,6+rnd(k+2)*8,0,7);X.fill();X.stroke()}X.restore()}
+// ---- 2026-11-23 22:00 craft ladder: dishwasher3() kitchen dishwasher (closed with a glowing CLEAN light, or open with a rack of clean plates), dishtower3() leaning tower of dirty dishes in a kitchen sink ----
+// dishwasher3(x,y,s,{clean:0..1 light, open:0..1, t}) x = centre, y = top of the front panel
+function dishwasher3(x,y,s=1,o={}){const t=o.t||0,op=C(o.open||0);X.save();X.translate(x,y);X.scale(s,s);
+ rr(-190,0,380,430,14,'#cfd6de',7);rr(-190,0,380,62,12,'#2b2f36',6);
+ // control strip: clean light
+ const cl=C(o.clean||0);circ(-130,31,9,cl>0?'#56f08a':'#3d4450',0);
+ if(cl>0){glow(-20,31,150,'90,240,140',.5*cl);X.save();X.globalAlpha=cl;txt('CLEAN ✓',30,33,34,'#7dffa8',0);X.restore()}
+ circ(150,31,12,'#555b66',4);
+ if(op<=0){rr(-150,96,300,20,10,'#9aa3ad',5);line([[-170,200],[170,200]],4,'rgba(255,255,255,.5)')}
+ else{// open: dark cavity + pulled-out rack of clean plates
+  rr(-170,80,340,330,10,'#3a4049',5);
+  for(let k=0;k<7;k++){const px=-130+k*43,py=300-Math.sin(k*1.3)*6;ell(px,py,14,78,'#ffffff',4);ell(px,py,7,52,'#eef4fb',0)}
+  rr(-175,370,350,26,8,'#9aa3ad',5);for(let k=0;k<8;k++)line([[-160+k*45,300],[-160+k*45,380]],4,'#8a939d');
+  sparkles(0,250,.6+.4*Math.sin(t*3),7,170,'#ffffff');
+  // door folded down toward the viewer
+  path(()=>{X.moveTo(-190,430);X.lineTo(190,430);X.lineTo(205,430+90*op);X.lineTo(-205,430+90*op)},'#bfc7d0',6)}
+ X.restore()}
+// dishtower3(x,y,s,{t,n,wob,stink}) x,y = base of the pile at the sink rim; plates lean, food smears, a mug and a pan on top
+function dishtower3(x,y,s=1,o={}){const t=o.t||0,n=o.n||13,wb=(o.wob==null?1:o.wob);X.save();X.translate(x,y);X.scale(s,s);
+ // sink basin + tap
+ rr(-200,-24,400,40,12,'#b7c0ca',6);rr(-170,-14,340,22,8,'#6f7a86',0);
+ line([[170,-24],[170,-170],[110,-170],[110,-140]],16,'#9aa3ad');line([[170,-24],[170,-170],[110,-170],[110,-140]],6,'#d9e0e6');
+ if(o.bare){X.restore();return}
+ X.rotate(Math.sin(t*2.6)*.03*wb);
+ const smear=['#d9822b','#8a5a2b','#c94a3a','#e3b23c','#6e8b3d'];
+ let yy=-20,dx=0;for(let k=0;k<n;k++){dx=Math.sin(k*.9)*14+k*2.2;const w=k%4==3?78:100,col=k%3==0?'#ffffff':(k%3==1?'#e9f1fb':'#fff6e6');
+  ell(dx,yy,w,20,col,5);ell(dx,yy-3,w*.66,11,'#f4f7fb',0);
+  X.save();X.globalAlpha=.85;ell(dx+(k%2?-30:26),yy-4,16+k%3*5,6,smear[k%5],0);X.restore();
+  yy-=k%4==3?34:26}
+ // bowl, mug, pan handle, fork on top
+ path(()=>{X.moveTo(dx-80,yy+4);X.quadraticCurveTo(dx,yy+80,dx+80,yy+4)},'#ffd23f',6);ell(dx,yy+4,80,14,'#ffe680',5);
+ mug3(dx+10,yy-6,.8,{col:'#5a8fe8',stain:1});
+ line([[dx-70,yy+20],[dx-150,yy-110]],10,'#2b2b2b');line([[dx+60,yy-10],[dx+120,yy-120]],7,'#b7c0ca');
+ X.restore();
+ if(o.stink)stink(x+20*s,y-(n*28+120)*s,t,o.stink,.8*s)}
