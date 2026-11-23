@@ -1171,3 +1171,31 @@ function monday3(x,y,s=1,o={}){const tiny=o.tiny;const base=Object.assign({col:t
  X.strokeStyle='#151515';X.lineWidth=6;X.beginPath();X.roundRect(-78,-120,156,140,16);X.stroke();
  for(const k of[-40,0,40])circ(k,-122,7,'#555',0);
  txt(o.day||'MON',0,-98,30,'#fff',0,'900 ');txt(o.num||'23',0,-28,62,'#222',0,'900 ');X.restore()}
+// craft ladder 2026-11-23 09:00: libbook3(x,y,s,o) a library book seen from the front, (x,y) = centre; o.rot, o.chew=1 bites out of the top-right corner
+// (scalloped edge + tooth dents + paper showing), o.col cover colour, o.drool=1 two drool drops, o.t. Library sticker with barcode + spine label.
+// dogbed3(x,y,s,o) round plush dog bed, (x,y) = floor contact centre; o.col rim colour, o.front=1 draws only the front rim (call after the dog to tuck it in).
+function libbook3(x,y,s=1,o={}){const col=o.col||'#e0533d',OUT='#151515',W=200,H=260,ch=o.chew?1:0;X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.lineJoin='round';
+ // pages block (behind, offset)
+ rr(-W/2+14,-H/2+10,W,H,10,'#fbf6ea',7);for(let k=1;k<4;k++)line([[W/2+14-2,-H/2+18+k*6],[W/2+10,H/2+4-k*6]],2,'#d8cdb4');
+ // cover with optional bitten corner
+ X.beginPath();X.moveTo(-W/2,-H/2+12);X.quadraticCurveTo(-W/2,-H/2,-W/2+12,-H/2);
+ if(ch){X.lineTo(W/2-78,-H/2);X.arc(W/2-58,-H/2,20,Math.PI,0,true);X.arc(W/2-22,-H/2+8,18,Math.PI*1.1,Math.PI*.45,true);X.arc(W/2,-H/2+46,20,Math.PI*1.3,Math.PI*.5,true);X.lineTo(W/2,H/2-12)}
+ else{X.lineTo(W/2-12,-H/2);X.quadraticCurveTo(W/2,-H/2,W/2,-H/2+12);X.lineTo(W/2,H/2-12)}
+ X.quadraticCurveTo(W/2,H/2,W/2-12,H/2);X.lineTo(-W/2+12,H/2);X.quadraticCurveTo(-W/2,H/2,-W/2,H/2-12);X.closePath();
+ X.fillStyle=col;X.fill();X.strokeStyle=OUT;X.lineWidth=7;X.stroke();
+ X.save();X.clip();X.fillStyle='rgba(0,0,0,.16)';X.fillRect(-W/2,-H/2,26,H);const g=X.createLinearGradient(-W/2,-H/2,W/2,H/2);g.addColorStop(0,'rgba(255,255,255,.28)');g.addColorStop(.6,'rgba(255,255,255,0)');X.fillStyle=g;X.fillRect(-W/2,-H/2,W,H);X.restore();
+ // title lines + a little star
+ rr(-60,-86,130,16,8,'#fff3c4',0);rr(-50,-58,110,12,6,'rgba(255,243,196,.75)',0);
+ X.save();X.translate(6,-6);X.fillStyle='#ffd23f';X.strokeStyle=OUT;X.lineWidth=4;X.beginPath();for(let k=0;k<10;k++){const a=k/10*Math.PI*2-Math.PI/2,rad=k%2?14:32;X.lineTo(Math.cos(a)*rad,Math.sin(a)*rad)}X.closePath();X.fill();X.stroke();X.restore();
+ // library sticker with barcode
+ rr(-62,52,124,64,8,'#fff',5);X.fillStyle='#151515';for(let k=0;k<16;k++)X.fillRect(-50+k*6.3,62,k%3?3:5,34);
+ rr(-W/2+2,H/2-58,24,40,4,'#ffffff',3);
+ if(ch){for(const [dx,dy] of[[W/2-62,-H/2+22],[W/2-30,-H/2+30],[W/2-14,-H/2+60]])ell(dx,dy,5,7,'rgba(0,0,0,.35)',0)}
+ if(o.drool){const t=o.t||0;for(let k=0;k<2;k++){const ph=(t*.9+k*.5)%1;X.globalAlpha=1-ph;ell(W/2-40+k*26,-H/2+8+ph*70,7,11,'#9fdcff',3);X.globalAlpha=1}}
+ X.restore()}
+function dogbed3(x,y,s=1,o={}){const col=o.col||'#7e57c2',OUT='#151515';X.save();X.translate(x,y);X.scale(s,s);
+ if(!o.front){X.save();X.globalAlpha=.22;ell(0,10,300,40,'#000',0);X.restore();
+  ell(0,-60,290,95,col,8);ell(0,-70,230,62,'#efe3cf',6);for(let k=-2;k<=2;k++)line([[k*70-20,-92],[k*70+20,-92]],4,'rgba(0,0,0,.08)')}
+ else{X.beginPath();X.ellipse(0,-60,290,95,0,0.08,Math.PI-.08);X.lineTo(-230,-50);X.ellipse(0,-50,232,40,0,Math.PI,0,true);X.closePath();X.fillStyle=col;X.fill();X.strokeStyle=OUT;X.lineWidth=8;X.stroke();
+  X.globalAlpha=.25;X.fillStyle='#fff';X.beginPath();X.ellipse(-120,-30,60,12,-.15,0,7);X.fill();X.globalAlpha=1}
+ X.restore()}
