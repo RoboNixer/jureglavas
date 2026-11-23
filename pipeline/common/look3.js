@@ -1298,3 +1298,20 @@ function note3(x,y,s=1,o={}){if((o.a==null?1:o.a)<=0)return;X.save();X.globalAlp
  X.save();X.rotate(-.35);X.beginPath();X.ellipse(0,0,32,23,0,0,7);X.fillStyle=c;X.fill();X.lineWidth=6;X.strokeStyle='#151515';X.stroke();X.restore();
  if(o.bad){line([[-12,-8],[-4,0]],4,'#151515');line([[-4,-8],[-12,0]],4,'#151515');line([[4,-8],[12,0]],4,'#151515');line([[12,-8],[4,0]],4,'#151515')}
  X.restore()}
+
+// ---------- craft ladder 2026-11-23 18:00: desert-dry gag + running tap + toothpaste foam ----------
+// tumbleweed3(x,y,s,t): a rolling tumbleweed (scribbly brown ball) with dust puffs behind it; (x,y)=ground contact
+function tumbleweed3(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.25;X.fillStyle='#000';X.beginPath();X.ellipse(0,4,70,12,0,0,7);X.fill();X.globalAlpha=1;
+ for(let k=0;k<5;k++){const q=(t*1.6+k/5)%1;X.save();X.globalAlpha=.45*(1-q);X.fillStyle='#d8c39a';X.beginPath();X.arc(-60-q*140,-10-q*30,10+q*22,0,7);X.fill();X.restore()}
+ X.translate(0,-72);X.rotate(t*5);X.lineCap='round';X.strokeStyle='#8a6a3a';X.lineWidth=6;
+ for(let k=0;k<14;k++){const a=rnd(k+1)*7,r1=20+rnd(k+3)*50;X.beginPath();X.arc(Math.cos(a)*10,Math.sin(a)*10,r1,a,a+2.2+rnd(k+5)*1.6);X.stroke()}
+ X.strokeStyle='#5e4422';X.lineWidth=4;for(let k=0;k<8;k++){const a=rnd(k+20)*7;X.beginPath();X.arc(0,0,40+rnd(k+30)*28,a,a+1.4);X.stroke()}X.restore()}
+// tapwater(x,y,len,t,a): a running stream from a tap spout at (x,y) down len px, with splash drops at the bottom
+function tapwater(x,y,len=120,t=0,a=1){if(a<=0)return;X.save();X.globalAlpha=.85*a;const g=X.createLinearGradient(x-10,0,x+10,0);g.addColorStop(0,'#8fd3f5');g.addColorStop(.5,'#e8f8ff');g.addColorStop(1,'#7cc3e8');X.fillStyle=g;
+ X.beginPath();X.moveTo(x-13,y);X.lineTo(x+13,y);X.lineTo(x+10+Math.sin(t*30)*2,y+len);X.lineTo(x-10+Math.sin(t*30)*2,y+len);X.closePath();X.fill();
+ X.strokeStyle='rgba(255,255,255,.9)';X.lineWidth=3;X.beginPath();X.moveTo(x-2,y+6);X.lineTo(x-1,y+len-8);X.stroke();
+ for(let k=0;k<7;k++){const q=(t*2.4+rnd(k+4))%1,d=k%2?1:-1;X.fillStyle='#9fdcf7';X.beginPath();X.arc(x+d*(10+q*60*rnd(k+8)),y+len-Math.sin(q*Math.PI)*40,5*(1-q)+2,0,7);X.fill()}X.restore()}
+// foam3(x,y,s,t): toothpaste foam around a mouth (x,y = mouth centre), little bubbles drifting off
+function foam3(x,y,s=1,t=0){X.save();X.translate(x,y);X.scale(s,s);X.fillStyle='#ffffff';X.strokeStyle='#cfe3ee';X.lineWidth=3;
+ for(let k=0;k<9;k++){const a=k/9*Math.PI*2,r=26+rnd(k)*8;X.beginPath();X.arc(Math.cos(a)*34,Math.sin(a)*14+4,r*.6+Math.sin(t*6+k)*2,0,7);X.fill();X.stroke()}
+ for(let k=0;k<5;k++){const q=(t*.8+k/5)%1;X.globalAlpha=1-q;X.beginPath();X.arc(-50+k*25+Math.sin(t*3+k)*10,-20-q*120,6+rnd(k+2)*8,0,7);X.fill();X.stroke()}X.restore()}
