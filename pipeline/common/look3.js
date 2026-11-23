@@ -1271,3 +1271,30 @@ function drybag3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);X.rotate(o
  X.globalAlpha=.9;path(()=>{X.moveTo(-120,0);X.lineTo(120,0);X.lineTo(135,380);X.lineTo(-135,380);X.closePath()},'#2c3e66',6);
  X.globalAlpha=.45;path(()=>{X.moveTo(-125,-6);X.lineTo(125,-6);X.lineTo(140,390);X.lineTo(-140,390);X.closePath()},'#e8f4ff',4);X.globalAlpha=1;
  line([[-40,20],[-20,300]],6,'rgba(255,255,255,.6)');rr(-60,120,120,40,10,'#fff',3);txt('CLEAN',0,141,22,'#2c3e66',0,'800 ');X.restore()}
+// craft ladder 2026-11-23 16:00: piano3(x,y,s,o) upright piano, feet at (x,y), ~520*s wide, ~600*s tall; keyboard top at y-330*s.
+//  o.web (0..1 cobweb across the keys + dangling spider), o.t, o.lid (0..1 open fallboard? default open), o.press (key index pressed -1 none), o.music (sheet on the stand)
+function piano3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.fillStyle='rgba(0,0,0,.18)';X.beginPath();X.ellipse(0,6,300,26,0,0,7);X.fill();
+ rr(-250,-600,500,280,22,'#5b3524',7);rr(-232,-582,464,244,16,'#6e4130',0);
+ rr(-200,-560,400,180,12,'#7c4a37',4);
+ if(o.music){X.save();X.translate(0,-470);X.rotate(-.04);rr(-80,-60,160,110,6,'#fbf7ee',4);for(let i=0;i<4;i++){line([[-64,-36+i*24],[64,-36+i*24]],2,'#9a9a9a');circ(-40+i*28,-40+i*24+((i*7)%10),6,'#222',0)}X.restore()}
+ rr(-270,-345,540,40,10,'#4a2a1c',6);
+ rr(-250,-330,500,70,6,'#fbfbf7',5);
+ for(let i=1;i<20;i++){const kx=-250+i*25;line([[kx,-330],[kx,-262]],2,'#9a9a9a')}
+ if(o.press!=null&&o.press>=0){const kx=-250+o.press*25;X.fillStyle='rgba(255,200,60,.55)';X.fillRect(kx+1,-328,23,66)}
+ for(let i=0;i<20;i++){if([0,1,3,4,5].includes(i%7)){const kx=-250+(i+1)*25-8;rr(kx,-330,16,40,3,'#151515',0)}}
+ rr(-250,-262,500,250,10,'#5b3524',7);rr(-220,-240,440,200,12,'#6a3e2d',4);
+ rr(-262,-20,30,20,4,'#3a2014',4);rr(232,-20,30,20,4,'#3a2014',4);
+ circ(-40,-30,9,'#d4af37',3);circ(0,-30,9,'#d4af37',3);circ(40,-30,9,'#d4af37',3);
+ const w=o.web||0;if(w>0){cobweb(-190,-345,150,0,Math.PI/2,w);cobweb(200,-345,140,Math.PI/2,Math.PI,w);
+  X.save();X.globalAlpha=w;const sy=-250+Math.sin(t*1.6)*16;X.strokeStyle='#f4f6fa';X.lineWidth=2;X.beginPath();X.moveTo(-30,-345);X.lineTo(-30,sy);X.stroke();
+  circ(-30,sy+14,15,'#151515',0);for(let k=0;k<4;k++){line([[-30,sy+14],[-52,sy+4+k*8]],3,'#151515');line([[-30,sy+14],[-8,sy+4+k*8]],3,'#151515')}
+  circ(-35,sy+10,4,'#fff',0);circ(-25,sy+10,4,'#fff',0);X.restore()}
+ X.restore()}
+// note3(x,y,s,o): a flying music note. o.bad (red, wobbly, with a little ✗ face) or golden; o.a alpha, o.rot
+function note3(x,y,s=1,o={}){if((o.a==null?1:o.a)<=0)return;X.save();X.globalAlpha=C(o.a==null?1:o.a);X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ const c=o.bad?'#e2483d':'#ffc531';if(!o.bad)glow(0,0,90,'255,210,80',.35);
+ X.lineCap='round';line([[22,-10],[22,-110]],12,'#151515');X.beginPath();X.moveTo(22,-110);X.quadraticCurveTo(60,-90,52,-50);X.lineWidth=12;X.strokeStyle='#151515';X.stroke();
+ X.save();X.rotate(-.35);X.beginPath();X.ellipse(0,0,32,23,0,0,7);X.fillStyle=c;X.fill();X.lineWidth=6;X.strokeStyle='#151515';X.stroke();X.restore();
+ if(o.bad){line([[-12,-8],[-4,0]],4,'#151515');line([[-4,-8],[-12,0]],4,'#151515');line([[4,-8],[12,0]],4,'#151515');line([[12,-8],[4,0]],4,'#151515')}
+ X.restore()}
