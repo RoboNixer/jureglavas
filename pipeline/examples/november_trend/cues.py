@@ -1,0 +1,6 @@
+beat(0,DUR,turn=T('y1'),seed=41)
+add(sfx,whoosh(.3),T('n1')-.2,.3)
+add(sfx,whoosh(.3),T('n2')-.2,.3)
+add(sfx,whoosh(.3),T('n3')-.2,.3)
+chime(T('y1')-.1)
+chime(T('cta'))
