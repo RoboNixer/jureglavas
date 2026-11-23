@@ -52,9 +52,16 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
 // craft ladder 2026-11-18: o.towel (colour) = bath towel wrapped round the waist (with stripe + tucked corner)
  if(o.towel&&!o.crawl){const tc=o.towel===1?'#5aa9e6':o.towel;const a=P(hip[0]-78,hip[1]-70),b=P(hip[0]+78,hip[1]-70),c=P(hip[0]+92,hip[1]+120),d=P(hip[0]-92,hip[1]+120);X.fillStyle=tc;X.strokeStyle=OUT;X.lineWidth=8*s;X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.stroke();X.strokeStyle='rgba(255,255,255,.75)';X.lineWidth=10*s;X.beginPath();X.moveTo(...P(hip[0]-86,hip[1]+88));X.lineTo(...P(hip[0]+86,hip[1]+88));X.stroke();X.strokeStyle=OUT;X.lineWidth=6*s;X.beginPath();X.moveTo(...P(hip[0]+40,hip[1]-70));X.lineTo(...P(hip[0]+55,hip[1]+40));X.stroke()}
  if(o.bow&&!o.crawl){const[bx,by]=P(neck[0],neck[1]+18);X.save();X.translate(bx,by);X.scale(s,s);X.fillStyle=o.bow;X.strokeStyle=OUT;X.lineWidth=6;for(const d of[-1,1]){X.beginPath();X.moveTo(0,0);X.lineTo(d*46,-24);X.lineTo(d*46,24);X.closePath();X.fill();X.stroke()}X.beginPath();X.arc(0,0,11,0,7);X.fill();X.stroke();X.restore()}
+// craft ladder 2026-11-23: o.jumper (colour) = school jumper (V-neck with white shirt collar, ribbed hem + cuffs, thick sleeves over the arms)
+ if(o.jumper&&!o.crawl){const jc=o.jumper===1?'#2f4f8a':o.jumper;X.save();X.fillStyle=jc;X.strokeStyle=OUT;X.lineWidth=8*s;const a=P(neck[0]-84,neck[1]+22),b=P(neck[0]+84,neck[1]+22),c=P(hip[0]+92,hip[1]+60),d=P(hip[0]-92,hip[1]+60);
+  X.beginPath();X.moveTo(...a);X.lineTo(...b);X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();X.stroke();
+  X.fillStyle='rgba(0,0,0,.18)';X.beginPath();X.moveTo(...P(hip[0]-92,hip[1]+22));X.lineTo(...P(hip[0]+92,hip[1]+22));X.lineTo(...c);X.lineTo(...d);X.closePath();X.fill();
+  X.strokeStyle='rgba(0,0,0,.25)';X.lineWidth=4*s;for(let k=-4;k<=4;k++){X.beginPath();X.moveTo(...P(hip[0]+k*20,hip[1]+24));X.lineTo(...P(hip[0]+k*20,hip[1]+58));X.stroke()}
+  X.strokeStyle=OUT;X.lineWidth=7*s;X.fillStyle='#ffffff';X.beginPath();X.moveTo(...P(neck[0]-50,neck[1]+20));X.lineTo(...P(neck[0],neck[1]+110));X.lineTo(...P(neck[0]+50,neck[1]+20));X.closePath();X.fill();X.stroke();
+  X.fillStyle=o.tie||'#c8323c';X.beginPath();X.moveTo(...P(neck[0]-10,neck[1]+40));X.lineTo(...P(neck[0]+10,neck[1]+40));X.lineTo(...P(neck[0]+6,neck[1]+100));X.lineTo(...P(neck[0]-6,neck[1]+100));X.closePath();X.fill();X.restore()}
  // arms
  const arm=(d,a,bend)=>{const sh=[neck[0]+d*6,neck[1]+40];const A=(a!=null?a:14+(w!=null?(d>0?-ph:ph)*28:0))*Math.PI/180;const ex=sh[0]+Math.sin(A)*d*150,ey=sh[1]+Math.cos(A)*150;const B=(((a!=null?a:14)+(bend||0)))*Math.PI/180;const hx=ex+Math.sin(B)*d*140,hy=ey+Math.cos(B)*140;
-  limbStroke([sh,[ex,ey],[hx,hy]]);const[wx,wy]=P(hx,hy);X.save();X.translate(wx,wy);X.fillStyle=o.col?OUT:OUT;X.beginPath();X.ellipse(0,0,31*s,27*s,0,0,7);X.fill();X.beginPath();X.ellipse(-fl*d*-20*s,-16*s,12*s,16*s,-.5,0,7);X.fill();
+  limbStroke([sh,[ex,ey],[hx,hy]]);if(o.jumper&&!o.crawl){const jc=o.jumper===1?'#2f4f8a':o.jumper,cx=ex+(hx-ex)*.82,cy=ey+(hy-ey)*.82;X.save();X.lineCap='round';X.lineJoin='round';X.strokeStyle=OUT;X.lineWidth=46*s;poly([sh,[ex,ey],[cx,cy]]);X.strokeStyle=jc;X.lineWidth=34*s;poly([sh,[ex,ey],[cx,cy]]);X.restore()}const[wx,wy]=P(hx,hy);X.save();X.translate(wx,wy);X.fillStyle=o.col?OUT:OUT;X.beginPath();X.ellipse(0,0,31*s,27*s,0,0,7);X.fill();X.beginPath();X.ellipse(-fl*d*-20*s,-16*s,12*s,16*s,-.5,0,7);X.fill();
   if(o.col){X.fillStyle=limb;X.beginPath();X.ellipse(0,0,24*s,20*s,0,0,7);X.fill()}X.restore();hands[d>0?'R':'L']=[wx,wy]};
  if(o.crawl){const cw=Math.sin(t*6+1.5)*14;limbStroke([[170,-350],[220+cw,-180],[240+cw,-14]]);limbStroke([[170,-350],[140-cw,-180],[150-cw,-14]]);X.fillStyle=OUT;for(const hx of[255+cw,165-cw]){const[a,b]=P(hx,-14);X.beginPath();X.ellipse(a,b,32*s,22*s,0,0,7);X.fill()}}
  else{arm(-1,o.armL,o.bendL);arm(1,o.armR,o.bendR)}
@@ -1198,4 +1205,29 @@ function dogbed3(x,y,s=1,o={}){const col=o.col||'#7e57c2',OUT='#151515';X.save()
   ell(0,-60,290,95,col,8);ell(0,-70,230,62,'#efe3cf',6);for(let k=-2;k<=2;k++)line([[k*70-20,-92],[k*70+20,-92]],4,'rgba(0,0,0,.08)')}
  else{X.beginPath();X.ellipse(0,-60,290,95,0,0.08,Math.PI-.08);X.lineTo(-230,-50);X.ellipse(0,-50,232,40,0,Math.PI,0,true);X.closePath();X.fillStyle=col;X.fill();X.strokeStyle=OUT;X.lineWidth=8;X.stroke();
   X.globalAlpha=.25;X.fillStyle='#fff';X.beginPath();X.ellipse(-120,-30,60,12,-.15,0,7);X.fill();X.globalAlpha=1}
+ X.restore()}
+
+// craft ladder 2026-11-23: jumper3(x,y,s,o) = a loose school jumper prop (x,y = neckline centre), o.col, o.rot, o.tag (white name tag), o.drape (sleeves hang down 0..1)
+function jumper3(x,y,s=1,o={}){const c=o.col||'#2f4f8a',d=o.drape==null?.4:o.drape;X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.lineJoin='round';X.lineCap='round';
+ const sl=(f)=>{X.save();X.scale(f,1);X.strokeStyle='#151515';X.lineWidth=58;X.beginPath();X.moveTo(70,30);X.quadraticCurveTo(170,40+d*40,180+(-d*40),110+d*150);X.stroke();X.strokeStyle=c;X.lineWidth=46;X.stroke();X.fillStyle='rgba(0,0,0,.25)';X.beginPath();X.arc(180-d*40,110+d*150,23,0,7);X.fill();X.restore()};sl(1);sl(-1);
+ path(()=>{X.moveTo(-95,0);X.lineTo(95,0);X.lineTo(105,230);X.lineTo(-105,230);X.closePath()},c,7);
+ rr(-105,200,210,32,6,'rgba(0,0,0,.2)',0);for(let k=-4;k<=4;k++)line([[k*22,204],[k*22,228]],3,'rgba(0,0,0,.25)');
+ path(()=>{X.moveTo(-48,-2);X.lineTo(0,80);X.lineTo(48,-2)},'#ffffff',6);
+ if(o.tag){rr(-36,20,72,36,6,'#ffffff',4);line([[-22,34],[22,34]],4,'#e2508a');line([[-22,44],[10,44]],3,'#9aa0aa')}
+ X.restore()}
+// lostbox3(x,y,s,o) = school lost-property crate overflowing with navy jumpers; (x,y) = bottom centre; o.n = jumpers on the pile (grows the heap), o.t
+function lostbox3(x,y,s=1,o={}){const n=o.n==null?8:o.n,t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,8,330,30,'#000',0);X.globalAlpha=1;
+ rr(-300,-300,600,300,26,'#3f8fd9',8);
+ const cols=['#2f4f8a','#26406f','#34558f','#2b4a80','#3a5d99','#2f4f8a','#22396a','#33528c'];
+ X.save();X.beginPath();X.rect(-420,-900,840,620);X.clip();
+ // the heap: older jumpers lower, newer on top
+ const spots=[[-180,-300,.7,-.3],[150,-300,.7,.35],[0,-320,.75,.05],[-120,-380,.7,.5],[120,-390,.72,-.45],[-30,-440,.74,.2],[90,-500,.68,-.15],[-110,-520,.7,.35],[20,-580,.72,-.05],[-60,-640,.66,.4]];
+ for(let i=0;i<Math.min(n,spots.length);i++){const[sx,sy,ss,rot]=spots[i];jumper3(sx,sy-120,ss,{col:cols[i%cols.length],rot,tag:i%3===0,drape:.7})}
+ // odd ones out: a trainer + a water bottle
+ X.restore();
+ X.save();X.translate(230,-330);X.rotate(.4);rr(-26,-110,52,120,14,'#ff7a5a',5);rr(-18,-130,36,26,8,'#2e3b40',4);X.restore();
+ X.save();X.translate(-250,-310);X.rotate(-.2);ell(0,0,70,30,'#f5f5f5',6);rr(-70,-8,140,20,8,'#e86a5a',0);X.restore();
+ rr(-300,-300,600,300,26,'#3f8fd9',8);rr(-300,-300,600,46,18,'#5aa6ea',6);
+ for(const hx of[-170,170])rr(hx-60,-200,120,40,20,'#2b6fb0',5);
  X.restore()}
