@@ -1400,3 +1400,61 @@ function lbasket3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);X.lineJoi
  rr(-132,-266,264,28,12,'#c79a5e',7);rr(-60,-215,120,34,16,'rgba(0,0,0,.25)',0);
  if(o.web)cobweb(-112,-240,110,0,Math.PI/2,o.web);
  X.restore()}
+// ---- craft ladder 2026-11-24 12:00: Christmas-elf kit ----
+// elf3(x,y,s,{t,web,sit,look,wink,tilt}) a generic felt toy Christmas elf (original design, no brand): red pointy hat with white bobble + fur band, peach face, rosy cheeks, green felt suit with red/white collar points.
+// (x,y) = the seat point (bottom of the body). sit:1 legs dangle forward over a shelf edge; web 0..1 = cobweb from the hat tip (hasn't moved); look [-1..1,-1..1] pupils; wink:1.
+function elf3(x,y,s=1,o={}){const t=o.t||0,OUT='#151515';X.save();X.translate(x,y);X.scale(s,s);X.rotate((o.tilt||0)*Math.PI/180);X.lineJoin='round';X.lineCap='round';
+ // legs: striped red/white, dangling (sit) or straight down
+ const sw=Math.sin(t*2.2)*(o.swing?6:0);
+ for(const sx of[-22,22]){X.save();X.translate(sx,-6);X.rotate((sx<0?1:-1)*.06+sw*.01);
+  if(o.sit){line([[0,0],[sx*.2,60]],22,OUT);line([[0,0],[sx*.2,60]],14,'#ffffff');for(let k=0;k<3;k++){line([[sx*.2*(k*20+8)/60,k*20+6],[sx*.2*(k*20+14)/60,k*20+14]],14,'#e2353a')}
+   ell(sx*.2+(sx<0?-8:8),70,20,12,'#2f8a4e',5)}
+  else{line([[0,0],[0,40]],22,OUT);line([[0,0],[0,40]],14,'#e2353a');ell(0,48,20,11,'#2f8a4e',5)}
+  X.restore()}
+ // body: green felt bell
+ path(()=>{X.moveTo(-46,0);X.quadraticCurveTo(-50,-60,-28,-96);X.lineTo(28,-96);X.quadraticCurveTo(50,-60,46,0);X.closePath()},'#2f9a55',6);
+ rr(-48,-14,96,16,8,'#1f6e3c',5);circ(0,-50,7,'#ffd23f',4);
+ // arms: little felt arms resting on knees, mitten hands
+ for(const sx of[-1,1]){line([[sx*30,-82],[sx*52,-34]],18,OUT);line([[sx*30,-82],[sx*52,-34]],11,'#2f9a55');circ(sx*54,-28,11,'#f3c9a8',4)}
+ // collar points red/white
+ for(let k=-3;k<=3;k++){const cx=k*15;path(()=>{X.moveTo(cx-9,-100);X.lineTo(cx+9,-100);X.lineTo(cx,-78);X.closePath()},k%2?'#ffffff':'#e2353a',4)}
+ // head
+ const hy=-142;circ(0,hy,46,'#f6d2b4',6);
+ X.globalAlpha=.55;circ(-26,hy+12,10,'#ff8a8a',0);circ(26,hy+12,10,'#ff8a8a',0);X.globalAlpha=1;
+ const lk=o.look||[0,0];
+ if(o.wink){line([[-22,hy-4],[-10,hy-4]],5,OUT)}else{circ(-16,hy-4,8,'#fff',3);circ(-16+lk[0]*3,hy-4+lk[1]*3,4.5,OUT,0)}
+ circ(16,hy-4,8,'#fff',3);circ(16+lk[0]*3,hy-4+lk[1]*3,4.5,OUT,0);
+ path(()=>{X.arc(0,hy+14,12,.15*Math.PI,.85*Math.PI)},null,4);
+ // pointy ears
+ for(const sx of[-1,1])path(()=>{X.moveTo(sx*42,hy-6);X.lineTo(sx*66,hy-22);X.lineTo(sx*44,hy+10);X.closePath()},'#f6d2b4',5);
+ // hat: fur band + floppy red cone + bobble
+ const fl=Math.sin(t*1.8)*.05;
+ X.save();X.translate(0,hy-34);
+ path(()=>{X.moveTo(-44,0);X.quadraticCurveTo(-30,-90,22+fl*200,-120);X.quadraticCurveTo(10,-60,44,0);X.closePath()},'#e2353a',6);
+ X.fillStyle='rgba(255,255,255,.14)';X.beginPath();X.moveTo(-30,-6);X.quadraticCurveTo(-20,-70,16,-108);X.quadraticCurveTo(-8,-60,-14,-6);X.fill();
+ rr(-52,-14,104,28,14,'#ffffff',5);circ(22+fl*200,-122,15,'#ffffff',5);
+ if(o.web)cobweb(22+fl*200,-122,120,-Math.PI*.95,-Math.PI*.35,o.web);
+ X.restore();
+ X.restore()}
+// wshelf3(x,y,w,{t}) floating wooden wall shelf, (x,y) = centre of the TOP surface; w = width; two black brackets underneath, a little candle + book at the ends
+function wshelf3(x,y,w=320,o={}){X.save();X.translate(x,y);X.lineJoin='round';
+ X.globalAlpha=.18;rr(-w/2+10,14,w,30,10,'#000',0);X.globalAlpha=1;
+ for(const sx of[-w*.32,w*.32]){path(()=>{X.moveTo(sx-8,20);X.lineTo(sx-8,80);X.lineTo(sx+8,80);X.lineTo(sx+8,34);X.lineTo(sx+44,34);X.lineTo(sx+44,20);X.closePath()},'#2a2a30',4)}
+ rr(-w/2,0,w,26,6,'#b07a4c',6);rr(-w/2+6,3,w-12,7,4,'rgba(255,255,255,.22)',0);
+ if(o.deco!==0){rr(w/2-62,-56,26,56,5,'#e9e4d8',4);X.save();X.globalAlpha=.8+.2*Math.sin((o.t||0)*9);ell(w/2-49,-70,7,12,'#ffb02e',0);X.restore();
+  rr(-w/2+18,-70,22,70,4,'#5a8fe8',4);rr(-w/2+42,-62,20,62,4,'#e86a5a',4)}
+ X.restore()}
+// fbowl3(x,y,s,{elf,t}) wide ceramic fruit bowl on a surface, (x,y) = bottom centre; apples, orange, banana; elf:1 = the toy elf sits IN the bowl, grinning (morning surprise gag)
+function fbowl3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);X.lineJoin='round';X.globalAlpha=.22;ell(0,4,170,18,'#000',0);X.globalAlpha=1;
+ // fruit behind
+ circ(-90,-118,42,'#e2353a',6);circ(80,-120,44,'#ff9a2e',6);
+ if(o.elf){X.save();elf3(-6,-70,.78,{t,look:[.2,.3],wink:o.wink,tilt:-6});X.restore()}
+ else{circ(0,-140,46,'#4caf7a',6)}
+ // banana arcing over the rim
+ X.save();X.translate(60,-96);X.rotate(-.3);path(()=>{X.moveTo(-70,0);X.quadraticCurveTo(0,-60,80,-6);X.quadraticCurveTo(0,-30,-70,0);X.closePath()},'#ffd23f',6);X.restore();
+ circ(-120,-80,34,'#c4383d',6);
+ // bowl
+ path(()=>{X.moveTo(-170,-100);X.quadraticCurveTo(-160,0,-60,0);X.lineTo(60,0);X.quadraticCurveTo(160,0,170,-100);X.closePath()},'#5fb4ff',7);
+ X.fillStyle='rgba(255,255,255,.25)';X.beginPath();X.moveTo(-150,-90);X.quadraticCurveTo(-140,-30,-90,-18);X.quadraticCurveTo(-130,-50,-130,-90);X.fill();
+ rr(-178,-110,356,20,10,'#7cc3ff',6);
+ X.restore()}
