@@ -782,6 +782,8 @@ function waBubble(edge,y,maxW,str,me,p,time,kind=1,o={}){if(p<=0)return 0;const 
  if(time){X.font="500 24px Inter";X.fillStyle='#667781';X.textAlign='right';X.fillText(time,bx+w-(me?62:22),y+h-36);if(me)watick(bx+w-22,y+h-26,1.1,kind)}
  if(o.ring){X.save();X.globalAlpha=C(o.ring);X.strokeStyle='#ff3b30';X.lineWidth=7;X.beginPath();X.arc(bx+w-36,y+h-26,34+Math.sin(o.t*8)*4,0,7);X.stroke();X.restore()}
  X.restore();return h}
+// waDots(edge,y,me,t,p): WhatsApp 'typing…' bubble with three bouncing dots (craft ladder 2026-11-24 16:00). In waChat pass o.typing (0..1 fade) and o.typingMe for your side; header shows 'typing…' for the contact.
+function waDots(edge,y,me,t,p=1){if(p<=0)return;const w=150,h=78,bx=me?edge-w:edge;X.save();X.globalAlpha=C(p*1.5);rr(bx,y,w,h,26,me?'#d9fdd3':'#ffffff',4);for(let k=0;k<3;k++){const b=Math.max(0,Math.sin(t*9-k*.9))*10;circ(bx+45+k*30,y+h/2-b,9,'#8696a0',0)}X.restore()}
 // waChat(x,y,s,r,o): WhatsApp chat screen with any contact. o.name, o.sub (e.g. 'last seen yesterday at 16:02'), o.av(x,y,r) avatar painter, o.clock, o.list=[{a,me,text,time,kind,ring}|{a,date}]
 function waChat(x,y,s,r,o){X.save();X.translate(x,y);X.scale(s,s);
  rr(-320,-660,640,1320,92,'#1b1b1f',10);rr(-298,-638,596,1276,74,'#efe7dc',0);X.save();X.beginPath();X.roundRect(-298,-638,596,1276,74);X.clip();
@@ -789,9 +791,10 @@ function waChat(x,y,s,r,o){X.save();X.translate(x,y);X.scale(s,s);
  X.fillStyle='#008069';X.fillRect(-300,-640,600,210);rr(-70,-618,140,40,20,'#000',0);
  X.font="600 26px Inter";X.fillStyle='#fff';X.textAlign='left';X.textBaseline='middle';X.fillText(o.clock||'9:41',-240,-598);
  X.font="400 40px Inter";X.fillText('‹',-270,-488);if(o.av)o.av(-180,-488,44);else avatar(-180,-488,44,0);
- X.font="800 40px Inter,'Noto Color Emoji'";X.fillStyle='#fff';X.textAlign='left';X.fillText(o.name||'Mom',-118,-506);X.font="400 25px Inter";X.fillText(o.sub||'online',-118,-466);
+ X.font="800 40px Inter,'Noto Color Emoji'";X.fillStyle='#fff';X.textAlign='left';X.fillText(o.name||'Mom',-118,-506);X.font="400 25px Inter";X.fillText(o.typing&&!o.typingMe?'typing…':(o.sub||'online'),-118,-466);
  let yy=-380;(o.list||[]).forEach(m=>{if(r<m.a)return;const p=C((r-m.a)/.22);if(m.date){X.save();X.globalAlpha=C(p*2);X.font="700 26px Inter,'Noto Color Emoji'";const dw=X.measureText(m.date).width+44;rr(-dw/2,yy,dw,46,14,'#e1f2fb',0);X.fillStyle='#54656f';X.textAlign='center';X.textBaseline='middle';X.fillText(m.date,0,yy+24);X.restore();yy+=66;return}
   yy+=waBubble(m.me?270:-270,yy,470,m.text,m.me,p,m.time,m.kind||1,{ring:m.ring,t:r,bg:m.bg})+22});
+ if(o.typing)waDots(o.typingMe?270:-270,yy,!!o.typingMe,r,o.typing);
  X.fillStyle='#f0f0f0';X.fillRect(-300,520,600,140);rr(-270,545,450,74,37,'#fff',0);X.font="400 30px Inter";X.fillStyle='#8696a0';X.textAlign='left';X.fillText('Message',-230,582);circ(235,582,38,'#00a884',0);
  X.restore();X.restore()}
 // keyhook(x,y,s,hasKeys): small wooden key rack on the wall, keys hanging (or empty)
@@ -1471,3 +1474,6 @@ function wallcal3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);if(o.sway
   if(o.ring&&d===o.day){X.save();X.globalAlpha=C(o.ring);X.strokeStyle='#ff3b30';X.lineWidth=5;X.beginPath();X.ellipse(cx,cy,24,18,0,0,7*C(o.ring));X.stroke();X.restore()}}
  if(o.cob){cobweb(160,70,120,-Math.PI/2,0,o.cob);cobweb(-160,70,90,Math.PI,Math.PI*1.5,o.cob)}
  X.restore()}
+// pad3(x,y,s,rot): game controller (promoted from examples/leash_look3 on 2026-11-24 so every scene can use it)
+function pad3(x,y,s=1,rot=0){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);path(()=>{X.moveTo(-70,-26);X.quadraticCurveTo(0,-40,70,-26);X.quadraticCurveTo(100,30,70,40);X.quadraticCurveTo(40,46,24,18);X.lineTo(-24,18);X.quadraticCurveTo(-40,46,-70,40);X.quadraticCurveTo(-100,30,-70,-26);X.closePath()},'#2a2f3a',6);
+ circ(40,-6,8,'#e0533d',0);circ(56,6,8,'#7bb36a',0);rr(-56,-10,30,10,3,'#c9ced6',0);rr(-46,-20,10,30,3,'#c9ced6',0);X.restore()}
