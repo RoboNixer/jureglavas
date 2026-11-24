@@ -1496,3 +1496,26 @@ function banana3(x,y,s=1,o={}){const t=o.t||0,f=o.fossil;X.save();X.translate(x,
  if(f){const fx=Math.sin(t*3.1)*70,fy=-110+Math.cos(t*4.3)*30;circ(fx,fy,9,'#151515',0);X.globalAlpha=.6;ell(fx-8,fy-10,9,5,'#dfe8ff',2,-.5);ell(fx+8,fy-10,9,5,'#dfe8ff',2,.5);X.globalAlpha=1;
   X.globalAlpha=.5;for(let k=0;k<3;k++){const p=((t*.8+k/3)%1);path(()=>{X.moveTo(-30+k*30,-30-p*90);X.quadraticCurveTo(-10+k*30,-50-p*90,-30+k*30,-70-p*90)},null,4,'#7fb34a')}X.globalAlpha=1}
  X.restore()}
+
+// ---- 2026-11-24 20:00 craft ladder (cake-sale reel): stove3() cooker with pot + rising steam, crackers3() plain cracker packet, cupcakes3() tray of frosted cupcakes
+function stove3(x,y,s=1,t=0,o={}){X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.22;ell(0,6,300,26,'#000',0);X.globalAlpha=1;
+ rr(-280,-420,560,420,18,'#f2f4f7',7);rr(-240,-330,480,250,14,'#2b2f38',6);rr(-220,-310,440,210,10,o.oven?'#ffb45a':'#3c424e',0);if(o.oven)glow(0,-205,260,'255,170,80',.55);
+ line([[-170,-360],[170,-360]],10,'#9aa0aa');for(let k=-1;k<=1;k++)circ(k*120,-385,14,'#cfd3da',4);
+ rr(-300,-460,600,46,12,'#3a3f4a',6);
+ if(o.pot!==0){const px=-40;path(()=>{X.moveTo(px-150,-460);X.lineTo(px-135,-600);X.lineTo(px+135,-600);X.lineTo(px+150,-460);X.closePath()},'#c9ced6',6);ell(px,-600,138,24,'#e8ebef',6);ell(px,-600,118,16,o.food||'#f2b84b',0);
+  line([[px+138,-580],[px+250,-600]],12,'#3a3f4a');
+  for(let k=0;k<4;k++){const ph=(t*.6+k/4)%1,sx=px-80+k*55+Math.sin(t*2+k)*18,sy=-620-ph*360;X.globalAlpha=.55*(1-ph)*(o.steam??1);circ(sx,sy,30+ph*40,'#ffffff',0);X.globalAlpha=1}}
+ X.restore()}
+function crackers3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ rr(-90,-150,180,300,20,'#e9d9b0',6);rr(-90,-150,180,70,20,'#c9a76a',0);rr(-90,-150,180,300,20,null,6);
+ X.font="900 34px Inter";X.fillStyle='#6a4a20';X.textAlign='center';X.textBaseline='middle';X.fillText('PLAIN',0,-115);X.font="800 26px Inter";X.fillText('CRACKERS',0,-20);
+ for(let i=0;i<2;i++)for(let j=0;j<2;j++){const cx=-38+i*76,cy=50+j*60;rr(cx-32,cy-24,64,48,6,'#f6e2a8',4);for(let k=0;k<3;k++)circ(cx-16+k*16,cy,3,'#c9a76a',0)}
+ X.restore()}
+function cupcakes3(x,y,s=1,o={}){const t=o.t||0,n=o.n??12;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,10,330,26,'#000',0);X.globalAlpha=1;rr(-320,-30,640,40,12,'#b9c2cc',6);
+ const cols=['#ff8fb1','#ffd23f','#9be0b0','#c8a2ff'];
+ for(let row=0;row<2;row++)for(let k=0;k<6;k++){const i=row*6+k;if(i>=n)continue;const cx=-250+k*100+(row?50:0)-25,cy=row?-40:-20,sc=row?.82:.9;
+  X.save();X.translate(cx,cy);X.scale(sc,sc);path(()=>{X.moveTo(-40,0);X.lineTo(40,0);X.lineTo(50,-56);X.lineTo(-50,-56);X.closePath()},'#7fb7e8',5);
+  const c=cols[i%4];X.fillStyle=c;X.strokeStyle='#151515';X.lineWidth=5;X.beginPath();X.moveTo(-56,-54);X.bezierCurveTo(-70,-120,-10,-130,0,-150);X.bezierCurveTo(10,-130,70,-120,56,-54);X.closePath();X.fill();X.stroke();
+  for(let q=0;q<5;q++)rr(-30+q*14,-100+((q*37)%3)*14,10,4,2,['#ff5a7a','#4a8fe0','#fff','#ffb02e'][q%4],0);X.restore()}
+ if(o.shine)sparkles(0,-120,(t*.7)%1,10,260,'#fff7b0');X.restore()}
