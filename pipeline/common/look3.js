@@ -1477,3 +1477,22 @@ function wallcal3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);if(o.sway
 // pad3(x,y,s,rot): game controller (promoted from examples/leash_look3 on 2026-11-24 so every scene can use it)
 function pad3(x,y,s=1,rot=0){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);path(()=>{X.moveTo(-70,-26);X.quadraticCurveTo(0,-40,70,-26);X.quadraticCurveTo(100,30,70,40);X.quadraticCurveTo(40,46,24,18);X.lineTo(-24,18);X.quadraticCurveTo(-40,46,-70,40);X.quadraticCurveTo(-100,30,-70,-26);X.closePath()},'#2a2f3a',6);
  circ(40,-6,8,'#e0533d',0);circ(56,6,8,'#7bb36a',0);rr(-56,-10,30,10,3,'#c9ced6',0);rr(-46,-20,10,30,3,'#c9ced6',0);X.restore()}
+
+// craft ladder 2026-11-24 18:00 (homework_look3): worksheet3(x,y,s,{rot,crumple:0..1,stamp:'DUE TOMORROW',written:0..1}) school worksheet centred on (x,y);
+// banana3(x,y,s,{t,fossil:1}) forgotten banana lying on a surface (x,y = bottom centre), fossil = brown with spots + a buzzing fly
+function worksheet3(x,y,s=1,o={}){const cr=C(o.crumple||0),w=300,h=400;X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ X.globalAlpha=.18;rr(-w/2+10,-h/2+14,w,h,10,'#000',0);X.globalAlpha=1;
+ path(()=>{const j=cr*14;X.moveTo(-w/2,-h/2+j);X.lineTo(-w/6,-h/2-j);X.lineTo(w/6,-h/2+j*.6);X.lineTo(w/2,-h/2-j*.4);X.lineTo(w/2+j*.5,0);X.lineTo(w/2,h/2-j);X.lineTo(w/6,h/2+j*.7);X.lineTo(-w/6,h/2-j*.5);X.lineTo(-w/2,h/2+j);X.lineTo(-w/2-j*.6,0);X.closePath()},'#fffdf4',6);
+ rr(-w/2+24,-h/2+26,150,18,6,'#3a3a46',0);
+ for(let k=0;k<7;k++){const yy=-h/2+80+k*42;line([[-w/2+24,yy],[w/2-24,yy]],3,'#b9c6dc');if(o.written&&k<Math.ceil(C(o.written)*7))line([[-w/2+30,yy-10],[-w/2+30+(160+((k*53)%80))*C(o.written*7-k),yy-12]],4,'#2a4fa0')}
+ if(cr>0){X.globalAlpha=.55*cr;line([[-w/2+20,-60],[0,-20],[w/2-30,-80]],3,'#c8c2ae');line([[-w/2+40,90],[20,50],[w/2-20,120]],3,'#c8c2ae');line([[-30,-h/2+10],[10,0],[-20,h/2-10]],3,'#c8c2ae');X.globalAlpha=1}
+ if(o.stamp){X.save();X.translate(0,40);X.rotate(-.2);rr(-150,-36,300,72,10,'rgba(255,255,255,.8)',0);X.strokeStyle='#e0332d';X.lineWidth=7;X.strokeRect(-150,-36,300,72);txt(o.stamp,0,2,33,'#e0332d',0);X.restore()}
+ X.restore()}
+function banana3(x,y,s=1,o={}){const t=o.t||0,f=o.fossil;X.save();X.translate(x,y);X.scale(s,s);X.globalAlpha=.2;ell(0,4,120,12,'#000',0);X.globalAlpha=1;
+ path(()=>{X.moveTo(-120,-40);X.quadraticCurveTo(0,44,120,-50);X.quadraticCurveTo(0,-14,-120,-40);X.closePath()},f?'#c9922e':'#ffd84a',6);
+ path(()=>{X.moveTo(-110,-30);X.quadraticCurveTo(0,20,110,-46)},null,3,f?'#4a3018':'#d9a820');
+ if(f){for(const [a,b,r] of [[-60,-14,8],[-10,-8,10],[40,-14,7],[80,-28,6]])circ(a,b,r,'#3a2414',0)}
+ rr(112,-60,22,16,5,'#3a2a14',4);
+ if(f){const fx=Math.sin(t*3.1)*70,fy=-110+Math.cos(t*4.3)*30;circ(fx,fy,9,'#151515',0);X.globalAlpha=.6;ell(fx-8,fy-10,9,5,'#dfe8ff',2,-.5);ell(fx+8,fy-10,9,5,'#dfe8ff',2,.5);X.globalAlpha=1;
+  X.globalAlpha=.5;for(let k=0;k<3;k++){const p=((t*.8+k/3)%1);path(()=>{X.moveTo(-30+k*30,-30-p*90);X.quadraticCurveTo(-10+k*30,-50-p*90,-30+k*30,-70-p*90)},null,4,'#7fb34a')}X.globalAlpha=1}
+ X.restore()}
