@@ -1458,3 +1458,16 @@ function fbowl3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s
  X.fillStyle='rgba(255,255,255,.25)';X.beginPath();X.moveTo(-150,-90);X.quadraticCurveTo(-140,-30,-90,-18);X.quadraticCurveTo(-130,-50,-130,-90);X.fill();
  rr(-178,-110,356,20,10,'#7cc3ff',6);
  X.restore()}
+// wallcal3(x,y,s,o): hanging wall calendar (nail + string at x,y top). o.month ('OCTOBER'), o.pic (emoji for the picture page, e.g. '🎃'), o.cob (0..1 cobweb in the top corner),
+//   o.ring (0..1 red circle on day o.day), o.day (1..31), o.first (0=Mon..6 weekday of the 1st), o.sway (time -> gentle swing), o.col (month bar colour). 2026-11-24 craft ladder (Remind Mom).
+function wallcal3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);if(o.sway!=null)X.rotate(Math.sin(o.sway*2.2)*.025);
+ circ(0,0,9,'#7a5a3a',4);line([[0,0],[-70,70]],4,'#5a4a3a');line([[0,0],[70,70]],4,'#5a4a3a');
+ X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=18;X.shadowOffsetY=8;rr(-160,64,320,440,14,'#fffdf7',6);X.shadowColor='transparent';X.shadowOffsetY=0;
+ for(let k=-5;k<=5;k++)circ(k*28,72,5,'#9aa0a8',0);
+ rr(-140,92,280,170,10,o.bg||'#f6b04a',0);X.save();X.globalAlpha=.25;circ(-80,130,60,'#fff',0);X.restore();
+ txt(o.pic||'🎃',0,182,110,'#111',0,'400 ');
+ rr(-140,272,280,56,8,o.col||'#e0533d',0);txt(o.month||'OCTOBER',0,301,40,'#fff',0,'900 ');
+ const f=o.first||0;for(let d=1;d<=30;d++){const i=d-1+f,cx=-120+(i%7)*40,cy=354+Math.floor(i/7)*30;X.fillStyle='#4a4f57';X.font="700 19px Inter";X.textAlign='center';X.textBaseline='middle';X.fillText(d,cx,cy);
+  if(o.ring&&d===o.day){X.save();X.globalAlpha=C(o.ring);X.strokeStyle='#ff3b30';X.lineWidth=5;X.beginPath();X.ellipse(cx,cy,24,18,0,0,7*C(o.ring));X.stroke();X.restore()}}
+ if(o.cob){cobweb(160,70,120,-Math.PI/2,0,o.cob);cobweb(-160,70,90,Math.PI,Math.PI*1.5,o.cob)}
+ X.restore()}
