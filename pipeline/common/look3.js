@@ -1357,3 +1357,46 @@ function dishtower3(x,y,s=1,o={}){const t=o.t||0,n=o.n||13,wb=(o.wob==null?1:o.w
  line([[dx-70,yy+20],[dx-150,yy-110]],10,'#2b2b2b');line([[dx+60,yy-10],[dx+120,yy-120]],7,'#b7c0ca');
  X.restore();
  if(o.stink)stink(x+20*s,y-(n*28+120)*s,t,o.stink,.8*s)}
+
+// ---- 2026-11-24 09:00 craft ladder: stairs3() staircase with banister, clothespile3() teen 'floordrobe' mountain, lbasket3() wicker laundry basket ----
+// stairs3(x,y,{n,w,h,col,warm}) staircase rising to the RIGHT: (x,y) = floor point at the foot of the first step; returns {tx,ty} = top landing point
+function stairs3(x,y,o={}){const n=o.n||7,w=o.w||62,h=o.h||70,tr=o.col||'#b9814f',ri=o.riser||'#fff8ef';X.save();X.lineJoin='round';
+ // side stringer (the wall-side mass under the steps)
+ path(()=>{X.moveTo(x,y);for(let k=0;k<n;k++){X.lineTo(x+k*w,y-(k+1)*h);X.lineTo(x+(k+1)*w,y-(k+1)*h)}X.lineTo(x+n*w+400,y-n*h);X.lineTo(x+n*w+400,y);X.closePath()},o.side||'#e9d3b4',7);
+ for(let k=0;k<n;k++){const sx=x+k*w,sy=y-(k+1)*h;rr(sx-6,sy,w+12,h,4,ri,5);rr(sx-10,sy-14,w+20,20,6,tr,5)}
+ const lx=x+n*w,ly=y-n*h;rr(lx-10,ly-14,420,22,6,tr,5);
+ // banister: posts + rail
+ const rail=(k)=>[x+k*w+w*.5,y-(k+1)*h-190];
+ for(let k=0;k<n;k++){const[px,py]=rail(k);line([[px,py],[px,y-(k+1)*h-14]],7,'#3a2a20')}
+ rr(x-24,y-h-250,30,250,8,tr,6);circ(x-9,y-h-262,20,tr,6);
+ line([[x-9,y-h-235],[x+n*w,ly-205]],18,'#151515');line([[x-9,y-h-235],[x+n*w,ly-205]],10,tr);
+ X.restore();return{tx:lx+120,ty:ly-14}}
+// clothespile3(x,y,s,{t,stink,n}) a heaped mountain of clothes, (x,y) = floor point under its centre; jumpers, jeans, tees, socks, one sock on top waving
+function clothespile3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);X.lineJoin='round';X.globalAlpha=.22;ell(0,8,330,34,'#000',0);X.globalAlpha=1;
+ const cols=['#2f4f8a','#e86a5a','#4caf7a','#ffb02e','#7a5ac8','#3a3a48','#5fb4ff','#d9577a','#8a6a4a','#f1f1f1'];
+ // body of the mound
+ path(()=>{X.moveTo(-320,0);X.quadraticCurveTo(-300,-170,-170,-260);X.quadraticCurveTo(-60,-390,40,-380);X.quadraticCurveTo(170,-360,240,-230);X.quadraticCurveTo(330,-120,320,0);X.closePath()},'#4a5a8a',8);
+ // garments: jumpers, tees and hoodies tumbling over the mound
+ jumper3(-190,-150,.62,{col:'#e86a5a',rot:-.5,drape:.7});jumper3(150,-170,.6,{col:'#ffb02e',rot:.45,drape:.6});
+ hoodie(-30,-330,.62,'#4caf7a');jumper3(-60,-120,.66,{col:'#2f4f8a',rot:.1,drape:.5});
+ jumper3(230,-80,.5,{col:'#7a5ac8',rot:.9,drape:.8});jumper3(-260,-60,.46,{col:'#f1f1f1',rot:-1.0,drape:.8});
+ jumper3(60,-260,.5,{col:'#d9577a',rot:-.25,drape:.6});
+ // sleeves / trouser legs flopping out
+ const leg=(x0,y0,x1,y1,c,wd)=>{X.lineCap='round';X.strokeStyle='#151515';X.lineWidth=wd+12;X.beginPath();X.moveTo(x0,y0);X.quadraticCurveTo((x0+x1)/2,y0-30,x1,y1);X.stroke();X.strokeStyle=c;X.lineWidth=wd;X.stroke()};
+ leg(-280,-60,-380,-6,'#2f4f8a',46);leg(250,-60,370,-10,'#3a3a48',52);leg(120,-250,250,-300,'#e86a5a',36);leg(-160,-250,-260,-310,'#4caf7a',34);
+ // socks scattered + one on the summit
+ sock3(-120,-6,.32,{rot:1.4});sock3(300,-4,.28,{rot:-1.3});
+ X.save();X.translate(10,-370);X.rotate(Math.sin(t*2.4)*.12);sock3(0,0,.42,{t});X.restore();
+ if(o.stink)stink(0,-300,t,o.stink,1.1);
+ X.restore()}
+// lbasket3(x,y,s,{full,web,t}) wicker laundry basket, (x,y) = floor point under its centre; full = clothes poking out, web = cobweb inside (empty basket gag)
+function lbasket3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);X.lineJoin='round';X.globalAlpha=.22;ell(0,6,130,16,'#000',0);X.globalAlpha=1;
+ const f=C(o.full||0);
+ if(f>0){X.save();X.translate(0,(1-f)*120);ell(-40,-250,70,40,'#e86a5a',6,.3);ell(40,-260,80,44,'#2f4f8a',6,-.2);ell(0,-290,60,34,'#4caf7a',6);sock3(70,-290,.3,{rot:-.6,clean:0});X.restore()}
+ path(()=>{X.moveTo(-120,-250);X.lineTo(120,-250);X.lineTo(100,0);X.lineTo(-100,0);X.closePath()},'#d8b27a',7);
+ X.save();X.beginPath();X.moveTo(-120,-250);X.lineTo(120,-250);X.lineTo(100,0);X.lineTo(-100,0);X.closePath();X.clip();
+ X.strokeStyle='rgba(120,80,30,.45)';X.lineWidth=5;for(let k=-6;k<=6;k++){X.beginPath();X.moveTo(k*22,-250);X.lineTo(k*18,0);X.stroke()}
+ for(let j=1;j<6;j++){X.beginPath();X.moveTo(-130,-250+j*42);X.lineTo(130,-250+j*42);X.stroke()}X.restore();
+ rr(-132,-266,264,28,12,'#c79a5e',7);rr(-60,-215,120,34,16,'rgba(0,0,0,.25)',0);
+ if(o.web)cobweb(-112,-240,110,0,Math.PI/2,o.web);
+ X.restore()}
