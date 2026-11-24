@@ -1519,3 +1519,21 @@ function cupcakes3(x,y,s=1,o={}){const t=o.t||0,n=o.n??12;X.save();X.translate(x
   const c=cols[i%4];X.fillStyle=c;X.strokeStyle='#151515';X.lineWidth=5;X.beginPath();X.moveTo(-56,-54);X.bezierCurveTo(-70,-120,-10,-130,0,-150);X.bezierCurveTo(10,-130,70,-120,56,-54);X.closePath();X.fill();X.stroke();
   for(let q=0;q<5;q++)rr(-30+q*14,-100+((q*37)%3)*14,10,4,2,['#ff5a7a','#4a8fe0','#fff','#ffb02e'][q%4],0);X.restore()}
  if(o.shine)sparkles(0,-120,(t*.7)%1,10,260,'#fff7b0');X.restore()}
+
+// ---- craft ladder 2026-11-24 22:00 (hidden present video) ----
+// thought3(x,y,r,a,tx,ty,fn): white cartoon thought cloud centred (x,y), radius ~r, with 3 trailing bubbles toward the
+// thinker's head at (tx,ty); fn(x,y) draws the content clipped inside the cloud. a = 0..1 pop-in (scale + alpha).
+function thought3(x,y,r,a,tx,ty,fn){if(a<=0)return;const s=.6+.4*eo(C(a));X.save();X.globalAlpha=C(a*1.4);
+ for(let k=0;k<3;k++){const f=.25+k*.22,bx=lerp(tx,x,f),by=lerp(ty,y+r*.7,f),br=(14+k*10)*s;circ(bx,by,br,'#fff',5)}
+ X.translate(x,y);X.scale(s,s);X.shadowColor='rgba(0,0,0,.22)';X.shadowBlur=24;
+ const bl=[[0,0,r*.78],[-r*.62,r*.12,r*.5],[r*.62,r*.1,r*.52],[-r*.32,-r*.42,r*.5],[r*.34,-r*.44,r*.5],[0,r*.42,r*.52]];
+ X.fillStyle='#fff';X.beginPath();for(const b of bl){X.moveTo(b[0]+b[2],b[1]);X.arc(b[0],b[1],b[2],0,7)}X.fill();X.shadowColor='transparent';
+ X.strokeStyle='#151515';X.lineWidth=6;for(const b of bl){X.beginPath();X.arc(b[0],b[1],b[2],0,7);X.stroke()}
+ X.fillStyle='#fff';X.beginPath();for(const b of bl){X.moveTo(b[0]+b[2]-5,b[1]);X.arc(b[0],b[1],b[2]-5,0,7)}X.fill();
+ if(fn){X.save();X.beginPath();X.arc(0,0,r*.95,0,7);X.clip();fn(0,0);X.restore()}X.restore()}
+// redcase3(x,y,s,o): small hard-shell red suitcase lying flat on a shelf, (x,y)=bottom centre; o.open 0..1 lid up, o.gift shows a wrapped present inside
+function redcase3(x,y,s=1,o={}){const op=C(o.open||0);X.save();X.translate(x,y);X.scale(s,s);gshadow(0,2,150,.25);
+ rr(-150,-90,300,90,16,'#e0533d',6);for(const k of[-60,0,60])line([[k,-80],[k,-10]],4,'rgba(0,0,0,.18)');
+ if(o.gift&&op>.2){X.save();X.beginPath();X.rect(-140,-260,280,180);X.clip();gift(0,-70,.55,{col:'#4a8fe0',rib:'#ffd23f'});X.restore()}
+ X.save();X.translate(150,-90);X.rotate(op*1.05);rr(-300,-36,300,36,14,'#c9432f',6);rr(-180,-52,60,18,8,'#333',0);X.restore();
+ if(op<.2){rr(-30,-142,60,18,8,'#333',0)}X.restore()}
