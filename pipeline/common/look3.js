@@ -110,6 +110,7 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  if(M=='smile'){X.moveTo(-34,52);X.quadraticCurveTo(0,76,34,52);X.stroke()}
  else if(M=='smirk'){X.moveTo(-30,60);X.quadraticCurveTo(10,66,40,46);X.stroke()}
  else if(M=='frown'){X.moveTo(-28,68);X.quadraticCurveTo(0,52,28,68);X.stroke()}
+ else if(M=='flat'){X.moveTo(-26,62);X.lineTo(26,62);X.stroke()}
  else if(M=='flat'){X.moveTo(-22,62);X.lineTo(22,62);X.stroke()}
  else if(M=='wavy'){X.moveTo(-34,62);X.quadraticCurveTo(-17,50,0,62);X.quadraticCurveTo(17,74,34,62);X.stroke()}
  else if(M=='o'){X.fillStyle='#5a1414';X.ellipse(0,62,16,20,0,0,7);X.fill();X.stroke()}
@@ -1557,3 +1558,24 @@ function foamHat3(hx,hy,s,t){X.save();X.fillStyle='#ffffff';X.strokeStyle='#bcd6
 function towel3(hx,hy,s,p,col='#5fb3a8'){if(p<=0)return;const y=lerp(hy-900*s,hy-120*s,eo(C(p)));X.save();X.translate(hx,y);X.scale(s,s);
  X.fillStyle=col;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-200,40);X.quadraticCurveTo(-210,-140,0,-150);X.quadraticCurveTo(210,-140,200,40);X.lineTo(230,260);X.lineTo(150,250);X.lineTo(140,60);X.quadraticCurveTo(0,0,-140,60);X.lineTo(-150,250);X.lineTo(-230,260);X.closePath();X.fill();X.stroke();
  X.strokeStyle='rgba(255,255,255,.55)';X.lineWidth=10;X.beginPath();X.moveTo(-215,200);X.lineTo(-160,205);X.moveTo(160,205);X.lineTo(215,200);X.stroke();X.restore()}
+
+// 2026-11-25 craft ladder: sticky notes + bouquet
+// sticky3(x,y,s,o): square sticky note with an emoji icon; o.icon, o.col (paper), o.rot, o.a (alpha). Curled bottom-right corner + soft drop shadow.
+function sticky3(x,y,s=1,o={}){const a=o.a==null?1:o.a;if(a<=0||s<=0)return;X.save();X.globalAlpha=C(a);X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ X.shadowColor='rgba(0,0,0,.28)';X.shadowBlur=14;X.shadowOffsetY=6;
+ path(()=>{X.moveTo(-58,-58);X.lineTo(58,-58);X.lineTo(58,34);X.quadraticCurveTo(50,52,30,58);X.lineTo(-58,58);X.closePath()},o.col||'#ffe066',5);
+ X.shadowColor='transparent';X.fillStyle='rgba(0,0,0,.08)';X.fillRect(-58,-58,116,18);
+ path(()=>{X.moveTo(58,34);X.quadraticCurveTo(40,38,30,58);X.quadraticCurveTo(46,48,58,34);X.closePath()},'rgba(0,0,0,.18)',3);
+ if(o.icon){X.fillStyle='#000';X.font="60px 'Noto Color Emoji'";X.textAlign='center';X.textBaseline='middle';X.fillText(o.icon,0,6)}
+ X.restore()}
+// stickyCoat3(x,y,s,notes,t,flap): a cloud of sticky notes stuck on a character standing at feet (x,y) scale s; notes=[[dx,dy,icon,col,rot],...] (dx,dy in character units); flap=1 makes them flutter
+function stickyCoat3(x,y,s,notes,t=0,flap=0){notes.forEach((n,k)=>{const w=flap?Math.sin(t*7+k*1.7)*.06:0;sticky3(x+n[0]*s,y+n[1]*s,.9*s,{icon:n[2],col:n[3],rot:n[4]+w})})}
+// bouquet3(x,y,s,o): flower bouquet held at (x,y) (the wrap's bottom tip); o.t sways the heads
+function bouquet3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);X.rotate(Math.sin(t*2)*.04);
+ for(let k=-3;k<=3;k++){line([[0,0],[k*22,-150]],6,'#3f8f3a')}
+ const fl=[[-60,-170,'#ff5a7a'],[0,-200,'#ffd23f'],[60,-172,'#ff8fb1'],[-30,-230,'#ffffff'],[34,-232,'#ff5a7a'],[-80,-215,'#ffd23f'],[82,-214,'#ffffff']];
+ for(const[fx,fy,c]of fl){for(let p=0;p<5;p++){const a=p/5*Math.PI*2+t*.3;circ(fx+Math.cos(a)*20,fy+Math.sin(a)*20,16,c,4)}circ(fx,fy,12,'#f2a33a',4)}
+ for(const[lx,ly,r]of[[-95,-150,-.6],[95,-150,.6]]){X.save();X.translate(lx,ly);X.rotate(r);ell(0,0,16,34,'#4fae4a',4);X.restore()}
+ path(()=>{X.moveTo(-110,-150);X.lineTo(110,-150);X.lineTo(14,20);X.lineTo(-14,20);X.closePath()},'#f4e7d0',6);
+ path(()=>{X.moveTo(-40,-60);X.lineTo(40,-60);X.lineTo(26,-30);X.lineTo(-26,-30);X.closePath()},'#e2483d',4);
+ X.restore()}
