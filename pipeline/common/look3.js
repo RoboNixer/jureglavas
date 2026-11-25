@@ -1633,3 +1633,25 @@ function desk3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);
  if(o.lit){X.fillStyle='rgba(255,255,255,.75)';for(let k=0;k<4;k++)X.fillRect(mx-110,-290+k*34,170-k*30,14)}
  line([[mx,-130],[mx,-14]],14,'#2a2f3a');rr(mx-70,-22,140,18,8,'#2a2f3a',0);
  X.restore()}
+
+// 2026-11-25 20:00 craft ladder: pizza3() whole pizza on a board (o.gone = slices eaten 0..8, o.steam), slice3() a hand-held slice, frame3() a framed photo of two friends (o.web = cobweb, o.fade)
+function pizza3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);const gone=o.gone||0,t=o.t||0;
+ X.globalAlpha=.22;ell(0,18,200,30,'#000',0);X.globalAlpha=1;ell(0,6,196,58,'#b07a45',5);ell(0,0,188,54,'#c98d52',0);
+ for(let k=0;k<8;k++){if(k<gone)continue;const a0=k/8*Math.PI*2,a1=(k+1)/8*Math.PI*2;
+  X.beginPath();X.moveTo(0,-6);X.ellipse(0,-6,170,48,0,a0,a1);X.closePath();X.fillStyle='#e8a54e';X.fill();X.lineWidth=5;X.strokeStyle='#151515';X.stroke();
+  X.beginPath();X.moveTo(0,-6);X.ellipse(0,-6,148,40,0,a0+.04,a1-.04);X.closePath();X.fillStyle='#d9452f';X.fill();
+  X.beginPath();X.moveTo(0,-6);X.ellipse(0,-6,140,37,0,a0+.08,a1-.08);X.closePath();X.fillStyle='#ffd77a';X.fill();
+  const am=(a0+a1)/2;for(const rr2 of[.45,.78]){const px=Math.cos(am+(rr2>.6?.12:-.1))*140*rr2,py=-6+Math.sin(am+(rr2>.6?.12:-.1))*37*rr2;ell(px,py,16,6.5,'#b8262a',3)}
+  ell(Math.cos(am)*95,-6+Math.sin(am)*26,6,3,'#3d8a3a',0)}
+ if(o.steam)for(let k=0;k<3;k++){const z=((t*.5+k/3)%1);X.save();X.globalAlpha=(1-z)*.55;line([[-60+k*60,-30-z*200],[-50+k*60+Math.sin(z*8+k)*14,-70-z*200]],8,'#ffffff');X.restore()}
+ X.restore()}
+function slice3(x,y,s=1,rot=0){X.save();X.translate(x,y);X.rotate(rot);X.scale(s,s);
+ X.beginPath();X.moveTo(0,40);X.lineTo(-44,-60);X.quadraticCurveTo(0,-82,44,-60);X.closePath();X.fillStyle='#ffd77a';X.fill();X.lineWidth=5;X.strokeStyle='#151515';X.stroke();
+ X.beginPath();X.moveTo(-46,-58);X.quadraticCurveTo(0,-84,46,-58);X.lineWidth=16;X.strokeStyle='#d9964e';X.stroke();X.lineWidth=4;X.strokeStyle='#151515';X.stroke();
+ ell(-10,-30,10,8,'#b8262a',3);ell(14,-10,9,7,'#b8262a',3);ell(-2,12,7,6,'#b8262a',3);X.restore()}
+function frame3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);rr(-110,-85,220,170,10,'#7a5236',6);rr(-92,-68,184,136,6,o.fade?'#c9cdd6':'#bfe4f7',0);
+ X.save();X.globalAlpha=o.fade?.55:1;rr(-92,10,184,58,0,o.fade?'#b9bcc4':'#8fd18a',0);
+ for(const [hx,c] of [[-40,'#fff'],[40,'#fff']]){line([[hx,10],[hx,50]],6,'#151515');circ(hx,-14,26,c,5)}
+ X.fillStyle='#e2508a';circ(40,-40,12,'#e2508a',4);arc0(-40,-12);arc0(40,-12);X.restore();
+ if(o.web)cobweb(-92,-68,90,0,Math.PI/2,.9);X.restore()
+ function arc0(cx,cy){X.beginPath();X.arc(cx,cy,12,.2,Math.PI-.2);X.lineWidth=4;X.strokeStyle='#151515';X.stroke()}}
