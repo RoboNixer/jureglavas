@@ -1579,3 +1579,9 @@ function bouquet3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale
  path(()=>{X.moveTo(-110,-150);X.lineTo(110,-150);X.lineTo(14,20);X.lineTo(-14,20);X.closePath()},'#f4e7d0',6);
  path(()=>{X.moveTo(-40,-60);X.lineTo(40,-60);X.lineTo(26,-30);X.lineTo(-26,-30);X.closePath()},'#e2483d',4);
  X.restore()}
+// splitPanel3(i,draw,t,o): split-screen before/after. i=0 top half, i=1 bottom half. draw(t) paints in WORLD coords (1080x1920);
+// o.cx,o.cy = world point shown at the panel centre, o.k = zoom. Adds a soft vignette and a white divider. Use with NOFX=1.
+function splitPanel3(i,draw,t,o={}){const k=o.k||.78,h=960,y0=i*h;X.save();X.setTransform(1,0,0,1,0,0);X.beginPath();X.rect(0,y0,1080,h);X.clip();
+ const dx=Math.sin(t*1.2+i)*4,dy=Math.cos(t*1.0+i)*3;X.setTransform(k,0,0,k,540-(o.cx||540)*k+dx,y0+h/2-(o.cy||1300)*k+dy);draw(t);
+ X.setTransform(1,0,0,1,0,0);const g=X.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,'rgba(0,0,0,.18)');g.addColorStop(.25,'rgba(0,0,0,0)');g.addColorStop(.75,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.18)');X.fillStyle=g;X.fillRect(0,y0,1080,h);X.restore();
+ if(i==1){X.save();X.setTransform(1,0,0,1,0,0);X.shadowColor='rgba(0,0,0,.35)';X.shadowBlur=18;X.fillStyle='#fff';X.fillRect(0,y0-6,1080,12);X.restore()}}
