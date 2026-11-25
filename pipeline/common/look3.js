@@ -1585,3 +1585,51 @@ function splitPanel3(i,draw,t,o={}){const k=o.k||.78,h=960,y0=i*h;X.save();X.set
  const dx=Math.sin(t*1.2+i)*4,dy=Math.cos(t*1.0+i)*3;X.setTransform(k,0,0,k,540-(o.cx||540)*k+dx,y0+h/2-(o.cy||1300)*k+dy);draw(t);
  X.setTransform(1,0,0,1,0,0);const g=X.createLinearGradient(0,y0,0,y0+h);g.addColorStop(0,'rgba(0,0,0,.18)');g.addColorStop(.25,'rgba(0,0,0,0)');g.addColorStop(.75,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.18)');X.fillStyle=g;X.fillRect(0,y0,1080,h);X.restore();
  if(i==1){X.save();X.setTransform(1,0,0,1,0,0);X.shadowColor='rgba(0,0,0,.35)';X.shadowBlur=18;X.fillStyle='#fff';X.fillRect(0,y0-6,1080,12);X.restore()}}
+
+// ---- craft ladder 2026-11-25 18:00: kitchen fridge + lunchbox character + office desk ----
+// lunch3(x,y,s,o): lunchbox (lasagna inside) with a little face. o.mood 'sad'|'happy'|'calm', o.lid 0..1 (1 = lid on), o.t
+function lunch3(x,y,s=1,o={}){const m=o.mood||'calm',t=o.t||0;X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ const w=190,h=96;
+ path(()=>{X.moveTo(-w/2,-h);X.lineTo(w/2,-h);X.lineTo(w/2-12,0);X.lineTo(-w/2+12,0);X.closePath()},'rgba(236,246,252,.95)',6);
+ // lasagna layers
+ const ly=[['#e0603a',-h+18],['#f6e0a0',-h+36],['#d9502e',-h+52],['#f6e0a0',-h+68],['#c9472a',-h+82]];
+ for(const [c,yy] of ly){X.fillStyle=c;X.fillRect(-w/2+14,yy,w-28,16)}
+ X.fillStyle='rgba(255,255,255,.5)';X.fillRect(-w/2+14,-h+8,10,h-18);
+ const lid=o.lid==null?1:o.lid;if(lid>0){X.save();X.globalAlpha=lid;rr(-w/2-10,-h-22,w+20,26,10,'#4a8fe0',6);X.restore()}
+ // face on the front
+ const ey=-h*.45,bl=(Math.sin(t*1.7)>.97)?.15:1;
+ for(const dx of[-34,34]){X.fillStyle='#fff';X.beginPath();X.ellipse(dx,ey,17,19*bl,0,0,7);X.fill();X.strokeStyle='#151515';X.lineWidth=4;X.stroke();
+  if(bl>.5){circ(dx+(m==='sad'?-3:3),ey+(m==='sad'?5:0),8,'#151515',0);circ(dx+(m==='sad'?-6:0),ey-4,3,'#fff',0)}}
+ X.strokeStyle='#151515';X.lineWidth=5;X.lineCap='round';X.beginPath();
+ if(m==='sad'){X.arc(0,ey+46,18,3.6,5.8)}else{X.arc(0,ey+22,18,.3,2.84)}X.stroke();
+ if(m==='sad'){X.strokeStyle='#151515';X.lineWidth=4;X.beginPath();X.moveTo(-50,ey-30);X.lineTo(-22,ey-24);X.moveTo(50,ey-30);X.lineTo(22,ey-24);X.stroke();
+  const q=(t*.6)%1;X.globalAlpha=1-q;X.fillStyle='#7cc4ff';X.beginPath();X.ellipse(-40,ey+24+q*30,5,8,0,0,7);X.fill();X.globalAlpha=1}
+ if(m==='happy'){X.globalAlpha=.5;circ(-56,ey+20,10,'#ff8aa0',0);circ(56,ey+20,10,'#ff8aa0',0);X.globalAlpha=1}
+ X.restore()}
+// fridge3(x,y,s,o): tall fridge, (x,y) = bottom centre on the floor. o.open 0..1 main door swing (hinge on the right), o.inside(fx,fy) draws items on the middle shelf, o.dark (interior lit at night)
+function fridge3(x,y,s=1,o={}){const op=C(o.open||0),W=320,H=700;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,6,200,22,'#000',0);X.globalAlpha=1;
+ rr(-W/2,-H,W,H,30,'#eef2f5',7);
+ const g=X.createLinearGradient(-W/2,0,W/2,0);g.addColorStop(0,'rgba(255,255,255,.6)');g.addColorStop(.5,'rgba(255,255,255,0)');g.addColorStop(1,'rgba(120,140,160,.18)');X.fillStyle=g;X.beginPath();X.roundRect(-W/2+6,-H+6,W-12,H-12,26);X.fill();
+ line([[-W/2+4,-H+210],[W/2-4,-H+210]],6,'#151515');
+ line([[-W/2+40,-H+60],[-W/2+40,-H+160]],12,'#9aa7b2');
+ // interior (visible when open)
+ if(op>0){X.save();rr(-W/2+14,-H+224,W-28,H-238,18,o.dark?'#fff6d6':'#f4fbff',5);glow(0,-H+430,260,'255,245,200',.55*op);
+  for(const sy of[-H+330,-H+500])line([[-W/2+20,sy],[W/2-20,sy]],5,'rgba(140,170,190,.8)');
+  pmugLike(-80,-H+500);X.fillStyle='#ffd23f';X.beginPath();X.ellipse(70,-H+485,34,14,0,0,7);X.fill();X.strokeStyle='#151515';X.lineWidth=4;X.stroke();
+  if(o.inside)o.inside(0,-H+330);X.restore()}
+ // main door: closed = full front; opening = panel shrinking towards the right hinge + swinging edge
+ const dw=(W-8)*Math.cos(op*Math.PI*.5);
+ if(op<1){X.save();rr(W/2-4-dw,-H+214,dw,H-218,22,'#e8edf1',7);if(dw>60)line([[W/2-4-dw+34,-H+260],[W/2-4-dw+34,-H+420]],12,'#9aa7b2');X.restore()}
+ if(op>0){const ow=(W*.9)*Math.sin(op*Math.PI*.5);path(()=>{X.moveTo(W/2-4,-H+214);X.lineTo(W/2-4+ow,-H+190);X.lineTo(W/2-4+ow,-30);X.lineTo(W/2-4,-8);X.closePath()},'#dfe5ea',7);
+  for(const k of[0,1,2])line([[W/2+ow*.15,-H+330+k*130],[W/2-4+ow*.9,-H+322+k*130]],6,'rgba(120,150,170,.8)')}
+ X.restore()}
+function pmugLike(x,y){rr(x-40,y-80,80,80,10,'#ffffff',5);rr(x-40,y-80,80,22,8,'#7bb36a',5)}
+// desk3(x,y,s,o): office desk with a monitor; (x,y) = desk top centre. o.lit monitor glow
+function desk3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);
+ line([[-380,20],[-400,420]],18,'#5a4030');line([[380,20],[400,420]],18,'#5a4030');
+ rr(-440,-10,880,46,12,'#c99a6a',7);
+ const mx=o.mx==null?-250:o.mx;rr(mx-150,-330,300,200,16,'#2a2f3a',7);rr(mx-132,-312,264,164,8,o.lit?'#7fb8e8':'#3c4a62',0);
+ if(o.lit){X.fillStyle='rgba(255,255,255,.75)';for(let k=0;k<4;k++)X.fillRect(mx-110,-290+k*34,170-k*30,14)}
+ line([[mx,-130],[mx,-14]],14,'#2a2f3a');rr(mx-70,-22,140,18,8,'#2a2f3a',0);
+ X.restore()}
