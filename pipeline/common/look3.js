@@ -1537,3 +1537,23 @@ function redcase3(x,y,s=1,o={}){const op=C(o.open||0);X.save();X.translate(x,y);
  if(o.gift&&op>.2){X.save();X.beginPath();X.rect(-140,-260,280,180);X.clip();gift(0,-70,.55,{col:'#4a8fe0',rib:'#ffd23f'});X.restore()}
  X.save();X.translate(150,-90);X.rotate(op*1.05);rr(-300,-36,300,36,14,'#c9432f',6);rr(-180,-52,60,18,8,'#333',0);X.restore();
  if(op<.2){rr(-30,-142,60,18,8,'#333',0)}X.restore()}
+
+// ---- 2026-11-25 09:00 craft ladder: tooth3()/toothBadge() cartoon molar (🦷 emoji is missing from the render font), brainGuy3() pink talking brain character, foamHat3() shampoo foam on a head, towel3() towel dropped over a head. Example: pipeline/examples/shower_look3
+// tooth3: a cartoon molar (x,y centre); toothBadge: white round badge with the tooth (emoji 🦷 is missing from the render font)
+function tooth3(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);X.fillStyle='#ffffff';X.strokeStyle='#151515';X.lineWidth=6;X.lineJoin='round';
+ X.beginPath();X.moveTo(-38,-30);X.bezierCurveTo(-46,-62,-14,-66,0,-50);X.bezierCurveTo(14,-66,46,-62,38,-30);X.bezierCurveTo(34,0,30,20,24,52);X.bezierCurveTo(20,66,8,62,6,46);X.lineTo(0,18);X.lineTo(-6,46);X.bezierCurveTo(-8,62,-20,66,-24,52);X.bezierCurveTo(-30,20,-34,0,-38,-30);X.closePath();X.fill();X.stroke();
+ X.strokeStyle='rgba(120,170,220,.7)';X.lineWidth=5;X.beginPath();X.arc(-14,-30,10,3.6,5.2);X.stroke();X.restore()}
+function toothBadge(x,y,s=1,a=1){if(a<=0||s<=0)return;X.save();X.globalAlpha=C(a);X.translate(x,y);X.scale(s,s);X.shadowColor='rgba(0,0,0,.25)';X.shadowBlur=14;circ(0,0,62,'#fff',6);X.shadowColor='transparent';tooth3(0,4,.82);X.restore()}
+// pink brain character: sm() with a pink head + brain folds; x,y = feet
+function brainGuy3(x,y,s,o={}){sm(x,y,s,Object.assign({col:'#f7a8c8',limb:'#151515'},o));
+ const hy=y-767*s;X.save();X.strokeStyle='rgba(190,60,110,.55)';X.lineWidth=9*s;X.lineCap='round';
+ for(const [dx,dy,r,a0,a1] of [[-70,-120,55,3.4,5.6],[40,-140,60,3.6,6.0],[-10,-60,45,3.3,5.9],[100,-60,40,4.2,6.4],[-110,-40,38,3.2,5.0]]){X.beginPath();X.arc(x+dx*s,hy+dy*s,r*s,a0,a1);X.stroke()}
+ X.beginPath();X.moveTo(x,hy-190*s);X.quadraticCurveTo(x+18*s,hy-120*s,x,hy-70*s);X.stroke();X.restore()}
+// shampoo foam on top of a head (hx,hy = head centre)
+function foamHat3(hx,hy,s,t){X.save();X.fillStyle='#ffffff';X.strokeStyle='#bcd6e6';X.lineWidth=4*s;
+ for(let k=0;k<11;k++){const a=Math.PI*(1.05+k/10*.9),rr0=170*s,bx=hx+Math.cos(a)*rr0*.95,by=hy+Math.sin(a)*rr0*.85-30*s,r=(46+rnd(k)*26)*s+Math.sin(t*5+k)*2*s;X.beginPath();X.arc(bx,by,r,0,7);X.fill();X.stroke()}
+ for(let k=0;k<6;k++){const q=(t*.7+k/6)%1;X.globalAlpha=1-q;X.beginPath();X.arc(hx-120*s+k*48*s+Math.sin(t*3+k)*12*s,hy-200*s-q*220*s,(8+rnd(k+3)*10)*s,0,7);X.fill();X.stroke()}X.restore()}
+// towel dropped over a head; p 0..1 = falling in
+function towel3(hx,hy,s,p,col='#5fb3a8'){if(p<=0)return;const y=lerp(hy-900*s,hy-120*s,eo(C(p)));X.save();X.translate(hx,y);X.scale(s,s);
+ X.fillStyle=col;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-200,40);X.quadraticCurveTo(-210,-140,0,-150);X.quadraticCurveTo(210,-140,200,40);X.lineTo(230,260);X.lineTo(150,250);X.lineTo(140,60);X.quadraticCurveTo(0,0,-140,60);X.lineTo(-150,250);X.lineTo(-230,260);X.closePath();X.fill();X.stroke();
+ X.strokeStyle='rgba(255,255,255,.55)';X.lineWidth=10;X.beginPath();X.moveTo(-215,200);X.lineTo(-160,205);X.moveTo(160,205);X.lineTo(215,200);X.stroke();X.restore()}
