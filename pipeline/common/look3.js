@@ -1743,3 +1743,42 @@ function chickenDish3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.s
  rr(-280,-6,40,26,10,'#d9d0c4',5);rr(240,-6,40,26,10,'#d9d0c4',5);
  if(o.steam){for(let k=0;k<4;k++){const ph=(t*.6+k/4)%1;X.globalAlpha=.55*(1-ph);circ(-90+k*60+Math.sin(t*2+k)*10,-90-ph*170,18+ph*26,'#ffffff',0)}X.globalAlpha=1}
  X.restore()}
+
+// ---------- craft ladder 2026-11-26 14:00 (filter jug): jug3() water-filter jug, cartridge3() filter cartridge (clean -> slimy green, marker label), fbox3() plain filter box, wglass3() glass of water (murky tint) ----------
+function _mixc(a,b,k){const p=s=>[1,3,5].map(i=>parseInt(s.slice(i,i+2),16));const A=p(a),B=p(b);return'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')+')'}
+// cartridge3(x,y,s,{dirty:0..1, label:'JUNE', t, stink}) centred at x,y (about 150 x 260 px at s=1)
+function cartridge3(x,y,s=1,o={}){const d=o.dirty||0;X.save();X.translate(x,y);X.scale(s,s);
+ rr(-62,-130,124,40,14,'#f4f6f8',7);rr(-44,-150,88,26,10,'#e8ecef',6);
+ rr(-70,-96,140,210,30,_mixc('#eef3f6','#4f6b2c',d),8);
+ X.save();X.beginPath();X.roundRect(-70,-96,140,210,30);X.clip();
+ for(let k=0;k<6;k++)line([[-70,-70+k*34],[70,-60+k*34]],6,`rgba(255,255,255,${.35-d*.25})`);
+ if(d>.3){X.globalAlpha=C((d-.3)/.5);for(let k=0;k<9;k++){const px=-50+rnd(k+11)*100,py=-80+rnd(k+21)*180;ell(px,py,10+rnd(k+3)*16,8+rnd(k+5)*10,'#2f4a18',0)}
+  for(let k=0;k<4;k++){const px=-55+k*36;X.strokeStyle='#3d6b22';X.lineWidth=7;X.beginPath();X.moveTo(px,114);X.quadraticCurveTo(px+14+Math.sin((o.t||0)*2+k)*6,60,px+4,20+rnd(k)*20);X.stroke()}X.globalAlpha=1}
+ X.restore();
+ if(o.label){X.save();X.rotate(-.08);rr(-62,-34,124,58,8,'#fffbe8',5);txt(o.label,0,-4,40,'#1b2a8f',0,'900 ');X.restore()}
+ rr(-30,112,60,22,8,'#f4f6f8',6);
+ if(o.stink)stink(0,-120,o.t||0,o.stink,.6);
+ X.restore()}
+// jug3(x,y,s,{dirty,label,murk,water:0..1,lid:0..1 open,t}) clear filter jug standing at y (about 300 x 430 px at s=1)
+function jug3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,6,150,18,'#000',0);X.globalAlpha=1;
+ X.strokeStyle=O;X.lineWidth=26;X.beginPath();X.moveTo(120,-330);X.bezierCurveTo(230,-320,230,-90,120,-80);X.stroke();X.strokeStyle='#cfe3ee';X.lineWidth=14;X.stroke();
+ const w=o.water==null?.55:o.water,wt=-20-w*300;
+ X.save();X.beginPath();X.moveTo(-130,-360);X.lineTo(130,-360);X.lineTo(120,-10);X.quadraticCurveTo(0,4,-120,-10);X.closePath();X.fillStyle='rgba(225,242,252,.55)';X.fill();X.clip();
+ const wg=X.createLinearGradient(0,wt,0,0);const m=o.murk||0;wg.addColorStop(0,m?`rgba(${Math.round(150-40*m)},${Math.round(200-30*m)},${Math.round(230-150*m)},.8)`:'rgba(140,200,240,.75)');wg.addColorStop(1,m?`rgba(${Math.round(110-30*m)},${Math.round(160-20*m)},${Math.round(200-140*m)},.9)`:'rgba(90,160,225,.85)');X.fillStyle=wg;X.fillRect(-140,wt,280,400);
+ line([[-140,wt],[140,wt]],5,'rgba(255,255,255,.8)');X.restore();
+ X.lineWidth=8;X.strokeStyle=O;X.beginPath();X.moveTo(-130,-360);X.lineTo(-120,-10);X.quadraticCurveTo(0,4,120,-10);X.lineTo(130,-360);X.stroke();
+ line([[-95,-320],[-88,-60]],10,'rgba(255,255,255,.75)');
+ cartridge3(0,-240,.62,{dirty:o.dirty||0,label:null,t:o.t});
+ const L=o.lid||0;X.save();X.translate(-140,-360);X.rotate(-L*1.1);rr(0,-40,290,44,18,'#f2f5f7',8);rr(200,-30,70,22,8,'#5ec26a',4);X.restore();
+ X.restore()}
+// fbox3(x,y,s) plain blue filter-cartridge box (no brand), standing at y (about 200 x 260 px at s=1)
+function fbox3(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);rr(-100,-260,200,260,14,'#2f7fd6',8);rr(-100,-260,200,60,14,'#1f62b0',0);rr(-100,-260,200,260,14,null,8);
+ X.save();X.translate(0,-125);X.beginPath();X.moveTo(0,-55);X.bezierCurveTo(40,-5,40,40,0,40);X.bezierCurveTo(-40,40,-40,-5,0,-55);X.fillStyle='#bfe6ff';X.fill();X.lineWidth=6;X.strokeStyle=O;X.stroke();X.restore();
+ txt('FILTER',0,-40,34,'#fff',0,'900 ');txt('×1',0,-228,30,'#fff',0,'900 ');X.restore()}
+// wglass3(x,y,s,{murk:0..1, full}) drinking glass standing at y
+function wglass3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);const m=o.murk||0,f=o.full==null?.7:o.full;
+ X.beginPath();X.moveTo(-46,-150);X.lineTo(46,-150);X.lineTo(38,0);X.lineTo(-38,0);X.closePath();X.fillStyle='rgba(230,245,252,.6)';X.fill();X.save();X.clip();
+ X.fillStyle=m?`rgba(${Math.round(150-50*m)},${Math.round(200-20*m)},${Math.round(230-160*m)},.85)`:'rgba(140,200,240,.75)';X.fillRect(-50,-150*f,100,160);
+ if(m>.4){X.globalAlpha=m;for(let k=0;k<5;k++)circ(-24+rnd(k+7)*48,-20-rnd(k+9)*80,5+rnd(k)*5,'#4f6b2c',0);X.globalAlpha=1}X.restore();
+ X.lineWidth=7;X.strokeStyle=O;X.beginPath();X.moveTo(-46,-150);X.lineTo(-38,0);X.lineTo(38,0);X.lineTo(46,-150);X.stroke();line([[-30,-130],[-26,-20]],7,'rgba(255,255,255,.8)');X.restore()}
