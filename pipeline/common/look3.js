@@ -1782,3 +1782,26 @@ function wglass3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);const m=o.
  X.fillStyle=m?`rgba(${Math.round(150-50*m)},${Math.round(200-20*m)},${Math.round(230-160*m)},.85)`:'rgba(140,200,240,.75)';X.fillRect(-50,-150*f,100,160);
  if(m>.4){X.globalAlpha=m;for(let k=0;k<5;k++)circ(-24+rnd(k+7)*48,-20-rnd(k+9)*80,5+rnd(k)*5,'#4f6b2c',0);X.globalAlpha=1}X.restore();
  X.lineWidth=7;X.strokeStyle=O;X.beginPath();X.moveTo(-46,-150);X.lineTo(-38,0);X.lineTo(38,0);X.lineTo(46,-150);X.stroke();line([[-30,-130],[-26,-20]],7,'rgba(255,255,255,.8)');X.restore()}
+
+// ---- craft ladder 2026-11-26 16:00: schoolPhoto3() school-portrait card + envelope3() email envelope ----
+// schoolPhoto3(x,y,s,{good, frame:0..1 gold frame snaps on, t}) : centred at x,y; card 300x380 * s. bad = band tee + ketchup + bed hair + mid-blink; good = school jumper, neat, smile
+function schoolPhoto3(x,y,s=1,o={}){const w=300*s,h=380*s;X.save();
+ if(o.frame>0){const f=o.frame,b=34*s*f;rr(x-w/2-b-14*s,y-h/2-b-14*s,w+2*b+28*s,h+2*b+28*s,10*s,'#d9a520',6*s);rr(x-w/2-b,y-h/2-b,w+2*b,h+2*b,6*s,'#f2c94c',4*s)}
+ X.save();X.translate(x,y);X.rotate(o.rot||0);
+ rr(-w/2-14*s,-h/2-14*s,w+28*s,h+28*s,8*s,'#ffffff',5*s);
+ X.save();X.beginPath();X.rect(-w/2,-h/2,w,h);X.clip();
+ const g=X.createRadialGradient(-w*.15,-h*.2,10,0,0,h*.8);g.addColorStop(0,'#a9c8ec');g.addColorStop(.6,'#5d86bb');g.addColorStop(1,'#34507e');X.fillStyle=g;X.fillRect(-w/2,-h/2,w,h);
+ for(let i=0;i<18;i++){X.globalAlpha=.12;circ(-w/2+rnd(i+40)*w,-h/2+rnd(i+90)*h,(20+rnd(i+5)*40)*s,'#ffffff',0)}X.globalAlpha=1;
+ const ks=.66*s,fy=-30*s+767*ks;
+ if(o.good)sm(0,fy,ks,{t:o.t||0,hair:'spike',hairc:'#5a3a22',jumper:'#2f4f8a',eyes:'open',brow:'up',mouth:'smile',blush:1,look:[0,0],armL:5,bendL:0,armR:5,bendR:0,noshadow:1});
+ else{sm(0,fy,ks,{t:o.t||0,hair:'spike',hairc:'#5a3a22',tee:'#f4f4f4',eyes:'open',lid:.55,brow:'up',mouth:'grin',look:[.4,-.3],armL:5,bendL:0,armR:5,bendR:0,noshadow:1,tilt:6});
+  const hy=fy-767*ks;X.strokeStyle='#5a3a22';X.lineCap='round';
+  for(let i=0;i<9;i++){const a=-Math.PI/2+(i-4)*.33+(rnd(i+3)-.5)*.3,r0=150*ks,r1=(240+rnd(i+11)*90)*ks;X.lineWidth=(16+rnd(i)*8)*ks;X.beginPath();X.moveTo(Math.cos(a)*r0,hy-60*ks+Math.sin(a)*r0);X.quadraticCurveTo(Math.cos(a+.3)*r1*.8,hy-60*ks+Math.sin(a+.3)*r1*.8,Math.cos(a)*r1,hy-60*ks+Math.sin(a)*r1);X.stroke()}
+  for(const [dx,dy,rr0] of [[-50,250,30],[40,290,24],[-10,340,36],[60,230,16]]){X.fillStyle='#d4231b';X.beginPath();X.ellipse(dx*ks,hy+dy*ks,rr0*ks*1.3,rr0*ks,.4,0,Math.PI*2);X.fill();circ(dx*ks+rr0*ks*1.5,hy+dy*ks+rr0*ks*.7,rr0*ks*.35,'#d4231b',0)}}
+ X.restore();X.lineWidth=3*s;X.strokeStyle='rgba(0,0,0,.25)';X.strokeRect(-w/2,-h/2,w,h);X.restore();X.restore()}
+// envelope3(x,y,s,rot,{tag,a}) : white email envelope 200x130*s with flap lines; optional red tag pill above it
+function envelope3(x,y,s=1,rot=0,o={}){X.save();X.globalAlpha=o.a==null?1:o.a;X.translate(x,y);X.rotate(rot);X.scale(s,s);
+ rr(-100,-65,200,130,12,o.tag?'#fff6f0':'#ffffff',6);X.beginPath();X.moveTo(-94,-58);X.lineTo(0,10);X.lineTo(94,-58);X.strokeStyle='#151515';X.lineWidth=6;X.lineJoin='round';X.stroke();
+ line([[-94,58],[-30,5]],4,'#c8ccd6');line([[94,58],[30,5]],4,'#c8ccd6');
+ if(o.tag){X.font="900 34px Inter, 'Noto Color Emoji'";const tw=X.measureText(o.tag).width+44;rr(-tw/2,-140,tw,58,29,'#e8453c',5);X.fillStyle='#fff';X.textAlign='center';X.textBaseline='middle';X.fillText(o.tag,0,-110)}
+ X.restore()}
