@@ -1687,3 +1687,25 @@ function towelHook3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);rr(-40,
  if(o.towel){const p=o.p===undefined?1:C(o.p);X.globalAlpha=p;X.fillStyle=o.col||'#e8a33d';X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(-70,10);X.quadraticCurveTo(0,-10,70,10);X.lineTo(95,330);X.quadraticCurveTo(0,350,-95,330);X.closePath();X.fill();X.stroke();
   X.strokeStyle='rgba(255,255,255,.75)';X.lineWidth=11;X.beginPath();X.moveTo(-88,270);X.quadraticCurveTo(0,288,88,270);X.stroke();X.strokeStyle='rgba(0,0,0,.25)';X.lineWidth=5;X.beginPath();X.moveTo(-20,30);X.lineTo(-30,320);X.moveTo(30,30);X.lineTo(36,320);X.stroke()}
  X.restore()}
+
+// ---- craft ladder 2026-11-26 09:00: street-cleaning kit ----
+// parkSign3(x,groundY,s,o): street-cleaning no-parking sign on a pole. o.l1/o.l2 text lines (default 'TUE 7–9', '🧹 STREET CLEANING'), o.cob (cobweb 0..1), o.rust
+function parkSign3(x,y,s=1,o={}){X.save();X.translate(x,y);X.scale(s,s);gshadow(0,4,60,.3);
+ rr(-12,-760,24,760,8,'#8b939c',5);
+ rr(-150,-760,300,300,26,'#ffffff',8);X.save();X.beginPath();X.arc(0,-660,78,0,7);X.fillStyle='#2f6fd6';X.fill();X.lineWidth=18;X.strokeStyle='#e23b3b';X.stroke();X.beginPath();X.moveTo(-55,-715);X.lineTo(55,-605);X.stroke();X.restore();
+ txt(o.l1||'TUE 7–9',0,-515,52,'#151515',0,'900 ');
+ rr(-150,-445,300,110,22,'#ffffff',7);txt(o.l2||'🧹 CLEANING',0,-390,36,'#151515',0,'800 ');
+ if(o.rust){X.save();X.globalAlpha=.35*o.rust;for(let k=0;k<9;k++)circ(-120+rnd(k+40)*240,-750+rnd(k+3)*420,6+rnd(k+9)*12,'#a0602a',0);X.restore()}
+ if(o.cob)cobweb(150,-760,110,Math.PI*.5,Math.PI,o.cob);
+ X.restore()}
+// sweeper3(x,groundY,s,o): street-sweeper truck, front = +x; o.t, o.spin wheel speed, o.brush (spinning brush + dust), o.flip, o.beacon
+function sweeper3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s*(o.flip?-1:1),s);
+ X.save();X.globalAlpha=.22;X.fillStyle='#000';X.beginPath();X.ellipse(0,8,430,24,0,0,7);X.fill();X.restore();
+ rr(-400,-430,470,320,40,'#f4f6f8',8);rr(-380,-230,430,40,10,'#2fae66',0);txt('CLEAN',-165,-330,58,'#2fae66',0,'900 ');
+ rr(70,-470,280,360,50,'#2fae66',8);path(()=>{X.moveTo(110,-440);X.lineTo(270,-440);X.lineTo(325,-310);X.lineTo(110,-310);X.closePath()},'#bfe1f2',6);
+ rr(330,-210,34,50,10,'#ffe9a0',5);
+ const on=Math.sin(t*12)>0;rr(150,-520,80,44,16,on?'#ff9a1a':'#a85a10',6);if(on)glow(190,-498,140,'255,160,40',.55);
+ for(const wx of[-280,230]){circ(wx,-80,82,'#222',8);circ(wx,-80,40,'#c8ccd2',6);const a=t*(o.spin||0);line([[wx,-80],[wx+Math.cos(a)*32,-80+Math.sin(a)*32]],7,'#8a9099')}
+ if(o.brush!==0){X.save();X.translate(40,-36);X.rotate(t*10);for(let k=0;k<14;k++){const a=k/14*Math.PI*2;line([[0,0],[Math.cos(a)*60,Math.sin(a)*60]],6,k%2?'#d9a441':'#b9862e')}X.restore();circ(40,-36,16,'#555',5);
+  X.save();for(let k=0;k<6;k++){const ph=(t*1.3+k/6)%1;X.globalAlpha=.4*(1-ph);circ(-60-ph*260,-30-ph*90+Math.sin(k*3)*20,18+ph*40,'#d8d2c4',0)}X.restore()}
+ X.restore()}
