@@ -1805,3 +1805,22 @@ function envelope3(x,y,s=1,rot=0,o={}){X.save();X.globalAlpha=o.a==null?1:o.a;X.
  line([[-94,58],[-30,5]],4,'#c8ccd6');line([[94,58],[30,5]],4,'#c8ccd6');
  if(o.tag){X.font="900 34px Inter, 'Noto Color Emoji'";const tw=X.measureText(o.tag).width+44;rr(-tw/2,-140,tw,58,29,'#e8453c',5);X.fillStyle='#fff';X.textAlign='center';X.textBaseline='middle';X.fillText(o.tag,0,-110)}
  X.restore()}
+
+// craft ladder 2026-11-26 18:00: muddyKit3(x,floorY,s,o) a football kit (shirt + shorts) so stiff with mud it STANDS UP on its own; o.t, o.num, o.clean (bright, no mud), o.wob (0..1 wobble), o.col shirt colour. flies3(x,y,t,a,s,n) buzzing flies orbiting a point.
+function muddyKit3(x,y,s=1,o={}){const t=o.t||0,cl=o.clean,col=o.col||(cl?'#2f7de0':'#4f6f7c'),mud='#6b4a2b',mud2='#8a6238';X.save();X.translate(x,y);X.rotate(Math.sin(t*7)*.05*(o.wob==null?1:o.wob));X.scale(s,s);X.lineJoin='round';
+ X.globalAlpha=.22;ell(0,6,150,18,'#000',0);X.globalAlpha=1;
+ // shorts
+ path(()=>{X.moveTo(-110,-190);X.lineTo(110,-190);X.lineTo(125,-20);X.lineTo(15,-20);X.lineTo(0,-90);X.lineTo(-15,-20);X.lineTo(-125,-20);X.closePath()},cl?'#ffffff':'#d9d2c2',8);
+ // shirt
+ path(()=>{X.moveTo(-60,-470);X.quadraticCurveTo(0,-440,60,-470);X.lineTo(150,-430);X.lineTo(205,-330);X.lineTo(145,-300);X.lineTo(120,-335);X.lineTo(118,-180);X.lineTo(-118,-180);X.lineTo(-120,-335);X.lineTo(-145,-300);X.lineTo(-205,-330);X.lineTo(-150,-430);X.closePath()},col,8);
+ path(()=>{X.moveTo(-60,-470);X.quadraticCurveTo(0,-420,60,-470)},null,8,'#151515');
+ X.fillStyle='#fff';X.font="900 120px Inter";X.textAlign='center';X.textBaseline='middle';X.lineWidth=10;X.strokeStyle='#151515';X.strokeText(String(o.num||7),0,-300);X.fillText(String(o.num||7),0,-300);
+ if(!cl){const sp=[[-70,-400,48,30,.3],[60,-250,70,40,-.4],[-40,-215,60,26,.1],[150,-370,34,22,.6],[-160,-360,30,20,-.5],[-70,-90,58,34,.2],[80,-60,46,30,-.3],[10,-150,40,18,0],[-95,-300,28,20,0]];
+  sp.forEach(([a,b,w,h,r],k)=>{ell(a,b,w,h,k%2?mud:mud2,0,r);ell(a+w*.7,b+h*.6,w*.25,h*.3,mud,0)});
+  X.globalAlpha=.55;for(let k=0;k<5;k++){const dx=-90+k*45;line([[dx,-180],[dx+4,-150-(k%3)*12]],9,mud)}X.globalAlpha=1;
+  // stiff crease lines
+  X.globalAlpha=.35;line([[-100,-420],[-60,-200]],5,'#151515');line([[100,-420],[70,-210]],5,'#151515');X.globalAlpha=1}
+ else{X.globalAlpha=.5;ell(-70,-400,30,10,'#ffffff',0);X.globalAlpha=1;line([[-118,-200],[118,-200]],10,'#ffffff')}
+ X.restore()}
+function flies3(x,y,t,a=1,s=1,n=4){if(a<=0)return;X.save();X.globalAlpha=C(a);for(let k=0;k<n;k++){const ph=t*(3+k*.7)+k*1.7,fx=x+Math.cos(ph)*(110+k*30)*s,fy=y+Math.sin(ph*1.3)*(70+k*15)*s;
+ X.globalAlpha=C(a)*.7;ell(fx-8*s,fy-10*s,10*s,6*s,'#ffffff',3,Math.sin(t*60+k)*.6-.5);ell(fx+8*s,fy-10*s,10*s,6*s,'#ffffff',3,-Math.sin(t*60+k)*.6+.5);X.globalAlpha=C(a);circ(fx,fy,8*s,'#151515',0)}X.restore()}
