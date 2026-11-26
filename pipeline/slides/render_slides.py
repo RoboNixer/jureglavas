@@ -11,6 +11,14 @@ deck.json = {"slides":[{...}, ...]}  slide types:
   text  : title, body (list of lines), [mascot]
   cta   : title, lines (list), button (default "memopai.com")
   story : title, sub, [kicker], [button]  (tall only, for Stories / link sticker)
+  vs    : title, without (list of lines), with (list of lines), [lw/rw custom headers]   -> life WITHOUT vs WITH Memopai
+  fact  : big (e.g. "50 weeks"), title, sub, [src]                                          -> fun-fact stat card
+  quote : quote, sub, [who]                                                                 -> bold relatable quote / meme card
+  steps : title, steps (list of lines), [kicker]                                            -> "What is Memopai" 1-2-3
+THEMES (deck "theme" or slide "theme"; owner 2026-11-26: "change the designs so the posts don't look the same"):
+  classic (purple + cream, the original), night (navy + neon green), sunset (orange/pink + peach), paper (lined notebook),
+  poster (yellow, black type, thick frames), mint (green + light mint), chat (WhatsApp wallpaper). Never reuse the theme
+  of the previous grid post or the previous Story set; rotate through all of them. A slide "bg" still overrides.
 Every slide gets the page dots + memopai.com footer (except story/cover).
 Design rules: text inside x 90..990 on feed; on tall, content sits in y 260..1500 and x 80..900
 (TikTok UI on the right and bottom). One idea per slide, max ~22 words.
@@ -61,34 +69,79 @@ body{width:%(W)dpx;height:%(H)dpx;overflow:hidden;font-family:'Inter Display',In
 .btn{align-self:center;margin-top:48px;background:#25d366;color:#0b3d1f;font-weight:900;font-size:56px;padding:26px 64px;border-radius:80px;box-shadow:0 10px 0 #179b4a}
 .text .pad{justify-content:center;padding-bottom:220px}
 .text .title{font-size:88px}
+/* ---- THEMES v2 (2026-11-26) ---- */
+.night{background:radial-gradient(circle at 70%% 10%%,#1f3a7a 0,#0d1633 60%%,#070b1c 100%%);color:#fff}
+.night .kicker{background:#39ff88;color:#062b15}.night .hl{background:#39ff88;color:#062b15}.night .note{color:#cfe0ff;border-color:#39ff88}
+.night .b{color:#111}.night .num{background:#39ff88;color:#062b15}
+.sunset{background:linear-gradient(160deg,#ff9a3c 0,#ff5e7e 55%%,#a83ecf 100%%);color:#fff}.sunset .kicker{background:#fff;color:#c2185b}
+.peach{background:#ffe9dc;color:#2a1a1a}.peach .num{background:#ff5e7e}.peach .kicker{background:#ff5e7e;color:#fff}.peach .hl{background:#ffb199}
+.paper{background:#fffdf5;color:#1d2a44;background-image:repeating-linear-gradient(#fffdf5 0 58px,#b9d3f0 58px 61px);}
+.paper:after{content:'';position:absolute;top:0;bottom:0;left:64px;width:4px;background:#f08a8a}
+.paper .kicker{background:#1d2a44;color:#fff}.paper .hl{background:#fff27a}.paper .num{background:#f08a8a}
+.poster{background:#ffd23f;color:#111}.poster .s,.poster{box-shadow:inset 0 0 0 26px #111}.poster .kicker{background:#111;color:#ffd23f}
+.poster .hl{background:#111;color:#ffd23f}.poster .num{background:#111;color:#ffd23f}.poster .btn{background:#111;color:#ffd23f;box-shadow:0 10px 0 #444}
+.mint{background:#e4fbee;color:#0b3d1f}.mint .num{background:#16a352}.mint .kicker{background:#16a352;color:#fff}
+.chatbg{background:#efe7dc;color:#1b1b1f;background-image:radial-gradient(#d8cdbd 2px,transparent 2px),radial-gradient(#e2d8ca 6px,transparent 6px);background-size:38px 38px,110px 110px;background-position:0 0,20px 30px}
+.chatbg .kicker{background:#128c7e;color:#fff}.chatbg .num{background:#128c7e}
+.vs .title{font-size:76px;text-align:center}
+.cols{margin-top:44px;display:flex;gap:26px;flex:1}
+.col{flex:1;border-radius:34px;padding:34px 30px;display:flex;flex-direction:column;gap:22px}
+.col h3{font-size:44px;font-weight:900}.col div{font-size:40px;line-height:1.25;font-weight:600}
+.col.no{background:#ffe1e1;color:#7a1515}.col.yes{background:#dcf8e6;color:#0b5a2a}
+.fact .big{font-size:230px;font-weight:900;letter-spacing:-.04em;line-height:.95;margin-top:60px}
+.fact .title{font-size:76px;margin-top:30px}.src{margin-top:auto;font-size:30px;opacity:.7;font-weight:600}
+.quote .q{font-size:104px;font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-top:40px}
+.quote .q:before{content:'“';display:block;font-size:220px;line-height:.6;opacity:.35}
+.steps .title{font-size:84px}.stp{display:flex;gap:30px;align-items:center;margin-top:40px}.stp b{flex:none;display:flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%%;background:#25d366;color:#0b3d1f;font-size:50px}.stp span{font-size:52px;font-weight:700;line-height:1.2}
 .body{margin-top:48px;display:flex;flex-direction:column;gap:30px}.body div{font-size:54px;line-height:1.3;font-weight:600}
 """
 
-def page(sl, i, n, tall):
+THEMES = {'classic': ('purple', 'cream'), 'night': ('night', 'night'), 'sunset': ('sunset', 'peach'), 'paper': ('paper', 'paper'),
+          'poster': ('poster', 'poster'), 'mint': ('green', 'mint'), 'chat': ('chatbg', 'chatbg')}
+
+def page(sl, i, n, tall, theme='classic'):
+    th = THEMES.get(sl.get('theme', theme), THEMES['classic']); D, L = th
+    return _page(sl, i, n, tall, D, L)
+
+def _page(sl, i, n, tall, D, L):
     t = sl['type']; dots = ''.join(f'<i class="{"on" if k==i else ""}"></i>' for k in range(n))
     foot = f'<div class="foot"><span>memopai.com</span><div class="dots">{dots}</div></div>'
     if t == 'cover':
         m = f'<img class="mascot" src="data:image/png;base64,{MASCOT}" style="width:{460 if tall else 440}px;right:{80 if tall else 70}px;bottom:{440 if tall else 60}px;transform:rotate(8deg)">' if sl.get('mascot', True) else ''
-        bg = sl.get('bg', 'purple')
+        bg = sl.get('bg', D)
         cf = '<div class="foot"><span>memopai.com</span><span></span></div>' if sl.get('foot') else ''
         return f'<div class="s {bg} cover"><div class="pad"><span class="kicker">{esc(sl.get("kicker"))}</span><div class="title">{hl(sl["title"])}</div><div class="sub">{hl(sl.get("sub",""))}</div></div>{m}{cf}</div>'
     if t == 'tip':
         note = f'<div class="note">{hl(sl["note"])}</div>' if sl.get('note') else ''
-        return (f'<div class="s cream tip"><div class="pad"><span class="num">{esc(str(sl["n"]))}</span><div class="title">{hl(sl["title"])}</div>'
+        return (f'<div class="s {L} tip"><div class="pad"><span class="num">{esc(str(sl["n"]))}</span><div class="title">{hl(sl["title"])}</div>'
                 f'<div class="chat"><div class="b me">{esc(sl["me"])}<span class="t">✓✓</span></div>'
                 f'<div class="b bot"><div class="who"><img src="data:image/png;base64,{MASCOT}">Memopai</div>{esc(sl["reply"])}</div></div>{note}</div>{foot}</div>')
     if t == 'text':
         body = ''.join(f'<div>{hl(x)}</div>' for x in sl.get('body', []))
-        return f'<div class="s cream text"><div class="pad"><div class="title">{hl(sl["title"])}</div><div class="body">{body}</div></div>{foot}</div>'
+        return f'<div class="s {L} text"><div class="pad"><div class="title">{hl(sl["title"])}</div><div class="body">{body}</div></div>{foot}</div>'
     if t == 'cta':
         lines = ''.join(f'<div>{hl(x)}</div>' for x in sl.get('lines', []))
-        return (f'<div class="s purple cta"><div class="pad"><img src="data:image/png;base64,{MASCOT}" style="width:{360 if tall else 300}px;align-self:center;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))">'
+        return (f'<div class="s {D} cta"><div class="pad"><img src="data:image/png;base64,{MASCOT}" style="width:{360 if tall else 300}px;align-self:center;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))">'
                 f'<div class="title">{hl(sl["title"])}</div><div class="lines">{lines}</div><div class="btn">{esc(sl.get("button","memopai.com"))}</div></div>{foot}</div>')
     if t == 'story':
-        return (f'<div class="s purple cta"><div class="pad"><span class="kicker" style="align-self:center">{esc(sl.get("kicker",""))}</span>'
+        return (f'<div class="s {D} cta"><div class="pad"><span class="kicker" style="align-self:center">{esc(sl.get("kicker",""))}</span>'
                 f'<img src="data:image/png;base64,{MASCOT}" style="width:440px;align-self:center;margin-top:40px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.35))">'
                 f'<div class="title" style="font-size:96px;text-align:center;margin-top:40px">{hl(sl["title"])}</div><div class="sub" style="text-align:center">{hl(sl.get("sub",""))}</div>'
                 + (f'<div class="btn">{esc(sl["button"])}</div>' if sl.get('button') else '') + '</div></div>')
+    if t == 'vs':
+        no = ''.join(f'<div>❌ {hl(x)}</div>' for x in sl.get('without', [])); ys = ''.join(f'<div>✅ {hl(x)}</div>' for x in sl.get('with', []))
+        return (f'<div class="s {L} vs"><div class="pad"><div class="title">{hl(sl["title"])}</div><div class="cols">'
+                f'<div class="col no"><h3>{esc(sl.get("lw","Without Memopai 😩"))}</h3>{no}</div><div class="col yes"><h3>{esc(sl.get("rw","With Memopai 😌"))}</h3>{ys}</div></div></div>{foot}</div>')
+    if t == 'fact':
+        src = f'<div class="src">Source: {esc(sl["src"])}</div>' if sl.get('src') else ''
+        return (f'<div class="s {D} fact"><div class="pad"><span class="kicker">{esc(sl.get("kicker","Fun fact"))}</span><div class="big">{hl(sl["big"])}</div>'
+                f'<div class="title">{hl(sl["title"])}</div><div class="sub">{hl(sl.get("sub",""))}</div>{src}</div>{foot}</div>')
+    if t == 'quote':
+        who = f'<div class="sub">— {esc(sl["who"])}</div>' if sl.get('who') else ''
+        return f'<div class="s {D} quote"><div class="pad"><div class="q">{hl(sl["quote"])}</div>{who}<div class="sub">{hl(sl.get("sub",""))}</div></div>{foot}</div>'
+    if t == 'steps':
+        st = ''.join(f'<div class="stp"><b>{k+1}</b><span>{hl(x)}</span></div>' for k, x in enumerate(sl.get('steps', [])))
+        return f'<div class="s {L} steps"><div class="pad"><span class="kicker">{esc(sl.get("kicker","How it works"))}</span><div class="title" style="margin-top:30px">{hl(sl["title"])}</div>{st}</div>{foot}</div>'
     raise ValueError(t)
 
 def render(deck, out, size):
@@ -105,7 +158,7 @@ def render(deck, out, size):
             pg = b.new_page(viewport={'width': W, 'height': H})
             slides = [s for s in deck['slides'] if (s['type'] != 'story' or tall)]
             for i, sl in enumerate(slides):
-                pg.set_content(f'<html><head><meta charset="utf-8"><style>{css}</style></head><body>{page(sl, i, len(slides), tall)}</body></html>')
+                pg.set_content(f'<html><head><meta charset="utf-8"><style>{css}</style></head><body>{page(sl, i, len(slides), tall, deck.get('theme','classic'))}</body></html>')
                 pg.wait_for_timeout(150)
                 f = out / f'{sz}_{i+1:02d}.png'; pg.screenshot(path=str(f)); files.append(str(f))
         b.close()

@@ -1,0 +1,8 @@
+{"theme":"night","slides":[
+{"type":"cover","kicker":"Life check","title":"Your week *without* vs *with* Memopai","sub":"Swipe →"},
+{"type":"vs","title":"Same week. Two lives.","without":["Bill paid late (+€15)","Mum's birthday at 23:50","Laundry smells. Again."],"with":["Bill reminder Mon 09:00","Mum called at breakfast","Washer → dryer, done"]},
+{"type":"fact","theme":"sunset","kicker":"Fun fact","big":"50 weeks","title":"A shark remembered a shape *almost a year*","sub":"You forgot the bins on Tuesday.","src":"University of Bonn"},
+{"type":"quote","theme":"poster","quote":"I'll remember. *(I did not.)*","sub":"Every adult, every day."},
+{"type":"steps","theme":"paper","title":"What is *Memopai*?","steps":["Text or voice-note it on WhatsApp","It replies ✅ Got it","It reminds you (or Mum) on time"]},
+{"type":"tip","theme":"chat","n":1,"title":"Reminder of the day","me":"Remind me Friday 18:00: put the bins out","reply":"✅ Got it! Fri 18:00 🗑️"},
+{"type":"cta","theme":"mint","title":"Try it tonight","lines":["No app. Just WhatsApp."],"button":"memopai.com"}]}

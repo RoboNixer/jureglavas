@@ -3,6 +3,7 @@
 Every run READS this first, then UPDATES it (sections 2–4) after checking the numbers. Keep it short and concrete: rules that change what the next video looks like. Delete rules that the data stops supporting.
 
 ## 1. Category rotation (fixed)
+**SUPERSEDED 2026-11-26 21:30 (owner): each of the 10 daily slots now has its own SERIES (RUNBOOK 0h): 08 REMINDER OF THE DAY, 10 FUN FACT, 12 STORY, 13 WHAT IS MEMOPAI, 14 HALF-HALF, 16 POLICEMAN, 18 FUN FACT 2, 19 LIFE WITH vs WITHOUT, 20 STORY 2, 22 REMINDER FOR TOMORROW. Log the series as the category. The rotation below is history.**
 Rotate strictly, based on the last entry in `topics_log.md`: **STORY → FUN FACT → PRODUCTIVITY → STORY → …**
 Since 2026-11-11 evening EVERY category must pass the Memopai fit test (RUNBOOK section 0c): the story is about forgetting or reminding, it falls apart without Memopai, and it shows only real features.
 - **STORY**: a character comedy or mini-drama where forgetting (or having to nag someone) is the problem and one WhatsApp message to Memopai is the turning point. Gary is allowed only when the plot is about remembering. No more "arrest <random thing> + Memopai cameo".
