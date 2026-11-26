@@ -1824,3 +1824,36 @@ function muddyKit3(x,y,s=1,o={}){const t=o.t||0,cl=o.clean,col=o.col||(cl?'#2f7d
  X.restore()}
 function flies3(x,y,t,a=1,s=1,n=4){if(a<=0)return;X.save();X.globalAlpha=C(a);for(let k=0;k<n;k++){const ph=t*(3+k*.7)+k*1.7,fx=x+Math.cos(ph)*(110+k*30)*s,fy=y+Math.sin(ph*1.3)*(70+k*15)*s;
  X.globalAlpha=C(a)*.7;ell(fx-8*s,fy-10*s,10*s,6*s,'#ffffff',3,Math.sin(t*60+k)*.6-.5);ell(fx+8*s,fy-10*s,10*s,6*s,'#ffffff',3,-Math.sin(t*60+k)*.6+.5);X.globalAlpha=C(a);circ(fx,fy,8*s,'#151515',0)}X.restore()}
+
+// ---------- craft ladder 2026-11-26 20:00: skates3 (white figure skates, single or a pair hanging from laces), fairyLights3 (twinkling bulb string), iceRink3 (outdoor winter rink at dusk) ----------
+// skates3(x,y,s,o): x,y = blade bottom centre. o: rot, col (boot), flip, tiny (draws toes-over-the-edge gag: a big foot sticking out), a
+function skates3(x,y,s=1,o={}){const col=o.col||'#ffffff',OUT='#151515';X.save();X.globalAlpha=o.a==null?1:C(o.a);X.translate(x,y);X.rotate(o.rot||0);X.scale(s*(o.flip?-1:1),s);X.lineJoin='round';X.lineCap='round';
+ // blade
+ X.strokeStyle='#9aa4b2';X.lineWidth=10;X.beginPath();X.moveTo(-95,0);X.lineTo(80,0);X.quadraticCurveTo(110,-2,108,-22);X.stroke();X.strokeStyle=OUT;X.lineWidth=4;X.beginPath();X.moveTo(-95,-6);X.lineTo(82,-6);X.stroke();
+ X.fillStyle='#c4ccd6';[-60,40].forEach(px=>{X.beginPath();X.moveTo(px-14,-6);X.lineTo(px+14,-6);X.lineTo(px+8,-30);X.lineTo(px-8,-30);X.closePath();X.fill();X.stroke()});
+ // boot
+ X.fillStyle=col;X.strokeStyle=OUT;X.lineWidth=6;X.beginPath();X.moveTo(-88,-30);X.lineTo(90,-30);X.quadraticCurveTo(100,-70,40,-78);X.lineTo(-10,-90);X.lineTo(-20,-200);X.lineTo(-92,-200);X.quadraticCurveTo(-100,-110,-88,-30);X.closePath();X.fill();X.stroke();
+ X.fillStyle='rgba(0,0,0,.08)';X.fillRect(-88,-60,178,26);
+ X.strokeStyle='#e2508a';X.lineWidth=4;for(let k=0;k<5;k++){const yy=-180+k*26;X.beginPath();X.moveTo(-70,yy);X.lineTo(-30,yy+14);X.moveTo(-30,yy);X.lineTo(-70,yy+14);X.stroke()}
+ X.fillStyle='#f6d6e2';X.beginPath();X.ellipse(-56,-200,40,10,0,0,7);X.fill();X.strokeStyle=OUT;X.lineWidth=4;X.stroke();
+ if(o.tiny){X.fillStyle='#151515';X.beginPath();X.ellipse(70,-90,42,26,-.3,0,7);X.fill()}
+ X.restore()}
+// skatePair3(hx,hy,s,t): a pair hanging from the hand by their laces (hand at hx,hy)
+function skatePair3(hx,hy,s=1,t=0){const sw=Math.sin(t*3)*.08;X.save();X.translate(hx,hy);X.rotate(sw);X.strokeStyle='#e2508a';X.lineWidth=5*s;X.beginPath();X.moveTo(0,0);X.lineTo(-40*s,120*s);X.moveTo(0,0);X.lineTo(45*s,110*s);X.stroke();
+ skates3(-40*s,330*s,s*.95,{rot:.12});skates3(45*s,320*s,s*.95,{rot:-.1,flip:1});X.restore()}
+// fairyLights3(x0,y0,x1,y1,sag,t,n): a drooping string of warm bulbs that twinkle
+function fairyLights3(x0,y0,x1,y1,sag,t,n=14){X.save();X.strokeStyle='#2b2b33';X.lineWidth=3;X.beginPath();const P=k=>{const u=k/n;return[lerp(x0,x1,u),lerp(y0,y1,u)+Math.sin(u*Math.PI)*sag]};X.moveTo(x0,y0);for(let k=1;k<=n*3;k++){const u=k/(n*3);X.lineTo(lerp(x0,x1,u),lerp(y0,y1,u)+Math.sin(u*Math.PI)*sag)}X.stroke();
+ const cols=['255,214,120','255,140,120','160,220,255','190,255,170'];for(let k=0;k<=n;k++){const[px,py]=P(k),c=cols[k%4],tw=.55+.45*Math.sin(t*4+k*1.9);glow(px,py+12,46,c,.55*tw);X.fillStyle=`rgb(${c})`;X.beginPath();X.ellipse(px,py+12,8,12,0,0,7);X.fill()}X.restore()}
+// iceRink3(t,o): dusk sky, blurred town + tree silhouettes, fairy-light strings, glossy ice with skate scratches and a rink wall. o.hz horizon
+function iceRink3(t,o={}){const hz=o.hz||1180;psky('#2a2f6b','#7a62a8','#f3a98a',hz);
+ pblur(4,()=>{for(let i=0;i<9;i++){const bx=-120+i*160,bh=180+rnd(i+7)*220;X.fillStyle=i%2?'#3a3566':'#433d73';X.fillRect(bx,hz-bh,140,bh+20);X.fillStyle='rgba(255,220,150,.75)';for(let w=0;w<6;w++)if(rnd(i*9+w)>.4)X.fillRect(bx+20+(w%2)*60,hz-bh+30+Math.floor(w/2)*55,26,30)}
+  for(let i=0;i<7;i++){const tx=-60+i*200+rnd(i)*60,th=260+rnd(i+2)*120;X.fillStyle='#24315a';X.beginPath();X.moveTo(tx,hz-th);X.lineTo(tx+90,hz+10);X.lineTo(tx-90,hz+10);X.fill()}});
+ bokeh(t,'255,210,150',12,500,1100);
+ fairyLights3(-80,560,560,600,120,t,12);fairyLights3(520,600,1160,540,110,t+1,12);
+ // rink wall
+ X.fillStyle='#e9eef6';X.fillRect(-3000,hz-70,8000,80);X.fillStyle='#d1495b';X.fillRect(-3000,hz-70,8000,18);X.strokeStyle='rgba(0,0,0,.15)';X.lineWidth=3;for(let k=-10;k<20;k++){X.beginPath();X.moveTo(k*140,hz-52);X.lineTo(k*140,hz+10);X.stroke()}
+ // ice
+ const g=X.createLinearGradient(0,hz,0,2000);g.addColorStop(0,'#cfe6f7');g.addColorStop(.5,'#eaf5ff');g.addColorStop(1,'#bcd8ef');X.fillStyle=g;X.fillRect(-3000,hz+10,8000,3000);
+ X.save();X.globalCompositeOperation='screen';X.globalAlpha=.35;const rg=X.createRadialGradient(540,hz+200,20,540,hz+200,700);rg.addColorStop(0,'rgba(255,200,170,.9)');rg.addColorStop(1,'rgba(255,200,170,0)');X.fillStyle=rg;X.fillRect(-500,hz,2100,1200);X.restore();
+ X.strokeStyle='rgba(120,150,190,.35)';X.lineWidth=3;for(let k=0;k<14;k++){const sx=rnd(k+30)*1300-100,sy=hz+80+rnd(k+60)*700;X.beginPath();X.ellipse(sx,sy,180+rnd(k)*160,30+rnd(k+4)*30,rnd(k+9)*.4-.2,0,3.2);X.stroke()}
+ if(o.snow!==0)psnow(t,.55,70)}
