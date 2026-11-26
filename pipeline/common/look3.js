@@ -1709,3 +1709,37 @@ function sweeper3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale
  if(o.brush!==0){X.save();X.translate(40,-36);X.rotate(t*10);for(let k=0;k<14;k++){const a=k/14*Math.PI*2;line([[0,0],[Math.cos(a)*60,Math.sin(a)*60]],6,k%2?'#d9a441':'#b9862e')}X.restore();circ(40,-36,16,'#555',5);
   X.save();for(let k=0;k<6;k++){const ph=(t*1.3+k/6)%1;X.globalAlpha=.4*(1-ph);circ(-60-ph*260,-30-ph*90+Math.sin(k*3)*20,18+ph*40,'#d8d2c4',0)}X.restore()}
  X.restore()}
+
+// ---- craft ladder 2026-11-26 12:00: iceChicken3() frozen-solid bag of chicken drumsticks (ice block with frost + crystals), chickenDish3() oven dish of roast drumsticks with steam ----
+// iceChicken3(x,y,s,o): (x,y) = centre. o.t, o.rot, o.frost 0..1 (white frost + sparkle), o.thaw 0..1 (frost fades, drops drip)
+function iceChicken3(x,y,s=1,o={}){const t=o.t||0,fr=o.frost==null?1:o.frost,th=C(o.thaw||0);X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);
+ X.globalAlpha=.2;ell(0,128,170,20,'#000',0);X.globalAlpha=1;
+ // drumsticks inside (drawn first, seen through the ice)
+ for(const [dx,dy,a] of [[-70,-10,-.5],[10,20,.3],[70,-25,1.1],[-20,-45,2.2]]){X.save();X.translate(dx,dy);X.rotate(a);
+  line([[0,0],[0,62]],16,'#f1e4cf');circ(-9,70,12,'#f1e4cf',4);circ(9,70,12,'#f1e4cf',4);
+  X.beginPath();X.ellipse(0,-20,42,54,0,0,7);X.fillStyle='#f0b98a';X.fill();X.strokeStyle='#151515';X.lineWidth=5;X.stroke();X.restore()}
+ // plastic bag + ice block
+ X.save();X.beginPath();X.roundRect(-170,-120,340,240,46);const g=X.createLinearGradient(-170,-120,170,120);g.addColorStop(0,`rgba(215,240,255,${.62-th*.3})`);g.addColorStop(1,`rgba(150,200,240,${.55-th*.3})`);X.fillStyle=g;X.fill();X.strokeStyle='#151515';X.lineWidth=7;X.stroke();
+ X.clip();X.globalAlpha=fr*(1-th);for(let k=0;k<24;k++){circ(-170+rnd(k+5)*340,-120+rnd(k+9)*240,6+rnd(k+1)*14,"rgba(255,255,255,.55)",0)}
+ X.globalAlpha=1;X.fillStyle='rgba(255,255,255,.55)';X.beginPath();X.moveTo(-150,-100);X.lineTo(-60,-100);X.lineTo(-140,40);X.closePath();X.fill();X.restore();
+ // bag twist on top
+ path(()=>{X.moveTo(-26,-118);X.lineTo(26,-118);X.lineTo(14,-150);X.lineTo(-14,-150);X.closePath()},'rgba(210,235,255,.8)',5);
+ // label sticker
+ rr(40,40,110,58,10,'#ffffff',4);txt('❄️',95,72,36,'#151515',0,'');
+ // icicle edge + crystals
+ if(fr*(1-th)>0){X.globalAlpha=fr*(1-th);for(let k=0;k<5;k++){const ix=-120+k*60;path(()=>{X.moveTo(ix-12,118);X.lineTo(ix+12,118);X.lineTo(ix,150+rnd(k+3)*30);X.closePath()},'rgba(225,245,255,.95)',4)}
+  for(let k=0;k<4;k++){const ph=(t*.7+k/4)%1;const sx=-150+rnd(k+21)*300,sy=-130+rnd(k+31)*200;X.globalAlpha=fr*(1-th)*Math.sin(ph*Math.PI);X.save();X.translate(sx,sy);X.rotate(ph);for(let a=0;a<3;a++){X.rotate(Math.PI/3);line([[-16,0],[16,0]],4,'#ffffff')}X.restore()}X.globalAlpha=1}
+ if(th>0){for(let k=0;k<3;k++){const q=(t*.8+k/3)%1;X.globalAlpha=th*(1-q);X.fillStyle='#7cc4ff';X.beginPath();X.ellipse(-80+k*80,125+q*60,7,11,0,0,7);X.fill()}X.globalAlpha=1}
+ X.restore()}
+// chickenDish3(x,y,s,o): oval oven dish of golden drumsticks + veg, (x,y) = dish centre. o.t, o.steam
+function chickenDish3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.22;ell(0,40,250,30,'#000',0);X.globalAlpha=1;
+ ell(0,10,240,72,'#ffffff',7);ell(0,0,205,52,'#e9eef4',0);
+ for(const [dx,dy,a] of [[-110,-6,-.9],[-40,-14,-.3],[40,-12,.3],[115,-4,.9],[0,6,0]]){X.save();X.translate(dx,dy);X.rotate(a);
+  line([[0,0],[0,-58]],14,'#f6ead6');circ(-8,-64,10,'#f6ead6',4);circ(8,-64,10,'#f6ead6',4);
+  X.beginPath();X.ellipse(0,10,38,30,0,0,7);const g=X.createLinearGradient(0,-20,0,40);g.addColorStop(0,'#f2b24e');g.addColorStop(1,'#b8641f');X.fillStyle=g;X.fill();X.strokeStyle='#151515';X.lineWidth=5;X.stroke();
+  X.fillStyle='rgba(255,255,255,.45)';X.beginPath();X.ellipse(-12,0,10,6,-.4,0,7);X.fill();X.restore()}
+ for(const [dx,dy,c] of [[-160,18,'#ff8a3d'],[150,20,'#7bc75a'],[-70,30,'#7bc75a'],[80,32,'#ff8a3d']])circ(dx,dy,12,c,3);
+ rr(-280,-6,40,26,10,'#d9d0c4',5);rr(240,-6,40,26,10,'#d9d0c4',5);
+ if(o.steam){for(let k=0;k<4;k++){const ph=(t*.6+k/4)%1;X.globalAlpha=.55*(1-ph);circ(-90+k*60+Math.sin(t*2+k)*10,-90-ph*170,18+ph*26,'#ffffff',0)}X.globalAlpha=1}
+ X.restore()}
