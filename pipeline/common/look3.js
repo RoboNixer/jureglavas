@@ -1857,3 +1857,39 @@ function iceRink3(t,o={}){const hz=o.hz||1180;psky('#2a2f6b','#7a62a8','#f3a98a'
  X.save();X.globalCompositeOperation='screen';X.globalAlpha=.35;const rg=X.createRadialGradient(540,hz+200,20,540,hz+200,700);rg.addColorStop(0,'rgba(255,200,170,.9)');rg.addColorStop(1,'rgba(255,200,170,0)');X.fillStyle=rg;X.fillRect(-500,hz,2100,1200);X.restore();
  X.strokeStyle='rgba(120,150,190,.35)';X.lineWidth=3;for(let k=0;k<14;k++){const sx=rnd(k+30)*1300-100,sy=hz+80+rnd(k+60)*700;X.beginPath();X.ellipse(sx,sy,180+rnd(k)*160,30+rnd(k+4)*30,rnd(k+9)*.4-.2,0,3.2);X.stroke()}
  if(o.snow!==0)psnow(t,.55,70)}
+
+// ---------- craft ladder 2026-11-26 22:00: bigTree3 (real Christmas tree that can dry out), needleRain3 (falling needles) ----------
+// bigTree3(x,groundY,s,o): ~880 px tall real tree in a red stand. o.dry 0..1 (droops, browns, goes sparse, star tilts, needle pile grows),
+// o.t (light twinkle), o.lights (1 = on), o.sway (rad, branch wobble), o.water 0..1 (water visible in the stand's window), o.deco (baubles, default 1)
+function _hx(c){return[parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]}
+function _mx(a,b,k){const A=_hx(a),B=_hx(b);return'rgb('+A.map((v,i)=>Math.round(v+(B[i]-v)*k)).join(',')+')'}
+function bigTree3(x,y,s=1,o={}){const d=o.dry||0,t=o.t||0,sw=o.sway||0;X.save();X.translate(x,y);X.scale(s,s);
+ gshadow(0,6,230,.28);
+ if(d>0){// needle pile
+  X.fillStyle=_mx('#9a8a40','#b9853e',d);X.beginPath();X.ellipse(0,-6,150+d*130,22+d*16,0,0,7);X.fill();
+  X.strokeStyle='#8a5a28';X.lineWidth=4;for(let k=0;k<Math.round(70*d);k++){const a=(k*2.399)%6.28,rr2=((k*53)%100)/100;const px=Math.cos(a)*(60+rr2*(110+d*120)),py=-6+Math.sin(a)*(10+rr2*(16+d*12));X.beginPath();X.moveTo(px-9,py);X.lineTo(px+9,py+(k%3-1)*3);X.stroke()}}
+ rr(-28,-150,56,120,8,'#6e4426',5);// trunk
+ // stand with water window
+ X.fillStyle='#c4523f';X.strokeStyle='#151515';X.lineWidth=6;X.beginPath();X.moveTo(-95,-95);X.lineTo(95,-95);X.lineTo(80,0);X.lineTo(-80,0);X.closePath();X.fill();X.stroke();
+ rr(-40,-72,80,48,8,'#1d2a3a',4);const wl=o.water==null?.6:o.water;if(wl>0){X.fillStyle='#57b6ff';X.fillRect(-36,-28-40*wl,72,40*wl)}else{X.fillStyle='#8a6a48';X.fillRect(-36,-32,72,6)}
+ X.fillStyle='rgba(255,255,255,.25)';X.fillRect(-90,-90,180,10);
+ const col=_mx('#2f8a4e','#b0803a',d),col2=_mx('#3fa45e','#b7a058',d),dark=_mx('#1f6a3a','#7a5428',d);
+ const tiers=[[-140,350,240],[-310,295,220],[-470,235,200],[-620,170,180],[-750,105,150]];
+ tiers.forEach(([ty,w,h],i)=>{X.save();X.translate(0,ty);X.rotate(Math.sin(t*9+i)*sw*(1+i*.3));
+  const droop=d*55*(1-i*.12),n=7;
+  X.fillStyle=col;X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.moveTo(0,-h);
+  for(let k=0;k<=n;k++){const u=k/n,px=-w+u*2*w;const tip=k%2===0;const yy=tip?droop+12:-14-d*10;X.lineTo(px,yy)}
+  X.closePath();X.fill();X.stroke();
+  X.fillStyle=col2;X.globalAlpha=.55;X.beginPath();X.moveTo(-6,-h+20);X.lineTo(-w*.55,-10);X.lineTo(-w*.25,-14);X.closePath();X.fill();X.globalAlpha=1;
+  if(d>.25){// bare patches showing twigs
+   X.fillStyle='#5a3a1e';for(let k=0;k<3;k++){const hx=(-.55+k*.5)*w,hy=-h*.35+(k%2)*20;X.globalAlpha=Math.min(.45,(d-.25)*.8);X.beginPath();X.ellipse(hx,hy,w*.17,h*.16,0,0,7);X.fill();X.globalAlpha=Math.min(1,(d-.25)*1.6);
+    X.strokeStyle='#3e2612';X.lineWidth=5;X.beginPath();X.moveTo(hx-w*.15,hy+8);X.lineTo(hx+w*.15,hy-8);X.moveTo(hx-w*.03,hy);X.lineTo(hx+w*.02,hy+18);X.moveTo(hx+w*.06,hy-3);X.lineTo(hx+w*.1,hy-20);X.stroke()}X.globalAlpha=1}
+  X.strokeStyle=dark;X.lineWidth=4;for(let k=1;k<n;k+=2){const px=-w+k/n*2*w;X.beginPath();X.moveTo(px*.4,-h*.4);X.lineTo(px*.9,-12);X.stroke()}
+  if(o.deco!==0){const bc=['#e23b3b','#ffd23f','#4a8fe0','#e2508a'];for(let k=0;k<3;k++){if(d>.5&&k==1)continue;const bx=(-.6+k*.6)*w*.8,by=-h*.25+((i+k)%2)*24+droop*.5;X.strokeStyle='#151515';X.lineWidth=3;X.beginPath();X.moveTo(bx,by-30);X.lineTo(bx,by-14);X.stroke();X.fillStyle=bc[(i+k)%4];X.beginPath();X.arc(bx,by,15,0,7);X.fill();X.stroke();X.fillStyle='rgba(255,255,255,.6)';X.beginPath();X.arc(bx-5,by-5,4,0,7);X.fill()}}
+  if(o.lights){for(let k=0;k<5;k++){const u=(k+.5)/5,lx=-w*.85+u*w*1.7,ly=-h*.12-Math.sin(u*Math.PI)*h*.18+droop*.4;const on=.6+.4*Math.sin(t*4+k*1.7+i);X.fillStyle=['#ffe08a','#ff8a8a','#8ad0ff','#a8ff9a'][(k+i)%4];X.globalAlpha=on;X.beginPath();X.arc(lx,ly,8,0,7);X.fill();glow(lx,ly,34,'255,230,150',.35*on);X.globalAlpha=1}}
+  X.restore()});
+ // star
+ X.save();X.translate(0,-900+d*20);X.rotate(d*.6);X.fillStyle='#ffd23f';X.strokeStyle='#151515';X.lineWidth=5;X.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rad=k%2?20:46;X.lineTo(Math.cos(a)*rad,Math.sin(a)*rad)}X.closePath();X.fill();X.stroke();if(o.lights&&d<.5)glow(0,0,110,'255,220,120',.5);X.restore();
+ X.restore()}
+// needleRain3(x,y0,w,p,t,s): a shower of brown needles falling from y0 over width w; p 0..1 progress, density fades out at the end
+function needleRain3(x,y0,w,p,t,s=1){if(p<=0||p>=1.4)return;X.save();X.lineWidth=6*s;for(let k=0;k<200;k++){X.strokeStyle=k%3?'#5a3414':'#7a8a2a';const st=(k%17)/17*.5,q=(p-st)/.9;if(q<0||q>1)continue;const px=x+((k*71)%100/100-.5)*w*(.5+((k*37)%420)/420*.8)+Math.sin(t*6+k)*14,py=y0+((k*37)%420)+q*q*640*s,a=t*5+k;X.globalAlpha=1-q*.6;X.beginPath();X.moveTo(px-Math.cos(a)*10*s,py-Math.sin(a)*4*s);X.lineTo(px+Math.cos(a)*10*s,py+Math.sin(a)*4*s);X.stroke()}X.restore()}
