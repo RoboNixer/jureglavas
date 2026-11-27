@@ -2021,3 +2021,58 @@ function tyreShop3(t,o={}){snowStreet3(t,{grey:o.grey,snow:0});
  tyreStack(720,1080,.8,5);tyreStack(880,1080,.8,4);
  const b=o.board||0;if(b>0){X.save();X.translate(740,800);X.rotate(Math.sin(t*3)*.03*(1-b)+(1-eo(b))*.6);X.scale(eo(b)*1.3,eo(b)*1.3);line([[0,-60],[0,-150]],8,'#444');
   rr(-230,-60,460,230,18,'#ff8a1f',7);txt('FULLY BOOKED',0,0,50,'#fff',0,'900 ');txt('NEXT FREE:',0,64,34,'#151515',0,'800 ');txt(o.next||'11 DEC',0,118,52,'#151515',0,'900 ');X.restore()}}
+
+// craft ladder 2026-11-27 19:00 (LIFE WITH vs WITHOUT 'boiler first frost'): HOME HEATING + REWIND kit
+// radiator3(x,yFloor,s,{ice,warm,t}) wall radiator with icicles (ice 0..1) or glowing heat waves (warm 0..1)
+function radiator3(x,y,s=1,o={}){const t=o.t||0,ice=o.ice||0,wm=o.warm||0;X.save();X.translate(x,y);X.scale(s,s);
+ X.globalAlpha=.18;ell(0,4,200,18,'#000',0);X.globalAlpha=1;
+ rr(-170,-20,14,30,4,'#cfd6dd',4);rr(156,-20,14,30,4,'#cfd6dd',4);
+ const body=wm>0?`rgb(${lerp(236,255,wm)|0},${lerp(240,226,wm)|0},${lerp(245,205,wm)|0})`:'#eef2f6';
+ rr(-190,-250,380,240,18,body,7);
+ for(let k=-4;k<=4;k++){X.fillStyle='rgba(0,0,0,.08)';X.fillRect(k*40-4,-236,8,212);X.fillStyle='rgba(255,255,255,.7)';X.fillRect(k*40+6,-236,5,212)}
+ circ(178,-40,14,'#c9a24a',4);
+ if(wm>0){glow(0,-130,330*wm+60,'255,170,90',.55*wm);X.save();X.strokeStyle=`rgba(255,200,150,${.55*wm})`;X.lineWidth=6;X.lineCap='round';for(let k=-2;k<=2;k++){X.beginPath();for(let i=0;i<=20;i++){const yy=-270-i*14,xx=k*70+Math.sin(i*.6-t*5+k)*12;i?X.lineTo(xx,yy):X.moveTo(xx,yy)}X.stroke()}X.restore()}
+ if(ice>0){X.save();for(let k=0;k<9;k++){const ix=-160+k*40+(k%2)*6,L=(40+rnd(k+3)*70)*ice;X.fillStyle='rgba(205,235,255,.95)';X.strokeStyle='#6fa6d6';X.lineWidth=4;X.beginPath();X.moveTo(ix-11,-12);X.lineTo(ix+11,-12);X.lineTo(ix+1,-12+L);X.closePath();X.fill();X.stroke();
+  const dp=((t*.7+rnd(k))%1);if(k%3==0){X.fillStyle='rgba(170,215,255,.9)';X.beginPath();X.ellipse(ix+1,-12+L+dp*40,4,6,0,0,7);X.fill()}}
+  X.fillStyle='rgba(225,245,255,.9)';X.beginPath();X.roundRect(-195,-262,390,22,10);X.fill();X.restore()}
+ X.restore()}
+// boiler3(x,yCentre,s,{err,on,t}) wall boiler: blinking red error code or green temp + live flame
+function boiler3(x,y,s=1,o={}){const t=o.t||0;X.save();X.translate(x,y);X.scale(s,s);
+ for(const px of[-60,-20,20,60]){rr(px-9,150,18,170,6,px%40?'#c98a4a':'#b8bec6',5)}
+ X.globalAlpha=.25;rr(-128,-162,268,330,26,'#000',0);X.globalAlpha=1;
+ rr(-140,-175,280,330,26,'#f7f8fa',7);rr(-140,95,280,60,0,'#e3e6ea',0);X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.roundRect(-140,-175,280,330,26);X.stroke();
+ rr(-90,-120,180,90,14,'#20262e',6);
+ if(o.err){const bl=Math.sin(t*9)>0;if(bl){glow(0,-75,170,'255,60,60',.5);txt('E119',0,-75,54,'#ff4d4d',0,'900 ')}X.fillStyle=bl?'#ff4d4d':'#5a1e1e';X.beginPath();X.arc(95,-140,10,0,7);X.fill()}
+ else{txt('60°',0,-75,54,'#7cf0a0',0,'900 ');X.fillStyle='#7cf0a0';X.beginPath();X.arc(95,-140,10,0,7);X.fill()}
+ rr(-55,0,110,70,12,'#151a20',5);
+ if(o.on){X.save();X.beginPath();X.rect(-50,5,100,60);X.clip();for(let k=-2;k<=2;k++){const h=34+Math.sin(t*14+k*2)*10;X.fillStyle=k%2?'#4aa8ff':'#ff9a3c';X.beginPath();X.moveTo(k*18-8,62);X.quadraticCurveTo(k*18,62-h*1.3,k*18+8,62);X.fill()}X.restore();glow(0,40,140,'255,160,80',.5)}
+ for(const bx of[-60,0,60]){circ(bx,120,11,'#9aa3ad',4)}
+ X.restore()}
+// breath3(x,y,t,a): little frosty breath puffs drifting up-left from a mouth
+function breath3(x,y,t,a=1,dir=-1){if(a<=0)return;X.save();for(let k=0;k<3;k++){const p=((t*.9+k/3)%1);X.globalAlpha=a*(1-p)*.75;X.fillStyle='#eef6ff';X.beginPath();X.ellipse(x+dir*(20+p*110),y-p*70,18+p*46,12+p*28,0,0,7);X.fill()}X.restore()}
+// duvet3(x,yFeet,s,{t,shiver,col}) a quilted duvet wrapped around a SEATED sm() (draw after the character)
+function duvet3(x,y,s=1,o={}){const t=o.t||0,sh=o.shiver?Math.sin(t*38)*4:0,c=o.col||'#9cc3e6';X.save();X.translate(x+sh,y);X.scale(s,s);
+ X.fillStyle=c;X.strokeStyle='#151515';X.lineWidth=8;X.beginPath();X.moveTo(-150,-585);X.quadraticCurveTo(0,-625,150,-585);X.quadraticCurveTo(260,-400,240,-150);X.quadraticCurveTo(120,-90,0,-110);X.quadraticCurveTo(-140,-90,-250,-150);X.quadraticCurveTo(-270,-400,-150,-585);X.closePath();X.fill();X.stroke();
+ X.save();X.clip();X.strokeStyle='rgba(40,70,110,.25)';X.lineWidth=5;for(let k=-3;k<=3;k++){X.beginPath();X.moveTo(k*80,-700);X.lineTo(k*80+30,-80);X.stroke()}for(let k=0;k<6;k++){X.beginPath();X.moveTo(-300,-600+k*90);X.lineTo(300,-590+k*90);X.stroke()}
+ X.fillStyle='rgba(255,255,255,.18)';X.beginPath();X.ellipse(-90,-480,60,140,-.2,0,7);X.fill();X.restore();
+ X.restore()}
+// winFX(t,wx,{snow,frost,leaves}) weather INSIDE a proom() window (wx = o.win): snowfall, frosted corners or falling autumn leaves
+function winFX(t,wx,o={}){X.save();X.beginPath();X.rect(wx-190,280,380,520);X.clip();
+ if(o.snow){for(let k=0;k<40;k++){const xx=wx-190+((k*97)%380)+Math.sin(t*1.3+k)*10,yy=280+((k*173+t*(50+(k%5)*14))%540);X.globalAlpha=.85;X.fillStyle='#ffffff';X.beginPath();X.arc(xx,yy,3+(k%3)*2,0,7);X.fill()}X.globalAlpha=1;X.fillStyle='#eef4ff';X.beginPath();X.ellipse(wx,815,260,60,0,0,7);X.fill()}
+ if(o.leaves){const cs=['#e8792f','#d9532b','#f2b134','#b5651d'];for(let k=0;k<12;k++){const xx=wx-190+((k*61)%380)+Math.sin(t*1.5+k)*30,yy=280+((k*131+t*(60+(k%4)*12))%540);X.save();X.translate(xx,yy);X.rotate(t*2+k);X.fillStyle=cs[k%4];X.beginPath();X.ellipse(0,0,14,7,0,0,7);X.fill();X.restore()}}
+ if(o.frost){const f=o.frost;for(const[cx,cy]of[[wx-190,280],[wx+190,280],[wx-190,800],[wx+190,800]]){const g=X.createRadialGradient(cx,cy,0,cx,cy,170);g.addColorStop(0,`rgba(240,248,255,${.9*f})`);g.addColorStop(1,'rgba(240,248,255,0)');X.fillStyle=g;X.fillRect(cx-180,cy-180,360,360)}
+  X.strokeStyle=`rgba(255,255,255,${.6*f})`;X.lineWidth=2;for(let k=0;k<14;k++){const a=rnd(k)*6.28,cx=wx+(k%2?-170:170),cy=k<7?300:780;X.beginPath();X.moveTo(cx,cy);X.lineTo(cx+Math.cos(a)*60,cy+Math.sin(a)*60);X.stroke()}}
+ X.restore()}
+// calPage3(x,y,s,{m,d,rot}) tear-off calendar page (red band = month, giant day number)
+function calPage3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);X.globalAlpha=.25;rr(-112,-132,236,276,18,'#000',0);X.globalAlpha=1;rr(-120,-140,240,280,18,'#ffffff',7);
+ X.save();X.beginPath();X.roundRect(-120,-140,240,280,18);X.clip();X.fillStyle='#e63b3b';X.fillRect(-120,-140,240,80);X.restore();X.strokeStyle='#151515';X.lineWidth=7;X.beginPath();X.roundRect(-120,-140,240,280,18);X.stroke();
+ txt(o.m||'JAN',0,-100,52,'#ffffff',0,'900 ');txt(o.d||'9',0,40,150,'#151515',0,'900 ');for(const hx of[-60,60])circ(hx,-140,10,'#9aa3ad',4);X.restore()}
+// vhsRewind3(t,p,word) full-screen VHS rewind overlay: scanlines, colour split band, ◀◀ chip, big month word
+function vhsRewind3(t,p,word){X.save();X.setTransform(1,0,0,1,0,0);
+ X.fillStyle='rgba(20,10,60,.22)';X.fillRect(0,0,1080,1920);
+ X.fillStyle='rgba(255,255,255,.07)';for(let y=(t*900)%8;y<1920;y+=8)X.fillRect(0,y,1080,3);
+ const by=((t*1400)%2300)-200;X.globalCompositeOperation='screen';X.fillStyle='rgba(255,40,120,.25)';X.fillRect(0,by,1080,60);X.fillStyle='rgba(40,220,255,.25)';X.fillRect(0,by+40,1080,40);X.globalCompositeOperation='source-over';
+ for(let k=0;k<160;k++){X.fillStyle=`rgba(255,255,255,${rnd(k+Math.floor(t*30))*.35})`;X.fillRect(rnd(k*3+Math.floor(t*30))*1080,rnd(k*7+Math.floor(t*30))*1920,3,2)}
+ const a=C(p*4);X.globalAlpha=a;txt('◀◀ REWIND',360,560,58,'#ffffff',12,'900 ');
+ if(word){const k=eo(C((p-.25)*2.5));X.translate(540,960);X.scale(lerp(1.6,1,k),lerp(1.6,1,k));X.globalAlpha=k;txt(word,0,0,150,'#ffd23f',22,'900 ')}
+ X.restore()}

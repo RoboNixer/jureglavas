@@ -1,0 +1,12 @@
+{
+"theme": "sunset",
+"slides": [
+{"type":"cover","bg":"green","foot":true,"mascot":true,"kicker":"First frost checklist","title":"5 winter reminders to set *this weekend*","sub":"Swipe → copy them into Memopai"},
+{"type":"tip","n":"1","title":"Before the cold gets serious","me":"Saturday at 10, remind me to book the boiler check 🔥","reply":"✅ Got it! Sat 28 Nov 10:00 → 🔥 Book the boiler check","note":"One call. Before everyone else calls."},
+{"type":"tip","n":"2","title":"Remind Dad, not just you","me":"Remind Dad on Sunday at 10 to bleed the radiators 🔧","reply":"✅ I'll remind Dad · Sun 29 Nov 10:00","note":"He taps *Accept* once. No app needed."},
+{"type":"tip","n":"3","title":"The one you always forget","me":"Every 1st of the month at 19:00, remind me to test the smoke alarm","reply":"✅ Every month, 1st · 19:00 → 🔔 Test the smoke alarm","note":"Repeats until you say stop."},
+{"type":"tip","n":"4","title":"Frozen windscreen o'clock","me":"Tomorrow at 9, remind me: winter screen wash for the car 🚗","reply":"✅ Got it! Sat 28 Nov 09:00 → 🚗 Winter screen wash","note":"Typed or a voice note. Both work."},
+{"type":"tip","n":"5","title":"The coat that smells like last winter","me":"Remind me Monday at 8 to take my coat to the dry cleaner 🧥","reply":"✅ Got it! Mon 30 Nov 08:00 → 🧥 Coat to the dry cleaner","note":"Reply *snooze* and it comes back in 10 min."},
+{"type":"cta","title":"Warm house. *Empty head.*","lines":["Memopai lives in your WhatsApp.","English · Hrvatski · Bosanski · Srpski"],"button":"memopai.com"}
+]
+}
