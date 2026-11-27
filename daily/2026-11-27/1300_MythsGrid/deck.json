@@ -1,0 +1,49 @@
+{
+"theme": "chat",
+"slides": [
+{
+"type": "cover",
+"bg": "cream",
+"foot": true,
+"mascot": true,
+"kicker": "Myth vs truth",
+"title": "4 myths about *Memopai*",
+"sub": "Swipe → which one did you believe?"
+},
+{
+"type": "vs",
+"title": "What people think vs what it is",
+"lw": "Myth 🙅",
+"rw": "Truth ✅",
+"without": [
+"\"Another app to download\"",
+"\"I must type exact dates\"",
+"\"It only reminds me\"",
+"\"It stops if my phone is off\""
+],
+"with": [
+"A contact in your WhatsApp",
+"Talk like a friend, or send a voice note",
+"It reminds Mum too (she taps Accept once)",
+"It works 24/7, phone off or silent"
+]
+},
+{
+"type": "tip",
+"title": "Try saying it like this",
+"me": "Remind Mum every Sunday at 10 to call me 💛",
+"reply": "✅ Got it! I'll remind Mum · every Sun 10:00",
+"note": "She taps Accept once. That's it.",
+"n": "💬"
+},
+{
+"type": "cta",
+"title": "Text it. *Forget it.*",
+"lines": [
+"No app. Just WhatsApp.",
+"English · Hrvatski · Bosanski · Srpski"
+],
+"button": "memopai.com"
+}
+]
+}
