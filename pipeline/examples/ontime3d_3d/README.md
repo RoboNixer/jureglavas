@@ -1,0 +1,6 @@
+# ontime3d_3d: first LOW-POLY 3D POLICEMAN reel (2026-11-27 16:00)
+Reusable 3D kit: `lib3d.js` (three@0.149.0 world rendered INTO the 2D canvas by `cam3()`, so captions, postFX, tag/stampBig/notif/phoneUI/endcard all work on top).
+Sets via `begin3d(name)`: `street` (x=100, office tower + 09:00 clock, traffic, trees, lamps), `station` (x=200, desks, MOST WANTED alarm-clock poster, 08:59 clock, door STDOOR), `flat` (x=300, bed, nightstand, sofa, window skyline, door FLATDOOR), `block` (x=0, cell block, stool in B-103).
+Props: `clock3(par,x,y,z,'9:00')`, `plant3`, `frame3`, `skyTex(night)`, `mkPhone3()` (phone with avatar + `.cuff` handcuffs, `.scr` screen colour). `pinPhone(ph,char)` in scenes3d.js puts it in a hand.
+Cast: SUS (green hoodie), BOSS (bald, glasses), CHIEF (moustache, belly, gold cap band), ROOK (ginger, freckles, light-blue), COP2, COWK (bun). `mkChar` options added: belly, belt, hood, mus, freck, capc, chiefcap, style side/bald; `P()` adds y, hop, wsp, tilt, holdL 'mug'/'bag'.
+Build: `mkdir ~/vid/<slug> && cp three.min.js (npm pack three@0.149.0) + assets`; `bash build3d.sh ~/vid/<slug> <times...>` (adds the three script tag + swiftshader flags), `python3 ../common/score_core.py`, `node render.js` (all 4 chunks ~5 min for 35 s on 2 cores), then finish.sh (cover.js now launches with swiftshader too).

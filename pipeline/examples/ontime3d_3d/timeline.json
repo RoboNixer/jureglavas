@@ -1,0 +1,75 @@
+{
+ "total": 34.73,
+ "lines": [
+  {
+   "t0": 0.05,
+   "t1": 4.543,
+   "text": "This man was late to everything for 11 years. Today, he showed up on time.",
+   "tag": "h1",
+   "voice": "her_s"
+  },
+  {
+   "t0": 4.703,
+   "t1": 6.163,
+   "text": "So his boss called the police.",
+   "tag": "s1",
+   "voice": "her"
+  },
+  {
+   "t0": 6.323,
+   "t1": 8.927,
+   "text": "Nobody changes overnight! Search his flat!",
+   "tag": "c1",
+   "voice": "him"
+  },
+  {
+   "t0": 9.087,
+   "t1": 12.046,
+   "text": "No alarm clock. No planner. Just one WhatsApp chat.",
+   "tag": "s2",
+   "voice": "her"
+  },
+  {
+   "t0": 12.206,
+   "t1": 15.164,
+   "text": "Every weekday at 8:30, it told him: leave for work.",
+   "tag": "s3",
+   "voice": "her"
+  },
+  {
+   "t0": 15.324,
+   "t1": 18.11,
+   "text": "So that's the mastermind. Arrest the reminder!",
+   "tag": "c2",
+   "voice": "him"
+  },
+  {
+   "t0": 18.27,
+   "t1": 23.725,
+   "text": "The rookie said: Chief, it's just a reminder. The chief gave it 25 years... of reminding him.",
+   "tag": "s4",
+   "voice": "her"
+  },
+  {
+   "t0": 23.885,
+   "t1": 25.771,
+   "text": "That night, the rookie set one up for the chief.",
+   "tag": "s5",
+   "voice": "her"
+  },
+  {
+   "t0": 26.071,
+   "t1": 29.837,
+   "text": "Next morning, the chief was on time. The station called the police.",
+   "tag": "p1",
+   "voice": "her_w"
+  },
+  {
+   "t0": 30.187,
+   "t1": 33.129,
+   "text": "Late for everything? Just text Memopai on WhatsApp.",
+   "tag": "cta",
+   "voice": "her"
+  }
+ ]
+}
