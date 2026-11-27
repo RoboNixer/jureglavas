@@ -79,3 +79,42 @@ function frost(p,t=0){if(p<=0)return;p=C(p);X.save();X.setTransform(1,0,0,1,0,0)
   a+=(rnd(k+9)-.5)*.9;br(x,y,a,(110+rnd(k+5)*230)*eo(p),0)}
  for(let k=0;k<16;k++){X.globalAlpha=p*(.4+.6*Math.abs(Math.sin(t*3+k*1.7)));const sd=k%2;circ(sd?rnd(k)*150:1080-rnd(k)*150,rnd(k+20)*1920,3+rnd(k+4)*5,'#fff',0)}
  X.restore()}
+
+// ---------- KINETIC TYPE KIT (2026-11-27, REMINDER OF THE DAY / TOMORROW look "kinetic type + phone") ----------
+// kinBg(t,{c1,c2,words,ink,glow,gy,stripeA}): bold typographic backdrop: diagonal gradient, moving stripes, 3 parallax rows of drifting words (background life, depth).
+function kinBg(t,o={}){X.setTransform(1,0,0,1,0,0);const g=X.createLinearGradient(0,0,1080,1920);g.addColorStop(0,o.c1||'#111');g.addColorStop(1,o.c2||'#333');X.fillStyle=g;X.fillRect(0,0,1080,1920);
+ X.save();X.globalAlpha=o.stripeA??.05;X.fillStyle='#fff';X.translate(540,960);X.rotate(-.35);for(let k=-16;k<16;k++)X.fillRect(k*150+((t*40)%150),-1700,60,3400);X.restore();
+ const W=o.words||[];if(W.length)for(let row=0;row<3;row++){const spd=[28,50,85][row],sz=[64,104,160][row],a=[.07,.09,.12][row],y=[330,990,1640][row];X.save();X.globalAlpha=a;X.font=`900 ${sz}px 'Inter Display',Inter,'Noto Color Emoji'`;X.fillStyle=o.ink||'#fff';X.textBaseline='middle';X.textAlign='left';const unit=W.join('  •  ')+'  •  ';const w=X.measureText(unit).width;let x=-((t*spd)%w);if(row%2)x=-w+((t*spd)%w);X.fillText(unit.repeat(Math.ceil(2200/w)+1),x,y);X.restore()}
+ if(o.glow)glow(540,o.gy||900,720,o.glow,.32);}
+// kinWord(s,x,y,size,r,{col,bg,rot,from:'left'|'right'|'up'|undefined(=spring scale),maxW,k}): one kinetic word/phrase with spring entrance, optional highlight bar; auto-shrinks to maxW (default 700, safe zone).
+function kinWord(s,x,y,size,r,o={}){if(r<=0)return;const k=sp(r,o.k||13,.42);X.save();
+ X.translate(x+(o.from=='left'?lerp(-1000,0,C(k)):o.from=='right'?lerp(1000,0,C(k)):0),y+(o.from=='up'?lerp(-600,0,C(k)):0));X.rotate((o.rot||0)*Math.PI/180);
+ if(!o.from)X.scale(Math.max(0,k),Math.max(0,k));X.font=`900 ${size}px 'Inter Display',Inter,'Noto Color Emoji'`;const w=X.measureText(s).width,mw=o.maxW||700;if(w+(o.bg?60:0)>mw){const f=mw/(w+(o.bg?60:0));X.scale(f,f)}
+ if(o.bg){X.fillStyle='rgba(0,0,0,.28)';X.beginPath();X.roundRect(-w/2-30+10,-size*.62+12,w+60,size*1.24,size*.22);X.fill();X.fillStyle=o.bg;X.beginPath();X.roundRect(-w/2-30,-size*.62,w+60,size*1.24,size*.22);X.fill()}
+ else{X.fillStyle='rgba(0,0,0,.35)';X.textAlign='center';X.textBaseline='middle';X.fillText(s,8,10)}
+ txt(s,0,0,size,o.col||'#fff',0);X.restore()}
+// kinDate(x,y,s,r,{wd,d,m,head,rot}): tear-off calendar page (big date stamp) that springs in with a swing.
+function kinDate(x,y,s,r,o={}){const k=sp(r,11,.4);if(k<=0)return;X.save();X.translate(x,y);X.rotate(((o.rot??-6)+(1-C(k))*25)*Math.PI/180);X.scale(s*Math.max(0,k),s*Math.max(0,k));
+ X.fillStyle='rgba(0,0,0,.32)';X.beginPath();X.roundRect(-186,-212,400,470,34);X.fill();
+ X.save();X.beginPath();X.roundRect(-200,-230,400,470,34);X.clip();X.fillStyle='#fffdf6';X.fillRect(-200,-230,400,470);X.fillStyle=o.head||'#e53935';X.fillRect(-200,-230,400,130);X.fillStyle='rgba(0,0,0,.06)';for(let i=0;i<6;i++)X.fillRect(-200,200-i*4,400,1);X.restore();
+ X.lineWidth=8;X.strokeStyle=O;X.beginPath();X.roundRect(-200,-230,400,470,34);X.stroke();X.beginPath();X.moveTo(-200,-100);X.lineTo(200,-100);X.stroke();
+ for(const rx of[-110,110]){circ(rx,-232,20,'#cfd3da',6);rr(rx-8,-262,16,46,8,'#9aa0aa',5)}
+ txt(o.wd||'FRIDAY',0,-160,64,'#fff',0);txt(o.d||'27',0,40,230,'#1d1d24',0);txt(o.m||'NOVEMBER',0,190,48,'#6b6f7a',0,'800 ');X.restore()}
+// kinParcel(x,y,s,{rot,open,face:'sad'|'happy',item,label}): cardboard parcel (feet at y) with tape, shipping label, opening flaps, optional face + item popping out.
+function kinParcel(x,y,s,o={}){X.save();X.translate(x,y);X.scale(s,s);X.rotate((o.rot||0)*Math.PI/180);
+ X.fillStyle='rgba(0,0,0,.25)';X.beginPath();X.ellipse(0,6,175,22,0,0,7);X.fill();const op=C(o.open||0);
+ if(op>0){
+  X.save();X.translate(-150,-230);X.rotate(-op*2.1);rr(0,-14,150,36,6,'#c48a52',6);X.restore();X.save();X.translate(150,-230);X.rotate(op*2.1);rr(-150,-14,150,36,6,'#c48a52',6);X.restore()}
+ rr(-150,-230,300,230,16,'#d9a066',7);X.fillStyle='rgba(120,70,20,.18)';X.fillRect(-146,-60,292,56);
+ if(!op){X.fillStyle='#ead39a';X.fillRect(-24,-226,48,222);X.fillStyle='rgba(0,0,0,.08)';X.fillRect(-24,-226,6,222)}
+ rr(40,-130,90,62,6,'#fff',4);X.fillStyle='#333';for(let i=0;i<3;i++)X.fillRect(52,-116+i*16,i==2?40:66,6);
+ if(o.label)txt(o.label,-80,-48,30,'#7a4a1c',0,'800 ');
+ if(op>0&&o.item){const iy=-250-190*eo(op);X.save();X.globalAlpha=1;X.font="150px 'Noto Color Emoji'";X.textAlign='center';X.textBaseline='middle';X.fillText(o.item,0,iy);X.restore()}
+ if(o.face){const ey=-140;circ(-90,ey,13,O,0);circ(-30,ey,13,O,0);circ(-86,ey-4,4,'#fff',0);circ(-26,ey-4,4,'#fff',0);X.lineWidth=7;X.strokeStyle=O;X.lineCap='round';X.beginPath();if(o.face=='sad'){X.arc(-60,ey+62,26,1.15*Math.PI,1.85*Math.PI);ell(-100,ey+28,12,7,'rgba(255,120,120,.5)',0)}else X.arc(-60,ey+22,26,.15*Math.PI,.85*Math.PI);X.stroke()}
+ X.restore()}
+// kinDays(x,y,r,{n,tick,red,size,cols}): row(s) of day boxes that tick ✓ one by one (tick = how many are done), box 'red' turns red with ✗ (the day too late), circle on o.ring.
+function kinDays(x,y,o={}){const n=o.n||14,cols=o.cols||7,b=o.size||86,g=12,W=cols*b+(cols-1)*g;for(let i=0;i<n;i++){const cx=x-W/2+(i%cols)*(b+g),cy=y+Math.floor(i/cols)*(b+g);const done=i<(o.tick||0),red=o.red==i+1;
+ X.save();if(done){const p=C((o.tick-i)*1.0);X.translate(cx+b/2,cy+b/2);X.scale(lerp(1.25,1,eo(p)),lerp(1.25,1,eo(p)));X.translate(-cx-b/2,-cy-b/2)}
+ rr(cx,cy,b,b,16,red?'#e53935':done?(o.doneCol||'#25d366'):'rgba(255,255,255,.92)',5);txt(String(i+1),cx+b/2,cy+b/2+(done||red?-14:0),done||red?28:40,done||red?'#fff':'#333',0);
+ if(done)txt('✓',cx+b/2,cy+b/2+20,40,'#fff',0);if(red)txt('✗',cx+b/2,cy+b/2+20,40,'#fff',0);
+ if(o.ring==i+1){X.lineWidth=9;X.strokeStyle=o.ringCol||'#ffd23f';X.beginPath();X.ellipse(cx+b/2,cy+b/2,b*.78,b*.72,-.2,0,7);X.stroke()}X.restore()}}
