@@ -1,0 +1,68 @@
+{
+ "total": 32.82,
+ "lines": [
+  {
+   "t0": 0.05,
+   "t1": 3.843,
+   "text": "It's Friday night. Time for the awards for everything you forgot this week.",
+   "tag": "h1",
+   "voice": "her_s"
+  },
+  {
+   "t0": 4.003,
+   "t1": 7.382,
+   "text": "Nominee one: your laundry. Still in the machine. Since Tuesday.",
+   "tag": "n1",
+   "voice": "him"
+  },
+  {
+   "t0": 7.542,
+   "t1": 10.633,
+   "text": "Nominee two: I'll call you back, Mum. That was Monday.",
+   "tag": "n2",
+   "voice": "him"
+  },
+  {
+   "t0": 10.793,
+   "t1": 14.069,
+   "text": "Nominee three: the parking meter. \u20ac40 ticket.",
+   "tag": "n3",
+   "voice": "him"
+  },
+  {
+   "t0": 14.229,
+   "t1": 17.232,
+   "text": "And the award for Most Forgetful goes to... you!",
+   "tag": "win",
+   "voice": "him"
+  },
+  {
+   "t0": 17.432,
+   "t1": 19.79,
+   "text": "Relax. Your head isn't broken. It's just full.",
+   "tag": "s1",
+   "voice": "her"
+  },
+  {
+   "t0": 19.95,
+   "t1": 24.525,
+   "text": "So tonight, you text it all to Memopai on WhatsApp. It reminds you at the right time.",
+   "tag": "s2",
+   "voice": "her"
+  },
+  {
+   "t0": 24.825,
+   "t1": 27.261,
+   "text": "Next Friday? You're not even nominated.",
+   "tag": "p1",
+   "voice": "her_w"
+  },
+  {
+   "t0": 27.611,
+   "t1": 31.223,
+   "text": "Empty your head before the weekend. Just text Memopai on WhatsApp.",
+   "tag": "cta",
+   "voice": "her"
+  }
+ ]
+}
