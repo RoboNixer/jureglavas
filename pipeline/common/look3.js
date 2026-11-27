@@ -1953,3 +1953,71 @@ function nursery3(t,o={}){const n=o.night;proom(t,{win:o.win==null?820:o.win,nig
 // changeTable3(x,y,s): dresser with drawers + changing mat on top (top surface at y-360*s)
 function changeTable3(x,y,s=1){X.save();X.translate(x,y);X.scale(s,s);rr(-260,-360,520,360,14,'#f1e3cf',7);for(let k=0;k<3;k++){rr(-230,-330+k*108,460,90,10,'#e7d3b6',5);circ(0,-285+k*108,10,'#b08a5a',4)}
  rr(-250,-400,500,48,24,'#9fd8c8',7);X.fillStyle='rgba(255,255,255,.35)';X.fillRect(-220,-392,440,10);X.restore()}
+
+// ---------- craft ladder 2026-11-27 14:00: HALF-HALF split-screen kit + winter street ----------
+// splitPanel3(t,topFn,botFn,o): v4 HALF-HALF split screen. topFn(t)/botFn(t) each draw a FULL scene with their own cam() moves;
+//  each is shown in its own half, scaled by o.k (default .6) around that half's centre. o.div = divider y (960; animate it to 0
+//  so the bottom half takes over the screen, its scale grows to 1). o.grey 0..1 desaturates + cools the top half.
+//  o.lt / o.lb = panel tags ('Without Memopai 😩' / 'With Memopai 😌'), o.ovT(t) / o.ovB(t, y0, y1) = screen-space overlays per half.
+//  Call capMid() in a shot to move the captions onto the divider (capLow() puts them back); use with every split shot.
+function capMid(y=1060){const c=document.getElementById('cap');if(c)c.style.bottom=(1920-y)+'px'}
+function capLow(){const c=document.getElementById('cap');if(c)c.style.bottom='310px'}
+function splitTag(text,x,y,bg,fg='#fff',a=1){if(a<=0)return;X.save();X.setTransform(1,0,0,1,0,0);X.globalAlpha=C(a);X.font="900 44px 'Inter Display',Inter,'Noto Color Emoji'";const w=Math.min(700,X.measureText(text).width+64);
+ X.shadowColor='rgba(0,0,0,.3)';X.shadowBlur=16;rr(x,y-37,w,74,37,bg,5);X.shadowColor='transparent';txt(text,x+w/2,y+2,44,fg,0,'900 ');X.restore()}
+function splitPanel3(t,topFn,botFn,o={}){const div=o.div==null?960:o.div,k=o.k||.6,tk=C(1-div/960);const camO=cam;
+ const half=(y0,y1,fn,kk,grey,ov)=>{if(y1-y0<2)return;const cy=y0===0?(Math.min(400,y1*.42)+y1)/2:(y0+y1)/2;X.save();X.setTransform(1,0,0,1,0,0);X.beginPath();X.rect(0,y0,1080,y1-y0);X.clip();
+  X.fillStyle='#000';X.fillRect(0,y0,1080,y1-y0);
+  cam=function(cx,cyy,z,tt,amp,rot){camO(cx,cyy,z,tt,amp,rot);const m=X.getTransform();X.setTransform(new DOMMatrix().translate(540,cy).scale(kk).translate(-540,-960).multiply(m))};
+  X.save();try{fn(t)}finally{cam=camO}X.restore();
+  X.setTransform(1,0,0,1,0,0);
+  if(grey>0){X.save();X.globalCompositeOperation='saturation';X.fillStyle=`rgba(128,128,128,${.75*grey})`;X.fillRect(0,y0,1080,y1-y0);X.globalCompositeOperation='multiply';X.fillStyle=`rgba(170,185,215,${.55*grey})`;X.fillRect(0,y0,1080,y1-y0);X.restore()}
+  if(ov)ov(t,y0,y1);X.restore()};
+ half(0,div,topFn,k,o.grey==null?1:o.grey,o.ovT);
+ half(div,1920,botFn,lerp(k,1,eo(tk)),0,o.ovB);
+ X.setTransform(1,0,0,1,0,0);
+ if(div>4&&div<1916){X.fillStyle='#fff';X.fillRect(0,div-6,1080,12);X.fillStyle='rgba(0,0,0,.25)';X.fillRect(0,div+6,1080,6)}
+ const ta=(o.tagA==null?1:o.tagA)*(1-tk*3);
+ if(o.lt&&div>380)splitTag(o.lt,150,Math.min(340,div-60),'#5b6472','#fff',ta);
+ if(o.lb&&div<1500)splitTag(o.lb,150,o.lbY?lerp(o.lbY,div+120,tk):div+120,'#1faa59','#fff',ta)}
+// tyreMarks(x,y,s,o): draws tyres over pcar() wheels (same x,y,s,flip): o.kind 'summer' (bald slick + ☀️ badge) | 'winter' (chunky tread + ❄️); o.t, o.spin
+function tyreMarks(x,y,s,o={}){const fl=o.flip?-1:1,a=(o.t||0)*(o.spin||0);for(const wx of[-270,270]){const cx=x+wx*s*fl,cy=y-80*s;X.save();X.translate(cx,cy);X.scale(s,s);
+ if(o.kind==='winter'){circ(0,0,104,'#1d1d22',8);X.save();X.rotate(a);for(let k=0;k<16;k++){X.save();X.rotate(k*Math.PI/8);rr(-12,-104,24,26,5,'#3a3a44',0);X.restore()}X.restore();circ(0,0,54,'#d6dae0',6);txt('❄️',0,4,48,'#fff',0,'400 ')}
+ else{circ(0,0,98,'#3a3a40',8);X.globalAlpha=.35;X.strokeStyle='#8a8a92';X.lineWidth=5;X.beginPath();X.arc(0,0,80,a,a+2.2);X.stroke();X.globalAlpha=1;circ(0,0,52,'#e8e2c8',6);txt('☀️',0,4,48,'#fff',0,'400 ')}
+ X.restore()}}
+// kidInCar(x,y,s,o): a kid's head peeking from pcar()'s rear window (same x,y,s,flip); o.eyes/o.mouth like sm()
+function kidInCar(x,y,s,o={}){const fl=o.flip?-1:1;X.save();X.translate(x,y);X.scale(s*fl,s);X.save();path(()=>{X.moveTo(-270,-265);X.lineTo(-195,-440);X.lineTo(-20,-440);X.lineTo(-20,-265);X.closePath()},null,0);X.clip();
+ X.scale(fl,1);const hx=fl*-130;circ(hx,-320,70,'#fff',7);const w=o.wide?1.25:1;ell(hx-22,-335,13*w,17*w,'#151515',0);ell(hx+22,-335,13*w,17*w,'#151515',0);circ(hx-18,-342,4,'#fff',0);circ(hx+26,-342,4,'#fff',0);
+ if(o.mouth==='o')circ(hx,-292,12,'#7a2a2a',5);else path(()=>{X.arc(hx,-300,18,0.2,Math.PI-.2)},null,6);
+ ell(hx,-385,62,26,o.hairc||'#7a4a2a',6);X.restore();X.restore()}
+// snowStreet3(t,o): winter residential street: sky (o.grey overcast / clear cold blue), parallax snowy roofs with lit windows +
+//  chimney smoke, snow-laden pines, white pavement, ploughed road with tyre tracks, falling snow, a robin on the fence.
+//  o.slope (radians, e.g. -.16) tilts the ground into a hill; ground line ~y 1330.
+function snowRoof(x,y,w,h,col,t,k){rr(x,y-h,w,h+40,4,col,0);path(()=>{X.moveTo(x-30,y-h+6);X.lineTo(x+w/2,y-h-120);X.lineTo(x+w+30,y-h+6);X.closePath()},'#7a5a50',0);
+ path(()=>{X.moveTo(x-34,y-h+10);X.lineTo(x+w/2,y-h-124);X.lineTo(x+w+34,y-h+10);X.quadraticCurveTo(x+w/2,y-h-40,x-34,y-h+10)},'#f7fbff',0);
+ for(let r=0;r<2;r++)for(let c=0;c<2;c++){const lit=rnd(k*7+r*3+c)>.35;rr(x+w*.18+c*w*.42,y-h+50+r*110,w*.22,70,6,lit?'#ffd98a':'#56607a',0);if(lit)glow(x+w*.29+c*w*.42,y-h+85+r*110,90,'255,210,120',.25)}
+ const cx=x+w*.72;rr(cx,y-h-110,34,70,3,'#7a5a50',0);for(let s=0;s<5;s++){const ph=(t*.35+s/5+k*.13)%1;X.save();X.globalAlpha=.35*(1-ph);circ(cx+17+Math.sin(ph*6+k)*30,y-h-120-ph*260,18+ph*40,'#e8edf3',0);X.restore()}}
+function snowPine(x,y,s){X.save();X.translate(x,y);X.scale(s,s);rr(-14,-40,28,60,4,'#5a3c25',0);for(let i=0;i<3;i++){const w=150-i*38,yy=-40-i*90;path(()=>{X.moveTo(-w,yy);X.lineTo(0,yy-150);X.lineTo(w,yy);X.closePath()},'#2f6a4f',0);path(()=>{X.moveTo(-w*.7,yy-30);X.lineTo(0,yy-150);X.lineTo(w*.7,yy-30);X.quadraticCurveTo(0,yy-70,-w*.7,yy-30)},'#f4f8ff',0)}X.restore()}
+function snowStreet3(t,o={}){const g=o.grey;if(g)psky('#8e98a8','#b4bcc8','#d3d8df',1100);else{psky('#6fb2ee','#bfe0fb','#fff2e0',1100);psun(860,330,70,t)}
+ pblur(4,()=>{for(let k=0;k<7;k++)snowRoof(-260+k*230,1030,180,200+rnd(k+4)*120,['#c98f7a','#9fb0c8','#d8c3a0','#a8b89a'][k%4],t,k)});
+ pblur(1.5,()=>{for(let k=0;k<5;k++)snowPine(-200+k*360+rnd(k)*80,1090,.9+rnd(k+2)*.4)});
+ X.save();if(o.slope){X.translate(540,1330);X.rotate(o.slope);X.translate(-540,-1330)}
+ X.fillStyle='#eef3f9';X.fillRect(-3000,1060,8000,140);X.fillStyle='#d9e1ea';X.fillRect(-3000,1190,8000,12);
+ // fence + robin
+ for(let k=-8;k<20;k++){rr(k*70,1080,14,90,3,'#8a6a50',0);rr(k*70-4,1074,22,12,4,'#f7fbff',0)}rr(-3000,1110,8000,10,0,'#8a6a50',0);
+ const bx=780+Math.sin(t*.8)*4,hop=Math.abs(Math.sin(t*4))*(Math.sin(t*.9)>.6?14:0);circ(bx,1066-hop,20,'#6a4a3a',4);circ(bx+14,1062-hop,12,'#e2533d',0);circ(bx+20,1052-hop,3,'#151515',0);path(()=>{X.moveTo(bx+30,1056-hop);X.lineTo(bx+44,1060-hop);X.lineTo(bx+30,1064-hop)},'#e8a33a',0);
+ const rg=X.createLinearGradient(0,1200,0,1900);rg.addColorStop(0,'#c9d0d9');rg.addColorStop(1,'#aab3bf');X.fillStyle=rg;X.fillRect(-3000,1200,8000,1500);
+ X.strokeStyle='rgba(120,130,145,.5)';X.lineWidth=26;for(const ty of[1380,1520]){X.beginPath();X.moveTo(-3000,ty);X.lineTo(5000,ty+10);X.stroke()}
+ X.fillStyle='rgba(255,255,255,.85)';for(let k=0;k<40;k++)ell(-600+k*90+rnd(k)*40,1210+rnd(k+5)*30,50+rnd(k+1)*40,14,'#ffffff',0);
+ X.restore();if(o.snow!==0)psnow(t,o.grey?.85:.6,o.grey?130:70)}
+// tyreShop3(t,o): tyre-change garage on a snowy street: brick front, big 'TYRES' sign with tyre logo, open bay with a lifted car,
+//  stacked tyres, an orange board 'FULLY BOOKED · NEXT FREE: <o.next>' that swings in (o.board 0..1)
+function tyreStack(x,y,s,n=4){X.save();X.translate(x,y);X.scale(s,s);for(let i=0;i<n;i++){ell(0,-30-i*58,90,32,'#25252b',6);ell(0,-34-i*58,40,13,'#55555e',0)}X.restore()}
+function tyreShop3(t,o={}){snowStreet3(t,{grey:o.grey,snow:0});
+ rr(60,560,960,520,6,'#a5533f',7);for(let r=0;r<10;r++)for(let c=0;c<12;c++)rr(60+c*80+(r%2)*40,566+r*52,74,46,2,'rgba(0,0,0,.08)',0);
+ path(()=>{X.moveTo(40,570);X.lineTo(540,470);X.lineTo(1040,570);X.quadraticCurveTo(540,520,40,570)},'#f7fbff',0);
+ rr(200,600,680,120,20,'#151820',7);txt('🛞 TYRES',540,662,84,'#ffd23f',0,'900 ');
+ rr(120,760,500,320,10,'#2a2f3a',7);for(let k=0;k<5;k++)rr(130,770+k*30,480,14,4,'#3a4150',0);
+ pcar(370,1000,.42,{t,col:'#4a8fe0',col2:'#3570b8'});line([[260,1004],[260,1080]],14,'#e0a020');line([[480,1004],[480,1080]],14,'#e0a020');
+ tyreStack(720,1080,.8,5);tyreStack(880,1080,.8,4);
+ const b=o.board||0;if(b>0){X.save();X.translate(740,800);X.rotate(Math.sin(t*3)*.03*(1-b)+(1-eo(b))*.6);X.scale(eo(b)*1.3,eo(b)*1.3);line([[0,-60],[0,-150]],8,'#444');
+  rr(-230,-60,460,230,18,'#ff8a1f',7);txt('FULLY BOOKED',0,0,50,'#fff',0,'900 ');txt('NEXT FREE:',0,64,34,'#151515',0,'800 ');txt(o.next||'11 DEC',0,118,52,'#151515',0,'900 ');X.restore()}}
