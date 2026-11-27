@@ -79,6 +79,8 @@ body{width:%(W)dpx;height:%(H)dpx;overflow:hidden;font-family:'Inter Display',In
 .paper:after{content:'';position:absolute;top:0;bottom:0;left:64px;width:4px;background:#f08a8a}
 .paper .kicker{background:#1d2a44;color:#fff}.paper .hl{background:#fff27a}.paper .num{background:#f08a8a}
 .poster{background:#ffd23f;color:#111}.poster .s,.poster{box-shadow:inset 0 0 0 26px #111}.poster .kicker{background:#111;color:#ffd23f}
+.quiz .title{font-size:80px;line-height:1.06;margin:34px 0 16px}
+.qo{display:flex;align-items:center;gap:28px;margin-top:26px;background:rgba(255,255,255,.14);border:4px solid rgba(255,255,255,.35);border-radius:34px;padding:26px 34px;font-size:52px;font-weight:800}.qo b{width:76px;height:76px;border-radius:50%%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex:none}.qo span{flex:1}.qo.ok{background:#25d366;border-color:#25d366;color:#0b3d1f;transform:scale(1.04)}.qo.ok b{background:#0b3d1f;color:#25d366}.qo i{font-style:normal;font-size:60px;font-weight:900}
 .poster .hl{background:#111;color:#ffd23f}.poster .num{background:#111;color:#ffd23f}.poster .btn{background:#111;color:#ffd23f;box-shadow:0 10px 0 #444}
 .mint{background:#e4fbee;color:#0b3d1f}.mint .num{background:#16a352}.mint .kicker{background:#16a352;color:#fff}
 .chatbg{background:#efe7dc;color:#1b1b1f;background-image:radial-gradient(#d8cdbd 2px,transparent 2px),radial-gradient(#e2d8ca 6px,transparent 6px);background-size:38px 38px,110px 110px;background-position:0 0,20px 30px}
@@ -135,14 +137,20 @@ def _page(sl, i, n, tall, D, L):
     if t == 'fact':
         src = f'<div class="src">Source: {esc(sl["src"])}</div>' if sl.get('src') else ''
         return (f'<div class="s {D} fact"><div class="pad"><span class="kicker">{esc(sl.get("kicker","Fun fact"))}</span><div class="big">{hl(sl["big"])}</div>'
-                f'<div class="title">{hl(sl["title"])}</div><div class="sub">{hl(sl.get("sub",""))}</div>{src}</div>{foot}</div>')
+                f'<div class="title">{hl(sl["title"])}</div><div class="sub">{hl(sl.get("sub",""))}</div>{src}{_btn(sl)}</div>{foot}</div>')
     if t == 'quote':
         who = f'<div class="sub">— {esc(sl["who"])}</div>' if sl.get('who') else ''
-        return f'<div class="s {D} quote"><div class="pad"><div class="q">{hl(sl["quote"])}</div>{who}<div class="sub">{hl(sl.get("sub",""))}</div></div>{foot}</div>'
+        return f'<div class="s {D} quote"><div class="pad"><div class="q">{hl(sl["quote"])}</div>{who}<div class="sub">{hl(sl.get("sub",""))}</div>{_btn(sl)}</div>{foot}</div>'
     if t == 'steps':
         st = ''.join(f'<div class="stp"><b>{k+1}</b><span>{hl(x)}</span></div>' for k, x in enumerate(sl.get('steps', [])))
-        return f'<div class="s {L} steps"><div class="pad"><span class="kicker">{esc(sl.get("kicker","How it works"))}</span><div class="title" style="margin-top:30px">{hl(sl["title"])}</div>{st}</div>{foot}</div>'
+        return f'<div class="s {L} steps"><div class="pad"><span class="kicker">{esc(sl.get("kicker","How it works"))}</span><div class="title" style="margin-top:30px">{hl(sl["title"])}</div>{st}{_btn(sl)}</div>{foot}</div>'
+    if t == 'quiz':  # 2026-11-27: Story quiz with the answer revealed (options A/B/C, sl["answer"] = index of the right one)
+        op = ''.join(f'<div class="qo{" ok" if k==sl.get("answer") else ""}"><b>{"ABCD"[k]}</b><span>{hl(x)}</span>{"<i>✓</i>" if k==sl.get("answer") else ""}</div>' for k, x in enumerate(sl.get('options', [])))
+        return (f'<div class="s {D} quiz"><div class="pad"><span class="kicker">{esc(sl.get("kicker","Quick quiz"))}</span><div class="title">{hl(sl["title"])}</div>{op}'
+                f'<div class="sub">{hl(sl.get("sub",""))}</div>{_btn(sl)}</div>{foot}</div>')
     raise ValueError(t)
+
+def _btn(sl): return f'<div class="btn">{esc(sl["button"])}</div>' if sl.get('button') else ''
 
 def render(deck, out, size):
     out = pathlib.Path(out); out.mkdir(parents=True, exist_ok=True)

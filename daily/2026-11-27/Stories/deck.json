@@ -1,0 +1,5 @@
+{"slides": [
+{"type": "quiz", "theme": "night", "kicker": "BLACK FRIDAY QUIZ 🛍️", "title": "Bought it online in the EU? How long to *change your mind*?", "options": ["3 days", "14 days", "30 days"], "answer": 1, "sub": "Usually 14 days from delivery. Most of us remember on day 15 🙈", "button": "memopai.com"},
+{"type": "steps", "theme": "paper", "kicker": "RETURN-PROOF YOUR BLACK FRIDAY", "title": "3 steps, *10 seconds*", "steps": ["📦 Your parcel arrives", "💬 Text Memopai: \"Remind me in 12 days: keep or return it?\"", "⏰ Day 12: it pings you. You decide."], "button": "memopai.com"},
+{"type": "quote", "theme": "poster", "quote": "\"I'll just return it if I don't like it.\" *(Day 15.)*", "sub": "Today's reel: what to text Memopai the day it arrives 👀", "button": "memopai.com"}
+]}
