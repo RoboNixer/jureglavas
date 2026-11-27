@@ -1,7 +1,7 @@
 #!/bin/bash
 # usage: build.sh <projdir> [times...]  -> builds story.html and contact sheet of preview frames
 D=$1; shift; cd $D; cp ../common/render.js ../common/frames.js .
-python3 -c "import json;s=open('../common/engine.html').read();lib=open('../common/toonlib.js').read()+open('../common/look2.js').read()+(open('../common/look3.js').read() if __import__('os').path.exists('../common/look3.js') else '')+(open('../common/look4doc.js').read() if __import__('os').path.exists('../common/look4doc.js') else '');open('story.html','w').write(s.replace('/*TL*/',open('timeline.json').read()).replace('/*SCENES*/',lib+open('scenes.js').read()))"
+python3 -c "import json;s=open('../common/engine.html').read();lib=open('../common/toonlib.js').read()+open('../common/look2.js').read()+(open('../common/look3.js').read() if __import__('os').path.exists('../common/look3.js') else '')+(open('../common/look4doc.js').read() if __import__('os').path.exists('../common/look4doc.js') else '')+(open('../common/look5ex.js').read() if __import__('os').path.exists('../common/look5ex.js') else '');open('story.html','w').write(s.replace('/*TL*/',open('timeline.json').read()).replace('/*SCENES*/',lib+open('scenes.js').read()))"
 if [ $# -gt 0 ]; then rm -f prev_*.jpg; node frames.js "$@"; python3 - "$@" <<'PY'
 import sys;from PIL import Image
 from PIL import ImageDraw

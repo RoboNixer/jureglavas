@@ -94,6 +94,8 @@ function sm(x,y,s,o={}){const t=o.t||0,OUT=o.out||'#151515',col=o.col||'#ffffff'
  // craft ladder 2026-11-19 18:00: o.cap (colour) = baseball/work cap with a peak towards the facing side
  if(o.cap){const cc=o.cap===1?'#2f5d8a':o.cap;X.save();X.fillStyle=cc;X.strokeStyle=OUT;X.lineWidth=8;X.beginPath();X.moveTo(-R*.98,-R*.25);X.quadraticCurveTo(-R*.95,-R*1.12,0,-R*1.08);X.quadraticCurveTo(R*.95,-R*1.12,R*.98,-R*.25);X.quadraticCurveTo(0,-R*.5,-R*.98,-R*.25);X.closePath();X.fill();X.stroke();
   X.beginPath();X.moveTo(R*.3*fl,-R*.42);X.quadraticCurveTo(R*1.25*fl,-R*.5,R*1.45*fl,-R*.22);X.quadraticCurveTo(R*.9*fl,-R*.18,R*.3*fl,-R*.28);X.closePath();X.fill();X.stroke();X.beginPath();X.arc(0,-R*1.07,10,0,7);X.fill();X.stroke();X.restore()}
+ // craft ladder 2026-11-27 13:00: o.beanie (colour or 1) = knit beanie with fold + pom-pom (drawn by beanie() in look5ex.js)
+ if(o.beanie&&typeof beanie==='function')beanie(0,0,1,o.beanie===1?'#ff7a3d':o.beanie);
  if(o.santa){const sc=o.santa===1||o.santa===true?'#e2353a':o.santa;X.save();X.rotate(.12);X.fillStyle=sc;X.strokeStyle=OUT;X.lineWidth=8;X.beginPath();X.moveTo(-R*.92,-R*.55);X.quadraticCurveTo(-R*.5,-R*1.55,R*.35,-R*1.45);X.quadraticCurveTo(R*1.15,-R*1.35,R*1.2,-R*.6);X.quadraticCurveTo(R*.9,-R*1.05,R*.6,-R*.9);X.lineTo(R*.92,-R*.55);X.closePath();X.fill();X.stroke();
   X.fillStyle='#fff';X.beginPath();X.roundRect?X.roundRect(-R*1.0,-R*.78,R*2.0,R*.36,R*.18):X.rect(-R,-R*.78,R*2,R*.36);X.fill();X.stroke();X.beginPath();X.arc(R*1.2,-R*.55,R*.2,0,7);X.fill();X.stroke();X.restore()}
  if(o.blush){X.fillStyle='rgba(255,110,140,.35)';X.beginPath();X.ellipse(-78,38,24,14,0,0,7);X.ellipse(78,38,24,14,0,0,7);X.fill()}
