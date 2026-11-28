@@ -14,10 +14,11 @@ deck.json = {"slides":[{...}, ...]}  slide types:
   vs    : title, without (list of lines), with (list of lines), [lw/rw custom headers]   -> life WITHOUT vs WITH Memopai
   fact  : big (e.g. "50 weeks"), title, sub, [src]                                          -> fun-fact stat card
   quote : quote, sub, [who]                                                                 -> bold relatable quote / meme card
+  thisorthat : title, a, b, [kicker], [sub], [button]                                     -> Story 'which one are you?' (b = the Memopai way)
   steps : title, steps (list of lines), [kicker]                                            -> "What is Memopai" 1-2-3
 THEMES (deck "theme" or slide "theme"; owner 2026-11-26: "change the designs so the posts don't look the same"):
   classic (purple + cream, the original), night (navy + neon green), sunset (orange/pink + peach), paper (lined notebook),
-  poster (yellow, black type, thick frames), mint (green + light mint), chat (WhatsApp wallpaper). Never reuse the theme
+  poster (yellow, black type, thick frames), mint (green + light mint), chat (WhatsApp wallpaper), frost (icy blue + snowflakes / light ice, 2026-11-28). Never reuse the theme
   of the previous grid post or the previous Story set; rotate through all of them. A slide "bg" still overrides.
 Every slide gets the page dots + memopai.com footer (except story/cover).
 Design rules: text inside x 90..990 on feed; on tall, content sits in y 260..1500 and x 80..900
@@ -96,10 +97,20 @@ body{width:%(W)dpx;height:%(H)dpx;overflow:hidden;font-family:'Inter Display',In
 .quote .q:before{content:'“';display:block;font-size:220px;line-height:.6;opacity:.35}
 .steps .title{font-size:84px}.stp{display:flex;gap:30px;align-items:center;margin-top:40px}.stp b{flex:none;display:flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%%;background:#25d366;color:#0b3d1f;font-size:50px}.stp span{font-size:52px;font-weight:700;line-height:1.2}
 .body{margin-top:48px;display:flex;flex-direction:column;gap:30px}.body div{font-size:54px;line-height:1.3;font-weight:600}
+/* ---- 2026-11-28: theme frost (icy blue, snowflakes) + type thisorthat ---- */
+.frost{background:linear-gradient(170deg,#0e3a66 0,#2f7fc1 55%%,#bfe3ff 100%%);color:#fff}
+.frost:before{content:'❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆ ❄ ❅ ❆';position:absolute;inset:0;font-size:64px;line-height:180px;letter-spacing:90px;color:rgba(255,255,255,.12);word-break:break-all;overflow:hidden}
+.frost .kicker{background:#fff;color:#0e3a66}.frost .hl{background:#fff;color:#0e3a66}.frost .num{background:#fff;color:#0e3a66}
+.ice{background:#eaf6ff;color:#0e2a44}.ice .kicker{background:#2f7fc1;color:#fff}.ice .num{background:#2f7fc1}.ice .hl{background:#bfe3ff}
+.tot .title{font-size:84px;text-align:center;margin-top:30px}
+.opt{position:relative;margin-top:44px;border-radius:40px;padding:40px 44px 40px 150px;font-size:54px;font-weight:800;line-height:1.2;background:rgba(255,255,255,.95);color:#0e2a44;box-shadow:0 14px 0 rgba(0,0,0,.18)}
+.opt b{position:absolute;left:34px;top:50%%;transform:translateY(-50%%);width:90px;height:90px;border-radius:50%%;display:flex;align-items:center;justify-content:center;font-size:52px;color:#fff;background:#ef5350}
+.opt.y b{background:#16a352}.opt.y{outline:8px solid #39ff88}
+.orx{text-align:center;font-size:60px;font-weight:900;margin-top:34px;opacity:.9}
 """
 
 THEMES = {'classic': ('purple', 'cream'), 'night': ('night', 'night'), 'sunset': ('sunset', 'peach'), 'paper': ('paper', 'paper'),
-          'poster': ('poster', 'poster'), 'mint': ('green', 'mint'), 'chat': ('chatbg', 'chatbg')}
+          'poster': ('poster', 'poster'), 'mint': ('green', 'mint'), 'chat': ('chatbg', 'chatbg'), 'frost': ('frost', 'ice')}
 
 def page(sl, i, n, tall, theme='classic'):
     th = THEMES.get(sl.get('theme', theme), THEMES['classic']); D, L = th
@@ -117,7 +128,7 @@ def _page(sl, i, n, tall, D, L):
         note = f'<div class="note">{hl(sl["note"])}</div>' if sl.get('note') else ''
         return (f'<div class="s {L} tip"><div class="pad"><span class="num">{esc(str(sl["n"]))}</span><div class="title">{hl(sl["title"])}</div>'
                 f'<div class="chat"><div class="b me">{esc(sl["me"])}<span class="t">✓✓</span></div>'
-                f'<div class="b bot"><div class="who"><img src="data:image/png;base64,{MASCOT}">Memopai</div>{esc(sl["reply"])}</div></div>{note}</div>{foot}</div>')
+                f'<div class="b bot"><div class="who"><img src="data:image/png;base64,{MASCOT}">Memopai</div>{esc(sl["reply"])}</div></div>{note}{_btn(sl)}</div>{foot}</div>')
     if t == 'text':
         body = ''.join(f'<div>{hl(x)}</div>' for x in sl.get('body', []))
         return f'<div class="s {L} text"><div class="pad"><div class="title">{hl(sl["title"])}</div><div class="body">{body}</div></div>{foot}</div>'
@@ -148,6 +159,10 @@ def _page(sl, i, n, tall, D, L):
         op = ''.join(f'<div class="qo{" ok" if k==sl.get("answer") else ""}"><b>{"ABCD"[k]}</b><span>{hl(x)}</span>{"<i>✓</i>" if k==sl.get("answer") else ""}</div>' for k, x in enumerate(sl.get('options', [])))
         return (f'<div class="s {D} quiz"><div class="pad"><span class="kicker">{esc(sl.get("kicker","Quick quiz"))}</span><div class="title">{hl(sl["title"])}</div>{op}'
                 f'<div class="sub">{hl(sl.get("sub",""))}</div>{_btn(sl)}</div>{foot}</div>')
+    if t == 'thisorthat':  # 2026-11-28: Story 'which one are you?' two option cards, option b = the Memopai way
+        return (f'<div class="s {D} tot"><div class="pad"><span class="kicker" style="align-self:center">{esc(sl.get("kicker","This or that?"))}</span><div class="title">{hl(sl["title"])}</div>'
+                f'<div class="opt"><b>A</b>{hl(sl["a"])}</div><div class="orx">or</div><div class="opt y"><b>B</b>{hl(sl["b"])}</div>'
+                f'<div class="sub" style="text-align:center">{hl(sl.get("sub",""))}</div>{_btn(sl)}</div>{foot}</div>')
     raise ValueError(t)
 
 def _btn(sl): return f'<div class="btn">{esc(sl["button"])}</div>' if sl.get('button') else ''
