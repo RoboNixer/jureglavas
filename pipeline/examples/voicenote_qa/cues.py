@@ -1,0 +1,7 @@
+beat(0,DUR,turn=T('q1')+1.0,seed=63,key=50)
+add(sfx,whoosh(.35),T('q1')-.3,.35)
+add(sfx,whoosh(.35),T('s2')-.2,.35)
+add(sfx,whoosh(.35),T('l1')-.2,.35)
+add(sfx,whoosh(.35),T('s3')-.2,.35);buzz(T('s3')+.15,.6);chime(T('s3')+.25)
+add(sfx,whoosh(.35),T('p1')-.45,.35)
+chime(T('cta'))

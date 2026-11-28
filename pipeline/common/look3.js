@@ -2235,3 +2235,30 @@ function postCounter3(t,o={}){proom(t,{hz:1240,wall:'#fdf1d6',wall2:'#f4dfb4',fl
  for(let r=0;r<3;r++)for(let k=0;k<7;k++){rr(-60+k*170,700+r*150,150,22,4,'#8a6a4a',4);rr(-40+k*170,620+r*150,60+((k+r)%3)*20,80,4,['#c9945a','#d9a86a','#b98450'][(k+r)%3],4)}
  rr(700,640,240,90,10,'#151515',5);txt('NOW 042',820,686,36,'#ff4d4d',0,'900 ');
  for(const px of[90,330]){rr(px-8,1240,16,260,6,'#b8bdc6',4);circ(px,1236,16,'#d9d9d9',4)}X.strokeStyle='#c8323c';X.lineWidth=12;X.beginPath();X.moveTo(90,1290);X.quadraticCurveTo(210,1340,330,1290);X.stroke()}
+// craft ladder 2026-11-28 13:00 (voice-note explainer): qBubble3() Q&A question header (screen space, purple 'Q' badge, replaces label3 in Q&A explainers);
+// keysTeeth3() keyring clamped in a character's teeth (swinging, o.drop 0..1 falls); formPaper3() school consent form with a signature that writes itself (o.sign 0..1);
+// voiceRec3() WhatsApp hold-to-record bar with pulsing mic + live waveform + timer (world coords, on a phone screen); langBubbles3() 4 language chat bubbles popping around a point
+function qBubble3(text,p=1,o={}){if(p<=0)return;X.save();X.setTransform(1,0,0,1,0,0);const y=o.y||400,k=eo(C(p));X.translate(540,y-lerp(80,0,k));X.globalAlpha=C(p*2);
+ X.font="900 58px Inter";let w=Math.min(700,X.measureText(text).width+190);let fs=58;while(X.measureText(text).width+190>700&&fs>36){fs-=2;X.font=`900 ${fs}px Inter`}w=Math.min(700,X.measureText(text).width+190);
+ X.fillStyle='rgba(0,0,0,.18)';rr(-w/2+8,-58+12,w,124,40,'rgba(0,0,0,.18)',0);rr(-w/2,-58,w,124,40,'#ffffff',6);
+ path(()=>{X.moveTo(-w/2+90,60);X.lineTo(-w/2+70,110);X.lineTo(-w/2+140,60);X.closePath()},'#ffffff',0);X.strokeStyle='#151515';X.lineWidth=6;X.beginPath();X.moveTo(-w/2+90,63);X.lineTo(-w/2+70,110);X.lineTo(-w/2+140,63);X.stroke();
+ circ(-w/2+62,4,40,o.badge||'#7b4dff',5);txt('Q',-w/2+62,6,46,'#fff',0,'900 ');txt(text,51,6,fs,'#151515',0,'900 ');X.restore()}
+function keysTeeth3(hx,hy,s=1,t=0,o={}){const d=C(o.drop||0);X.save();X.translate(hx,hy+d*d*900);X.rotate(Math.sin(t*5)*.18+d*2.5);X.scale(s,s);
+ X.strokeStyle='#c9a227';X.lineWidth=8;X.beginPath();X.arc(0,22,22,0,7);X.stroke();
+ const K=[['#d7d7dc',-.35],['#e6c45a',0],['#b8c4cc',.4]];for(const[c,a]of K){X.save();X.translate(0,40);X.rotate(a);rr(-9,0,18,64,4,c,4);rr(-9,40,26,10,3,c,3);rr(-9,56,20,10,3,c,3);X.restore()}
+ rr(-20,-8,40,16,7,'#9aa0a8',4);X.restore()}
+function formPaper3(x,y,s=1,o={}){X.save();X.translate(x,y);X.rotate(o.rot||0);X.scale(s,s);gshadow(0,10,190,.2);
+ rr(-170,-230,340,460,8,'#fffef8',6);rr(-170,-230,340,70,8,'#4a7fd4',0);txt('SCHOOL TRIP',0,-205,30,'#fff',0,'900 ');txt('CONSENT FORM',0,-172,24,'#fff',0,'800 ');
+ X.fillStyle='#c9ccd6';for(let k=0;k<6;k++)X.fillRect(-130,-130+k*36,k%2?200:260,10);
+ rr(-140,96,24,24,4,'#fff',4);if(o.tick){X.strokeStyle='#2ea44f';X.lineWidth=7;X.beginPath();X.moveTo(-136,108);X.lineTo(-128,118);X.lineTo(-110,92);X.stroke()}
+ txt('I agree',-50,110,24,'#555',0,'700 ');line([[-130,190],[140,190]],4,'#333');txt('Parent signature',5,212,18,'#777',0,'700 ');
+ const sg=C(o.sign||0);if(sg>0){X.strokeStyle='#1d3fa8';X.lineWidth=6;X.lineCap='round';X.beginPath();const N=40;for(let i=0;i<=N*sg;i++){const u=i/N,xx=-110+u*230,yy=170-Math.sin(u*Math.PI*5)*18*(1-u*.4)-u*10;i?X.lineTo(xx,yy):X.moveTo(xx,yy)}X.stroke()}
+ X.restore()}
+function voiceRec3(x,y,s,t,o={}){const sec=o.sec||0;X.save();X.translate(x,y);X.scale(s,s);rr(-250,-60,500,120,60,'#ffffff',5);
+ circ(-200,0,14,'#e5383b',0);txt('0:0'+Math.min(9,Math.floor(sec)),-140,2,32,'#151515',0,'800 ');
+ for(let k=0;k<16;k++){const h=8+Math.abs(Math.sin(t*12+k*1.7))*34*(o.live?1:.15);rr(-90+k*14,-h/2,8,h,4,'#25d366',0)}
+ for(let k=0;k<3;k++){const ph=((t*1.6+k/3)%1);X.save();X.globalAlpha=(1-ph)*.6*(o.live?1:0);circ(330,0,70+ph*80,'#25d366',0);X.restore()}
+ circ(330,0,72,'#25d366',6);X.fillStyle='#fff';rr(318,-36,24,46,12,'#fff',0);X.strokeStyle='#fff';X.lineWidth=6;X.beginPath();X.arc(330,0,22,0.15,Math.PI-.15);X.stroke();line([[330,22],[330,36]],6,'#fff');X.restore()}
+function langBubbles3(cx,cy,t,r,o={}){const L=o.list||[['EN','"Remind me…"'],['HR','"Podsjeti me…"'],['BS','"Podsjeti me…"'],['SR','"Podseti me…"']];
+ const pos=[[-175,-300],[175,-190],[-175,-80],[175,30]];L.forEach((l,i)=>{const p=C((r-(o.a||0)-i*.45)/.3);if(p<=0)return;const k=eo(p),[dx,dy]=pos[i];X.save();X.translate(cx+dx,cy+dy+Math.sin(t*2+i)*8);X.scale(lerp(.3,1,k)*(1+.08*Math.sin(p*Math.PI)),lerp(.3,1,k));
+  rr(-170,-50,340,100,30,i%2?'#dcf8c6':'#ffffff',5);circ(-122,0,32,['#7b4dff','#e5383b','#f59f00','#1c7ed6'][i],4);txt(l[0],-122,2,28,'#fff',0,'900 ');txt(l[1],38,2,30,'#151515',0,'800 ');X.restore()})}

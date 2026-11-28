@@ -1,0 +1,11 @@
+{
+"theme": "poster",
+"slides": [
+{"type":"cover","bg":"purple","foot":true,"mascot":true,"kicker":"Quick quiz","title":"Can Memopai *do this?*","sub":"4 questions. Guess, then swipe →"},
+{"type":"quiz","kicker":"Question 1 of 4","title":"Hands full. Can I just send a voice note?","options":["No, only typed messages","Yes, voice notes work"],"answer":1,"sub":"Hold the mic and say it like you'd tell a friend."},
+{"type":"quiz","kicker":"Question 2 of 4","title":"Can it remind my mum, not just me?","options":["Only you","Yes, she taps *Accept* once"],"answer":1,"sub":"It lands in her WhatsApp. No app, no account."},
+{"type":"quiz","kicker":"Question 3 of 4","title":"Which languages does it understand?","options":["English only","English, Croatian, Bosnian, Serbian"],"answer":1,"sub":"Write or speak in any of the four."},
+{"type":"quiz","kicker":"Question 4 of 4","title":"Is Memopai free?","options":["Yes, free forever","No, it's a paid assistant"],"answer":1,"sub":"Plans are on memopai.com."},
+{"type":"cta","title":"Think it. *Say it.* Done.","lines":["Memopai is a reminder contact in your WhatsApp.","Every day, every Monday, every 1st · until you say stop."],"button":"memopai.com"}
+]
+}
